@@ -216,8 +216,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.3.0"
-  flutter_localizations:
+  flutter_localization:
     dependency: "direct main"
+    description:
+      name: flutter_localization
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.9"
+  flutter_localizations:
+    dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
@@ -245,20 +252,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  get_it:
-    dependency: "direct main"
-    description:
-      name: get_it
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "7.2.0"
-  go_router:
-    dependency: "direct main"
-    description:
-      name: go_router
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "6.0.0"
   html:
     dependency: transitive
     description:
@@ -308,13 +301,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.4"
-  logging:
-    dependency: transitive
-    description:
-      name: logging
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.0"
   matcher:
     dependency: transitive
     description:
