@@ -1,4 +1,41 @@
 class AppStrings {
+  static const String noRouteFound = "404";
+
+  // auth
+  static const String signIn = "sign_in";
+  static const String signUp = "sign_up";
+  static const String signUpNow = "sign_up_now";
+  static const String forgetYourPassword = "forget_your_password";
+  static const String notHaveAccountYet = "not_have_account_yet";
+  static const String email = "email";
+  static const String password = "password";
+  static const String pleaseEnterEmail = "please_enter_email";
+  static const String pleaseEnterPassword = "please_enter_password";
+  static const String shortPassword = "short_password";
+  static const String logout = "Logout";
+
+  static const String name = "name";
+  static const String mobileNumber = "mobile_number";
+  static const String pleaseEnterName = "please_enter_name";
+  static const String alreadyHaveAccount = "already_have_account";
+  static const String nameShouldAtLeast3Character =
+      "name_should_atLeast_3_character";
+  static const String emailFormatNotCorrect = "email_format_not_correct";
+  static const String pleaseEnterMobileNumber = "please_enter_mobile_number";
+  static const String mobileNumberShouldAtLeast5Character =
+      "mobile_number_should_at_least_5_character";
+  static const String passwordShouldAtLeast6Character =
+      "password_should_at_least_6_Character";
+  static const String mobileNumberFormatNotCorrect =
+      "mobile_number_format_not_correct";
+
+  static const String resetPassword = "reset_password";
+  static const String verificationCode = "verification_code";
+  static const String sendVerificationCode = "send_verification_code";
+  static const String newPassword = "new_password";
+  static const String resetEmailSendMessage =
+      "we_send_you_an_email_please_check_your_email_address";
+
   // exception handler
   static const String success = "Success";
   static const String badRequestError = "Bad request error";
