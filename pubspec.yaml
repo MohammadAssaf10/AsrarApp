@@ -33,7 +33,8 @@ dev_dependencies:
     sdk: flutter
 
 flutter_native_splash:
-  background_image: assets/images/splash.png
+  color: "#00743D"
+  image: assets/images/splash.png
   android_gravity: fill
   ios_content_mode: fill
 
@@ -45,6 +46,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/icons/
     - assets/translations/
     - assets/json/
 

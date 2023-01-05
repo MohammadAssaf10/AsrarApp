@@ -1,4 +1,5 @@
 import 'package:asrar_app/config/routes_manager.dart';
+import 'package:asrar_app/core/app/language.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,7 +31,8 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
             AppLocalizations.delegate,
           ],
-          supportedLocales: const [Locale("ar")],
+          supportedLocales: const [arabicLocale, englishLocale],
+          locale: arabicLocale,
           localeResolutionCallback: (deviceLocale, supportedLocales) {
             for (var locale in supportedLocales) {
               if (deviceLocale != null &&
@@ -41,6 +43,7 @@ class MyApp extends StatelessWidget {
             return supportedLocales.first;
           },
           theme: getApplicationTheme(),
+          initialRoute: Routes.homeRoute,
           onGenerateRoute: RouteGenerator.getRoute,
         );
       },

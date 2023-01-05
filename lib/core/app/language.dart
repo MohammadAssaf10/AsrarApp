@@ -6,8 +6,8 @@ enum LanguageType { english, arabic }
 const String prefsKeyLang = "PREFS_KEY_LANG";
 const String arabic = "ar";
 const String english = "en";
-const Locale arabicLocal = Locale("ar");
-const Locale englishLocal = Locale("en");
+const Locale arabicLocale = Locale("ar");
+const Locale englishLocale = Locale("en");
 
 extension LanguageTypeExtension on LanguageType {
   String getValue() {
@@ -43,9 +43,9 @@ class LanguageCacheHelper {
     String currentLang = await getAppLanguage();
 
     if (currentLang == LanguageType.arabic.getValue()) {
-      return arabicLocal;
+      return arabicLocale;
     } else {
-      return englishLocal;
+      return englishLocale;
     }
   }
 }

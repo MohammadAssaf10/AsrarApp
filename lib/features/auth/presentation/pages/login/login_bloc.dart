@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../../config/strings_manager.dart';
-import '../../../../../core/app/extensions.dart';
 
 part 'login_event.dart';
 
@@ -27,7 +26,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   _onEmailChanged(EmailChanged event, Emitter<LoginState> emit) {
-    if (event.email.nullOrEmpty()) {
+    if (event.email!.isNotEmpty&&event.email!=null) {
       emit(state.copyWith(
           emailErrorMessage: AppStrings.pleaseEnterEmail));
     }
@@ -37,7 +36,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   _onPasswordChanged(PasswordChanged event, Emitter<LoginState> emit) {
-    if (event.password.nullOrEmpty()) {
+    if (event.password!.isNotEmpty&&event.password!=null) {
       emit(
           state.copyWith(passwordErrorMessage: AppStrings.pleaseEnterPassword));
     }

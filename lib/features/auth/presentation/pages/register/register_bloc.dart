@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 
 import '../../../../../config/strings_manager.dart';
 import '../../../../../core/app/functions.dart';
-import '../../../../../core/app/extensions.dart';
 
 part 'register_event.dart';
 
@@ -40,7 +39,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   _onNameChanged(NameChanged event, Emitter<RegisterState> emit) {
     _nameEntered = true;
-    if (event.name.nullOrEmpty()) {
+    if (event.name!.isNotEmpty&&event.name!=null) {
       emit(state.copyWith(
           nameErrorMessage: AppStrings.pleaseEnterName));
     } else if ((event.name?.length ?? 0) < 3) {
@@ -54,7 +53,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   _onEmailChanged(EmailChanged event, Emitter<RegisterState> emit) {
     _emailEntered = true;
-    if (event.email.nullOrEmpty()) {
+    if (event.email!.isNotEmpty&&event.email!=null) {
       emit(state.copyWith(
           emailErrorMessage: AppStrings.pleaseEnterEmail));
     } else if (!isEmailFormatCorrect(event.email ?? '')) {
@@ -68,7 +67,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   _onMobileNumberChanged(
       MobileNumberChanged event, Emitter<RegisterState> emit) {
     _mobileNumberEntered = true;
-    if (event.mobileNumber.nullOrEmpty()) {
+    if (event.mobileNumber!.isNotEmpty&&event.mobileNumber!=null) {
       emit(state.copyWith(
           mobileNumberErrorMessage:
               AppStrings.pleaseEnterMobileNumber));
@@ -87,7 +86,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   _onPasswordChanged(PasswordChanged event, Emitter<RegisterState> emit) {
     _passwordEntered = true;
-    if (event.password.nullOrEmpty()) {
+    if (event.password!.isNotEmpty&&event.password!=null) {
       emit(state.copyWith(
           passwordErrorMessage: AppStrings.pleaseEnterPassword));
     } else if ((event.password?.length ?? 0) < 6) {

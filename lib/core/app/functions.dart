@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../config/color_manager.dart';
+import '../../config/styles_manager.dart';
 import '../../config/values_manager.dart';
 
 bool isEmailFormatCorrect(String email) {
@@ -41,22 +42,34 @@ void showCustomDialog(BuildContext context,
               children: [
                 if (jsonPath != null)
                   Padding(
-                    padding: EdgeInsets.all(AppSize.s10.h),
+                    padding: EdgeInsets.symmetric(
+                      vertical: AppSize.s10.h,
+                      horizontal: AppSize.s10.w,
+                    ),
                     child: Lottie.asset(jsonPath),
                   ),
                 if (message != null)
                   Padding(
-                    padding: EdgeInsets.all(AppSize.s10.h),
+                    padding: EdgeInsets.symmetric(
+                      vertical: AppSize.s10.h,
+                      horizontal: AppSize.s10.w,
+                    ),
                     child: Center(
                       child: Text(
                         message,
-                        style: Theme.of(context).textTheme.titleMedium,
+                        style: getAlmaraiRegularStyle(
+                          fontSize: AppSize.s16.sp,
+                          color: ColorManager.primary,
+                        ),
                       ),
                     ),
                   ),
                 if (jsonPath == null && message == null)
                   Padding(
-                    padding: EdgeInsets.all(AppSize.s8.h),
+                    padding: EdgeInsets.symmetric(
+                      vertical: AppSize.s8.h,
+                      horizontal: AppSize.s8.w,
+                    ),
                     child: const CircularProgressIndicator(
                       color: ColorManager.primary,
                     ),
@@ -69,4 +82,3 @@ void showCustomDialog(BuildContext context,
     );
   });
 }
-

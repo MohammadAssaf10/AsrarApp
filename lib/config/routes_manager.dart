@@ -1,3 +1,4 @@
+import 'package:asrar_app/features/home/presentation/pages/main_view.dart';
 import 'package:flutter/material.dart';
 
 import '../features/auth/presentation/pages/login/login_view.dart';
@@ -6,19 +7,20 @@ import '../features/auth/presentation/pages/reset_password/reset_password_view.d
 import 'strings_manager.dart';
 
 class Routes {
-  static const String splashRoute = '/';
+  // home route
+  static const String homeRoute = "/";
 
   // auth rotes
   static const String loginRoute = '/login';
   static const String registerRoute = '/register';
   static const String resetPassword = '/resetPassword';
-
-  static const String mainRoute = '/home';
 }
 
 class RouteGenerator {
   static Route getRoute(RouteSettings settings) {
     switch (settings.name) {
+      case Routes.homeRoute:
+        return MaterialPageRoute(builder: (_) => MainView());
       case Routes.loginRoute:
         return MaterialPageRoute(builder: (_) => LoginView());
       case Routes.resetPassword:
@@ -34,11 +36,11 @@ class RouteGenerator {
     return MaterialPageRoute(
       builder: (_) => Scaffold(
         appBar: AppBar(
-          title: const Text(
+          title: Text(
             AppStrings.noRouteFound,
           ),
         ),
-        body: const Center(
+        body: Center(
           child: Text(AppStrings.noRouteFound),
         ),
       ),
