@@ -1,3 +1,4 @@
+import 'package:asrar_app/config/routes_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
             AppLocalizations.delegate,
           ],
-          supportedLocales: const [Locale("ar"), Locale("en")],
+          supportedLocales: const [Locale("ar")],
           localeResolutionCallback: (deviceLocale, supportedLocales) {
             for (var locale in supportedLocales) {
               if (deviceLocale != null &&
@@ -40,14 +41,7 @@ class MyApp extends StatelessWidget {
             return supportedLocales.first;
           },
           theme: getApplicationTheme(),
-          home: Scaffold(
-            appBar: AppBar(
-              title: Text("أسرار للخدمات الالكترونية"),
-            ),
-            body: Center(
-              child: Text("اسرار"),
-            ),
-          ),
+          onGenerateRoute: RouteGenerator.getRoute,
         );
       },
     );
