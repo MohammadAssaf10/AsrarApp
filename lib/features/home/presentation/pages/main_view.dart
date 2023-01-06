@@ -2,7 +2,6 @@ import 'package:asrar_app/config/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../config/assets_manager.dart';
-import '../../../../config/color_manager.dart';
 import '../../../../config/strings_manager.dart';
 import '../../../../config/values_manager.dart';
 import '../widgets/navigation_bar_bottom.dart';
@@ -12,38 +11,26 @@ import 'orders_screen.dart';
 import 'my_wallet_screen.dart';
 import 'profile_screen.dart';
 
-class MainView extends StatefulWidget {
-  const MainView({Key? key}) : super(key: key);
-
-  @override
-  State<MainView> createState() => _MainViewState();
-}
-
-class _MainViewState extends State<MainView> {
-  Widget _currentScreen = HomeScreen();
-
+class MainView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    PageController _controller = PageController(initialPage: 2);
     return Scaffold(
-      body: PageStorage(
-        bucket: PageStorageBucket(),
-        child: _currentScreen,
+      body: PageView(
+        controller: _controller,
+        children: [
+          OrdersScreen(),
+          MyWalletScreen(),
+          HomeScreen(),
+          CustomersServiceScreen(),
+          ProfileScreen(),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: ColorManager.transparent,
-        elevation: 0.0,
-        highlightElevation: 0.0,
-        onPressed: () {
-          setState(() {
-            _currentScreen = HomeScreen();
-          });
-        },
+      floatingActionButton: MaterialButton(
+        onPressed: () => _controller.jumpToPage(2),
         child: Image.asset(
           IconAssets.home,
-          height: double.infinity,
-          width: double.infinity,
           filterQuality: FilterQuality.high,
-          fit: BoxFit.fill,
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -59,20 +46,12 @@ class _MainViewState extends State<MainView> {
                   NavigationBarBottom(
                     title: AppStrings.orders.tr(context),
                     icon: IconAssets.orders,
-                    onPress: () {
-                      setState(() {
-                        _currentScreen = OrdersScreen();
-                      });
-                    },
+                    onPress: () => _controller.jumpToPage(0),
                   ),
                   NavigationBarBottom(
                     title: AppStrings.myWallet.tr(context),
                     icon: IconAssets.wallet,
-                    onPress: () {
-                      setState(() {
-                        _currentScreen = MyWalletScreen();
-                      });
-                    },
+                    onPress: () => _controller.jumpToPage(1),
                   ),
                 ],
               ),
@@ -82,20 +61,12 @@ class _MainViewState extends State<MainView> {
                   NavigationBarBottom(
                     title: AppStrings.customerService.tr(context),
                     icon: IconAssets.customersService,
-                    onPress: () {
-                      setState(() {
-                        _currentScreen = CustomersServiceScreen();
-                      });
-                    },
+                    onPress: () => _controller.jumpToPage(3),
                   ),
                   NavigationBarBottom(
                     title: AppStrings.profile.tr(context),
                     icon: IconAssets.profile,
-                    onPress: () {
-                      setState(() {
-                        _currentScreen = ProfileScreen();
-                      });
-                    },
+                    onPress: () => _controller.jumpToPage(4),
                   ),
                 ],
               )

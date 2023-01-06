@@ -1,8 +1,11 @@
 import 'package:asrar_app/config/app_localizations.dart';
+import 'package:asrar_app/config/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../../config/assets_manager.dart';
+import '../../../../config/color_manager.dart';
 import '../../../../config/strings_manager.dart';
 import '../../../../config/values_manager.dart';
 import '../widgets/drawer.dart';
@@ -21,11 +24,11 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Image.asset(IconAssets.notification),
+            icon: SvgPicture.asset(IconAssets.notification),
           ),
           IconButton(
             onPressed: () {},
-            icon: Image.asset(IconAssets.share),
+            icon: SvgPicture.asset(IconAssets.share),
           ),
         ],
       ),
@@ -33,8 +36,71 @@ class HomeScreen extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.symmetric(
-                vertical: AppSize.s10.h, horizontal: AppSize.s12.w,),
-            child: Image.asset(ImageAssets.maskGroup),
+              vertical: AppSize.s12.h,
+              horizontal: AppSize.s12.w,
+            ),
+            child: Image.asset(
+              ImageAssets.maskGroup,
+              width: double.infinity,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: AppSize.s12.w),
+            width: double.infinity,
+            height: AppSize.s40.h,
+            decoration: BoxDecoration(
+              color: ColorManager.primary,
+              borderRadius: BorderRadius.circular(AppSize.s18.r),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                MaterialButton(
+                  onPressed: () {},
+                  minWidth: AppSize.s80.w,
+                  child: Text(
+                    "وظائف",
+                    style: getAlmaraiRegularStyle(
+                      fontSize: 16.sp,
+                      color: ColorManager.white,
+                    ),
+                  ),
+                ),
+                MaterialButton(
+                  onPressed: () {},
+                  minWidth: AppSize.s80.w,
+                  child: Text(
+                    "أخبار",
+                    style: getAlmaraiRegularStyle(
+                      fontSize: 16.sp,
+                      color: ColorManager.white,
+                    ),
+                  ),
+                ),
+                MaterialButton(
+                  onPressed: () {},
+                  minWidth: AppSize.s80.w,
+                  child: Text(
+                    "جديدنا",
+                    style: getAlmaraiRegularStyle(
+                      fontSize: 16.sp,
+                      color: ColorManager.white,
+                    ),
+                  ),
+                ),
+                MaterialButton(
+                  onPressed: () {},
+                  minWidth: AppSize.s80.w,
+                  child: Text(
+                    "الدورات",
+                    style: getAlmaraiRegularStyle(
+                      fontSize: 16.sp,
+                      color: ColorManager.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           )
         ],
       ),
