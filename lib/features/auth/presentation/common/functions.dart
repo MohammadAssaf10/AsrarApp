@@ -1,24 +1,8 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/scheduler.dart';
 
-import '../../../../config/assets_manager.dart';
-import '../../../../config/routes_manager.dart';
-import '../../../../config/strings_manager.dart';
-import '../../../../core/app/functions.dart';
-import '../bloc/authentication_bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-manageDialog(BuildContext context, AuthenticationState state) {
-  if (state is AuthenticationInProgress) {
-    showCustomDialog(context);
-  } else if (state is AuthenticationFailed) {
-    showCustomDialog(context,
-        jsonPath: JsonAssets.error, message: state.message);
-  } else if (state is AuthenticationSuccess) {
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      dismissDialog(context);
-      Navigator.pushReplacementNamed(context, Routes.homeRoute);
-    });
-  } else if (state is ResetPasswordRequestSuccess) {
-    showCustomDialog(context, message: AppStrings.resetEmailSendMessage);
-  }
-}
+
+ShapeBorder roundedBorder({double radius = 30}) =>
+    RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius.r));
+

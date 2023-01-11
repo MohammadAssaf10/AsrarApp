@@ -1,32 +1,34 @@
-import 'package:asrar_app/features/home/presentation/pages/main_view.dart';
 import 'package:flutter/material.dart';
 
-import '../features/auth/presentation/pages/login/login_view.dart';
-import '../features/auth/presentation/pages/register/register_view.dart';
-import '../features/auth/presentation/pages/reset_password/reset_password_view.dart';
+import '../features/auth/presentation/pages/auth_view.dart';
+import '../features/home/presentation/pages/main_view.dart';
+import '../splash.dart';
 import 'strings_manager.dart';
 
 class Routes {
+  static const String splash = '/';
+
   // home route
-  static const String homeRoute = "/";
+  static const String homeRoute = "/home";
 
   // auth rotes
-  static const String loginRoute = '/login';
-  static const String registerRoute = '/register';
+  static const String auth = '/auth';
   static const String resetPassword = '/resetPassword';
 }
 
 class RouteGenerator {
   static Route getRoute(RouteSettings settings) {
     switch (settings.name) {
+      case Routes.splash:
+        return MaterialPageRoute(builder: (_) => SplashScreen());
+
       case Routes.homeRoute:
         return MaterialPageRoute(builder: (_) => MainView());
-      case Routes.loginRoute:
-        return MaterialPageRoute(builder: (_) => LoginView());
-      case Routes.resetPassword:
-        return MaterialPageRoute(builder: (_) => ResetPasswordView());
-      case Routes.registerRoute:
-        return MaterialPageRoute(builder: (_) => RegisterView());
+
+      case Routes.auth:
+        return MaterialPageRoute(builder: (_) => Auth());
+
+
       default:
         return unDefinedRoute();
     }
