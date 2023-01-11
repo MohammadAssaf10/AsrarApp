@@ -1,0 +1,118 @@
+{
+  "project_info": {
+    "project_number": "493016441872",
+    "project_id": "asrar-82d33",
+    "storage_bucket": "asrar-82d33.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493016441872:android:61efcfeb5a10dc710cd695",
+        "android_client_info": {
+          "package_name": "com.example.asrar_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "493016441872-4johhr4e1cdh0trlmsvf5c5b78uo4j8u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrMPbKFA9AW_I2-kmQTvQONhoRy7Md6i8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "493016441872-4johhr4e1cdh0trlmsvf5c5b78uo4j8u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "493016441872-2vuquu1srdneo3ouvdd5c7svb15prj4c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.asrarEmployeeApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493016441872:android:65dba6aff7c69a360cd695",
+        "android_client_info": {
+          "package_name": "com.example.asrar_control_panel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "493016441872-4johhr4e1cdh0trlmsvf5c5b78uo4j8u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrMPbKFA9AW_I2-kmQTvQONhoRy7Md6i8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "493016441872-4johhr4e1cdh0trlmsvf5c5b78uo4j8u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "493016441872-2vuquu1srdneo3ouvdd5c7svb15prj4c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.asrarEmployeeApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493016441872:android:e704681eb42dc0300cd695",
+        "android_client_info": {
+          "package_name": "com.example.asrar_employee_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "493016441872-4johhr4e1cdh0trlmsvf5c5b78uo4j8u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrMPbKFA9AW_I2-kmQTvQONhoRy7Md6i8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "493016441872-4johhr4e1cdh0trlmsvf5c5b78uo4j8u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "493016441872-2vuquu1srdneo3ouvdd5c7svb15prj4c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.asrarEmployeeApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

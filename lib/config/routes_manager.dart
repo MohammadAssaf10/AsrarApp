@@ -1,6 +1,7 @@
 import 'package:asrar_app/features/home/presentation/pages/main_view.dart';
 import 'package:flutter/material.dart';
 
+import '../core/app/di.dart';
 import '../features/auth/presentation/pages/login/login_view.dart';
 import '../features/auth/presentation/pages/register/register_view.dart';
 import '../features/auth/presentation/pages/reset_password/reset_password_view.dart';
@@ -20,6 +21,7 @@ class RouteGenerator {
   static Route getRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.homeRoute:
+        initHomeModule();
         return MaterialPageRoute(builder: (_) => MainView());
       case Routes.loginRoute:
         return MaterialPageRoute(builder: (_) => LoginView());
@@ -34,16 +36,17 @@ class RouteGenerator {
 
   static Route unDefinedRoute() {
     return MaterialPageRoute(
-      builder: (_) => Scaffold(
-        appBar: AppBar(
-          title: Text(
-            AppStrings.noRouteFound,
+      builder: (_) =>
+          Scaffold(
+            appBar: AppBar(
+              title: Text(
+                AppStrings.noRouteFound,
+              ),
+            ),
+            body: Center(
+              child: Text(AppStrings.noRouteFound),
+            ),
           ),
-        ),
-        body: Center(
-          child: Text(AppStrings.noRouteFound),
-        ),
-      ),
     );
   }
 }
