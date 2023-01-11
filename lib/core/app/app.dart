@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../config/app_localizations.dart';
 import '../../config/routes_manager.dart';
 import '../../config/theme_manager.dart';
+import '../../features/auth/presentation/bloc/authentication_bloc.dart';
 import '../../language_cubit/language_cubit.dart';
 import 'language.dart';
 
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<LanguageCubit>(create: (context)=> LanguageCubit())
+        BlocProvider<LanguageCubit>(create: (context)=> LanguageCubit()),
+        BlocProvider<AuthenticationBloc>(create: ((context) => AuthenticationBloc()))
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),

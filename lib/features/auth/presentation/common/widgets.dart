@@ -15,6 +15,7 @@ class TextFrom extends StatelessWidget {
     required this.label,
     this.onChange,
     this.keyboardType,
+    this.controller,
   }) : super(key: key);
 
   final String? Function(String?)? validator;
@@ -22,10 +23,12 @@ class TextFrom extends StatelessWidget {
   final String label;
   final Function(String)? onChange;
   final TextInputType? keyboardType;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       validator: validator,
       keyboardType: keyboardType,
       onChanged: onChange,

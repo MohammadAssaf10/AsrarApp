@@ -17,7 +17,7 @@ class Routes {
 }
 
 class RouteGenerator {
-  static Route getRoute(RouteSettings settings) {
+  static Route getRoute(RouteSettings settings){
     switch (settings.name) {
       case Routes.splash:
         return MaterialPageRoute(builder: (_) => SplashScreen());
@@ -27,7 +27,6 @@ class RouteGenerator {
 
       case Routes.auth:
         return MaterialPageRoute(builder: (_) => Auth());
-
 
       default:
         return unDefinedRoute();
