@@ -17,17 +17,22 @@ ShapeBorder roundedBorder({double radius = 30}) =>
 manageDialog(BuildContext context, AuthenticationState state) {
   if (state is AuthenticationInProgress) {
     showCustomDialog(context);
-  } else if (state is AuthenticationFailed) {
+  } 
+  else if (state is AuthenticationFailed) {
     BlocProvider.of<AuthenticationBloc>(context).add(Relode());
     showCustomDialog(context,
         jsonPath: JsonAssets.error, message: state.message.tr(context));
-  } else if (state is AuthenticationSuccess) {
+  } 
+  else if (state is AuthenticationSuccess) {
     SchedulerBinding.instance.addPostFrameCallback((_) {
+    BlocProvider.of<AuthenticationBloc>(context).add(Relode());
       dismissDialog(context);
       // TODO: navigate to main view
       Navigator.pushReplacementNamed(context, Routes.splash);
     });
-  } else if (state is ResetPasswordRequestSuccess) {
+  } 
+  else if (state is ResetPasswordRequestSuccess) {
+    BlocProvider.of<AuthenticationBloc>(context).add(Relode());
     showCustomDialog(context, message: AppStrings.resetEmailSendMessage);
   }
 }
