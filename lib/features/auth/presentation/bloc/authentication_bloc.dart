@@ -27,7 +27,6 @@ class AuthenticationBloc
         emit(AuthenticationFailed(failure.message));
       }, (_) {
         emit(AuthenticationSuccess());
-
         _authPreferences.setUserLoggedIn();
       });
     });

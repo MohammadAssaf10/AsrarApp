@@ -55,7 +55,7 @@ class RepositoryImp implements Repository {
     User user = User(
         name: registerRequest.name,
         email: registerRequest.email,
-        mobileNumber: registerRequest.mobileNumber);
+        );
 
     // try to register
     try {

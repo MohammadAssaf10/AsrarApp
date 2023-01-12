@@ -179,6 +179,15 @@ class NewAccountForm extends StatefulWidget {
 class _NewAccountFormState extends State<NewAccountForm> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
+  final TextEditingController _emailTextEditingController =
+      TextEditingController();
+
+  final TextEditingController _passwordTextEditingController =
+      TextEditingController();
+
+  final TextEditingController _nameTextEditingController =
+      TextEditingController();
+
   bool validateEmail = false;
 
   bool validatePassword = false;
@@ -201,6 +210,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 TextFrom(
+                  controller: _emailTextEditingController,
                   icon: Icons.email_outlined,
                   label: AppStrings.email.tr(context),
                   onTap: () {
@@ -221,6 +231,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
                 ),
                 SizedBox(height: AppSize.s15.h),
                 TextFrom(
+                  controller: _nameTextEditingController,
                   icon: Icons.person_outline,
                   label: AppStrings.userName.tr(context),
                   onTap: () {
@@ -238,6 +249,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
                 ),
                 SizedBox(height: AppSize.s15.h),
                 TextFrom(
+                  controller: _passwordTextEditingController,
                   icon: Icons.lock_outline,
                   label: AppStrings.password.tr(context),
                   onTap: () {
@@ -267,16 +279,27 @@ class _NewAccountFormState extends State<NewAccountForm> {
           SizedBox(
             height: AppSize.s100.h,
           ),
-          FullElevatedButton(
-            onPressed: () {
-              setState(() {
-                validateEmail = true;
-                validatePassword = true;
-                validateUserName = true;
-              });
-              _key.currentState!.validate();
+          BlocBuilder<AuthenticationBloc, AuthenticationState>(
+            builder: (context, state) {
+              manageDialog(context, state);
+              return FullElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    validateEmail = true;
+                    validatePassword = true;
+                    validateUserName = true;
+                  });
+                  if (_key.currentState!.validate()) {
+                    BlocProvider.of<AuthenticationBloc>(context).add(
+                        RegisterButtonPressed(RegisterRequest(
+                            _nameTextEditingController.text,
+                            _emailTextEditingController.text,
+                            _passwordTextEditingController.text)));
+                  }
+                },
+                text: AppStrings.registerNewAccount.tr(context),
+              );
             },
-            text: AppStrings.registerNewAccount.tr(context),
           )
         ],
       ),

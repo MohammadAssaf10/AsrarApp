@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart';
 
 import '../../../../config/assets_manager.dart';
+import '../../../../config/routes_manager.dart';
 import '../../../../config/strings_manager.dart';
 import '../../../../config/app_localizations.dart';
 import '../../../../core/app/functions.dart';
@@ -24,7 +25,7 @@ manageDialog(BuildContext context, AuthenticationState state) {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       dismissDialog(context);
       // TODO: navigate to main view
-      // Navigator.pushReplacementNamed(context, Routes.mainRoute);
+      Navigator.pushReplacementNamed(context, Routes.splash);
     });
   } else if (state is ResetPasswordRequestSuccess) {
     showCustomDialog(context, message: AppStrings.resetEmailSendMessage);

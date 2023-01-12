@@ -7,7 +7,6 @@ import '../models/responses.dart';
 
 const String userCollectionPath = 'Users';
 const String userNameDocPath = 'name';
-const String userPhoneNumberDocPath = 'phone';
 
 class FirebaseHelper {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -25,7 +24,6 @@ class FirebaseHelper {
         await _firestore.collection(userCollectionPath).doc(email).get();
 
     userResponse.name = doc[userNameDocPath];
-    userResponse.phoneNumber = doc[userPhoneNumberDocPath];
 
     return userResponse;
   }
@@ -38,7 +36,6 @@ class FirebaseHelper {
   Future<void> updateUserData(entities.User user) async {
     await _firestore.collection(userCollectionPath).doc(user.email).set({
       userNameDocPath: user.name,
-      userPhoneNumberDocPath: user.mobileNumber
     });
   }
 
