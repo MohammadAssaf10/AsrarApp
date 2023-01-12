@@ -14,6 +14,12 @@ class AuthenticationBloc
   final Repository _repository = instance<Repository>();
   final AuthPreferences _authPreferences = instance<AuthPreferences>();
   AuthenticationBloc() : super(AuthenticationInitial()) {
+    on<Relode>(
+      (event, emit) {
+        emit(AuthenticationInitial());
+      },
+    );
+
     // login
     on<LoginButtonPressed>((event, emit) async {
       emit(AuthenticationInProgress());
@@ -21,7 +27,6 @@ class AuthenticationBloc
         emit(AuthenticationFailed(failure.message));
       }, (_) {
         emit(AuthenticationSuccess());
-
         _authPreferences.setUserLoggedIn();
       });
     });

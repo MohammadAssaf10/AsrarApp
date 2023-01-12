@@ -36,23 +36,15 @@ ThemeData getApplicationTheme() {
           color: ColorManager.error, fontSize: AppSize.s16.sp),
 
       // enabled border style
-      enabledBorder: InputBorder.none,
+      enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: ColorManager.grey)),
       // focused border style
-      focusedBorder: InputBorder.none,
+      focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: ColorManager.primary)),
       // error border style
-      errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: ColorManager.error, width: AppSize.s1.w),
-        borderRadius: BorderRadius.all(
-          Radius.circular(AppSize.s20.r),
-        ),
-      ),
+      errorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: ColorManager.error)),
       // focused border style
-      focusedErrorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: ColorManager.error, width: AppSize.s1.w),
-        borderRadius: BorderRadius.all(
-          Radius.circular(AppSize.s20.r),
-        ),
-      ),
     ),
     // icon theme
     iconTheme: IconThemeData(color: ColorManager.white, size: AppSize.s25.sp),

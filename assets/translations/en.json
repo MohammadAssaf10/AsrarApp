@@ -1,6 +1,7 @@
 {
   "sign_in": "Sign in",
   "sign_up": "Sign up",
+  "register_new_account": "Register new account",
   "sign_out": "Sign out",
   "sign_up_now": "Sign up now",
   "forget_your_password": "Forget your password",
@@ -10,9 +11,9 @@
   "please_enter_email": "Please enter email",
   "please_enter_password": "please enter password",
   "short_password": "Short password",
-  "name": "Name",
+  "user_name": "user name",
   "mobile_number": "Phone number",
-  "please_enter_name": "Please enter name",
+  "name_too_short": "name too short",
   "already_have_account": "Already have account",
   "name_should_atLeast_3_character": "Name should at least 3 character",
   "email_format_not_correct": "Email format not correct",
@@ -25,6 +26,8 @@
   "send_verification_code": "Send verification code",
   "new_password": "New password",
   "we_send_you_an_email_please_check_your_email_address": "We have sent a message to you check your email",
+  "continue as guest": "continue as guest",
+
   "asrar": "Asrar",
   "home": "Home",
   "profile": "Profile",
@@ -37,5 +40,27 @@
   "google_translate": "Language",
   "subscribe": "Subscribe",
   "terms_of_use": "Terms of use",
-  "SignOut": "SignOut"
+  "SignOut": "SignOut",
+
+  "Success": "Success",
+  "Bad request error": "Bad request error",
+      "Forbidden error": "Forbidden error",
+  "Unauthorized error": "Unauthorized error",
+  "Not found error": "Not found error",
+  "Internal server error": "Internal server error",
+  "Timeout error": "Timeout error",
+     "Default error": "Default error",
+       "Cache error": "Cache error",
+ "No internet error": "No internet error",
+
+ "Email already exists": "Email already exists",
+  "Wrong password": "Wrong password",
+ "Invalid email": "Invalid email",
+ "User not found": "User not found",
+ "User disabled": "User disabled",
+ "Weak password": "Weak password",
+ "Operation not allowed": "Operation not allowed",
+ "Undefined": "Undefined",
+ "Expired action code": "Expired action code",
+ "Invalid action code": "Invalid action code"
 }

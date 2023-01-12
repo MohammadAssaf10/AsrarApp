@@ -4,6 +4,7 @@ class AppStrings {
   // auth
   static const String signIn = "sign_in";
   static const String signUp = "sign_up";
+  static const String registerNewAccount = "register_new_account";
   static const String signOut = "sign_out";
   static const String signUpNow = "sign_up_now";
   static const String forgetYourPassword = "forget_your_password";
@@ -13,9 +14,9 @@ class AppStrings {
   static const String pleaseEnterEmail = "please_enter_email";
   static const String pleaseEnterPassword = "please_enter_password";
   static const String shortPassword = "short_password";
-  static const String name = "name";
+  static const String userName = "user_name";
   static const String mobileNumber = "mobile_number";
-  static const String pleaseEnterName = "please_enter_name";
+  static const String nameTooShort = "name_too_short";
   static const String alreadyHaveAccount = "already_have_account";
   static const String nameShouldAtLeast3Character =
       "name_should_atLeast_3_character";
@@ -33,6 +34,7 @@ class AppStrings {
   static const String newPassword = "new_password";
   static const String resetEmailSendMessage =
       "we_send_you_an_email_please_check_your_email_address";
+  static const String continueAsGuest = 'continue as guest';
 
   // home
   static const String asrar = "asrar";
