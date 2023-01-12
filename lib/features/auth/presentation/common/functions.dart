@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart';
 
 import '../../../../config/assets_manager.dart';
 import '../../../../config/strings_manager.dart';
+import '../../../../config/app_localizations.dart';
 import '../../../../core/app/functions.dart';
 import '../bloc/authentication_bloc.dart';
 
@@ -15,8 +17,9 @@ manageDialog(BuildContext context, AuthenticationState state) {
   if (state is AuthenticationInProgress) {
     showCustomDialog(context);
   } else if (state is AuthenticationFailed) {
+    BlocProvider.of<AuthenticationBloc>(context).add(Relode());
     showCustomDialog(context,
-        jsonPath: JsonAssets.error, message: state.message);
+        jsonPath: JsonAssets.error, message: state.message.tr(context));
   } else if (state is AuthenticationSuccess) {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       dismissDialog(context);

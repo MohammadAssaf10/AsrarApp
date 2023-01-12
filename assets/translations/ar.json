@@ -37,5 +37,27 @@
   "whats_app": "تواصل واتساب",
   "google_translate": "اللغة",
   "subscribe": "الاشتراك",
-  "terms_of_use": "شروط الاستخدام"
+  "terms_of_use": "شروط الاستخدام",
+
+  "Success": "نحاج",
+  "Bad request error": "طلب خاطئ",
+      "Forbidden error": "مخظور",
+  "Unauthorized error": "غير مصرح",
+  "Not found error": "لم يتم العثور",
+  "Internal server error": "خطا داخلي",
+  "Timeout error": "انتهت المدة",
+     "Default error": "الخطا الافتراضي",
+       "Cache error": "خطا في التخزين الداخلي",
+ "No internet error": "لا يوجد اتصال بالانترنت",
+ 
+ "Email already exists": "البريد مسجل مسبقا",
+  "Wrong password": "كلمة المرور خاطئة",
+ "Invalid email": "البريد غير صحيح",
+ "User not found": "لم يتم العثور على المستخدم",
+ "User disabled": "المستخدم مفصول",
+ "Weak password": "كلمة السر ضعيفة",
+ "Operation not allowed": "العملية غير مصرح بها",
+ "Undefined": "خطا غير معلوم",
+ "Expired action code": "انتهت صلاحية الكود",
+ "Invalid action code": "كود غير صالح"
 }

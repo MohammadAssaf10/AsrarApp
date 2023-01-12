@@ -10,6 +10,7 @@ import '../../../../core/app/functions.dart';
 import '../../../../core/app/extensions.dart';
 import '../../data/models/requests.dart';
 import '../bloc/authentication_bloc.dart';
+import '../common/functions.dart';
 import '../common/widgets.dart';
 
 class Auth extends StatefulWidget {
@@ -53,15 +54,24 @@ class _AuthState extends State<Auth> {
   }
 }
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
   LoginForm({super.key});
 
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   final TextEditingController _emailTextEditingController =
       TextEditingController();
+
   final TextEditingController _passwordTextEditingController =
       TextEditingController();
+
+  bool validateEmail = false;
+  bool validatePassword = false;
 
   @override
   Widget build(BuildContext context) {
@@ -82,26 +92,39 @@ class LoginForm extends StatelessWidget {
                   controller: _emailTextEditingController,
                   icon: Icons.email_outlined,
                   label: AppStrings.email.tr(context),
+                  onTap: () {
+                    setState(() {
+                      validateEmail = true;
+                    });
+                  },
                   validator: (v) {
-                    if (v.nullOrEmpty())
-                      return AppStrings.pleaseEnterEmail.tr(context);
+                    if (validateEmail) {
+                      if (v.nullOrEmpty())
+                        return AppStrings.pleaseEnterEmail.tr(context);
 
-                    if (!isEmailFormatCorrect(v!))
-                      return AppStrings.emailFormatNotCorrect.tr(context);
+                      if (!isEmailFormatCorrect(v!))
+                        return AppStrings.emailFormatNotCorrect.tr(context);
+                    }
 
                     return null;
                   },
                 ),
                 SizedBox(height: AppSize.s15.h),
                 TextFrom(
+                  onTap: () {
+                    setState(() {
+                      validatePassword = true;
+                    });
+                  },
                   controller: _passwordTextEditingController,
                   icon: Icons.lock_outline,
                   label: AppStrings.password.tr(context),
                   validator: (v) {
-                    if (v.nullOrEmpty() || v!.length < 6)
-                      return AppStrings.passwordShouldAtLeast6Character
-                          .tr(context);
-
+                    if (validatePassword) {
+                      if (v.nullOrEmpty() || v!.length < 6)
+                        return AppStrings.passwordShouldAtLeast6Character
+                            .tr(context);
+                    }
                     return null;
                   },
                 ),
@@ -122,8 +145,13 @@ class LoginForm extends StatelessWidget {
           ),
           BlocBuilder<AuthenticationBloc, AuthenticationState>(
             builder: (context, state) {
+              manageDialog(context, state);
               return FullElevatedButton(
                 onPressed: () {
+                  setState(() {
+                    validateEmail = true;
+                    validatePassword = true;
+                  });
                   if (_key.currentState!.validate()) {
                     BlocProvider.of<AuthenticationBloc>(context).add(
                         LoginButtonPressed(LoginRequest(
@@ -141,10 +169,21 @@ class LoginForm extends StatelessWidget {
   }
 }
 
-class NewAccountForm extends StatelessWidget {
+class NewAccountForm extends StatefulWidget {
   NewAccountForm({super.key});
 
+  @override
+  State<NewAccountForm> createState() => _NewAccountFormState();
+}
+
+class _NewAccountFormState extends State<NewAccountForm> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
+
+  bool validateEmail = false;
+
+  bool validatePassword = false;
+
+  bool validateUserName = false;
 
   @override
   Widget build(BuildContext context) {
@@ -164,13 +203,19 @@ class NewAccountForm extends StatelessWidget {
                 TextFrom(
                   icon: Icons.email_outlined,
                   label: AppStrings.email.tr(context),
+                  onTap: () {
+                    setState(() {
+                      validateEmail = true;
+                    });
+                  },
                   validator: (v) {
-                    if (v.nullOrEmpty())
-                      return AppStrings.pleaseEnterEmail.tr(context);
+                    if (validateEmail) {
+                      if (v.nullOrEmpty())
+                        return AppStrings.pleaseEnterEmail.tr(context);
 
-                    if (!isEmailFormatCorrect(v!))
-                      return AppStrings.emailFormatNotCorrect.tr(context);
-
+                      if (!isEmailFormatCorrect(v!))
+                        return AppStrings.emailFormatNotCorrect.tr(context);
+                    }
                     return null;
                   },
                 ),
@@ -178,10 +223,16 @@ class NewAccountForm extends StatelessWidget {
                 TextFrom(
                   icon: Icons.person_outline,
                   label: AppStrings.userName.tr(context),
+                  onTap: () {
+                    setState(() {
+                      validateUserName = true;
+                    });
+                  },
                   validator: (val) {
-                    if (val.nullOrEmpty() || val!.length < 3)
-                      return AppStrings.nameTooShort.tr(context);
-
+                    if (validateUserName) {
+                      if (val.nullOrEmpty() || val!.length < 3)
+                        return AppStrings.nameTooShort.tr(context);
+                    }
                     return null;
                   },
                 ),
@@ -189,11 +240,17 @@ class NewAccountForm extends StatelessWidget {
                 TextFrom(
                   icon: Icons.lock_outline,
                   label: AppStrings.password.tr(context),
+                  onTap: () {
+                    setState(() {
+                      validatePassword = true;
+                    });
+                  },
                   validator: (v) {
-                    if (v.nullOrEmpty() || v!.length < 6)
-                      return AppStrings.passwordShouldAtLeast6Character
-                          .tr(context);
-
+                    if (validatePassword) {
+                      if (v.nullOrEmpty() || v!.length < 6)
+                        return AppStrings.passwordShouldAtLeast6Character
+                            .tr(context);
+                    }
                     return null;
                   },
                 ),
@@ -212,6 +269,11 @@ class NewAccountForm extends StatelessWidget {
           ),
           FullElevatedButton(
             onPressed: () {
+              setState(() {
+                validateEmail = true;
+                validatePassword = true;
+                validateUserName = true;
+              });
               _key.currentState!.validate();
             },
             text: AppStrings.registerNewAccount.tr(context),

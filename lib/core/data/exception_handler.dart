@@ -18,7 +18,7 @@ class ExceptionHandler implements Exception {
       found = true;
     }
 
-    if (exception is FirebaseException) {
+    if (!found &&  exception is FirebaseException) {
       failure = FirebaseExceptionHandler.handle(exception).getFailure();
       found = true;
     }

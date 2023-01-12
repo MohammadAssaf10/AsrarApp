@@ -4,6 +4,11 @@ abstract class AuthenticationEvent extends Equatable {
   const AuthenticationEvent();
 }
 
+class Relode extends AuthenticationEvent{
+  @override
+  
+  List<Object?> get props => [];
+}
 class LoginButtonPressed extends AuthenticationEvent {
   final LoginRequest loginRequest;
 

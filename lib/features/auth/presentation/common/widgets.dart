@@ -16,18 +16,23 @@ class TextFrom extends StatelessWidget {
     this.onChange,
     this.keyboardType,
     this.controller,
+    this.onFieldSubmitted, this.onTap,
   }) : super(key: key);
 
   final String? Function(String?)? validator;
   final IconData icon;
   final String label;
   final Function(String)? onChange;
+  final Function(String)? onFieldSubmitted;
+  final Function()? onTap;
   final TextInputType? keyboardType;
   final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTap: onTap,
+      onFieldSubmitted: onFieldSubmitted,
       controller: controller,
       validator: validator,
       keyboardType: keyboardType,
