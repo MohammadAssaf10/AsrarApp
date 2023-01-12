@@ -46,6 +46,14 @@ class _AuthState extends State<Auth> {
                 SizedBox(width: double.infinity),
                 if (_login) LoginForm(),
                 if (!_login) NewAccountForm(),
+                Center(
+                  child: TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        AppStrings.continueAsGuest.tr(context),
+                        style: TextStyle(color: ColorManager.grey),
+                      )),
+                )
               ],
             ),
           ),
