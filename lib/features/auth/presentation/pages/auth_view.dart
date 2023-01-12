@@ -1,3 +1,4 @@
+import 'package:asrar_app/config/routes_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -48,7 +49,10 @@ class _AuthState extends State<Auth> {
                 if (!_login) NewAccountForm(),
                 Center(
                   child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        // TODO: vavigate to main view
+                        Navigator.pushReplacementNamed(context, Routes.splash);
+                      },
                       child: Text(
                         AppStrings.continueAsGuest.tr(context),
                         style: TextStyle(color: ColorManager.grey),
