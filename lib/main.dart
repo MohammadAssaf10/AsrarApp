@@ -15,7 +15,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await initAppModule();
   // lock rotate
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

@@ -29,13 +29,14 @@ Future<void> initAppModule() async {
   // network info
   instance.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(InternetConnectionChecker()));
+
+  instance.registerLazySingleton<FirebaseHelper>(() => FirebaseHelper());
 }
 
 void initAuthenticationModule() {
   if (!GetIt.I.isRegistered<Repository>()) {
     instance.registerLazySingleton<Repository>(
         () => RepositoryImp(instance(), instance()));
-    instance.registerLazySingleton<FirebaseHelper>(() => FirebaseHelper());
   }
 }
 
@@ -46,7 +47,6 @@ void initHomeModule() {
     instance.registerLazySingleton<FileRepository>(() => FileRepositoryImpl(
         storage: instance<FirebaseStorage>(),
         networkInfo: instance<NetworkInfo>()));
-    instance.registerLazySingleton<FirebaseHelper>(() => FirebaseHelper());
     instance.registerLazySingleton<GetFileUseCase>(
         () => GetFileUseCase(instance<FileRepository>()));
   }
