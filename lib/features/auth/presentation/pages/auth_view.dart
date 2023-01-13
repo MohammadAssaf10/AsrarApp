@@ -1,10 +1,10 @@
-import 'package:asrar_app/config/routes_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../config/app_localizations.dart';
 import '../../../../config/color_manager.dart';
+import '../../../../config/routes_manager.dart';
 import '../../../../config/strings_manager.dart';
 import '../../../../config/values_manager.dart';
 import '../../../../core/app/functions.dart';
@@ -26,39 +26,45 @@ class _AuthState extends State<Auth> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: SingleChildScrollView(
-        physics: NeverScrollableScrollPhysics(),
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 30.h, horizontal: 8.w),
-          child: SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                AuthSwitcher(
-                  onChange: (v) {
-                    setState(() {
-                      _login = v;
-                    });
-                  },
-                ),
-                SizedBox(width: double.infinity),
-                if (_login) LoginForm(),
-                if (!_login) NewAccountForm(),
-                Center(
-                  child: TextButton(
-                      onPressed: () {
-                        // TODO: vavigate to main view
-                        Navigator.pushReplacementNamed(context, Routes.splash);
-                      },
-                      child: Text(
-                        AppStrings.continueAsGuest.tr(context),
-                        style: TextStyle(color: ColorManager.grey),
-                      )),
-                )
-              ],
+    return BlocListener<AuthenticationBloc, AuthenticationState>(
+      listener: (context, state) {
+        manageDialog(context, state);
+      },
+      child: Scaffold(
+        appBar: AppBar(),
+        body: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 30.h, horizontal: 8.w),
+            child: SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  AuthSwitcher(
+                    onChange: (v) {
+                      setState(() {
+                        _login = v;
+                      });
+                    },
+                  ),
+                  SizedBox(width: double.infinity),
+                  if (_login) LoginForm(),
+                  if (!_login) NewAccountForm(),
+                  Center(
+                    child: TextButton(
+                        onPressed: () {
+                          // TODO: vavigate to main view
+                          Navigator.pushReplacementNamed(
+                              context, Routes.splash);
+                        },
+                        child: Text(
+                          AppStrings.continueAsGuest.tr(context),
+                          style: TextStyle(color: ColorManager.grey),
+                        )),
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -156,10 +162,7 @@ class _LoginFormState extends State<LoginForm> {
           SizedBox(
             height: AppSize.s100.h,
           ),
-          BlocBuilder<AuthenticationBloc, AuthenticationState>(
-            builder: (context, state) {
-              manageDialog(context, state);
-              return FullElevatedButton(
+          FullElevatedButton(
                 onPressed: () {
                   setState(() {
                     validateEmail = true;
@@ -173,9 +176,7 @@ class _LoginFormState extends State<LoginForm> {
                   }
                 },
                 text: AppStrings.signIn.tr(context),
-              );
-            },
-          )
+              )
         ],
       ),
     );
@@ -292,10 +293,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
           SizedBox(
             height: AppSize.s100.h,
           ),
-          BlocBuilder<AuthenticationBloc, AuthenticationState>(
-            builder: (context, state) {
-              manageDialog(context, state);
-              return FullElevatedButton(
+          FullElevatedButton(
                 onPressed: () {
                   setState(() {
                     validateEmail = true;
@@ -311,9 +309,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
                   }
                 },
                 text: AppStrings.registerNewAccount.tr(context),
-              );
-            },
-          )
+              )
         ],
       ),
     );

@@ -4,11 +4,7 @@ abstract class AuthenticationEvent extends Equatable {
   const AuthenticationEvent();
 }
 
-class Reload extends AuthenticationEvent{
-  @override
-  
-  List<Object?> get props => [];
-}
+
 class LoginButtonPressed extends AuthenticationEvent {
   final LoginRequest loginRequest;
 
