@@ -19,20 +19,18 @@ manageDialog(BuildContext context, AuthenticationState state) {
     showCustomDialog(context);
   } 
   else if (state is AuthenticationFailed) {
-    BlocProvider.of<AuthenticationBloc>(context).add(Relode());
     showCustomDialog(context,
         jsonPath: JsonAssets.error, message: state.message.tr(context));
   } 
   else if (state is AuthenticationSuccess) {
     SchedulerBinding.instance.addPostFrameCallback((_) {
-    BlocProvider.of<AuthenticationBloc>(context).add(Relode());
       dismissDialog(context);
       // TODO: navigate to main view
       Navigator.pushReplacementNamed(context, Routes.splash);
     });
   } 
   else if (state is ResetPasswordRequestSuccess) {
-    BlocProvider.of<AuthenticationBloc>(context).add(Relode());
+    // BlocProvider.of<AuthenticationBloc>(context).add(Reload());
     showCustomDialog(context, message: AppStrings.resetEmailSendMessage);
   }
 }
