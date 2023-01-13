@@ -30,7 +30,6 @@ manageDialog(BuildContext context, AuthenticationState state) {
     });
   } 
   else if (state is ResetPasswordRequestSuccess) {
-    // BlocProvider.of<AuthenticationBloc>(context).add(Reload());
     showCustomDialog(context, message: AppStrings.resetEmailSendMessage);
   }
 }
