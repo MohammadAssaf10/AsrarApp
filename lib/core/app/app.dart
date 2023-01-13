@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
             AppLocalizations.delegate,
           ],
           supportedLocales: const [arabicLocale, englishLocale],
-          locale: arabicLocale,
+          locale: englishLocale,
           localeResolutionCallback: (deviceLocale, supportedLocales) {
             for (var locale in supportedLocales) {
               if (deviceLocale != null &&

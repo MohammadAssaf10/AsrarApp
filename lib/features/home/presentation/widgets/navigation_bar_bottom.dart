@@ -20,7 +20,7 @@ class NavigationBarBottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      minWidth: AppSize.s80.w,
+      minWidth: AppSize.s75.w,
       onPressed: () {
         onPress();
       },
