@@ -14,7 +14,7 @@ class AuthenticationBloc
   final Repository _repository = instance<Repository>();
   final AuthPreferences _authPreferences = instance<AuthPreferences>();
   AuthenticationBloc() : super(AuthenticationInitial()) {
-    on<Relode>(
+    on<Reload>(
       (event, emit) {
         emit(AuthenticationInitial());
       },
