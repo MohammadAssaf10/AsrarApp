@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>493016441872-p6oord5l09b3h498uh50k4327v7e9hae.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.493016441872-p6oord5l09b3h498uh50k4327v7e9hae</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDzWhUxbEe-Hzfvt5e261-zyUF16e5UnEM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>493016441872</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.asrarApp</string>
+	<key>PROJECT_ID</key>
+	<string>asrar-82d33</string>
+	<key>STORAGE_BUCKET</key>
+	<string>asrar-82d33.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:493016441872:ios:89ae9d48bc59366a0cd695</string>
+</dict>
+</plist>

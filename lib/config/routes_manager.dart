@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../core/app/di.dart';
 import '../features/auth/presentation/pages/auth_view.dart';
 import '../features/home/presentation/pages/main_view.dart';
 import '../splash.dart';
@@ -23,6 +24,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => SplashScreen());
 
       case Routes.homeRoute:
+        initHomeModule();
         return MaterialPageRoute(builder: (_) => MainView());
 
       case Routes.auth:
@@ -35,16 +37,17 @@ class RouteGenerator {
 
   static Route unDefinedRoute() {
     return MaterialPageRoute(
-      builder: (_) => Scaffold(
-        appBar: AppBar(
-          title: Text(
-            AppStrings.noRouteFound,
+      builder: (_) =>
+          Scaffold(
+            appBar: AppBar(
+              title: Text(
+                AppStrings.noRouteFound,
+              ),
+            ),
+            body: Center(
+              child: Text(AppStrings.noRouteFound),
+            ),
           ),
-        ),
-        body: Center(
-          child: Text(AppStrings.noRouteFound),
-        ),
-      ),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../config/color_manager.dart';
 import '../../../../config/styles_manager.dart';
@@ -26,14 +27,14 @@ class NavigationBarBottom extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
+          SvgPicture.asset(
             icon,
           ),
           Text(
             title,
             style: getAlmaraiRegularStyle(
               fontSize: AppSize.s12.sp,
-              color: ColorManager.grey,
+              color: ColorManager.darkGrey,
             ),
           ),
         ],

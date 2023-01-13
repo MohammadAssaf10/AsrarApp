@@ -4,6 +4,7 @@ import 'package:asrar_app/config/styles_manager.dart';
 import 'package:asrar_app/config/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../config/color_manager.dart';
 import '../../../../config/strings_manager.dart';
@@ -126,22 +127,40 @@ class MenuItem extends StatelessWidget {
         onTap: () {
           onTap();
         },
-        child: Row(
+        child: Column(
           children: [
-            Expanded(
-              child: Image.asset(
-                icon,
-                filterQuality: FilterQuality.high,
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: AppSize.s12.h,
+                horizontal: AppSize.s5.w,
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: SvgPicture.asset(
+                      icon,
+                      height: AppSize.s24.h,
+                      width: AppSize.s24.w,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: Text(
+                      title,
+                      style: getAlmaraiRegularStyle(
+                        fontSize: AppSize.s20.sp,
+                        color: ColorManager.primary,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            Expanded(
-              flex: 3,
-              child: Text(
-                title,
-                style: getAlmaraiRegularStyle(
-                  fontSize: AppSize.s18.sp,
-                  color: ColorManager.primary,
-                ),
+            SizedBox(
+              height: AppSize.s0_5.h,
+              width: double.infinity,
+              child: Material(
+                color: ColorManager.grey,
               ),
             ),
           ],
