@@ -12,6 +12,7 @@ import '../../features/home/data/repositories/file_repository_impl.dart';
 import '../../features/home/domain/use_cases/get_file.dart';
 import '../network/network_info.dart';
 
+
 final GetIt instance = GetIt.instance;
 
 Future<void> initAppModule() async {
