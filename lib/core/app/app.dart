@@ -1,18 +1,24 @@
 import 'package:asrar_app/config/routes_manager.dart';
 import 'package:asrar_app/core/app/language.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../config/app_localizations.dart';
 import '../../config/theme_manager.dart';
+import '../../features/home/domain/use_cases/get_company.dart';
+import '../../features/home/domain/use_cases/get_file.dart';
+import '../../features/home/presentation/blocs/ad_image_bloc/ad_image_bloc.dart';
+import '../../features/home/presentation/blocs/company_bloc/company_bloc.dart';
+import 'di.dart';
 
 class MyApp extends StatelessWidget {
   // named constructor
   const MyApp._internal();
 
   static const MyApp _instance =
-      MyApp._internal(); // singleton or single instance
+  MyApp._internal(); // singleton or single instance
 
   factory MyApp() => _instance; // factory
   @override
@@ -22,29 +28,43 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: "أسرار",
-          localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            AppLocalizations.delegate,
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) =>
+              CompanyBloc(getCompanyUseCase: instance<GetCompanyUseCase>())
+                ..add(GetCompanyEvent()),
+            ),
+            BlocProvider(
+              create: (context) =>
+              AdImageBloc(getFileUseCase: instance<GetFileUseCase>())
+                ..add(GetAdImage()),
+            ),
           ],
-          supportedLocales: const [arabicLocale, englishLocale],
-          locale: englishLocale,
-          localeResolutionCallback: (deviceLocale, supportedLocales) {
-            for (var locale in supportedLocales) {
-              if (deviceLocale != null &&
-                  deviceLocale.languageCode == locale.languageCode) {
-                return deviceLocale;
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: "أسرار",
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              AppLocalizations.delegate,
+            ],
+            supportedLocales: const [arabicLocale, englishLocale],
+            locale: arabicLocale,
+            localeResolutionCallback: (deviceLocale, supportedLocales) {
+              for (var locale in supportedLocales) {
+                if (deviceLocale != null &&
+                    deviceLocale.languageCode == locale.languageCode) {
+                  return deviceLocale;
+                }
               }
-            }
-            return supportedLocales.first;
-          },
-          theme: getApplicationTheme(),
-          initialRoute: Routes.homeRoute,
-          onGenerateRoute: RouteGenerator.getRoute,
+              return supportedLocales.first;
+            },
+            theme: getApplicationTheme(),
+            initialRoute: Routes.homeRoute,
+            onGenerateRoute: RouteGenerator.getRoute,
+          ),
         );
       },
     );

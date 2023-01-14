@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../domain/entities/file_entities.dart';
-import '../../domain/use_cases/get_file.dart';
+import '../../../domain/entities/file_entities.dart';
+import '../../../domain/use_cases/get_file.dart';
 
 part 'ad_image_event.dart';
 
