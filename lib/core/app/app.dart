@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   const MyApp._internal();
 
   static const MyApp _instance =
-  MyApp._internal(); // singleton or single instance
+      MyApp._internal(); // singleton or single instance
 
   factory MyApp() => _instance; // factory
   @override
@@ -28,17 +28,18 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-              create: (context) =>
+          create: (context) =>
               CompanyBloc(getCompanyUseCase: instance<GetCompanyUseCase>())
                 ..add(GetCompanyEvent()),
-            ),
-            BlocProvider(
-              create: (context) =>
+        ),
+        BlocProvider(
+          create: (context) =>
               AdImageBloc(getFileUseCase: instance<GetFileUseCase>())
                 ..add(GetAdImage()),
-            ),
-        BlocProvider<LanguageCubit>(create: (context)=> LanguageCubit()),
-        BlocProvider<AuthenticationBloc>(create: ((context) => AuthenticationBloc()))
+        ),
+        BlocProvider<LanguageCubit>(create: (context) => LanguageCubit()),
+        BlocProvider<AuthenticationBloc>(
+            create: ((context) => AuthenticationBloc()))
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),
@@ -48,28 +49,28 @@ class MyApp extends StatelessWidget {
           return BlocBuilder<LanguageCubit, LanguageState>(
             builder: (context, state) {
               return MaterialApp(
-                      debugShowCheckedModeBanner: false,
-                      title: "اسرار",
-                      localizationsDelegates: const [
-                        GlobalMaterialLocalizations.delegate,
-                        GlobalWidgetsLocalizations.delegate,
-                        GlobalCupertinoLocalizations.delegate,
-                        AppLocalizations.delegate,
-                      ],
-                      supportedLocales: const [arabicLocale, englishLocale],
-                      locale: state.locale,
-                      localeResolutionCallback: (deviceLocale, supportedLocales) {
-                        for (var locale in supportedLocales) {
-                          if (deviceLocale != null &&
-                              deviceLocale.languageCode == locale.languageCode) {
-                            return deviceLocale;
-                          }
-                        }
-                        return supportedLocales.first;
-                      },
-                      theme: getApplicationTheme(),
-                      onGenerateRoute: RouteGenerator.getRoute,
-                    );
+                debugShowCheckedModeBanner: false,
+                title: "اسرار",
+                localizationsDelegates: const [
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                  AppLocalizations.delegate,
+                ],
+                supportedLocales: const [arabicLocale, englishLocale],
+                locale: state.locale,
+                localeResolutionCallback: (deviceLocale, supportedLocales) {
+                  for (var locale in supportedLocales) {
+                    if (deviceLocale != null &&
+                        deviceLocale.languageCode == locale.languageCode) {
+                      return deviceLocale;
+                    }
+                  }
+                  return supportedLocales.first;
+                },
+                theme: getApplicationTheme(),
+                onGenerateRoute: RouteGenerator.getRoute,
+              );
             },
           );
         },
