@@ -9,19 +9,34 @@ import '../../config/theme_manager.dart';
 import '../../features/auth/presentation/bloc/authentication_bloc.dart';
 import '../../language_cubit/language_cubit.dart';
 import 'language.dart';
+import '../../features/home/domain/use_cases/get_company.dart';
+import '../../features/home/domain/use_cases/get_file.dart';
+import '../../features/home/presentation/blocs/ad_image_bloc/ad_image_bloc.dart';
+import '../../features/home/presentation/blocs/company_bloc/company_bloc.dart';
+import 'di.dart';
 
 class MyApp extends StatelessWidget {
   // named constructor
   const MyApp._internal();
 
   static const MyApp _instance =
-      MyApp._internal(); // singleton or single instance
+  MyApp._internal(); // singleton or single instance
 
   factory MyApp() => _instance; // factory
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+              create: (context) =>
+              CompanyBloc(getCompanyUseCase: instance<GetCompanyUseCase>())
+                ..add(GetCompanyEvent()),
+            ),
+            BlocProvider(
+              create: (context) =>
+              AdImageBloc(getFileUseCase: instance<GetFileUseCase>())
+                ..add(GetAdImage()),
+            ),
         BlocProvider<LanguageCubit>(create: (context)=> LanguageCubit()),
         BlocProvider<AuthenticationBloc>(create: ((context) => AuthenticationBloc()))
       ],

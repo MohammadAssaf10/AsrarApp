@@ -1,4 +1,3 @@
-import 'package:asrar_app/features/home/domain/repositories/file_repository.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -9,6 +8,8 @@ import '../../features/auth/data/data_sources/firebase.dart';
 import '../../features/auth/data/repository/repository_impl.dart';
 import '../../features/auth/domain/repository/repository.dart';
 import '../../features/home/data/repositories/file_repository_impl.dart';
+import '../../features/home/domain/repositories/file_repository.dart';
+import '../../features/home/domain/use_cases/get_company.dart';
 import '../../features/home/domain/use_cases/get_file.dart';
 import '../network/network_info.dart';
 
@@ -42,12 +43,12 @@ void initAuthenticationModule() {
 
 void initHomeModule() {
   if (!GetIt.I.isRegistered<FileRepository>()) {
-    instance
-        .registerLazySingleton<FirebaseStorage>(() => FirebaseStorage.instance);
     instance.registerLazySingleton<FileRepository>(() => FileRepositoryImpl(
-        storage: instance<FirebaseStorage>(),
+        storage: FirebaseStorage.instance,
         networkInfo: instance<NetworkInfo>()));
     instance.registerLazySingleton<GetFileUseCase>(
         () => GetFileUseCase(instance<FileRepository>()));
+    instance
+        .registerLazySingleton<GetCompanyUseCase>(() => GetCompanyUseCase());
   }
 }

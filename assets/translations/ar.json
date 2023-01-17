@@ -62,4 +62,7 @@
  "Undefined": "خطا غير معلوم",
  "Expired action code": "انتهت صلاحية الكود",
  "Invalid action code": "كود غير صالح"
+  "terms_of_use": "شروط الاستخدام",
+  "no_internet_error": "تحقق من اتصالك بالإنترنت وحاول مرة أخرى",
+  "no_services": "لا توجد خدمات"
 }

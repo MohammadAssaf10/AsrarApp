@@ -50,6 +50,7 @@ class AppStrings {
   static const String googleTranslate = "google_translate";
   static const String subscribe = "subscribe";
   static const String termsOfUse = "terms_of_use";
+  static const String noServices = "no_services";
 
   // exception handler
   static const String success = "Success";
@@ -61,7 +62,7 @@ class AppStrings {
   static const String timeoutError = "Timeout error";
   static const String defaultError = "Default error";
   static const String cacheError = "Cache error";
-  static const String noInternetError = "No internet error";
+  static const String noInternetError = "no_internet_error";
 
   // firebase auth exception
   static const String emailAlreadyExists = "Email already exists";
