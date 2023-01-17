@@ -8,6 +8,7 @@ import '../../../../config/color_manager.dart';
 import '../../../../config/strings_manager.dart';
 import '../../../../config/styles_manager.dart';
 import '../../../../config/values_manager.dart';
+import '../../domain/use_cases/get_services.dart';
 import '../blocs/company_bloc/company_bloc.dart';
 
 class CompanyWidget extends StatelessWidget {
@@ -15,6 +16,7 @@ class CompanyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GetServicesUseCase getServicesUseCase = GetServicesUseCase();
     return BlocBuilder<CompanyBloc, CompanyState>(
       builder: (context, state) {
         if (state is CompanyLoadingState) {
@@ -39,7 +41,7 @@ class CompanyWidget extends StatelessWidget {
         } else if (state is CompanyLoadedState) {
           if (state.company.isNotEmpty) {
             return Container(
-              height: AppSize.s250.h,
+              height: AppSize.s230.h,
               child: GridView.builder(
                   scrollDirection: Axis.vertical,
                   itemCount: state.company.length,
@@ -48,38 +50,45 @@ class CompanyWidget extends StatelessWidget {
                     maxCrossAxisExtent: AppSize.s120.r,
                   ),
                   itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      margin: EdgeInsets.symmetric(
-                        horizontal: AppSize.s10.w,
-                        vertical: AppSize.s5.h,
-                      ),
-                      height: AppSize.s90.h,
-                      width: AppSize.s100.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(AppSize.s10.r),
-                        border: Border.all(
-                          color: ColorManager.lightBlue,
-                          width: AppSize.s1_5.w,
+                    return InkWell(
+                      onTap: () {
+                        getServicesUseCase(state.company[index].name);
+                      },
+                      child: Container(
+                        margin: EdgeInsets.symmetric(
+                          horizontal: AppSize.s10.w,
+                          vertical: AppSize.s5.h,
                         ),
-                      ),
-                      child: CachedNetworkImage(
-                        imageUrl: state.company[index].image,
-                        imageBuilder: (context, imageProvider) => Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(AppSize.s10.r),
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.fill,
+                        height: AppSize.s90.h,
+                        width: AppSize.s100.w,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(AppSize.s10.r),
+                          border: Border.all(
+                            color: ColorManager.lightBlue,
+                            width: AppSize.s1_5.w,
+                          ),
+                        ),
+                        child: CachedNetworkImage(
+                          imageUrl: state.company[index].image,
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.circular(AppSize.s10.r),
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
-                        ),
-                        placeholder: (context, url) => const Center(
-                          child: CircularProgressIndicator(
-                            color: ColorManager.primary,
+                          placeholder: (context, url) => const Center(
+                            child: CircularProgressIndicator(
+                              color: ColorManager.primary,
+                            ),
                           ),
+                          errorWidget: (context, url, error) => const Icon(
+                              Icons.error,
+                              color: ColorManager.error),
                         ),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error, color: ColorManager.error),
                       ),
                     );
                   }),

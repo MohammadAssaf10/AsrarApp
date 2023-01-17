@@ -1,8 +1,8 @@
-import 'package:asrar_app/core/data/firebase_exception_handler.dart';
 import 'package:asrar_app/features/home/domain/entities/company_entities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 
+import '../../../../core/data/exception_handler.dart';
 import '../../../../core/data/failure.dart';
 
 class GetCompanyUseCase {
@@ -18,7 +18,7 @@ class GetCompanyUseCase {
       }
       return Right(company);
     } catch (e) {
-      return Left(FirebaseExceptionHandler.handle(e).getFailure());
+      return Left(ExceptionHandler.handle(e).failure);
     }
   }
 }
