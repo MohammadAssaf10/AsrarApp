@@ -20,6 +20,8 @@ class IconAssets {
   static const String subscribe = "$iconPath/subscribe.svg";
   static const String termsOfUse = "$iconPath/terms_of_use.svg";
   static const String signOut = "$iconPath/sign_out.svg";
+  static const String search = "$iconPath/search.svg";
+  static const String dot = "$iconPath/dot.svg";
 }
 
 class JsonAssets {

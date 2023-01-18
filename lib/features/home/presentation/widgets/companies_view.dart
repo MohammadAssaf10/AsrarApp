@@ -8,15 +8,15 @@ import '../../../../config/color_manager.dart';
 import '../../../../config/strings_manager.dart';
 import '../../../../config/styles_manager.dart';
 import '../../../../config/values_manager.dart';
-import '../../domain/use_cases/get_services.dart';
 import '../blocs/company_bloc/company_bloc.dart';
+import '../blocs/services_bloc/bloc/services_bloc.dart';
+import '../pages/services_screen.dart';
 
-class CompanyWidget extends StatelessWidget {
-  const CompanyWidget({Key? key}) : super(key: key);
+class CompaniesView extends StatelessWidget {
+  const CompaniesView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final GetServicesUseCase getServicesUseCase = GetServicesUseCase();
     return BlocBuilder<CompanyBloc, CompanyState>(
       builder: (context, state) {
         if (state is CompanyLoadingState) {
@@ -52,7 +52,16 @@ class CompanyWidget extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     return InkWell(
                       onTap: () {
-                        getServicesUseCase(state.company[index].name);
+                        BlocProvider.of<ServicesBloc>(context).add(GetServices(
+                            companyName: state.company[index].name));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ServicesScreen(
+                              comapnyName: state.company[index].name,
+                            ),
+                          ),
+                        );
                       },
                       child: Container(
                         margin: EdgeInsets.symmetric(
@@ -86,8 +95,9 @@ class CompanyWidget extends StatelessWidget {
                             ),
                           ),
                           errorWidget: (context, url, error) => const Icon(
-                              Icons.error,
-                              color: ColorManager.error),
+                            Icons.error,
+                            color: ColorManager.error,
+                          ),
                         ),
                       ),
                     );

@@ -63,5 +63,8 @@
  "Expired action code": "انتهت صلاحية الكود",
  "Invalid action code": "كود غير صالح",
   "no_internet_error": "تحقق من اتصالك بالإنترنت وحاول مرة أخرى",
-  "no_services": "لا توجد خدمات"
+  "no_services": "لا توجد خدمات",
+  "services": "الخدمات",
+  "search_for_your_services": "ابحث عن خدماتك",
+  "required_documents": "المستندات المطلوبة:"
 }

@@ -3,7 +3,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 import '../../../../core/data/exception_handler.dart';
 import '../../../../core/data/failure.dart';
-import '../../../../core/data/firebase_exception_handler.dart';
 import '../../../../core/network/network_info.dart';
 import '../../domain/entities/file_entities.dart';
 import '../../domain/repositories/file_repository.dart';
@@ -24,7 +23,7 @@ class FileRepositoryImpl implements FileRepository {
         final Reference ref = storage.ref(folderName);
         final ListResult result = await ref.listAll();
         final List<String> urls = await downloadUrlFile(result.items);
-        return Right(urls
+        final List<FileEntities> files = urls
             .asMap()
             .map((key, value) {
               final ref = result.items[key];
@@ -34,9 +33,10 @@ class FileRepositoryImpl implements FileRepository {
               return MapEntry(key, file);
             })
             .values
-            .toList());
+            .toList();
+        return Right(files);
       } catch (e) {
-        return Left(FirebaseExceptionHandler.handle(e).getFailure());
+        return Left(ExceptionHandler.handle(e).failure);
       }
     } else
       return Left(DataSourceExceptions.noInternetConnections.getFailure());
