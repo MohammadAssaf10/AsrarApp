@@ -18,7 +18,7 @@ class ExceptionHandler implements Exception {
       found = true;
     }
 
-    if (!found &&  exception is FirebaseException) {
+    if (!found && exception is FirebaseException) {
       failure = FirebaseExceptionHandler.handle(exception).getFailure();
       found = true;
     }
@@ -52,8 +52,9 @@ class ResponseCode {
   static const int badRequestError = 400; // failure, API rejected request
   static const int unauthorized = 401; // failure, user is not authorized
   static const int forbidden = 403; //  failure, API rejected request
-  static const int internalServerError = 500; // failure, crash in server side
   static const int notFound = 404; // failure, not found
+  static const int internalServerError = 500; // failure, crash in server side
+  static const int bandwidthLimitExceeded = 509;
 
   // local status code
   static const int connectTimeout = -1;

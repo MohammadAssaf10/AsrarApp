@@ -9,7 +9,7 @@ import '../../../../config/color_manager.dart';
 import '../../../../config/strings_manager.dart';
 import '../../../../config/values_manager.dart';
 import '../widgets/ad_image_view.dart';
-import '../widgets/company_widget.dart';
+import '../widgets/companies_view.dart';
 import '../widgets/drawer.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -123,14 +123,14 @@ class HomeScreen extends StatelessWidget {
                 horizontal: AppSize.s12.w,
               ),
               child: Text(
-                "الخدمات",
+                AppStrings.services.tr(context),
                 style: getAlmaraiBoldStyle(
                   fontSize: AppSize.s18.sp,
                   color: ColorManager.darkPrimary,
                 ),
               ),
             ),
-            CompanyWidget(),
+            CompaniesView(),
           ],
         ),
       ),

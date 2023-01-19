@@ -22,7 +22,7 @@ ThemeData getApplicationTheme() {
       centerTitle: true,
       elevation: AppSize.s0,
       titleTextStyle: getAlmaraiRegularStyle(
-          fontSize: AppSize.s16.sp, color: ColorManager.white),
+          fontSize: AppSize.s18.sp, color: ColorManager.white),
     ),
     // input decoration theme (text form field)
     errorColor: ColorManager.error,
@@ -36,11 +36,9 @@ ThemeData getApplicationTheme() {
           color: ColorManager.error, fontSize: AppSize.s16.sp),
 
       // enabled border style
-      enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: ColorManager.grey)),
+      enabledBorder: InputBorder.none,
       // focused border style
-      focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: ColorManager.primary)),
+      focusedBorder: InputBorder.none,
       // error border style
       errorBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: ColorManager.error)),

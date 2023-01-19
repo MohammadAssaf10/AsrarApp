@@ -21,7 +21,9 @@ class AdImageView extends StatelessWidget {
           return Padding(
             padding: EdgeInsets.symmetric(vertical: AppSize.s85.h),
             child: Center(
-              child: CircularProgressIndicator(color: ColorManager.primary),
+              child: CircularProgressIndicator(
+                color: ColorManager.primary,
+              ),
             ),
           );
         else if (state is AdImageErrorState)
@@ -68,8 +70,10 @@ class AdImageView extends StatelessWidget {
                         color: ColorManager.primary,
                       ),
                     ),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error, color: ColorManager.error),
+                    errorWidget: (context, url, error) => const Icon(
+                      Icons.error,
+                      color: ColorManager.error,
+                    ),
                   ),
                 );
               },
