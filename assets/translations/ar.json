@@ -61,5 +61,7 @@
  "Operation not allowed": "العملية غير مصرح بها",
  "Undefined": "خطا غير معلوم",
  "Expired action code": "انتهت صلاحية الكود",
- "Invalid action code": "كود غير صالح"
+ "Invalid action code": "كود غير صالح",
+  "no_internet_error": "تحقق من اتصالك بالإنترنت وحاول مرة أخرى",
+  "no_services": "لا توجد خدمات"
 }

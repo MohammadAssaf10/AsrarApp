@@ -1,7 +1,6 @@
 import 'package:asrar_app/config/app_localizations.dart';
 import 'package:asrar_app/config/styles_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -9,10 +8,8 @@ import '../../../../config/assets_manager.dart';
 import '../../../../config/color_manager.dart';
 import '../../../../config/strings_manager.dart';
 import '../../../../config/values_manager.dart';
-import '../../../../core/app/di.dart';
-import '../../domain/use_cases/get_file.dart';
-import '../blocs/ad_image_bloc.dart';
 import '../widgets/ad_image_view.dart';
+import '../widgets/company_widget.dart';
 import '../widgets/drawer.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -20,32 +17,30 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          AdImageBloc(getFileUseCase: instance<GetFileUseCase>())
-            ..add(GetAdImage()),
-      child: Scaffold(
-        drawer: DrawerWidget(),
-        appBar: AppBar(
-          title: Text(
-            AppStrings.asrarForElectronicServices.tr(context),
-          ),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset(IconAssets.notification),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset(IconAssets.share),
-            ),
-          ],
+    return Scaffold(
+      drawer: DrawerWidget(),
+      appBar: AppBar(
+        title: Text(
+          AppStrings.asrarForElectronicServices.tr(context),
         ),
-        body: Column(
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: SvgPicture.asset(IconAssets.notification),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: SvgPicture.asset(IconAssets.share),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AdImageView(),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: AppSize.s12.w),
+              margin: EdgeInsets.symmetric(horizontal: AppSize.s10.w),
               width: double.infinity,
               height: AppSize.s40.h,
               decoration: BoxDecoration(
@@ -101,7 +96,41 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
+            SizedBox(height: AppSize.s10.h),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: AppSize.s10.w),
+              width: double.infinity,
+              height: AppSize.s40.h,
+              decoration: BoxDecoration(
+                color: ColorManager.primary,
+                borderRadius: BorderRadius.circular(AppSize.s18.r),
+              ),
+              child: Center(
+                child: Text(
+                  "متجرنا",
+                  style: getAlmaraiBoldStyle(
+                    fontSize: 18.sp,
+                    color: ColorManager.white,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: AppSize.s10.h),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: AppSize.s8.h,
+                horizontal: AppSize.s12.w,
+              ),
+              child: Text(
+                "الخدمات",
+                style: getAlmaraiBoldStyle(
+                  fontSize: AppSize.s18.sp,
+                  color: ColorManager.darkPrimary,
+                ),
+              ),
+            ),
+            CompanyWidget(),
           ],
         ),
       ),

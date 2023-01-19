@@ -1,3 +1,4 @@
+import 'package:asrar_app/config/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +8,7 @@ import '../../../../config/assets_manager.dart';
 import '../../../../config/color_manager.dart';
 import '../../../../config/styles_manager.dart';
 import '../../../../config/values_manager.dart';
-import '../blocs/ad_image_bloc.dart';
+import '../blocs/ad_image_bloc/ad_image_bloc.dart';
 
 class AdImageView extends StatelessWidget {
   const AdImageView({Key? key}) : super(key: key);
@@ -24,11 +25,15 @@ class AdImageView extends StatelessWidget {
             ),
           );
         else if (state is AdImageErrorState)
-          return Text(
-            state.errorMessage,
-            style: getAlmaraiRegularStyle(
-              fontSize: AppSize.s20.sp,
-              color: ColorManager.error,
+          return Container(
+            margin: EdgeInsets.symmetric(vertical: AppSize.s90.h),
+            alignment: Alignment.center,
+            child: Text(
+              state.errorMessage.tr(context),
+              style: getAlmaraiRegularStyle(
+                fontSize: AppSize.s20.sp,
+                color: ColorManager.error,
+              ),
             ),
           );
         else if (state is AdImageLoadedState) if (state.list.isNotEmpty)
@@ -43,17 +48,18 @@ class AdImageView extends StatelessWidget {
                 return Container(
                   margin: EdgeInsets.symmetric(
                     vertical: AppSize.s12.h,
-                    horizontal: AppSize.s12.w,
+                    horizontal: AppSize.s10.w,
                   ),
                   height: AppSize.s220.h,
-                  width: AppSize.s330.w,
+                  width: AppSize.s340.w,
                   child: CachedNetworkImage(
                     imageUrl: state.list[index].url,
                     imageBuilder: (context, imageProvider) => Container(
                       decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(AppSize.s18.r),
                         image: DecorationImage(
                           image: imageProvider,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         ),
                       ),
                     ),
