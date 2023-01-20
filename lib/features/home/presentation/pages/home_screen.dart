@@ -40,7 +40,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             AdImageView(),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: AppSize.s10.w),
+              margin: EdgeInsets.symmetric(horizontal: AppSize.s15.w),
               width: double.infinity,
               height: AppSize.s40.h,
               decoration: BoxDecoration(
@@ -52,44 +52,44 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   MaterialButton(
                     onPressed: () {},
-                    minWidth: AppSize.s80.w,
+                    minWidth: AppSize.s60.w,
                     child: Text(
                       "وظائف",
                       style: getAlmaraiRegularStyle(
-                        fontSize: 16.sp,
+                        fontSize: 15.sp,
                         color: ColorManager.white,
                       ),
                     ),
                   ),
                   MaterialButton(
                     onPressed: () {},
-                    minWidth: AppSize.s80.w,
+                    minWidth: AppSize.s60.w,
                     child: Text(
                       "أخبار",
                       style: getAlmaraiRegularStyle(
-                        fontSize: 16.sp,
+                        fontSize: 15.sp,
                         color: ColorManager.white,
                       ),
                     ),
                   ),
                   MaterialButton(
                     onPressed: () {},
-                    minWidth: AppSize.s80.w,
+                    minWidth: AppSize.s60.w,
                     child: Text(
                       "جديدنا",
                       style: getAlmaraiRegularStyle(
-                        fontSize: 16.sp,
+                        fontSize: 15.sp,
                         color: ColorManager.white,
                       ),
                     ),
                   ),
                   MaterialButton(
                     onPressed: () {},
-                    minWidth: AppSize.s80.w,
+                    minWidth: AppSize.s60.w,
                     child: Text(
                       "الدورات",
                       style: getAlmaraiRegularStyle(
-                        fontSize: 16.sp,
+                        fontSize: 15.sp,
                         color: ColorManager.white,
                       ),
                     ),
@@ -99,7 +99,7 @@ class HomeScreen extends StatelessWidget {
             ),
             SizedBox(height: AppSize.s10.h),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: AppSize.s10.w),
+              margin: EdgeInsets.symmetric(horizontal: AppSize.s15.w),
               width: double.infinity,
               height: AppSize.s40.h,
               decoration: BoxDecoration(
@@ -120,7 +120,7 @@ class HomeScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(
                 vertical: AppSize.s8.h,
-                horizontal: AppSize.s12.w,
+                horizontal: AppSize.s15.w,
               ),
               child: Text(
                 AppStrings.services.tr(context),

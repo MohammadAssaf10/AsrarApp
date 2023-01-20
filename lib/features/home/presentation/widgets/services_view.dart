@@ -1,5 +1,4 @@
 import 'package:asrar_app/config/app_localizations.dart';
-import 'package:asrar_app/features/home/presentation/widgets/service_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +8,7 @@ import '../../../../config/strings_manager.dart';
 import '../../../../config/styles_manager.dart';
 import '../../../../config/values_manager.dart';
 import '../blocs/services_bloc/bloc/services_bloc.dart';
+import 'service_widget.dart';
 
 class ServicesView extends StatelessWidget {
   const ServicesView({super.key});
@@ -44,9 +44,7 @@ class ServicesView extends StatelessWidget {
                 itemCount: state.services.length,
                 itemBuilder: (BuildContext context, int index) {
                   return ServiceWidget(
-                    serviceName: state.services[index].serviceName,
-                    servicePrice: state.services[index].servicePrice,
-                    requiredDocument: state.services[index].requiredDocuments,
+                    service: state.services[index],
                   );
                 },
               ),

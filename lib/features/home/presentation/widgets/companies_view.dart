@@ -5,12 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../config/color_manager.dart';
+import '../../../../config/routes_manager.dart';
 import '../../../../config/strings_manager.dart';
 import '../../../../config/styles_manager.dart';
 import '../../../../config/values_manager.dart';
 import '../blocs/company_bloc/company_bloc.dart';
 import '../blocs/services_bloc/bloc/services_bloc.dart';
-import '../pages/services_screen.dart';
 
 class CompaniesView extends StatelessWidget {
   const CompaniesView({Key? key}) : super(key: key);
@@ -48,19 +48,17 @@ class CompaniesView extends StatelessWidget {
                   shrinkWrap: true,
                   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: AppSize.s120.r,
+                    mainAxisExtent: AppSize.s80.r,
                   ),
                   itemBuilder: (BuildContext context, int index) {
                     return InkWell(
                       onTap: () {
                         BlocProvider.of<ServicesBloc>(context).add(GetServices(
                             companyName: state.company[index].name));
-                        Navigator.push(
+                        Navigator.pushNamed(
                           context,
-                          MaterialPageRoute(
-                            builder: (_) => ServicesScreen(
-                              comapnyName: state.company[index].name,
-                            ),
-                          ),
+                          Routes.serviceRoute,
+                          arguments: state.company[index],
                         );
                       },
                       child: Container(
@@ -68,14 +66,15 @@ class CompaniesView extends StatelessWidget {
                           horizontal: AppSize.s10.w,
                           vertical: AppSize.s5.h,
                         ),
-                        height: AppSize.s90.h,
-                        width: AppSize.s100.w,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(AppSize.s10.r),
-                          border: Border.all(
-                            color: ColorManager.lightBlue,
-                            width: AppSize.s1_5.w,
-                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: ColorManager.grey,
+                              blurRadius: 2.0,
+                              offset: Offset(0, 6),
+                            ),
+                          ],
                         ),
                         child: CachedNetworkImage(
                           imageUrl: state.company[index].image,

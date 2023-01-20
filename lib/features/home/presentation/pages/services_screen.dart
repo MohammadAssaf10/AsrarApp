@@ -9,15 +9,16 @@ import '../../../../config/color_manager.dart';
 import '../../../../config/strings_manager.dart';
 import '../../../../config/styles_manager.dart';
 import '../../../../config/values_manager.dart';
+import '../../domain/entities/company_entities.dart';
 import '../widgets/services_view.dart';
 
 class ServicesScreen extends StatelessWidget {
-  const ServicesScreen({super.key, required this.comapnyName});
-  final String comapnyName;
+  final CompanyEntities comapny;
+  ServicesScreen(this.comapny);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(comapnyName)),
+      appBar: AppBar(title: Text(comapny.name)),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -25,10 +26,7 @@ class ServicesScreen extends StatelessWidget {
             Container(
               alignment: Alignment.center,
               height: AppSize.s40.h,
-              padding: EdgeInsets.symmetric(
-                horizontal: AppSize.s10.w,
-                vertical: AppSize.s5.h,
-              ),
+              transformAlignment: Alignment.center,
               margin: EdgeInsets.symmetric(horizontal: AppSize.s10.w),
               decoration: BoxDecoration(
                 color: ColorManager.white,
@@ -46,8 +44,9 @@ class ServicesScreen extends StatelessWidget {
                       decoration: InputDecoration(
                         hintText: AppStrings.searchForYourServices.tr(context),
                         hintStyle: getAlmaraiBoldStyle(
-                            fontSize: AppSize.s18.sp,
-                            color: ColorManager.darkPrimary),
+                          fontSize: AppSize.s16.sp,
+                          color: ColorManager.darkPrimary,
+                        ),
                       ),
                     ),
                   ),

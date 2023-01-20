@@ -8,20 +8,18 @@ import '../../../../config/color_manager.dart';
 import '../../../../config/strings_manager.dart';
 import '../../../../config/styles_manager.dart';
 import '../../../../config/values_manager.dart';
+import '../../domain/entities/service_entities.dart';
 
 class RequiredDocumentsScreen extends StatelessWidget {
-  const RequiredDocumentsScreen({
-    super.key,
-    required this.serviceName,
-    required this.requirdDocumentList,
-  });
-  final String serviceName;
-  final List requirdDocumentList;
+  const RequiredDocumentsScreen(
+    this.service,
+  );
+  final ServiceEntities service;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(serviceName),
+        title: Text(service.serviceName),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -47,7 +45,7 @@ class RequiredDocumentsScreen extends StatelessWidget {
               height: AppSize.s540.h,
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: requirdDocumentList.length,
+                itemCount: service.requiredDocuments.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: AppSize.s5.h),
@@ -56,7 +54,7 @@ class RequiredDocumentsScreen extends StatelessWidget {
                         SvgPicture.asset(IconAssets.dot),
                         SizedBox(width: AppSize.s3.w),
                         Text(
-                          requirdDocumentList[index],
+                          service.requiredDocuments[index],
                           style: getAlmaraiRegularStyle(
                             fontSize: AppSize.s20.sp,
                             color: ColorManager.darkPrimary,
