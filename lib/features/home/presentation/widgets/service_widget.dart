@@ -1,33 +1,26 @@
-import 'package:asrar_app/config/styles_manager.dart';
-import 'package:asrar_app/features/home/presentation/pages/required_documents_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../config/color_manager.dart';
+import '../../../../config/routes_manager.dart';
+import '../../../../config/styles_manager.dart';
 import '../../../../config/values_manager.dart';
+import '../../domain/entities/service_entities.dart';
 
 class ServiceWidget extends StatelessWidget {
   const ServiceWidget({
     super.key,
-    required this.serviceName,
-    required this.servicePrice,
-    required this.requiredDocument,
+    required this.service,
   });
-  final String serviceName;
-  final String servicePrice;
-  final List requiredDocument;
+  final ServiceEntities service;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(
+        Navigator.pushNamed(
           context,
-          MaterialPageRoute(
-            builder: (_) => RequiredDocumentsScreen(
-              serviceName: serviceName,
-              requirdDocumentList: requiredDocument,
-            ),
-          ),
+          Routes.requiredDocumentsRoute,
+          arguments: service,
         );
       },
       child: Container(
@@ -46,14 +39,14 @@ class ServiceWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              serviceName,
+              service.serviceName,
               style: getAlmaraiBoldStyle(
                 fontSize: AppSize.s18.sp,
                 color: ColorManager.darkPrimary,
               ),
             ),
             Text(
-              "$servicePrice ر.س",
+              "${service.servicePrice} ر.س",
               style: getAlmaraiRegularStyle(
                 fontSize: AppSize.s18.sp,
                 color: ColorManager.darkPrimary,
