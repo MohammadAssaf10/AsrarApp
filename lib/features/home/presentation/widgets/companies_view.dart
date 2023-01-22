@@ -41,8 +41,9 @@ class CompaniesView extends StatelessWidget {
         } else if (state is CompanyLoadedState) {
           if (state.company.isNotEmpty) {
             return Container(
-              height: AppSize.s230.h,
+              height: AppSize.s220.h,
               child: GridView.builder(
+                  physics: AlwaysScrollableScrollPhysics(),
                   scrollDirection: Axis.vertical,
                   itemCount: state.company.length,
                   shrinkWrap: true,
@@ -53,8 +54,11 @@ class CompaniesView extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     return InkWell(
                       onTap: () {
-                        BlocProvider.of<ServicesBloc>(context).add(GetServices(
-                            companyName: state.company[index].name));
+                        BlocProvider.of<ServicesBloc>(context).add(
+                          GetServices(
+                            companyName: state.company[index].name,
+                          ),
+                        );
                         Navigator.pushNamed(
                           context,
                           Routes.serviceRoute,

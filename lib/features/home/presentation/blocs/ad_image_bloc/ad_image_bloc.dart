@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../../../core/app/constants.dart';
 import '../../../domain/entities/file_entities.dart';
 import '../../../domain/use_cases/get_file.dart';
 
@@ -15,7 +16,7 @@ class AdImageBloc extends Bloc<AdImageEvent, AdImageState> {
     on<AdImageEvent>((event, emit) async {
       if (event is GetAdImage) {
         emit(AdImageLoadingState());
-        final fileUrl = await getFileUseCase("adImages");
+        final fileUrl = await getFileUseCase(FireBaseCollection.adImages);
         fileUrl.fold(
             (failure) => emit(AdImageErrorState(errorMessage: failure.message)),
             (imageUrlList) => emit(AdImageLoadedState(list: imageUrlList)));
