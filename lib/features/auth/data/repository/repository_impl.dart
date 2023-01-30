@@ -9,11 +9,11 @@ import '../../domain/repository/repository.dart';
 import '../data_sources/firebase.dart';
 import '../models/requests.dart';
 
-class RepositoryImp implements AuthRepository {
+class FirebaseAuthRepository implements AuthRepository {
   final FirebaseAuthHelper _authHelper;
   final NetworkInfo _networkInfo;
 
-  RepositoryImp(this._authHelper, this._networkInfo);
+  FirebaseAuthRepository(this._authHelper, this._networkInfo);
 
   @override
   Future<Either<Failure, User>> login(LoginRequest loginRequest) async {

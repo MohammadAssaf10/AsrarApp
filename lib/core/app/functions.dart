@@ -1,11 +1,59 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../config/color_manager.dart';
+import '../../config/strings_manager.dart';
 import '../../config/styles_manager.dart';
 import '../../config/values_manager.dart';
+import '../../config/app_localizations.dart';
+import '../../core/app/extensions.dart';
+
+String? nameValidator(String? name, BuildContext context) {
+  if (name.nullOrEmpty()) {
+    return "";//AppStrings.pleaseEnterName.tr(context);
+  }
+
+  if (name!.length < 3) {
+    return "";//AppStrings.nameTooShort.tr(context);
+  }
+
+  return null;
+}
+
+String? mobileNumberValidator(String? phone, BuildContext context) {
+  if (phone.nullOrEmpty()) {
+    return "";//AppStrings.pleaseEnterName.tr(context);
+  }
+
+  if (!isMobileNumberCorrect(phone!)) {
+    return AppStrings.mobileNumberFormatNotCorrect.tr(context);
+  }
+
+  return null;
+}
+
+String? emailValidator(String? email, BuildContext context) {
+  if (email.nullOrEmpty()) {
+    return AppStrings.pleaseEnterEmail.tr(context);
+  }
+
+  if (!isEmailFormatCorrect(email!)) {
+    return AppStrings.emailFormatNotCorrect.tr(context);
+  }
+
+  return null;
+}
+
+String? cantBeEmpty(String? v, BuildContext context) {
+  if (v.nullOrEmpty()) {
+    return '';
+  }
+
+  return null;
+}
 
 bool isEmailFormatCorrect(String email) {
   return RegExp(
