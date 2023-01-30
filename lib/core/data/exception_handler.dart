@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../config/strings_manager.dart';
 import 'firebase_auth_exception_handler.dart';
@@ -9,8 +10,9 @@ class ExceptionHandler implements Exception {
   late final Failure failure;
 
   ExceptionHandler.handle(exception) {
-    print("exception cached: ${exception.runtimeType} ${exception.toString()}");
-
+ if (kDebugMode) {
+      print("\x1B[31m exception cached: ${exception.runtimeType} ${exception.toString()} \x1B[0m");
+    }
     bool found = false;
 
     if (exception is FirebaseAuthException) {

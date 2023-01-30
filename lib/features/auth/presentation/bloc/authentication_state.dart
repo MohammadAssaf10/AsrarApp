@@ -10,8 +10,13 @@ class AuthenticationInitial extends AuthenticationState {
 }
 
 class AuthenticationSuccess extends AuthenticationState {
+  final User user;
+
+  AuthenticationSuccess({
+    required this.user,
+  });
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [user];
 }
 
 class AuthenticationInProgress extends AuthenticationState {

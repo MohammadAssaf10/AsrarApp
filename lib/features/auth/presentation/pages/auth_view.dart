@@ -53,15 +53,15 @@ class _AuthState extends State<Auth> {
                   if (!_login) NewAccountForm(),
                   Center(
                     child: TextButton(
-                        onPressed: () {
-                          // TODO: vavigate to main view
-                          Navigator.pushReplacementNamed(
-                              context, Routes.splash);
-                        },
-                        child: Text(
-                          AppStrings.continueAsGuest.tr(context),
-                          style: TextStyle(color: ColorManager.grey),
-                        )),
+                      child: Text(
+                        AppStrings.continueAsGuest.tr(context),
+                        style: TextStyle(color: ColorManager.grey),
+                      ),
+                      onPressed: () {
+                        // TODO: vavigate to main view
+                        Navigator.pushReplacementNamed(context, Routes.splash);
+                      },
+                    ),
                   )
                 ],
               ),
@@ -163,20 +163,20 @@ class _LoginFormState extends State<LoginForm> {
             height: AppSize.s100.h,
           ),
           FullElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    validateEmail = true;
-                    validatePassword = true;
-                  });
-                  if (_key.currentState!.validate()) {
-                    BlocProvider.of<AuthenticationBloc>(context).add(
-                        LoginButtonPressed(LoginRequest(
-                            _emailTextEditingController.text,
-                            _passwordTextEditingController.text)));
-                  }
-                },
-                text: AppStrings.signIn.tr(context),
-              )
+            onPressed: () {
+              setState(() {
+                validateEmail = true;
+                validatePassword = true;
+              });
+              if (_key.currentState!.validate()) {
+                BlocProvider.of<AuthenticationBloc>(context).add(
+                    LoginButtonPressed(LoginRequest(
+                        _emailTextEditingController.text,
+                        _passwordTextEditingController.text)));
+              }
+            },
+            text: AppStrings.signIn.tr(context),
+          )
         ],
       ),
     );
@@ -202,11 +202,16 @@ class _NewAccountFormState extends State<NewAccountForm> {
   final TextEditingController _nameTextEditingController =
       TextEditingController();
 
+  final TextEditingController _phoneNumberTextEditingController =
+      TextEditingController();
+
   bool validateEmail = false;
 
   bool validatePassword = false;
 
   bool validateUserName = false;
+
+  bool validatePhoneNumber = false;
 
   @override
   Widget build(BuildContext context) {
@@ -261,6 +266,24 @@ class _NewAccountFormState extends State<NewAccountForm> {
                     return null;
                   },
                 ),
+                TextFrom(
+                  controller: _phoneNumberTextEditingController,
+                  icon: Icons.phone,
+                  label: AppStrings.mobileNumber.tr(context),
+                  onTap: () {
+                    setState(() {
+                      validatePhoneNumber = true;
+                    });
+                  },
+                  validator: (val) {
+                    if (validatePhoneNumber) {
+                      if (val.nullOrEmpty() || val!.length < 5)
+                        return AppStrings.mobileNumberShouldAtLeast5Character
+                            .tr(context);
+                    }
+                    return null;
+                  },
+                ),
                 SizedBox(height: AppSize.s15.h),
                 TextFrom(
                   controller: _passwordTextEditingController,
@@ -294,22 +317,25 @@ class _NewAccountFormState extends State<NewAccountForm> {
             height: AppSize.s100.h,
           ),
           FullElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    validateEmail = true;
-                    validatePassword = true;
-                    validateUserName = true;
-                  });
-                  if (_key.currentState!.validate()) {
-                    BlocProvider.of<AuthenticationBloc>(context).add(
-                        RegisterButtonPressed(RegisterRequest(
-                            _nameTextEditingController.text,
-                            _emailTextEditingController.text,
-                            _passwordTextEditingController.text)));
-                  }
-                },
-                text: AppStrings.registerNewAccount.tr(context),
-              )
+            onPressed: () {
+              setState(() {
+                validateEmail = true;
+                validatePassword = true;
+                validateUserName = true;
+              });
+              if (_key.currentState!.validate()) {
+                BlocProvider.of<AuthenticationBloc>(context)
+                    .add(RegisterButtonPressed(
+                  RegisterRequest(
+                      name: _nameTextEditingController.text,
+                      email: _emailTextEditingController.text,
+                      password: _passwordTextEditingController.text,
+                      phoneNumber: _phoneNumberTextEditingController.text),
+                ));
+              }
+            },
+            text: AppStrings.registerNewAccount.tr(context),
+          )
         ],
       ),
     );

@@ -1,14 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../domain/entities/entities.dart' as entities;
+import '../../domain/entities/user.dart' as domain;
 import '../models/requests.dart';
-import '../models/responses.dart';
 
 const String userCollectionPath = 'Users';
 const String userNameDocPath = 'name';
 
-class FirebaseHelper {
+class FirebaseAuthHelper {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -17,15 +16,20 @@ class FirebaseHelper {
         email: loginRequest.email, password: loginRequest.password);
   }
 
-  Future<UserResponse> getUserData(String email) async {
-    UserResponse userResponse = UserResponse();
+  Future<domain.User> getUser(String email) async {
+    final userMap =
+        (await _firestore.collection(userCollectionPath).doc(email).get())
+            .data();
 
-    final doc =
-        await _firestore.collection(userCollectionPath).doc(email).get();
+    if (userMap == null) {
+      throw FirebaseAuthException(code: "auth/user-not-found");
+    }
 
-    userResponse.name = doc[userNameDocPath];
+    return domain.User.fromMap(userMap);
+  }
 
-    return userResponse;
+  User? getCurrentUser() {
+    return _firebaseAuth.currentUser;
   }
 
   Future<void> register(RegisterRequest registerRequest) async {
@@ -33,10 +37,8 @@ class FirebaseHelper {
         email: registerRequest.email, password: registerRequest.password);
   }
 
-  Future<void> updateUserData(entities.User user) async {
-    await _firestore.collection(userCollectionPath).doc(user.email).set({
-      userNameDocPath: user.name,
-    });
+  Future<void> updateUserData(domain.User user) async {
+    await _firestore.collection(userCollectionPath).doc(user.email).set(user.toMap());
   }
 
   Future<void> resetPassword(String email) async {
