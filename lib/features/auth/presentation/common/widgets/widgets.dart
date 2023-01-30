@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../config/color_manager.dart';
-import '../../../../config/strings_manager.dart';
-import '../../../../config/values_manager.dart';
-import '../../../../config/app_localizations.dart';
-import 'functions.dart';
+import '../../../../../config/color_manager.dart';
+import '../../../../../config/strings_manager.dart';
+import '../../../../../config/values_manager.dart';
+import '../../../../../config/app_localizations.dart';
+import '../functions.dart';
 
 class TextFrom extends StatelessWidget {
   const TextFrom({

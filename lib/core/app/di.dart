@@ -22,8 +22,6 @@ Future<void> initAppModule() async {
 
   instance.registerLazySingleton<SharedPreferences>(() => sharedPref);
 
-
-
   // network info
   instance.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(InternetConnectionChecker()));
@@ -35,7 +33,7 @@ Future<void> initAppModule() async {
 void initAuthenticationModule() {
   if (!GetIt.I.isRegistered<AuthRepository>()) {
     instance.registerLazySingleton<AuthRepository>(
-        () => RepositoryImp(instance(), instance()));
+        () => FirebaseAuthRepository(instance(), instance()));
   }
 }
 

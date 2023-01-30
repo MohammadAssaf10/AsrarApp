@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../core/app/di.dart';
 import '../features/auth/presentation/pages/auth_view.dart';
+import '../features/auth/presentation/pages/password_reset_view.dart';
 import '../features/home/domain/entities/company_entities.dart';
 import '../features/home/domain/entities/service_entities.dart';
 import '../features/home/presentation/pages/main_view.dart';
@@ -24,7 +25,7 @@ class Routes {
 
   // auth rotes
   static const String auth = '/auth';
-  static const String resetPassword = '/resetPassword';
+  static const String passwordReset = '/passwordReset';
 }
 
 class RouteGenerator {
@@ -56,6 +57,9 @@ class RouteGenerator {
         }
       case Routes.auth:
         return MaterialPageRoute(builder: (_) => Auth());
+
+      case Routes.passwordReset:
+        return MaterialPageRoute(builder: ((context) => PasswordResetView()));
       default:
         return unDefinedRoute();
     }
