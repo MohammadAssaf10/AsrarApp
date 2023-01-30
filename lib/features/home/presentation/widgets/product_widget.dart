@@ -176,131 +176,129 @@ class _ProductSelectedWidgetState extends State<ProductSelectedWidget> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            width: AppSize.s100.w,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(AppSize.s20.r),
-              boxShadow: [
-                BoxShadow(
-                  color: ColorManager.grey,
-                  blurRadius: 2.0,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            child: CachedNetworkImage(
-              imageUrl: widget.product.productImageUrl,
-              imageBuilder: (context, imageProvider) => Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppSize.s20.r),
-                  image: DecorationImage(
-                    image: imageProvider,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-              placeholder: (context, url) => const Center(
-                child: CircularProgressIndicator(
-                  color: ColorManager.primary,
-                ),
-              ),
-              errorWidget: (context, url, error) => const Icon(
-                Icons.error,
-                color: ColorManager.error,
-              ),
-            ),
-          ),
-          Container(
-            constraints: BoxConstraints(
-              maxWidth: AppSize.s110.w,
-              minWidth: AppSize.s110.w,
-            ),
-            margin: EdgeInsets.symmetric(
-              vertical: AppSize.s12.h,
-              horizontal: AppSize.s5.w,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              textBaseline: TextBaseline.alphabetic,
-              children: [
-                Text(
-                  widget.product.productName,
-                  style: getAlmaraiBoldStyle(
-                    fontSize: AppSize.s18.sp,
-                    color: ColorManager.primary,
-                  ),
-                  maxLines: 3,
-                  softWrap: true,
-                  overflow: TextOverflow.visible,
-                ),
-                SizedBox(height: AppSize.s5.h),
-                Text(
-                  totalPrice.toStringAsFixed(2),
-                  style: getAlmaraiBoldStyle(
-                    fontSize: AppSize.s16.sp,
-                    color: ColorManager.primary,
-                  ),
-                  maxLines: 1,
-                  softWrap: true,
-                  overflow: TextOverflow.visible,
-                ),
-              ],
-            ),
-          ),
-          Card(
-            color: ColorManager.transparent,
-            elevation: AppSize.s8,
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                // horizontal: AppSize.s5.w,
-                vertical: AppSize.s5.h,
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  CircleAvatar(
-                    radius: AppSize.s20.r,
-                    backgroundColor: ColorManager.primary,
-                    child: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _counter++;
-                          totalPrice +=
-                              double.parse(widget.product.productPrice);
-                        });
-                      },
-                      icon: Icon(
-                        Icons.add,
-                        color: ColorManager.white,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: AppSize.s5.w),
-                    child: Text(
-                      "$_counter",
-                    ),
-                  ),
-                  CircleAvatar(
-                    radius: AppSize.s20.r,
-                    backgroundColor: ColorManager.primary,
-                    child: IconButton(
-                      onPressed: () {
-                        if (_counter > 1) {
-                          setState(() {
-                            _counter--;
-                            totalPrice -=
-                                double.parse(widget.product.productPrice);
-                          });
-                        }
-                      },
-                      icon: Icon(
-                        Icons.remove,
-                        color: ColorManager.white,
-                      ),
-                    ),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(AppSize.s20.r),
+                boxShadow: [
+                  BoxShadow(
+                    color: ColorManager.grey,
+                    blurRadius: 2.0,
+                    offset: Offset(0, 2),
                   ),
                 ],
+              ),
+              child: CachedNetworkImage(
+                imageUrl: widget.product.productImageUrl,
+                imageBuilder: (context, imageProvider) => Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(AppSize.s20.r),
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+                placeholder: (context, url) => const Center(
+                  child: CircularProgressIndicator(
+                    color: ColorManager.primary,
+                  ),
+                ),
+                errorWidget: (context, url, error) => const Icon(
+                  Icons.error,
+                  color: ColorManager.error,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.symmetric(
+                vertical: AppSize.s12.h,
+                horizontal: AppSize.s5.w,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                textBaseline: TextBaseline.alphabetic,
+                children: [
+                  Text(
+                    widget.product.productName,
+                    style: getAlmaraiBoldStyle(
+                      fontSize: AppSize.s18.sp,
+                      color: ColorManager.primary,
+                    ),
+                    maxLines: 3,
+                    softWrap: true,
+                    overflow: TextOverflow.visible,
+                  ),
+                  SizedBox(height: AppSize.s5.h),
+                  Text(
+                    totalPrice.toStringAsFixed(2),
+                    style: getAlmaraiBoldStyle(
+                      fontSize: AppSize.s16.sp,
+                      color: ColorManager.primary,
+                    ),
+                    maxLines: 1,
+                    softWrap: true,
+                    overflow: TextOverflow.visible,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            child: Material(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: AppSize.s5.h,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CircleAvatar(
+                      radius: AppSize.s20.r,
+                      backgroundColor: ColorManager.primary,
+                      child: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _counter++;
+                            totalPrice +=
+                                double.parse(widget.product.productPrice);
+                          });
+                        },
+                        icon: Icon(
+                          Icons.add,
+                          color: ColorManager.white,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: AppSize.s5.w),
+                      child: Text(
+                        "$_counter",
+                      ),
+                    ),
+                    CircleAvatar(
+                      radius: AppSize.s20.r,
+                      backgroundColor: ColorManager.primary,
+                      child: IconButton(
+                        onPressed: () {
+                          if (_counter > 1) {
+                            setState(() {
+                              _counter--;
+                              totalPrice -=
+                                  double.parse(widget.product.productPrice);
+                            });
+                          }
+                        },
+                        icon: Icon(
+                          Icons.remove,
+                          color: ColorManager.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
