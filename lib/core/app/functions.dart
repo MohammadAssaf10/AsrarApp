@@ -1,11 +1,15 @@
+import 'package:asrar_app/config/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../config/color_manager.dart';
+import '../../config/strings_manager.dart';
 import '../../config/styles_manager.dart';
 import '../../config/values_manager.dart';
+import '../../features/home/presentation/widgets/home_button_widgets.dart';
 
 bool isEmailFormatCorrect(String email) {
   return RegExp(
@@ -81,4 +85,90 @@ void showCustomDialog(BuildContext context,
       ),
     );
   });
+}
+
+void showOrderDialog(
+  BuildContext context,
+  String title,
+  String hintTitle,
+  String number,
+  Function acceptOnTap,
+) {
+  dismissDialog(context);
+  TextEditingController controller = TextEditingController();
+  controller = TextEditingController(text: number);
+  showDialog(
+    context: context,
+    builder: (_) {
+      return AlertDialog(
+        title: Text(
+          title,
+          style: getAlmaraiRegularStyle(
+            fontSize: AppSize.s20.sp,
+            color: ColorManager.primary,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: ColorManager.primary,
+                  ),
+                  borderRadius: BorderRadius.circular(
+                    AppSize.s18.r,
+                  ),
+                ),
+                child: TextField(
+                  controller: controller,
+                  textAlign: TextAlign.center,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                      RegExp("[0-9]"),
+                    ),
+                  ],
+                  decoration: InputDecoration(
+                    hintText: hintTitle,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                OptionButton(
+                  onTap: () {
+                    acceptOnTap();
+                  },
+                  title: AppStrings.addOrder.tr(context),
+                  height: AppSize.s35.h,
+                  width: AppSize.s110.w,
+                  fontSize: AppSize.s18.sp,
+                ),
+                SizedBox(
+                  width: AppSize.s5.w,
+                ),
+                OptionButton(
+                  onTap: () {
+                    dismissDialog(context);
+                  },
+                  title: AppStrings.cancel.tr(context),
+                  height: AppSize.s35.h,
+                  width: AppSize.s110.w,
+                  fontSize: AppSize.s20.sp,
+                ),
+              ],
+            ),
+          )
+        ],
+      );
+    },
+  );
 }

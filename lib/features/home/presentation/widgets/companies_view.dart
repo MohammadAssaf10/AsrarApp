@@ -23,7 +23,9 @@ class CompaniesView extends StatelessWidget {
           return Padding(
             padding: EdgeInsets.symmetric(vertical: AppSize.s60.h),
             child: Center(
-              child: CircularProgressIndicator(color: ColorManager.primary),
+              child: CircularProgressIndicator(
+                color: ColorManager.primary,
+              ),
             ),
           );
         } else if (state is CompanyErrorState) {
@@ -40,10 +42,9 @@ class CompaniesView extends StatelessWidget {
           );
         } else if (state is CompanyLoadedState) {
           if (state.company.isNotEmpty) {
-            return Container(
-              height: AppSize.s230.h,
+            return SizedBox(
+              height: AppSize.s200.h,
               child: GridView.builder(
-                  scrollDirection: Axis.vertical,
                   itemCount: state.company.length,
                   shrinkWrap: true,
                   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -53,8 +54,11 @@ class CompaniesView extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     return InkWell(
                       onTap: () {
-                        BlocProvider.of<ServicesBloc>(context).add(GetServices(
-                            companyName: state.company[index].name));
+                        BlocProvider.of<ServicesBloc>(context).add(
+                          GetServices(
+                            companyName: state.company[index].name,
+                          ),
+                        );
                         Navigator.pushNamed(
                           context,
                           Routes.serviceRoute,
@@ -67,7 +71,8 @@ class CompaniesView extends StatelessWidget {
                           vertical: AppSize.s5.h,
                         ),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(AppSize.s10.r),
+                          borderRadius:
+                              BorderRadius.circular(AppSize.s10.r),
                           boxShadow: [
                             BoxShadow(
                               color: ColorManager.grey,
@@ -78,7 +83,8 @@ class CompaniesView extends StatelessWidget {
                         ),
                         child: CachedNetworkImage(
                           imageUrl: state.company[index].image,
-                          imageBuilder: (context, imageProvider) => Container(
+                          imageBuilder: (context, imageProvider) =>
+                              Container(
                             decoration: BoxDecoration(
                               borderRadius:
                                   BorderRadius.circular(AppSize.s10.r),

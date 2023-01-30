@@ -13,20 +13,18 @@ import '../../domain/entities/company_entities.dart';
 import '../widgets/services_view.dart';
 
 class ServicesScreen extends StatelessWidget {
-  final CompanyEntities comapny;
-  ServicesScreen(this.comapny);
+  final CompanyEntities company;
+  ServicesScreen(this.company);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(comapny.name)),
+      appBar: AppBar(title: Text(company.name)),
       body: SingleChildScrollView(
         child: Column(
           children: [
             SizedBox(height: AppSize.s10.h),
             Container(
-              alignment: Alignment.center,
-              height: AppSize.s40.h,
-              transformAlignment: Alignment.center,
+              height: AppSize.s45.h,
               margin: EdgeInsets.symmetric(horizontal: AppSize.s10.w),
               decoration: BoxDecoration(
                 color: ColorManager.white,
@@ -37,15 +35,20 @@ class ServicesScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: TextField(
+                      textAlignVertical: TextAlignVertical.top,
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(
-                            RegExp('[" "a-zآ-يA-Z]')),
+                          RegExp('[" "a-zآ-يA-Z]'),
+                        ),
                       ],
                       decoration: InputDecoration(
                         hintText: AppStrings.searchForYourServices.tr(context),
                         hintStyle: getAlmaraiBoldStyle(
                           fontSize: AppSize.s16.sp,
                           color: ColorManager.darkPrimary,
+                        ),
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: AppSize.s10.w,
                         ),
                       ),
                     ),

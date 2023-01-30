@@ -5,8 +5,10 @@ import '../features/auth/presentation/pages/auth_view.dart';
 import '../features/home/domain/entities/company_entities.dart';
 import '../features/home/domain/entities/service_entities.dart';
 import '../features/home/presentation/pages/main_view.dart';
+import '../features/home/presentation/pages/card_screen.dart';
 import '../features/home/presentation/pages/required_documents_screen.dart';
 import '../features/home/presentation/pages/services_screen.dart';
+import '../features/home/presentation/pages/shop_screen.dart';
 import '../splash.dart';
 import 'strings_manager.dart';
 
@@ -17,6 +19,8 @@ class Routes {
   static const String homeRoute = "/home";
   static const String serviceRoute = "/service";
   static const String requiredDocumentsRoute = "/requiredDocuments";
+  static const String shopRoute = "/shop";
+  static const String productsSelectedListRoute = "/productsSelectedList";
 
   // auth rotes
   static const String auth = '/auth';
@@ -32,6 +36,10 @@ class RouteGenerator {
       case Routes.homeRoute:
         initHomeModule();
         return MaterialPageRoute(builder: (_) => MainView());
+      case Routes.shopRoute:
+        return MaterialPageRoute(builder: (_) => ShopScreen());
+      case Routes.productsSelectedListRoute:
+        return MaterialPageRoute(builder: (_) => CardScreen());
       case Routes.serviceRoute:
         {
           final arg = settings.arguments as CompanyEntities;

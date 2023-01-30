@@ -12,6 +12,7 @@ class ColorManager {
 
   static const Color black = Colors.black;
   static const Color white = Colors.white;
+  static const Color darkWhite = Color.fromARGB(255, 250, 250, 250);
 
   static const Color error = Color(0xFFE61F34); // red color
 }

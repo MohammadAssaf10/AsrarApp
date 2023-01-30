@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 
+import '../../../../core/app/constants.dart';
 import '../../../../core/app/di.dart';
 import '../../../../core/data/exception_handler.dart';
 import '../../../../core/data/failure.dart';
@@ -15,23 +16,10 @@ class GetServicesUseCase {
       try {
         final List<ServiceEntities> services = [];
         final FirebaseFirestore db = FirebaseFirestore.instance;
-        final data = await db.collection("service").get();
+        final data = await db.collection(FireBaseCollection.services).get();
         for (var doc in data.docs) {
-          if (doc["companyName"] == companyName) {
-            final ServiceEntities serviceEntities = ServiceEntities(
-              companyName: doc["companyName"],
-              serviceName: doc["serviceName"],
-              servicePrice: doc["servicePrice"],
-              requiredDocuments: doc["requiredDocuments"],
-            );
-            services.add(serviceEntities);
-            print("Company name:${serviceEntities.companyName}");
-            print("Service name:${serviceEntities.serviceName}");
-            print("Service price:${serviceEntities.servicePrice}");
-            for (String i in serviceEntities.requiredDocuments) {
-              print("----->${i}");
-            }
-          }
+          if (doc["companyName"] == companyName)
+            services.add(ServiceEntities.fromMap(doc.data()));
         }
         return Right(services);
       } catch (e) {
