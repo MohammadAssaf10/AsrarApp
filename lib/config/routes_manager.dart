@@ -5,7 +5,7 @@ import '../features/auth/presentation/pages/auth_view.dart';
 import '../features/home/domain/entities/company_entities.dart';
 import '../features/home/domain/entities/service_entities.dart';
 import '../features/home/presentation/pages/main_view.dart';
-import '../features/home/presentation/pages/products_selected_list_screen.dart';
+import '../features/home/presentation/pages/card_screen.dart';
 import '../features/home/presentation/pages/required_documents_screen.dart';
 import '../features/home/presentation/pages/services_screen.dart';
 import '../features/home/presentation/pages/shop_screen.dart';
@@ -39,7 +39,7 @@ class RouteGenerator {
       case Routes.shopRoute:
         return MaterialPageRoute(builder: (_) => ShopScreen());
       case Routes.productsSelectedListRoute:
-        return MaterialPageRoute(builder: (_) => ProductsSelectedListScreen());
+        return MaterialPageRoute(builder: (_) => CardScreen());
       case Routes.serviceRoute:
         {
           final arg = settings.arguments as CompanyEntities;

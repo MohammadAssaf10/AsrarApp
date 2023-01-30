@@ -248,7 +248,7 @@ class _ProductSelectedWidgetState extends State<ProductSelectedWidget> {
             ),
           ),
           Card(
-            color: ColorManager.darkWhite,
+            color: ColorManager.transparent,
             elevation: AppSize.s8,
             child: Padding(
               padding: EdgeInsets.symmetric(

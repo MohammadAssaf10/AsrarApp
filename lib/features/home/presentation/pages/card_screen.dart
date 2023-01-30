@@ -8,8 +8,8 @@ import '../../../../core/app/functions.dart';
 import '../widgets/home_button_widgets.dart';
 import '../widgets/product_widget.dart';
 
-class ProductsSelectedListScreen extends StatelessWidget {
-  const ProductsSelectedListScreen({super.key});
+class CardScreen extends StatelessWidget {
+  const CardScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
