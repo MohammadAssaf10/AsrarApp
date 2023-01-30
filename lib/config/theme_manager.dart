@@ -22,7 +22,7 @@ ThemeData getApplicationTheme() {
       centerTitle: true,
       elevation: AppSize.s0,
       titleTextStyle: getAlmaraiRegularStyle(
-          fontSize: AppSize.s18.sp, color: ColorManager.white),
+          fontSize: AppSize.s17.sp, color: ColorManager.white),
     ),
     // input decoration theme (text form field)
     errorColor: ColorManager.error,

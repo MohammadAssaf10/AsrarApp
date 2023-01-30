@@ -29,8 +29,10 @@
   "continue as guest": "المتابعة كضيف",
 
   "asrar": "اسرار",
+  "asrar_services": "خدمات أسرار",
   "home": "البيت",
   "profile": "حسابي",
+  "shop": "متجرنا",
   "orders": "طلباتي",
   "my_wallet": "محفظتي",
   "customers_service": "خدمة العملاء",
@@ -40,6 +42,9 @@
   "google_translate": "اللغة",
   "subscribe": "الاشتراك",
   "terms_of_use": "شروط الاستخدام",
+  "cancel": "إلغاء",
+  "add_order": "إضافة الطلب",
+  "whatsApp_number": "رقم الواتساب",
 
   "Success": "نحاج",
   "Bad request error": "طلب خاطئ",

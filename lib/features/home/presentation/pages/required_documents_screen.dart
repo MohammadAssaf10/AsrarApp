@@ -40,10 +40,10 @@ class RequiredDocumentsScreen extends StatelessWidget {
                 textAlign: TextAlign.start,
               ),
             ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: AppSize.s30.w),
-              height: AppSize.s540.h,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppSize.s30.w,),
               child: ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: service.requiredDocuments.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -53,11 +53,15 @@ class RequiredDocumentsScreen extends StatelessWidget {
                       children: [
                         SvgPicture.asset(IconAssets.dot),
                         SizedBox(width: AppSize.s3.w),
-                        Text(
-                          service.requiredDocuments[index],
-                          style: getAlmaraiRegularStyle(
-                            fontSize: AppSize.s20.sp,
-                            color: ColorManager.darkPrimary,
+                        SizedBox(
+                          width: AppSize.s260.w,
+                          child: Text(
+                            service.requiredDocuments[index],
+                            style: getAlmaraiRegularStyle(
+                              fontSize: AppSize.s20.sp,
+                              color: ColorManager.darkPrimary,
+                            ),
+                            maxLines: 3,
                           ),
                         ),
                       ],

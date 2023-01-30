@@ -1,16 +1,20 @@
 import 'package:asrar_app/config/app_localizations.dart';
-import 'package:asrar_app/config/styles_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../config/assets_manager.dart';
 import '../../../../config/color_manager.dart';
+import '../../../../config/routes_manager.dart';
 import '../../../../config/strings_manager.dart';
+import '../../../../config/styles_manager.dart';
 import '../../../../config/values_manager.dart';
+import '../blocs/product_bloc/product_bloc.dart';
 import '../widgets/ad_image_view.dart';
 import '../widgets/companies_view.dart';
 import '../widgets/drawer.dart';
+import '../widgets/home_button_widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -39,76 +43,61 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AdImageView(),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: AppSize.s15.w),
-              width: double.infinity,
-              height: AppSize.s40.h,
-              decoration: BoxDecoration(
-                color: ColorManager.primary,
-                borderRadius: BorderRadius.circular(AppSize.s18.r),
-              ),
+            OptionsWidget(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  MaterialButton(
-                    onPressed: () {},
-                    minWidth: AppSize.s60.w,
-                    child: Text(
-                      "وظائف",
-                      style: getAlmaraiRegularStyle(
-                        fontSize: 15.sp,
-                        color: ColorManager.white,
-                      ),
-                    ),
+                  OptionButton(
+                    onTap: () {
+                      print("وظائف");
+                    },
+                    title: "وظائف",
+                    height: double.infinity,
+                    width: AppSize.s100.w,
+                    fontSize: AppSize.s16.sp,
                   ),
-                  MaterialButton(
-                    onPressed: () {},
-                    minWidth: AppSize.s60.w,
-                    child: Text(
-                      "أخبار",
-                      style: getAlmaraiRegularStyle(
-                        fontSize: 15.sp,
-                        color: ColorManager.white,
-                      ),
-                    ),
+                  Container(
+                    color: ColorManager.grey,
+                    height: double.infinity,
+                    width: AppSize.s2.w,
                   ),
-                  MaterialButton(
-                    onPressed: () {},
-                    minWidth: AppSize.s60.w,
-                    child: Text(
-                      "جديدنا",
-                      style: getAlmaraiRegularStyle(
-                        fontSize: 15.sp,
-                        color: ColorManager.white,
-                      ),
-                    ),
+                  OptionButton(
+                    onTap: () {
+                      print("أخبار");
+                    },
+                    title: "أخبار",
+                    height: double.infinity,
+                    width: AppSize.s100.w,
+                    fontSize: AppSize.s16.sp,
                   ),
-                  MaterialButton(
-                    onPressed: () {},
-                    minWidth: AppSize.s60.w,
-                    child: Text(
-                      "الدورات",
-                      style: getAlmaraiRegularStyle(
-                        fontSize: 15.sp,
-                        color: ColorManager.white,
-                      ),
-                    ),
+                  Container(
+                    color: ColorManager.grey,
+                    height: double.infinity,
+                    width: AppSize.s2.w,
+                  ),
+                  OptionButton(
+                    onTap: () {
+                      print("الدورات");
+                    },
+                    title: "الدورات",
+                    height: double.infinity,
+                    width: AppSize.s100.w,
+                    fontSize: AppSize.s16.sp,
                   ),
                 ],
               ),
             ),
             SizedBox(height: AppSize.s10.h),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: AppSize.s15.w),
-              width: double.infinity,
-              height: AppSize.s40.h,
-              decoration: BoxDecoration(
-                color: ColorManager.primary,
-                borderRadius: BorderRadius.circular(AppSize.s18.r),
-              ),
-              child: Center(
+            OptionsWidget(
+              child: MaterialButton(
+                onPressed: () {
+                  BlocProvider.of<ProductBloc>(context)
+                      .add(GetProductsListEvent());
+                  Navigator.pushNamed(context, Routes.shopRoute);
+                },
                 child: Text(
-                  "متجرنا",
+                  AppStrings.shop.tr(context),
+                  textAlign: TextAlign.center,
                   style: getAlmaraiBoldStyle(
                     fontSize: 18.sp,
                     color: ColorManager.white,

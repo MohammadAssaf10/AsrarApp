@@ -7,6 +7,7 @@ import '../../config/app_localizations.dart';
 import '../../config/routes_manager.dart';
 import '../../config/theme_manager.dart';
 import '../../features/auth/presentation/bloc/authentication_bloc.dart';
+import '../../features/home/presentation/blocs/product_bloc/product_bloc.dart';
 import '../../features/home/presentation/blocs/services_bloc/bloc/services_bloc.dart';
 import '../../language_cubit/language_cubit.dart';
 import 'language.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<LanguageCubit>(create: (context) => LanguageCubit()),
         BlocProvider<ServicesBloc>(create: (context) => ServicesBloc()),
+        BlocProvider<ProductBloc>(create: (context) => ProductBloc()),
         BlocProvider<AuthenticationBloc>(
             create: ((context) => AuthenticationBloc()))
       ],

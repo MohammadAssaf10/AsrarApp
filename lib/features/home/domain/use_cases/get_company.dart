@@ -16,13 +16,9 @@ class GetCompanyUseCase {
         List<CompanyEntities> company = [];
         final FirebaseFirestore db = FirebaseFirestore.instance;
         final data = await db.collection(FireBaseCollection.companies).get();
-        for (var doc in data.docs) {
-          final CompanyEntities companyEntities = CompanyEntities(
-              fullName: doc["fullName"],
-              name: doc["name"],
-              image: doc["image"]);
-          company.add(companyEntities);
-        }
+        for (var doc in data.docs)
+          company.add(CompanyEntities.fromMap(doc.data()));
+        company.sort((a, b) => a.companyRanking.compareTo(b.companyRanking));
         return Right(company);
       } catch (e) {
         return Left(ExceptionHandler.handle(e).failure);

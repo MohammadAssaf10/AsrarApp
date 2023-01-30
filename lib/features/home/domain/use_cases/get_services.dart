@@ -18,15 +18,8 @@ class GetServicesUseCase {
         final FirebaseFirestore db = FirebaseFirestore.instance;
         final data = await db.collection(FireBaseCollection.services).get();
         for (var doc in data.docs) {
-          if (doc["companyName"] == companyName) {
-            final ServiceEntities serviceEntities = ServiceEntities(
-              companyName: doc["companyName"],
-              serviceName: doc["serviceName"],
-              servicePrice: doc["servicePrice"],
-              requiredDocuments: doc["requiredDocuments"],
-            );
-            services.add(serviceEntities);
-          }
+          if (doc["companyName"] == companyName)
+            services.add(ServiceEntities.fromMap(doc.data()));
         }
         return Right(services);
       } catch (e) {

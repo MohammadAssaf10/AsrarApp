@@ -38,7 +38,9 @@ class AppStrings {
 
   // home
   static const String asrar = "asrar";
+  static const String asrarServices = "asrar_services";
   static const String home = "home";
+  static const String shop = "shop";
   static const String profile = "profile";
   static const String orders = "orders";
   static const String myWallet = "my_wallet";
@@ -54,6 +56,8 @@ class AppStrings {
   static const String services = "services";
   static const String searchForYourServices = "search_for_your_services";
   static const String requiredDocuments = "required_documents";
+  static const String addOrder = "add_order";
+  static const String whatsAppNumber = "whatsApp_number";
   // exception handler
   static const String success = "Success";
   static const String badRequestError = "Bad request error";
@@ -87,6 +91,7 @@ class AppStrings {
   static const String retryLimitExceeded = "retry_limit_exceeded";
   static const String invalidChecksum = "invalid_checksum";
   static const String canceled = "canceled";
+  static const String cancel = "cancel";
   static const String invalidEventName = "invalid_event_name";
   static const String invalidUrl = "invalid_url";
   static const String invalidArgument = "invalid_argument";

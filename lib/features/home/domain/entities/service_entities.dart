@@ -32,10 +32,15 @@ class ServiceEntities extends Equatable {
 
   factory ServiceEntities.fromMap(Map<String, dynamic> map) {
     return ServiceEntities(
-      companyName: map['companyName'] as String,
-      serviceName: map['serviceName'] as String,
-      servicePrice: map['servicePrice'] as String,
-      requiredDocuments: map['requiredDocuments'] as List<String>,
+      companyName: map['companyName'],
+      serviceName: map['serviceName'],
+      servicePrice: map['servicePrice'],
+      requiredDocuments: map['requiredDocuments'],
     );
+  }
+
+  @override
+  String toString() {
+    return 'ServiceEntities(companyName: $companyName, serviceName: $serviceName, servicePrice: $servicePrice, requiredDocuments: $requiredDocuments)';
   }
 }
