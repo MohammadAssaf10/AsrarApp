@@ -41,7 +41,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<LanguageCubit>(create: (context) => LanguageCubit()),
         BlocProvider<ServicesBloc>(create: (context) => ServicesBloc()),
         BlocProvider<AuthenticationBloc>(
-            create: ((context) => AuthenticationBloc()))
+            lazy: false,
+            create: ((context) =>
+                AuthenticationBloc.instance..add(AppStarted())))
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),

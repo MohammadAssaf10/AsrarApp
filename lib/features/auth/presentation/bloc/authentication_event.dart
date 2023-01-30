@@ -4,7 +4,13 @@ abstract class AuthenticationEvent extends Equatable {
   const AuthenticationEvent();
 }
 
-
+/// called when app start to check if user logged in before
+/// 
+/// it use the firebase auth package to get user email and firebase store to get his data 
+class AppStarted extends AuthenticationEvent {
+  @override
+  List<Object?> get props => [];
+}
 class LoginButtonPressed extends AuthenticationEvent {
   final LoginRequest loginRequest;
 
