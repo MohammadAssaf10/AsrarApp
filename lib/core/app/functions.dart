@@ -14,11 +14,11 @@ import '../../core/app/extensions.dart';
 
 String? nameValidator(String? name, BuildContext context) {
   if (name.nullOrEmpty()) {
-    return "";//AppStrings.pleaseEnterName.tr(context);
+    return ""; //AppStrings.pleaseEnterName.tr(context);
   }
 
   if (name!.length < 3) {
-    return "";//AppStrings.nameTooShort.tr(context);
+    return ""; //AppStrings.nameTooShort.tr(context);
   }
 
   return null;
@@ -26,7 +26,7 @@ String? nameValidator(String? name, BuildContext context) {
 
 String? mobileNumberValidator(String? phone, BuildContext context) {
   if (phone.nullOrEmpty()) {
-    return "";//AppStrings.pleaseEnterName.tr(context);
+    return ""; //AppStrings.pleaseEnterName.tr(context);
   }
 
   if (!isMobileNumberCorrect(phone!)) {
@@ -137,6 +137,7 @@ void showOrderDialog(
   String title,
   String hintTitle,
   String number,
+  String totalPrice,
   Function acceptOnTap,
 ) {
   dismissDialog(context);
@@ -147,7 +148,7 @@ void showOrderDialog(
     builder: (_) {
       return AlertDialog(
         title: Text(
-          title,
+          "${AppStrings.totalPrice.tr(context)}: $totalPrice",
           style: getAlmaraiRegularStyle(
             fontSize: AppSize.s20.sp,
             color: ColorManager.primary,
@@ -157,6 +158,17 @@ void showOrderDialog(
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
+              Center(
+                child: Text(
+                  title,
+                  style: getAlmaraiRegularStyle(
+                    fontSize: AppSize.s20.sp,
+                    color: ColorManager.primary,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(height: AppSize.s5.h),
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(
@@ -190,9 +202,12 @@ void showOrderDialog(
               children: [
                 OptionButton(
                   onTap: () {
-                    acceptOnTap();
+                    if (controller.text.isNotEmpty)
+                      acceptOnTap();
+                    else
+                      print("Enter number");
                   },
-                  title: AppStrings.addOrder.tr(context),
+                  title: AppStrings.checkout.tr(context),
                   height: AppSize.s35.h,
                   width: AppSize.s110.w,
                   fontSize: AppSize.s18.sp,

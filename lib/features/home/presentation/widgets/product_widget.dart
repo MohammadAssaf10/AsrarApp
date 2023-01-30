@@ -8,6 +8,7 @@ import '../../../../config/values_manager.dart';
 import '../../domain/entities/product_entities.dart';
 
 List<ProductEntities> productsSelectedList = [];
+double totalProductsPrice = 0;
 
 class ProductWidget extends StatefulWidget {
   ProductWidget({
@@ -151,17 +152,24 @@ class ProductSelectedWidget extends StatefulWidget {
 
 class _ProductSelectedWidgetState extends State<ProductSelectedWidget> {
   int _counter = 1;
-  late double totalPrice;
+  late double totalProductPrice;
   @override
   void initState() {
-    totalPrice = double.parse(widget.product.productPrice);
+    totalProductPrice = double.parse(widget.product.productPrice);
+    totalProductsPrice += totalProductPrice;
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    totalProductsPrice = 0;
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: AppSize.s90.h,
+      height: AppSize.s110.h,
       width: double.infinity,
       margin: EdgeInsets.symmetric(
         horizontal: AppSize.s10.w,
@@ -233,7 +241,7 @@ class _ProductSelectedWidgetState extends State<ProductSelectedWidget> {
                   ),
                   SizedBox(height: AppSize.s5.h),
                   Text(
-                    totalPrice.toStringAsFixed(2),
+                    "${totalProductPrice.toStringAsFixed(2)} ر.س",
                     style: getAlmaraiBoldStyle(
                       fontSize: AppSize.s16.sp,
                       color: ColorManager.primary,
@@ -262,8 +270,9 @@ class _ProductSelectedWidgetState extends State<ProductSelectedWidget> {
                         onPressed: () {
                           setState(() {
                             _counter++;
-                            totalPrice +=
-                                double.parse(widget.product.productPrice);
+                            totalProductPrice += double.parse(
+                                widget.product.productPrice);
+                            totalProductsPrice += totalProductPrice;
                           });
                         },
                         icon: Icon(
@@ -286,8 +295,9 @@ class _ProductSelectedWidgetState extends State<ProductSelectedWidget> {
                           if (_counter > 1) {
                             setState(() {
                               _counter--;
-                              totalPrice -=
-                                  double.parse(widget.product.productPrice);
+                              totalProductPrice -= double.parse(
+                                  widget.product.productPrice);
+                              totalProductsPrice -= totalProductPrice;
                             });
                           }
                         },

@@ -58,6 +58,9 @@ class AppStrings {
   static const String requiredDocuments = "required_documents";
   static const String addOrder = "add_order";
   static const String whatsAppNumber = "whatsApp_number";
+  static const String checkout = "checkout";
+  static const String totalPrice = "total_price";
+
   // exception handler
   static const String success = "Success";
   static const String badRequestError = "Bad request error";

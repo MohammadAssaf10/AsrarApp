@@ -1,10 +1,12 @@
 import 'package:asrar_app/config/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../config/strings_manager.dart';
 import '../../../../config/values_manager.dart';
 import '../../../../core/app/functions.dart';
+import '../../../auth/presentation/bloc/authentication_bloc.dart';
 import '../widgets/home_button_widgets.dart';
 import '../widgets/product_widget.dart';
 
@@ -32,15 +34,23 @@ class CardScreen extends StatelessWidget {
               ),
               child: OptionButton(
                 onTap: () {
-                  showOrderDialog(
-                    context,
-                    AppStrings.whatsAppNumber.tr(context),
-                    AppStrings.whatsAppNumber.tr(context),
-                    "0997806274",
-                    () {
-                      print("Done");
-                    },
-                  );
+                  if (productsSelectedList.isNotEmpty) {
+                    final state =
+                        BlocProvider.of<AuthenticationBloc>(context).state;
+                    if (state is AuthenticationSuccess)
+                      showOrderDialog(
+                        context,
+                        AppStrings.whatsAppNumber.tr(context),
+                        AppStrings.whatsAppNumber.tr(context),
+                        state.user.phoneNumber,
+                        totalProductsPrice.toStringAsFixed(2),
+                        () {
+                          print("Done");
+                          dismissDialog(context);
+                        },
+                      );
+                  } else
+                    showCustomDialog(context, message: "الرجاء اختيار منتجات");
                 },
                 title: AppStrings.addOrder.tr(context),
                 height: AppSize.s40.h,
