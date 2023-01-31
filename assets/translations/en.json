@@ -18,7 +18,7 @@
   "name_should_atLeast_3_character": "Name should at least 3 character",
   "email_format_not_correct": "Email format not correct",
   "please_enter_mobile_number": "Please enter mobile number",
-  "mobile_number_should_at_least_5_character": "Mobile number should at least 5 character",
+  "mobile_number_should_at_least_9_character": "Mobile number should at least 9 character",
   "password_should_at_least_6_Character": "Password should at least 6 character",
   "mobile_number_format_not_correct": "Mobile number format not correct",
   "reset_password": "Reset password",

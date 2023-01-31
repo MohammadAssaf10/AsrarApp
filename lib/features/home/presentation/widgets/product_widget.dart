@@ -6,8 +6,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../config/color_manager.dart';
 import '../../../../config/values_manager.dart';
 import '../../domain/entities/product_entities.dart';
+import '../../../../core/app/functions.dart';
 
-List<ProductEntities> productsSelectedList = [];
+List<ProductEntities> cartList = [];
 double totalProductsPrice = 0;
 
 class ProductWidget extends StatefulWidget {
@@ -24,7 +25,7 @@ class ProductWidget extends StatefulWidget {
 class _ProductWidgetState extends State<ProductWidget> {
   @override
   void dispose() {
-    productsSelectedList.clear();
+    cartList.clear();
     super.dispose();
   }
 
@@ -37,9 +38,9 @@ class _ProductWidgetState extends State<ProductWidget> {
           isSelect = !isSelect;
         });
         if (isSelect == true) {
-          productsSelectedList.add(widget.product);
+          cartList.add(widget.product);
         } else {
-          productsSelectedList.remove(widget.product);
+          cartList.remove(widget.product);
         }
       },
       child: Container(
@@ -241,7 +242,7 @@ class _ProductSelectedWidgetState extends State<ProductSelectedWidget> {
                   ),
                   SizedBox(height: AppSize.s5.h),
                   Text(
-                    "${totalProductPrice.toStringAsFixed(2)} ر.س",
+                    "${dp(totalProductPrice, 2)} ر.س",
                     style: getAlmaraiBoldStyle(
                       fontSize: AppSize.s16.sp,
                       color: ColorManager.primary,
@@ -269,10 +270,11 @@ class _ProductSelectedWidgetState extends State<ProductSelectedWidget> {
                       child: IconButton(
                         onPressed: () {
                           setState(() {
-                            _counter++;
-                            totalProductPrice += double.parse(
-                                widget.product.productPrice);
-                            totalProductsPrice += totalProductPrice;
+                            ++_counter;
+                            totalProductPrice = _counter *
+                                stringToDouble(widget.product.productPrice);
+                            totalProductsPrice = totalProductsPrice +
+                                stringToDouble(widget.product.productPrice);
                           });
                         },
                         icon: Icon(
@@ -294,10 +296,11 @@ class _ProductSelectedWidgetState extends State<ProductSelectedWidget> {
                         onPressed: () {
                           if (_counter > 1) {
                             setState(() {
-                              _counter--;
-                              totalProductPrice -= double.parse(
-                                  widget.product.productPrice);
-                              totalProductsPrice -= totalProductPrice;
+                              --_counter;
+                              totalProductPrice = _counter *
+                                  stringToDouble(widget.product.productPrice);
+                              totalProductsPrice = totalProductsPrice -
+                                  stringToDouble(widget.product.productPrice);
                             });
                           }
                         },

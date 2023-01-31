@@ -22,8 +22,8 @@ class AppStrings {
       "name_should_atLeast_3_character";
   static const String emailFormatNotCorrect = "email_format_not_correct";
   static const String pleaseEnterMobileNumber = "please_enter_mobile_number";
-  static const String mobileNumberShouldAtLeast5Character =
-      "mobile_number_should_at_least_5_character";
+  static const String mobileNumberShouldAtLeast9Character =
+      "mobile_number_should_at_least_9_character";
   static const String passwordShouldAtLeast6Character =
       "password_should_at_least_6_Character";
   static const String mobileNumberFormatNotCorrect =

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:asrar_app/config/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -64,6 +66,16 @@ bool isEmailFormatCorrect(String email) {
 
 bool isMobileNumberCorrect(String mobileNumber) {
   return RegExp(r"^[+]*[0-9]+").hasMatch(mobileNumber);
+}
+
+///places: The desired number of digits after the comma
+double dp(double val, int places) {
+  num mod = pow(10.0, places);
+  return ((val * mod).round().toDouble() / mod);
+}
+
+double stringToDouble(String str) {
+  return double.parse(str);
 }
 
 _isCurrentDialogShowing(BuildContext context) =>
@@ -135,7 +147,6 @@ void showCustomDialog(BuildContext context,
 void showOrderDialog(
   BuildContext context,
   String title,
-  String hintTitle,
   String number,
   String totalPrice,
   Function acceptOnTap,
@@ -143,12 +154,13 @@ void showOrderDialog(
   dismissDialog(context);
   TextEditingController controller = TextEditingController();
   controller = TextEditingController(text: number);
+
   showDialog(
     context: context,
     builder: (_) {
       return AlertDialog(
         title: Text(
-          "${AppStrings.totalPrice.tr(context)}: $totalPrice",
+          "${AppStrings.totalPrice.tr(context)}: $totalPrice ر.س",
           style: getAlmaraiRegularStyle(
             fontSize: AppSize.s20.sp,
             color: ColorManager.primary,
@@ -169,27 +181,18 @@ void showOrderDialog(
                 ),
               ),
               SizedBox(height: AppSize.s5.h),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: ColorManager.primary,
+              TextFormField(
+                controller: controller,
+                textAlign: TextAlign.center,
+                
+                keyboardType: TextInputType.phone,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(
+                    RegExp("[0-9]"),
                   ),
-                  borderRadius: BorderRadius.circular(
-                    AppSize.s18.r,
-                  ),
-                ),
-                child: TextField(
-                  controller: controller,
-                  textAlign: TextAlign.center,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(
-                      RegExp("[0-9]"),
-                    ),
-                  ],
-                  decoration: InputDecoration(
-                    hintText: hintTitle,
-                  ),
+                ],
+                decoration: InputDecoration(
+                  hintText: title,
                 ),
               ),
             ],
@@ -200,12 +203,11 @@ void showOrderDialog(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                //TODO:when finish app changer 10 to 9
                 OptionButton(
                   onTap: () {
-                    if (controller.text.isNotEmpty)
-                      acceptOnTap();
-                    else
-                      print("Enter number");
+                    if (controller.text.isNotEmpty &&
+                        controller.text.length == 10) acceptOnTap();
                   },
                   title: AppStrings.checkout.tr(context),
                   height: AppSize.s35.h,

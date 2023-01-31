@@ -8,6 +8,7 @@ import '../../../../config/routes_manager.dart';
 import '../../../../config/strings_manager.dart';
 import '../../../../config/styles_manager.dart';
 import '../../../../config/values_manager.dart';
+import '../../../../core/app/functions.dart';
 import '../blocs/product_bloc/product_bloc.dart';
 import '../widgets/product_widget.dart';
 
@@ -22,10 +23,13 @@ class ShopScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(
-            context,
-            Routes.productsSelectedListRoute,
-          );
+          if (cartList.isNotEmpty)
+            Navigator.pushNamed(
+              context,
+              Routes.cartRoute,
+            );
+          else
+            showCustomDialog(context, message: "الرجاء اختيار منتجات");
         },
         backgroundColor: ColorManager.primary,
         child: Icon(

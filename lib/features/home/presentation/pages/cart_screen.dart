@@ -10,8 +10,8 @@ import '../../../auth/presentation/bloc/authentication_bloc.dart';
 import '../widgets/home_button_widgets.dart';
 import '../widgets/product_widget.dart';
 
-class CardScreen extends StatelessWidget {
-  const CardScreen({super.key});
+class CartScreen extends StatelessWidget {
+  const CartScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,10 +21,10 @@ class CardScreen extends StatelessWidget {
           children: [
             ListView.builder(
               shrinkWrap: true,
-              itemCount: productsSelectedList.length,
+              itemCount: cartList.length,
               itemBuilder: (_, int index) {
                 return ProductSelectedWidget(
-                  product: productsSelectedList[index],
+                  product: cartList[index],
                 );
               },
             ),
@@ -34,23 +34,21 @@ class CardScreen extends StatelessWidget {
               ),
               child: OptionButton(
                 onTap: () {
-                  if (productsSelectedList.isNotEmpty) {
+                  if (cartList.isNotEmpty) {
                     final state =
                         BlocProvider.of<AuthenticationBloc>(context).state;
                     if (state is AuthenticationSuccess)
                       showOrderDialog(
                         context,
                         AppStrings.whatsAppNumber.tr(context),
-                        AppStrings.whatsAppNumber.tr(context),
                         state.user.phoneNumber,
-                        totalProductsPrice.toStringAsFixed(2),
+                        dp(totalProductsPrice, 2).toString(),
                         () {
                           print("Done");
                           dismissDialog(context);
                         },
                       );
-                  } else
-                    showCustomDialog(context, message: "الرجاء اختيار منتجات");
+                  }
                 },
                 title: AppStrings.addOrder.tr(context),
                 height: AppSize.s40.h,

@@ -6,7 +6,7 @@ import '../features/auth/presentation/pages/password_reset_view.dart';
 import '../features/home/domain/entities/company_entities.dart';
 import '../features/home/domain/entities/service_entities.dart';
 import '../features/home/presentation/pages/main_view.dart';
-import '../features/home/presentation/pages/card_screen.dart';
+import '../features/home/presentation/pages/cart_screen.dart';
 import '../features/home/presentation/pages/required_documents_screen.dart';
 import '../features/home/presentation/pages/services_screen.dart';
 import '../features/home/presentation/pages/shop_screen.dart';
@@ -21,7 +21,7 @@ class Routes {
   static const String serviceRoute = "/service";
   static const String requiredDocumentsRoute = "/requiredDocuments";
   static const String shopRoute = "/shop";
-  static const String productsSelectedListRoute = "/productsSelectedList";
+  static const String cartRoute = "/cart";
 
   // auth rotes
   static const String auth = '/auth';
@@ -39,8 +39,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => MainView());
       case Routes.shopRoute:
         return MaterialPageRoute(builder: (_) => ShopScreen());
-      case Routes.productsSelectedListRoute:
-        return MaterialPageRoute(builder: (_) => CardScreen());
+      case Routes.cartRoute:
+        return MaterialPageRoute(builder: (_) => CartScreen());
       case Routes.serviceRoute:
         {
           final arg = settings.arguments as CompanyEntities;
