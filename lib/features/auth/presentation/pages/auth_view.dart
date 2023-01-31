@@ -31,7 +31,7 @@ class _AuthState extends State<Auth> {
       child: Scaffold(
         appBar: AppBar(),
         body: SingleChildScrollView(
-          physics: NeverScrollableScrollPhysics(),
+          // physics: NeverScrollableScrollPhysics(),
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 30.h, horizontal: 8.w),
             child: SafeArea(
@@ -56,7 +56,7 @@ class _AuthState extends State<Auth> {
                         style: TextStyle(color: ColorManager.grey),
                       ),
                       onPressed: () {
-                        // TODO: vavigate to main view
+                        // TODO: navigate to main view
                         Navigator.pushReplacementNamed(context, Routes.splash);
                       },
                     ),

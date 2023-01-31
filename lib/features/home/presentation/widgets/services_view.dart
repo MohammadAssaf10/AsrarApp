@@ -15,54 +15,57 @@ class ServicesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ServicesBloc, ServicesState>(
-      builder: (context, state) {
-        if (state is LoadingServicesState)
-          return Container(
-            margin: EdgeInsets.symmetric(vertical: AppSize.s240.h),
-            child: CircularProgressIndicator(
-              color: ColorManager.primary,
-            ),
-          );
-        else if (state is ErrorServicesState)
-          return Container(
-            margin: EdgeInsets.symmetric(vertical: AppSize.s240.h),
-            child: Text(
-              state.errorMessage.tr(context),
-              style: getAlmaraiRegularStyle(
-                fontSize: AppSize.s20.sp,
-                color: ColorManager.error,
-              ),
-            ),
-          );
-        else if (state is LoadedServicesState) {
-          if (state.services.isNotEmpty) {
-            return SizedBox(
-              height: AppSize.s540.h,
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: state.services.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ServiceWidget(
-                    service: state.services[index],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          BlocBuilder<ServicesBloc, ServicesState>(
+            builder: (context, state) {
+              if (state is LoadingServicesState)
+                return Container(
+                  margin: EdgeInsets.symmetric(vertical: AppSize.s240.h),
+                  child: CircularProgressIndicator(
+                    color: ColorManager.primary,
+                  ),
+                );
+              else if (state is ErrorServicesState)
+                return Container(
+                  margin: EdgeInsets.symmetric(vertical: AppSize.s240.h),
+                  child: Text(
+                    state.errorMessage.tr(context),
+                    style: getAlmaraiRegularStyle(
+                      fontSize: AppSize.s20.sp,
+                      color: ColorManager.error,
+                    ),
+                  ),
+                );
+              else if (state is LoadedServicesState) {
+                if (state.services.isNotEmpty) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: state.services.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ServiceWidget(
+                        service: state.services[index],
+                      );
+                    },
                   );
-                },
-              ),
-            );
-          } else
-            return Container(
-              margin: EdgeInsets.symmetric(vertical: AppSize.s240.h),
-              child: Text(
-                AppStrings.noServices.tr(context),
-                style: getAlmaraiRegularStyle(
-                  fontSize: AppSize.s20.sp,
-                  color: ColorManager.error,
-                ),
-              ),
-            );
-        }
-        return SizedBox();
-      },
+                } else
+                  return Container(
+                    margin: EdgeInsets.symmetric(vertical: AppSize.s240.h),
+                    child: Text(
+                      AppStrings.noServices.tr(context),
+                      style: getAlmaraiRegularStyle(
+                        fontSize: AppSize.s20.sp,
+                        color: ColorManager.error,
+                      ),
+                    ),
+                  );
+              }
+              return SizedBox();
+            },
+          ),
+        ],
+      ),
     );
   }
 }

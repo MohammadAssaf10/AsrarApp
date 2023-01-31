@@ -26,11 +26,6 @@ class ServicesScreen extends StatelessWidget {
             Container(
               height: AppSize.s45.h,
               margin: EdgeInsets.symmetric(horizontal: AppSize.s10.w),
-              decoration: BoxDecoration(
-                color: ColorManager.white,
-                borderRadius: BorderRadius.circular(AppSize.s20.r),
-                border: Border.all(color: ColorManager.primary),
-              ),
               child: Row(
                 children: [
                   Expanded(

@@ -100,7 +100,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
           SizedBox(
-            height: AppSize.s100.h,
+            height: AppSize.s50.h,
           ),
           FullElevatedButton(
             onPressed: () {
