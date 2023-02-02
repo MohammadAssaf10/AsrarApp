@@ -7,10 +7,16 @@ class CachedNetworkImageWidget extends StatelessWidget {
   const CachedNetworkImageWidget({
     super.key,
     required this.image,
-    required this.boxShape,
+    required this.shapeBorder,
+    required this.offset,
+    required this.horizontalMargin,
+    required this.verticalMargin,
   });
   final String image;
-  final BoxShape boxShape;
+  final ShapeBorder shapeBorder;
+  final Offset offset;
+  final double horizontalMargin;
+  final double verticalMargin;
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
@@ -18,8 +24,19 @@ class CachedNetworkImageWidget extends StatelessWidget {
       fit: BoxFit.fill,
       imageBuilder: (context, imageProvider) {
         return Container(
-          decoration: BoxDecoration(
-          shape: boxShape,
+          margin: EdgeInsets.symmetric(
+            horizontal: horizontalMargin,
+            vertical: verticalMargin,
+          ),
+          decoration: ShapeDecoration(
+            shadows: [
+              BoxShadow(
+                color: ColorManager.grey,
+                blurRadius: 2.0,
+                offset: offset,
+              ),
+            ],
+            shape: shapeBorder,
             image: DecorationImage(
               image: imageProvider,
               fit: BoxFit.fill,

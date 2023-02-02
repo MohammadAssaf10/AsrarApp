@@ -57,35 +57,64 @@ class NewsScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Expanded(
-                                  child: Container(
-                                    margin: EdgeInsets.symmetric(
-                                      vertical: AppSize.s5.h,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: ColorManager.grey,
-                                    ),
-                                    child: CachedNetworkImageWidget(
-                                      image: state.newsList[index].newsImageUrl,
-                                      boxShape: BoxShape.circle,
-                                    ),
+                                  child: CachedNetworkImageWidget(
+                                    offset: Offset(1, 3),
+                                    horizontalMargin: AppSize.s0.w,
+                                    verticalMargin: AppSize.s4.h,
+                                    image: state.newsList[index].newsImageUrl,
+                                    shapeBorder: CircleBorder(),
                                   ),
                                 ),
                                 Expanded(
                                   flex: 2,
-                                  child: Container(
-                                    margin: EdgeInsets.symmetric(
-                                      horizontal: AppSize.s5.w,
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      // horizontal: AppSize.s5.w,
+                                      vertical: AppSize.s15.h,
                                     ),
-                                    child: Text(
-                                      state.newsList[index].newsTitle,
-                                      style: getAlmaraiBoldStyle(
-                                        fontSize: AppSize.s16.sp,
-                                        color: ColorManager.darkPrimary,
-                                      ),
-                                      maxLines: 3,
-                                      softWrap: true,
-                                      overflow: TextOverflow.visible,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      textBaseline: TextBaseline.alphabetic,
+                                      children: [
+                                        Center(
+                                          child: Text(
+                                            state.newsList[index].newsTitle,
+                                            style: getAlmaraiBoldStyle(
+                                              fontSize: AppSize.s17.sp,
+                                              color: ColorManager.primary,
+                                            ),
+                                            maxLines: 3,
+                                            softWrap: true,
+                                            overflow: TextOverflow.visible,
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              state.newsList[index].timestamp
+                                                  .toDate()
+                                                  .toString()
+                                                  .substring(0, 10),
+                                              style: getAlmaraiRegularStyle(
+                                                fontSize: AppSize.s14.sp,
+                                                color: ColorManager.grey,
+                                              ),
+                                            ),
+                                            Text(
+                                              "عرض التفاصيل",
+                                              style: getAlmaraiRegularStyle(
+                                                fontSize: AppSize.s14.sp,
+                                                color: ColorManager.grey,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),

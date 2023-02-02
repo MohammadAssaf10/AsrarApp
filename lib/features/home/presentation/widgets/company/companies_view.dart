@@ -46,67 +46,39 @@ class CompaniesView extends StatelessWidget {
             return SizedBox(
               height: AppSize.s200.h,
               child: GridView.builder(
-                  itemCount: state.company.length,
-                  shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: AppSize.s120.r,
-                    mainAxisExtent: AppSize.s80.r,
-                  ),
-                  itemBuilder: (BuildContext context, int index) {
-                    return InkWell(
-                      onTap: () {
-                        BlocProvider.of<ServicesBloc>(context).add(
-                          GetServices(
-                            companyName: state.company[index].name,
-                          ),
-                        );
-                        Navigator.pushNamed(
-                          context,
-                          Routes.serviceRoute,
-                          arguments: state.company[index],
-                        );
-                      },
-                      child: Container(
-                        margin: EdgeInsets.symmetric(
-                          horizontal: AppSize.s10.w,
-                          vertical: AppSize.s5.h,
+                itemCount: state.company.length,
+                shrinkWrap: true,
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: AppSize.s120.w,
+                  mainAxisExtent: AppSize.s75.h,
+                ),
+                itemBuilder: (BuildContext context, int index) {
+                  return InkWell(
+                    onTap: () {
+                      BlocProvider.of<ServicesBloc>(context).add(
+                        GetServices(
+                          companyName: state.company[index].name,
                         ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(AppSize.s10.r),
-                          boxShadow: [
-                            BoxShadow(
-                              color: ColorManager.grey,
-                              blurRadius: 2.0,
-                              offset: Offset(0, 6),
-                            ),
-                          ],
-                        ),
-                        child: CachedNetworkImage(
-                          imageUrl: state.company[index].image,
-                          imageBuilder: (context, imageProvider) =>
-                              Container(
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(AppSize.s10.r),
-                              image: DecorationImage(
-                                image: imageProvider,
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                          placeholder: (context, url) => const Center(
-                            child: CircularProgressIndicator(
-                              color: ColorManager.primary,
-                            ),
-                          ),
-                          errorWidget: (context, url, error) => const Icon(
-                            Icons.error,
-                            color: ColorManager.error,
-                          ),
-                        ),
+                      );
+                      Navigator.pushNamed(
+                        context,
+                        Routes.serviceRoute,
+                        arguments: state.company[index],
+                      );
+                    },
+                    child: CachedNetworkImageWidget(
+                      image: state.company[index].image,
+                      offset: Offset(0, 6),
+                      horizontalMargin: AppSize.s10.w,
+                      verticalMargin: AppSize.s5.h,
+                      shapeBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: ColorManager.transparent),
+                        borderRadius: BorderRadius.circular(AppSize.s10.r),
                       ),
-                    );
-                  }),
+                    ),
+                  );
+                },
+              ),
             );
           } else {
             return Container(
