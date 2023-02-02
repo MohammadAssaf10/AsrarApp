@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../config/strings_manager.dart';
-import '../../../../config/values_manager.dart';
-import '../../../../core/app/functions.dart';
-import '../../../auth/presentation/bloc/authentication_bloc.dart';
-import '../widgets/home_button_widgets.dart';
-import '../widgets/shop/product_widget.dart';
+import '../../../../../config/strings_manager.dart';
+import '../../../../../config/values_manager.dart';
+import '../../../../../core/app/functions.dart';
+import '../../../../auth/presentation/bloc/authentication_bloc.dart';
+import '../../widgets/general/home_button_widgets.dart';
+import '../../widgets/shop/product_widget.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});

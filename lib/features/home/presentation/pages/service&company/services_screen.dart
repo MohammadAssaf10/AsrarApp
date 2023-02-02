@@ -4,13 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../config/assets_manager.dart';
-import '../../../../config/color_manager.dart';
-import '../../../../config/strings_manager.dart';
-import '../../../../config/styles_manager.dart';
-import '../../../../config/values_manager.dart';
-import '../../domain/entities/company_entities.dart';
-import '../widgets/service/services_view.dart';
+import '../../../../../config/assets_manager.dart';
+import '../../../../../config/color_manager.dart';
+import '../../../../../config/strings_manager.dart';
+import '../../../../../config/styles_manager.dart';
+import '../../../../../config/values_manager.dart';
+import '../../../domain/entities/company_entities.dart';
+import '../../widgets/service/services_view.dart';
 
 class ServicesScreen extends StatelessWidget {
   final CompanyEntities company;

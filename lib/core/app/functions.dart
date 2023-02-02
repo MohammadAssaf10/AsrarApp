@@ -11,7 +11,7 @@ import '../../config/color_manager.dart';
 import '../../config/strings_manager.dart';
 import '../../config/styles_manager.dart';
 import '../../config/values_manager.dart';
-import '../../features/home/presentation/widgets/home_button_widgets.dart';
+import '../../features/home/presentation/widgets/general/home_button_widgets.dart';
 import '../../core/app/extensions.dart';
 
 String? nameValidator(String? name, BuildContext context) {

@@ -5,12 +5,12 @@ import '../features/auth/presentation/pages/auth_view.dart';
 import '../features/auth/presentation/pages/password_reset_view.dart';
 import '../features/home/domain/entities/company_entities.dart';
 import '../features/home/domain/entities/service_entities.dart';
-import '../features/home/presentation/pages/main_view.dart';
-import '../features/home/presentation/pages/cart_screen.dart';
+import '../features/home/presentation/pages/main/main_view.dart';
+import '../features/home/presentation/pages/shop/cart_screen.dart';
 import '../features/home/presentation/pages/news/news_screen.dart';
-import '../features/home/presentation/pages/required_documents_screen.dart';
-import '../features/home/presentation/pages/services_screen.dart';
-import '../features/home/presentation/pages/shop_screen.dart';
+import '../features/home/presentation/pages/service&company/required_documents_screen.dart';
+import '../features/home/presentation/pages/service&company/services_screen.dart';
+import '../features/home/presentation/pages/shop/shop_screen.dart';
 import '../splash.dart';
 import 'strings_manager.dart';
 

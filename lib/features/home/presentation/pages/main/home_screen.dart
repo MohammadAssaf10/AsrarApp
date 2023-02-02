@@ -4,18 +4,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../config/assets_manager.dart';
-import '../../../../config/color_manager.dart';
-import '../../../../config/routes_manager.dart';
-import '../../../../config/strings_manager.dart';
-import '../../../../config/styles_manager.dart';
-import '../../../../config/values_manager.dart';
-import '../blocs/news_bloc/news_bloc.dart';
-import '../blocs/product_bloc/product_bloc.dart';
-import '../widgets/ad/ad_image_view.dart';
-import '../widgets/company/companies_view.dart';
-import '../widgets/drawer.dart';
-import '../widgets/home_button_widgets.dart';
+import '../../../../../config/assets_manager.dart';
+import '../../../../../config/color_manager.dart';
+import '../../../../../config/routes_manager.dart';
+import '../../../../../config/strings_manager.dart';
+import '../../../../../config/styles_manager.dart';
+import '../../../../../config/values_manager.dart';
+import '../../blocs/news_bloc/news_bloc.dart';
+import '../../blocs/product_bloc/product_bloc.dart';
+import '../../widgets/ad/ad_image_view.dart';
+import '../../widgets/company/companies_view.dart';
+import '../../widgets/general/drawer.dart';
+import '../../widgets/general/home_button_widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);

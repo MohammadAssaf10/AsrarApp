@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../config/color_manager.dart';
+import '../../../../../config/color_manager.dart';
 
 class LoadingView extends StatelessWidget {
   const LoadingView({super.key});

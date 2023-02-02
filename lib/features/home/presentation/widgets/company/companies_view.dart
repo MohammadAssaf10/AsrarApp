@@ -1,6 +1,5 @@
 import 'package:asrar_app/config/app_localizations.dart';
-import 'package:asrar_app/features/home/presentation/widgets/cached_network_image_widget.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:asrar_app/features/home/presentation/widgets/general/cached_network_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

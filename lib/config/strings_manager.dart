@@ -47,7 +47,7 @@ class AppStrings {
   static const String customerService = "customers_service";
   static const String asrarForElectronicServices =
       "asrar_for_electronic_services";
-  static const String info = "info";
+  static const String aboutUs = "about_us";
   static const String whatsApp = "whats_app";
   static const String googleTranslate = "google_translate";
   static const String subscribe = "subscribe";

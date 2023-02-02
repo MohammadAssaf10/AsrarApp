@@ -8,9 +8,9 @@ import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../blocs/news_bloc/news_bloc.dart';
-import '../../widgets/cached_network_image_widget.dart';
-import '../../widgets/error_view.dart';
-import '../../widgets/loading_view.dart';
+import '../../widgets/general/cached_network_image_widget.dart';
+import '../../widgets/general/error_view.dart';
+import '../../widgets/general/loading_view.dart';
 
 class NewsScreen extends StatelessWidget {
   const NewsScreen({super.key});
