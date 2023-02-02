@@ -8,6 +8,7 @@ import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../blocs/news_bloc/news_bloc.dart';
+import '../../widgets/loading_widget.dart';
 
 class NewsScreen extends StatelessWidget {
   const NewsScreen({super.key});
@@ -23,17 +24,10 @@ class NewsScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: AppSize.s10.h),
             BlocBuilder<NewsBloc, NewsState>(
               builder: (context, state) {
                 if (state is NewsLoadingState)
-                  return Center(
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        color: ColorManager.primary,
-                      ),
-                    ),
-                  );
+                  return LoadingWidget();
                 else if (state is NewsErrorState)
                   return Container(
                     margin: EdgeInsets.symmetric(vertical: AppSize.s240.h),
