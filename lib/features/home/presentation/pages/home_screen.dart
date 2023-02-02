@@ -12,8 +12,8 @@ import '../../../../config/styles_manager.dart';
 import '../../../../config/values_manager.dart';
 import '../blocs/news_bloc/news_bloc.dart';
 import '../blocs/product_bloc/product_bloc.dart';
-import '../widgets/ad_image_view.dart';
-import '../widgets/companies_view.dart';
+import '../widgets/ad/ad_image_view.dart';
+import '../widgets/company/companies_view.dart';
 import '../widgets/drawer.dart';
 import '../widgets/home_button_widgets.dart';
 

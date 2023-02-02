@@ -3,10 +3,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../config/color_manager.dart';
-import '../../../../config/values_manager.dart';
-import '../../domain/entities/product_entities.dart';
-import '../../../../core/app/functions.dart';
+import '../../../../../config/color_manager.dart';
+import '../../../../../config/values_manager.dart';
+import '../../../domain/entities/product_entities.dart';
+import '../../../../../core/app/functions.dart';
 
 List<ProductEntities> cartList = [];
 double totalProductsPrice = 0;

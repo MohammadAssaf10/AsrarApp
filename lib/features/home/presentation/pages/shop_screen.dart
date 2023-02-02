@@ -10,7 +10,7 @@ import '../../../../config/styles_manager.dart';
 import '../../../../config/values_manager.dart';
 import '../../../../core/app/functions.dart';
 import '../blocs/product_bloc/product_bloc.dart';
-import '../widgets/product_widget.dart';
+import '../widgets/shop/product_widget.dart';
 
 class ShopScreen extends StatelessWidget {
   const ShopScreen({super.key});

@@ -8,6 +8,7 @@ import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../blocs/news_bloc/news_bloc.dart';
+import '../../widgets/cached_network_image_widget.dart';
 import '../../widgets/error_view.dart';
 import '../../widgets/loading_view.dart';
 
@@ -55,28 +56,18 @@ class NewsScreen extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  margin: EdgeInsets.symmetric(
-                                    horizontal: AppSize.s5.w,
-                                  ),
+                                Expanded(
                                   child: Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: ColorManager.primary,
-                                      ),
-                                      shape: BoxShape.circle,
+                                    margin: EdgeInsets.symmetric(
+                                      vertical: AppSize.s5.h,
                                     ),
-                                    child: CircleAvatar(
-                                      radius: AppSize.s40.r,
-                                      backgroundColor: ColorManager.darkWhite,
-                                      child: Text(
-                                        AppStrings.asrarServices.tr(context),
-                                        textAlign: TextAlign.center,
-                                        style: getAlmaraiBoldStyle(
-                                          fontSize: AppSize.s16.sp,
-                                          color: ColorManager.primary,
-                                        ),
-                                      ),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: ColorManager.grey,
+                                    ),
+                                    child: CachedNetworkImageWidget(
+                                      image: state.newsList[index].newsImageUrl,
+                                      boxShape: BoxShape.circle,
                                     ),
                                   ),
                                 ),

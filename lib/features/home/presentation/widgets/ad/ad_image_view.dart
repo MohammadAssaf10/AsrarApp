@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../config/assets_manager.dart';
-import '../../../../config/color_manager.dart';
-import '../../../../config/styles_manager.dart';
-import '../../../../config/values_manager.dart';
-import '../blocs/ad_image_bloc/ad_image_bloc.dart';
+import '../../../../../config/assets_manager.dart';
+import '../../../../../config/color_manager.dart';
+import '../../../../../config/styles_manager.dart';
+import '../../../../../config/values_manager.dart';
+import '../../blocs/ad_image_bloc/ad_image_bloc.dart';
 
 class AdImageView extends StatelessWidget {
   const AdImageView({Key? key}) : super(key: key);

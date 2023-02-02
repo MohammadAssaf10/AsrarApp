@@ -10,7 +10,7 @@ import '../../../../config/strings_manager.dart';
 import '../../../../config/styles_manager.dart';
 import '../../../../config/values_manager.dart';
 import '../../domain/entities/company_entities.dart';
-import '../widgets/services_view.dart';
+import '../widgets/service/services_view.dart';
 
 class ServicesScreen extends StatelessWidget {
   final CompanyEntities company;

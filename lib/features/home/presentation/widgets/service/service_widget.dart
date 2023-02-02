@@ -2,12 +2,12 @@ import 'package:asrar_app/config/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../config/color_manager.dart';
-import '../../../../config/routes_manager.dart';
-import '../../../../config/strings_manager.dart';
-import '../../../../config/styles_manager.dart';
-import '../../../../config/values_manager.dart';
-import '../../domain/entities/service_entities.dart';
+import '../../../../../config/color_manager.dart';
+import '../../../../../config/routes_manager.dart';
+import '../../../../../config/strings_manager.dart';
+import '../../../../../config/styles_manager.dart';
+import '../../../../../config/values_manager.dart';
+import '../../../domain/entities/service_entities.dart';
 
 class ServiceWidget extends StatelessWidget {
   const ServiceWidget({

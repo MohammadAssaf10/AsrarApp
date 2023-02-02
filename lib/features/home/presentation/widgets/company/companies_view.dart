@@ -1,16 +1,17 @@
 import 'package:asrar_app/config/app_localizations.dart';
+import 'package:asrar_app/features/home/presentation/widgets/cached_network_image_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../config/color_manager.dart';
-import '../../../../config/routes_manager.dart';
-import '../../../../config/strings_manager.dart';
-import '../../../../config/styles_manager.dart';
-import '../../../../config/values_manager.dart';
-import '../blocs/company_bloc/company_bloc.dart';
-import '../blocs/services_bloc/bloc/services_bloc.dart';
+import '../../../../../config/color_manager.dart';
+import '../../../../../config/routes_manager.dart';
+import '../../../../../config/strings_manager.dart';
+import '../../../../../config/styles_manager.dart';
+import '../../../../../config/values_manager.dart';
+import '../../blocs/company_bloc/company_bloc.dart';
+import '../../blocs/services_bloc/bloc/services_bloc.dart';
 
 class CompaniesView extends StatelessWidget {
   const CompaniesView({Key? key}) : super(key: key);
@@ -71,8 +72,7 @@ class CompaniesView extends StatelessWidget {
                           vertical: AppSize.s5.h,
                         ),
                         decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.circular(AppSize.s10.r),
+                          borderRadius: BorderRadius.circular(AppSize.s10.r),
                           boxShadow: [
                             BoxShadow(
                               color: ColorManager.grey,
