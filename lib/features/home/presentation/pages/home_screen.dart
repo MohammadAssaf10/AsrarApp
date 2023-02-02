@@ -10,6 +10,7 @@ import '../../../../config/routes_manager.dart';
 import '../../../../config/strings_manager.dart';
 import '../../../../config/styles_manager.dart';
 import '../../../../config/values_manager.dart';
+import '../blocs/news_bloc/news_bloc.dart';
 import '../blocs/product_bloc/product_bloc.dart';
 import '../widgets/ad_image_view.dart';
 import '../widgets/companies_view.dart';
@@ -63,9 +64,11 @@ class HomeScreen extends StatelessWidget {
                   ),
                   OptionButton(
                     onTap: () {
-                      print("أخبار");
+                      BlocProvider.of<NewsBloc>(context)
+                          .add(GetNewsListEvent());
+                      Navigator.pushNamed(context, Routes.newsRoute);
                     },
-                    title: "أخبار",
+                    title: AppStrings.news.tr(context),
                     height: double.infinity,
                     width: AppSize.s100.w,
                     fontSize: AppSize.s16.sp,

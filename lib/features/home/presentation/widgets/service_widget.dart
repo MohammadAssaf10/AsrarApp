@@ -30,7 +30,7 @@ class ServiceWidget extends StatelessWidget {
           vertical: AppSize.s8.h,
           horizontal: AppSize.s10.w,
         ),
-        padding: EdgeInsets.symmetric(horizontal: AppSize.s10.w),
+        padding: EdgeInsets.symmetric(horizontal: AppSize.s8.w),
         height: AppSize.s65.h,
         width: double.infinity,
         decoration: BoxDecoration(
@@ -41,6 +41,7 @@ class ServiceWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(
@@ -66,11 +67,17 @@ class ServiceWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(
-                  service.serviceName,
-                  style: getAlmaraiBoldStyle(
-                    fontSize: AppSize.s18.sp,
-                    color: ColorManager.darkPrimary,
+                SizedBox(
+                  width: AppSize.s130.w,
+                  child: Text(
+                    service.serviceName,
+                    style: getAlmaraiBoldStyle(
+                      fontSize: AppSize.s18.sp,
+                      color: ColorManager.darkPrimary,
+                    ),
+                    maxLines: 3,
+                    softWrap: true,
+                    overflow: TextOverflow.visible,
                   ),
                 ),
               ],

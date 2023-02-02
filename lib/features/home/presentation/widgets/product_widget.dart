@@ -141,17 +141,17 @@ class _ProductWidgetState extends State<ProductWidget> {
   }
 }
 
-class ProductSelectedWidget extends StatefulWidget {
-  const ProductSelectedWidget({
+class cartWidget extends StatefulWidget {
+  const cartWidget({
     super.key,
     required this.product,
   });
   final ProductEntities product;
   @override
-  State<ProductSelectedWidget> createState() => _ProductSelectedWidgetState();
+  State<cartWidget> createState() => _cartWidgetState();
 }
 
-class _ProductSelectedWidgetState extends State<ProductSelectedWidget> {
+class _cartWidgetState extends State<cartWidget> {
   int _counter = 1;
   late double totalProductPrice;
   @override

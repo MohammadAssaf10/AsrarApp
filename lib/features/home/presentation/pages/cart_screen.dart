@@ -23,7 +23,7 @@ class CartScreen extends StatelessWidget {
               shrinkWrap: true,
               itemCount: cartList.length,
               itemBuilder: (_, int index) {
-                return ProductSelectedWidget(
+                return cartWidget(
                   product: cartList[index],
                 );
               },

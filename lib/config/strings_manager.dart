@@ -60,6 +60,7 @@ class AppStrings {
   static const String whatsAppNumber = "whatsApp_number";
   static const String checkout = "checkout";
   static const String totalPrice = "total_price";
+  static const String news = "news";
 
   // exception handler
   static const String success = "Success";
