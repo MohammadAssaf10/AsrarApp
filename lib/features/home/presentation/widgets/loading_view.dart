@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../config/color_manager.dart';
 
-class LoadingWidget extends StatelessWidget {
-  const LoadingWidget({super.key});
+class LoadingView extends StatelessWidget {
+  const LoadingView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +11,8 @@ class LoadingWidget extends StatelessWidget {
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.center,
-      child: Center(
-        child: CircularProgressIndicator(
-          color: ColorManager.primary,
-        ),
+      child: CircularProgressIndicator(
+        color: ColorManager.primary,
       ),
     );
   }

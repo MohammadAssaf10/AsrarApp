@@ -8,7 +8,8 @@ import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../blocs/news_bloc/news_bloc.dart';
-import '../../widgets/loading_widget.dart';
+import '../../widgets/error_view.dart';
+import '../../widgets/loading_view.dart';
 
 class NewsScreen extends StatelessWidget {
   const NewsScreen({super.key});
@@ -27,17 +28,10 @@ class NewsScreen extends StatelessWidget {
             BlocBuilder<NewsBloc, NewsState>(
               builder: (context, state) {
                 if (state is NewsLoadingState)
-                  return LoadingWidget();
+                  return LoadingView();
                 else if (state is NewsErrorState)
-                  return Container(
-                    margin: EdgeInsets.symmetric(vertical: AppSize.s240.h),
-                    child: Text(
-                      state.errorMessage.tr(context),
-                      style: getAlmaraiRegularStyle(
-                        fontSize: AppSize.s20.sp,
-                        color: ColorManager.error,
-                      ),
-                    ),
+                  return ErrorView(
+                    errorMessage: state.errorMessage.tr(context),
                   );
                 else if (state is NewsLoadedState) {
                   if (state.newsList.isNotEmpty) {
