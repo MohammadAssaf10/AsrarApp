@@ -22,6 +22,8 @@ class IconAssets {
   static const String signOut = "$iconPath/sign_out.svg";
   static const String search = "$iconPath/search.svg";
   static const String dot = "$iconPath/dot.svg";
+  static const String gmail = "$iconPath/gmail.svg";
+  static const String apple = "$iconPath/apple.svg";
 }
 
 class JsonAssets {

@@ -5,7 +5,10 @@ import '../../data/models/requests.dart';
 import '../entities/user.dart';
 
 abstract class AuthRepository {
-  Future<Either<Failure, User>> login(LoginRequest loginRequest);
+  Future<Either<Failure, User>> loginViaEmail(LoginRequest loginRequest);
+  Future<Either<Failure, User>> loginViaGoogle();
+  Future<void> logOut();
+  Future<Either<Failure, User>> updateUserData(User user);
   Future<Either<Failure, User>> register(RegisterRequest registerRequest);
   Future<Either<Failure, void>> resetPassword(String email);
   Future<Either<Failure, User?>> getCurrentUserIfExists();

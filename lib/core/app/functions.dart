@@ -1,4 +1,3 @@
-import 'package:asrar_app/config/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -6,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../config/color_manager.dart';
-import '../../config/strings_manager.dart';
 import '../../config/strings_manager.dart';
 import '../../config/styles_manager.dart';
 import '../../config/values_manager.dart';

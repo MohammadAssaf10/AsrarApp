@@ -1,13 +1,10 @@
 part of 'authentication_bloc.dart';
 
-abstract class AuthenticationState extends Equatable {
+abstract class AuthenticationState {
   const AuthenticationState();
 }
 
-class AuthenticationInitial extends AuthenticationState {
-  @override
-  List<Object> get props => [];
-}
+class AuthenticationInitial extends AuthenticationState {}
 
 class AuthenticationSuccess extends AuthenticationState {
   final User user;
@@ -15,19 +12,14 @@ class AuthenticationSuccess extends AuthenticationState {
   AuthenticationSuccess({
     required this.user,
   });
+
   @override
-  List<Object?> get props => [user];
+  String toString() => 'AuthenticationSuccess(user: $user)';
 }
 
-class AuthenticationInProgress extends AuthenticationState {
-  @override
-  List<Object?> get props => [];
-}
+class AuthenticationInProgress extends AuthenticationState {}
 
-class ResetPasswordRequestSuccess extends AuthenticationState {
-  @override
-  List<Object?> get props => [];
-}
+class ResetPasswordRequestSuccess extends AuthenticationState {}
 
 class AuthenticationFailed extends AuthenticationState {
   final String message;
@@ -36,4 +28,11 @@ class AuthenticationFailed extends AuthenticationState {
 
   @override
   List<Object?> get props => [message];
+}
+
+class PhoneNumberNeeded extends AuthenticationState {
+  @override
+  String toString() {
+    return super.toString();
+  }
 }

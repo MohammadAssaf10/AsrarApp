@@ -3,9 +3,9 @@ import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../features/auth/data/data_sources/firebase.dart';
-import '../../features/auth/data/repository/repository_impl.dart';
-import '../../features/auth/domain/repository/repository.dart';
+import '../../features/auth/data/data_sources/firebase_auth_helper.dart';
+import '../../features/auth/data/repository/firebase_auth_repository.dart';
+import '../../features/auth/domain/repository/auth_repository.dart';
 import '../../features/home/data/repositories/file_repository_impl.dart';
 import '../../features/home/domain/repositories/file_repository.dart';
 import '../../features/home/domain/use_cases/get_company.dart';

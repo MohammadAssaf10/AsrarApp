@@ -25,11 +25,11 @@ class User {
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
-  
+
     result.addAll({'name': name});
     result.addAll({'email': email});
     result.addAll({'phoneNumber': phoneNumber});
-  
+
     return result;
   }
 
@@ -46,18 +46,26 @@ class User {
   factory User.fromJson(String source) => User.fromMap(json.decode(source));
 
   @override
-  String toString() => 'User(name: $name, email: $email, phoneNumber: $phoneNumber)';
+  String toString() =>
+      'User(name: $name, email: $email, phoneNumber: $phoneNumber)';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is User &&
-      other.name == name &&
-      other.email == email &&
-      other.phoneNumber == phoneNumber;
+        other.name == name &&
+        other.email == email &&
+        other.phoneNumber == phoneNumber;
   }
 
   @override
   int get hashCode => name.hashCode ^ email.hashCode ^ phoneNumber.hashCode;
+
+  /// true if all sensitive filed actually has data
+  bool safeToContinue() {
+    return (this.email.isNotEmpty &&
+        this.name.isNotEmpty &&
+        this.phoneNumber.isNotEmpty);
+  }
 }

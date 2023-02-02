@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../domain/entities/user.dart' as domain;
 import '../models/requests.dart';
@@ -10,10 +11,24 @@ const String userNameDocPath = 'name';
 class FirebaseAuthHelper {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  Future<void> login(LoginRequest loginRequest) async {
+  Future<void> loginViaEmail(LoginRequest loginRequest) async {
     await _firebaseAuth.signInWithEmailAndPassword(
         email: loginRequest.email, password: loginRequest.password);
+  }
+
+  Future<UserCredential> loginViaGoogle() async {
+    await _googleSignIn.signOut();
+    final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser!.authentication;
+
+    final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+
+    return _firebaseAuth.signInWithCredential(credential);
   }
 
   Future<domain.User> getUser(String email) async {
@@ -37,11 +52,28 @@ class FirebaseAuthHelper {
         email: registerRequest.email, password: registerRequest.password);
   }
 
-  Future<void> updateUserData(domain.User user) async {
-    await _firestore.collection(userCollectionPath).doc(user.email).set(user.toMap());
+  Future<domain.User> updateUserData(domain.User user) async {
+    await _firestore
+        .collection(userCollectionPath)
+        .doc(user.email)
+        .set(user.toMap());
+
+    return user;
+  }
+
+  Future<domain.User> createUserDocument(User firebaseUser) async {
+    return await updateUserData(domain.User.fromMap({
+      'name': firebaseUser.displayName,
+      'email': firebaseUser.email,
+      'phoneNumber': firebaseUser.phoneNumber
+    }));
   }
 
   Future<void> resetPassword(String email) async {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
+  logout() async {
+    await _firebaseAuth.signOut();
   }
 }

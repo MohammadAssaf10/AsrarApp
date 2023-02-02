@@ -1,8 +1,9 @@
-import 'package:asrar_app/language_cubit/language_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'config/routes_manager.dart';
+import 'features/auth/presentation/bloc/authentication_bloc.dart';
+import 'language_cubit/language_cubit.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -19,6 +20,16 @@ class SplashScreen extends StatelessWidget {
                 Navigator.pushNamed(context, Routes.auth);
               },
               child: Text('Auth')),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, Routes.verificationView);
+              },
+              child: Text('verification')),
+          ElevatedButton(
+              onPressed: () {
+                BlocProvider.of<AuthenticationBloc>(context).add(LogOut());
+              },
+              child: Text('logout')),
           ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, Routes.homeRoute);
