@@ -10,6 +10,8 @@ import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../../../../core/app/functions.dart';
 import '../../blocs/product_bloc/product_bloc.dart';
+import '../../widgets/general/error_view.dart';
+import '../../widgets/general/loading_view.dart';
 import '../../widgets/shop/product_widget.dart';
 
 class ShopScreen extends StatelessWidget {
@@ -29,7 +31,10 @@ class ShopScreen extends StatelessWidget {
               Routes.cartRoute,
             );
           else
-            showCustomDialog(context, message: "الرجاء اختيار منتجات");
+            showCustomDialog(
+              context,
+              message: "الرجاء اختيار منتجات",
+            );
         },
         backgroundColor: ColorManager.primary,
         child: Icon(
@@ -43,46 +48,37 @@ class ShopScreen extends StatelessWidget {
             BlocBuilder<ProductBloc, ProductState>(
               builder: (context, state) {
                 if (state is ProductLoadingState) {
-                  return Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: AppSize.s100.h,
-                    ),
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        color: ColorManager.primary,
-                      ),
-                    ),
+                  return LoadingView(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height / 1.3,
                   );
                 } else if (state is ProductErrorState) {
-                  return Container(
-                    margin: EdgeInsets.symmetric(vertical: AppSize.s60.h),
-                    alignment: Alignment.center,
-                    child: Text(
-                      state.errorMessage.tr(context),
-                      style: getAlmaraiRegularStyle(
-                        fontSize: AppSize.s20.sp,
-                        color: ColorManager.error,
-                      ),
-                    ),
+                  return ErrorView(
+                    errorMessage: state.errorMessage.tr(context),
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height / 1.3,
                   );
                 } else if (state is ProductsLoadedState) {
                   if (state.productsList.isNotEmpty) {
                     return GridView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: state.productsList.length,
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.9,
-                        ),
-                        itemBuilder: (_, int index) {
-                          return ProductWidget(
-                            product: state.productsList[index],
-                          );
-                        });
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: state.productsList.length,
+                      shrinkWrap: true,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.85.h,
+                      ),
+                      itemBuilder: (_, int index) {
+                        return ProductWidget(
+                          product: state.productsList[index],
+                        );
+                      },
+                    );
                   } else {
                     return Container(
-                      margin: EdgeInsets.symmetric(vertical: AppSize.s60.h),
+                      margin: EdgeInsets.symmetric(
+                        vertical: AppSize.s60.h,
+                      ),
                       alignment: Alignment.center,
                       child: Text(
                         AppStrings.noServices.tr(context),

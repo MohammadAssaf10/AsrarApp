@@ -5,10 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../config/assets_manager.dart';
 import '../../../../../config/color_manager.dart';
-import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../blocs/ad_image_bloc/ad_image_bloc.dart';
 import '../general/cached_network_image_widget.dart';
+import '../general/error_view.dart';
+import '../general/loading_view.dart';
 
 class AdImageView extends StatelessWidget {
   const AdImageView({Key? key}) : super(key: key);
@@ -18,30 +19,20 @@ class AdImageView extends StatelessWidget {
     return BlocBuilder<AdImageBloc, AdImageState>(
       builder: (context, state) {
         if (state is AdImageLoadingState)
-          return Padding(
-            padding: EdgeInsets.symmetric(vertical: AppSize.s85.h),
-            child: Center(
-              child: CircularProgressIndicator(
-                color: ColorManager.primary,
-              ),
-            ),
+          return LoadingView(
+            height: AppSize.s200.h,
+            width: MediaQuery.of(context).size.width,
           );
         else if (state is AdImageErrorState)
-          return Container(
-            margin: EdgeInsets.symmetric(vertical: AppSize.s90.h),
-            alignment: Alignment.center,
-            child: Text(
-              state.errorMessage.tr(context),
-              style: getAlmaraiRegularStyle(
-                fontSize: AppSize.s20.sp,
-                color: ColorManager.error,
-              ),
-            ),
+          return ErrorView(
+            errorMessage: state.errorMessage.tr(context),
+            height: AppSize.s200.h,
+            width: MediaQuery.of(context).size.width,
           );
         else if (state is AdImageLoadedState) if (state.list.isNotEmpty)
           return Container(
             height: AppSize.s200.h,
-            width: double.infinity,
+            // width: MediaQuery.of(context).size.width,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: state.list.length,
@@ -53,10 +44,10 @@ class AdImageView extends StatelessWidget {
                   width: AppSize.s340.w,
                   shapeBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(AppSize.s10.r),
-                    borderSide: BorderSide(color: ColorManager.transparent)
+                    borderSide: BorderSide(color: ColorManager.transparent),
                   ),
-                  offset: Offset(0,0),
-                  horizontalMargin: AppSize.s10.w,
+                  offset: Offset(0, 0),
+                  horizontalMargin: AppSize.s8.w,
                   verticalMargin: AppSize.s12.h,
                 );
               },

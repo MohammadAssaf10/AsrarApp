@@ -1,5 +1,4 @@
 import 'package:asrar_app/config/styles_manager.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -7,6 +6,7 @@ import '../../../../../config/color_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../../domain/entities/product_entities.dart';
 import '../../../../../core/app/functions.dart';
+import '../general/cached_network_image_widget.dart';
 
 List<ProductEntities> cartList = [];
 double totalProductsPrice = 0;
@@ -58,47 +58,27 @@ class _ProductWidgetState extends State<ProductWidget> {
         ),
         child: Column(
           children: [
-            Flexible(
+            Expanded(
               flex: 4,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppSize.s20.r),
-                  boxShadow: [
-                    BoxShadow(
-                      color: ColorManager.grey,
-                      blurRadius: 2.0,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: CachedNetworkImage(
-                  imageUrl: widget.product.productImageUrl,
-                  imageBuilder: (context, imageProvider) => Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(AppSize.s20.r),
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
+              child: CachedNetworkImageWidget(
+                image: widget.product.productImageUrl,
+                shapeBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: ColorManager.transparent,
                   ),
-                  placeholder: (context, url) => const Center(
-                    child: CircularProgressIndicator(
-                      color: ColorManager.primary,
-                    ),
-                  ),
-                  errorWidget: (context, url, error) => const Icon(
-                    Icons.error,
-                    color: ColorManager.error,
+                  borderRadius: BorderRadius.circular(
+                    AppSize.s20.r,
                   ),
                 ),
+                offset: Offset(0,2),
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
               ),
             ),
-            Flexible(
+            Expanded(
               flex: 2,
               child: Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(vertical: AppSize.s10.h),
+                margin: EdgeInsets.symmetric(vertical: AppSize.s12.h),
                 child: Text(
                   widget.product.productName,
                   textAlign: TextAlign.center,
@@ -115,7 +95,7 @@ class _ProductWidgetState extends State<ProductWidget> {
               height: AppSize.s1_5.h,
               color: ColorManager.grey,
             ),
-            Flexible(
+            Expanded(
               child: Container(
                 decoration: BoxDecoration(
                   color: ColorManager.white,
@@ -186,70 +166,58 @@ class _cartWidgetState extends State<cartWidget> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(AppSize.s20.r),
-                boxShadow: [
-                  BoxShadow(
-                    color: ColorManager.grey,
-                    blurRadius: 2.0,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: CachedNetworkImage(
-                imageUrl: widget.product.productImageUrl,
-                imageBuilder: (context, imageProvider) => Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(AppSize.s20.r),
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
+            child: CachedNetworkImageWidget(
+              image: widget.product.productImageUrl,
+              shapeBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: ColorManager.transparent,
                 ),
-                placeholder: (context, url) => const Center(
-                  child: CircularProgressIndicator(
-                    color: ColorManager.primary,
-                  ),
-                ),
-                errorWidget: (context, url, error) => const Icon(
-                  Icons.error,
-                  color: ColorManager.error,
+                borderRadius: BorderRadius.circular(
+                  AppSize.s20.r,
                 ),
               ),
+              offset: Offset(0, 0),
+              height: MediaQuery.of(context).size.height,
             ),
           ),
           Expanded(
             child: Container(
               margin: EdgeInsets.symmetric(
-                vertical: AppSize.s12.h,
                 horizontal: AppSize.s5.w,
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                textBaseline: TextBaseline.alphabetic,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    widget.product.productName,
-                    style: getAlmaraiBoldStyle(
-                      fontSize: AppSize.s18.sp,
-                      color: ColorManager.primary,
+                  Container(
+                    margin: EdgeInsets.only(
+                      bottom: AppSize.s5.h,
                     ),
-                    maxLines: 3,
-                    softWrap: true,
-                    overflow: TextOverflow.visible,
+                    width: MediaQuery.of(context).size.width,
+                    child: Text(
+                      widget.product.productName,
+                      style: getAlmaraiBoldStyle(
+                        fontSize: AppSize.s18.sp,
+                        color: ColorManager.primary,
+                      ),
+                      textAlign: TextAlign.start,
+                      maxLines: 4,
+                      softWrap: true,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                  SizedBox(height: AppSize.s5.h),
-                  Text(
-                    "${dp(totalProductPrice, 2)} ر.س",
-                    style: getAlmaraiBoldStyle(
-                      fontSize: AppSize.s16.sp,
-                      color: ColorManager.primary,
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: Text(
+                      "${dp(totalProductPrice, 2)} ر.س",
+                      style: getAlmaraiBoldStyle(
+                        fontSize: AppSize.s16.sp,
+                        color: ColorManager.primary,
+                      ),
+                      textAlign: TextAlign.start,
+                      maxLines: 1,
+                      softWrap: true,
+                      overflow: TextOverflow.visible,
                     ),
-                    maxLines: 1,
-                    softWrap: true,
-                    overflow: TextOverflow.visible,
                   ),
                 ],
               ),

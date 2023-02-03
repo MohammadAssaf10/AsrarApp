@@ -41,7 +41,6 @@ class HomeScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AdImageView(),
             OptionsWidget(
@@ -109,13 +108,15 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: AppSize.s10.h),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: AppSize.s8.h,
+            Container(
+              margin:   EdgeInsets.symmetric(
+                vertical: AppSize.s5.h,
                 horizontal: AppSize.s15.w,
               ),
+              width: MediaQuery.of(context).size.width,
               child: Text(
                 AppStrings.services.tr(context),
+                textAlign: TextAlign.start,
                 style: getAlmaraiBoldStyle(
                   fontSize: AppSize.s18.sp,
                   color: ColorManager.darkPrimary,
@@ -129,3 +130,5 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
+

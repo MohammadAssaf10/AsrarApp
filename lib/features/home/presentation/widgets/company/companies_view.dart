@@ -11,6 +11,8 @@ import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../blocs/company_bloc/company_bloc.dart';
 import '../../blocs/services_bloc/bloc/services_bloc.dart';
+import '../general/error_view.dart';
+import '../general/loading_view.dart';
 
 class CompaniesView extends StatelessWidget {
   const CompaniesView({Key? key}) : super(key: key);
@@ -20,30 +22,20 @@ class CompaniesView extends StatelessWidget {
     return BlocBuilder<CompanyBloc, CompanyState>(
       builder: (context, state) {
         if (state is CompanyLoadingState) {
-          return Padding(
-            padding: EdgeInsets.symmetric(vertical: AppSize.s60.h),
-            child: Center(
-              child: CircularProgressIndicator(
-                color: ColorManager.primary,
-              ),
-            ),
+          return LoadingView(
+            height: MediaQuery.of(context).size.height / 3,
+            width: MediaQuery.of(context).size.width,
           );
         } else if (state is CompanyErrorState) {
-          return Container(
-            margin: EdgeInsets.symmetric(vertical: AppSize.s60.h),
-            alignment: Alignment.center,
-            child: Text(
-              state.errorMessage.tr(context),
-              style: getAlmaraiRegularStyle(
-                fontSize: AppSize.s20.sp,
-                color: ColorManager.error,
-              ),
-            ),
+          return ErrorView(
+            errorMessage: state.errorMessage.tr(context),
+            height: MediaQuery.of(context).size.height / 3,
+            width: MediaQuery.of(context).size.width,
           );
         } else if (state is CompanyLoadedState) {
           if (state.company.isNotEmpty) {
             return SizedBox(
-              height: MediaQuery.of(context).size.height/3.2,
+              height: MediaQuery.of(context).size.height / 3.2,
               child: GridView.builder(
                 itemCount: state.company.length,
                 shrinkWrap: true,
@@ -67,8 +59,6 @@ class CompaniesView extends StatelessWidget {
                     },
                     child: CachedNetworkImageWidget(
                       image: state.company[index].image,
-                      height: AppSize.s0.h,
-                      width: AppSize.s0.w,
                       offset: Offset(0, 6),
                       horizontalMargin: AppSize.s10.w,
                       verticalMargin: AppSize.s5.h,

@@ -2,17 +2,18 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../config/color_manager.dart';
+import 'loading_view.dart';
 
 class CachedNetworkImageWidget extends StatelessWidget {
-  const CachedNetworkImageWidget({
+  CachedNetworkImageWidget({
     super.key,
     required this.image,
     required this.shapeBorder,
     required this.offset,
-    required this.horizontalMargin,
-    required this.verticalMargin,
-    required this.height,
-    required this.width,
+    this.horizontalMargin = 0,
+    this.verticalMargin = 0,
+    this.height = 0,
+    this.width = 0,
   });
   final String image;
   final ShapeBorder shapeBorder;
@@ -25,7 +26,6 @@ class CachedNetworkImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: image,
-      fit: BoxFit.fill,
       imageBuilder: (context, imageProvider) {
         return Container(
           height: height,
@@ -38,7 +38,7 @@ class CachedNetworkImageWidget extends StatelessWidget {
             shadows: [
               BoxShadow(
                 color: ColorManager.grey,
-                blurRadius: 2.0,
+                blurRadius: 4.0,
                 offset: offset,
               ),
             ],
@@ -50,15 +50,18 @@ class CachedNetworkImageWidget extends StatelessWidget {
           ),
         );
       },
-      placeholder: (context, url) => const Center(
-        child: CircularProgressIndicator(
-          color: ColorManager.primary,
-        ),
-      ),
-      errorWidget: (context, url, error) => const Icon(
-        Icons.error,
-        color: ColorManager.error,
-      ),
+      placeholder: (context, url) {
+        return LoadingView(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+        );
+      },
+      errorWidget: (context, url, error) {
+        return const Icon(
+          Icons.error,
+          color: ColorManager.error,
+        );
+      },
     );
   }
 }

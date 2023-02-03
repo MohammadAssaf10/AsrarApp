@@ -8,6 +8,8 @@ import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../blocs/services_bloc/bloc/services_bloc.dart';
+import '../general/error_view.dart';
+import '../general/loading_view.dart';
 import 'service_widget.dart';
 
 class ServicesView extends StatelessWidget {
@@ -21,22 +23,15 @@ class ServicesView extends StatelessWidget {
           BlocBuilder<ServicesBloc, ServicesState>(
             builder: (context, state) {
               if (state is LoadingServicesState)
-                return Container(
-                  margin: EdgeInsets.symmetric(vertical: AppSize.s240.h),
-                  child: CircularProgressIndicator(
-                    color: ColorManager.primary,
-                  ),
+                return LoadingView(
+                  height: MediaQuery.of(context).size.height / 2,
+                  width: MediaQuery.of(context).size.width,
                 );
               else if (state is ErrorServicesState)
-                return Container(
-                  margin: EdgeInsets.symmetric(vertical: AppSize.s240.h),
-                  child: Text(
-                    state.errorMessage.tr(context),
-                    style: getAlmaraiRegularStyle(
-                      fontSize: AppSize.s20.sp,
-                      color: ColorManager.error,
-                    ),
-                  ),
+                return ErrorView(
+                  errorMessage: state.errorMessage.tr(context),
+                  height: MediaQuery.of(context).size.height / 2,
+                  width: MediaQuery.of(context).size.width,
                 );
               else if (state is LoadedServicesState) {
                 if (state.services.isNotEmpty) {
@@ -51,7 +46,8 @@ class ServicesView extends StatelessWidget {
                   );
                 } else
                   return Container(
-                    margin: EdgeInsets.symmetric(vertical: AppSize.s240.h),
+                    height: MediaQuery.of(context).size.height / 2,
+                    alignment: Alignment.center,
                     child: Text(
                       AppStrings.noServices.tr(context),
                       style: getAlmaraiRegularStyle(
@@ -63,7 +59,7 @@ class ServicesView extends StatelessWidget {
               }
               return SizedBox();
             },
-          ),       
+          ),
         ],
       ),
     );

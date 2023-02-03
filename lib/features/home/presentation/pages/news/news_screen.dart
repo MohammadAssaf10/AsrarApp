@@ -30,10 +30,15 @@ class NewsScreen extends StatelessWidget {
             BlocBuilder<NewsBloc, NewsState>(
               builder: (context, state) {
                 if (state is NewsLoadingState)
-                  return LoadingView();
+                  return LoadingView(
+                    height: MediaQuery.of(context).size.height / 1.2,
+                    width: MediaQuery.of(context).size.width,
+                  );
                 else if (state is NewsErrorState)
                   return ErrorView(
                     errorMessage: state.errorMessage.tr(context),
+                    height: MediaQuery.of(context).size.height / 1.2,
+                    width: MediaQuery.of(context).size.width,
                   );
                 else if (state is NewsLoadedState) {
                   if (state.newsList.isNotEmpty) {
@@ -66,14 +71,13 @@ class NewsScreen extends StatelessWidget {
                                     offset: Offset(1, 3),
                                     height: AppSize.s90.h,
                                     width: double.infinity,
-                                    horizontalMargin: AppSize.s0.w,
                                     verticalMargin: AppSize.s4.h,
                                     image: state.newsList[index].newsImageUrl,
                                     shapeBorder: CircleBorder(),
                                   ),
                                 ),
                                 Expanded(
-                                  flex:2,
+                                  flex: 2,
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(
                                       vertical: AppSize.s5.h,

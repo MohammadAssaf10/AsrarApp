@@ -38,8 +38,6 @@ class NewsDetailsScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(AppSize.s10.r),
                 ),
                 offset: Offset(0, 0),
-                horizontalMargin: AppSize.s0.w,
-                verticalMargin: AppSize.s0.h,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
