@@ -52,7 +52,7 @@ class NewsScreen extends StatelessWidget {
                               vertical: AppSize.s8.h,
                               horizontal: AppSize.s10.w,
                             ),
-                            height: AppSize.s85.h,
+                            height: AppSize.s90.h,
                             decoration: BoxDecoration(
                               color: ColorManager.white,
                               borderRadius:
@@ -64,7 +64,7 @@ class NewsScreen extends StatelessWidget {
                                 Expanded(
                                   child: CachedNetworkImageWidget(
                                     offset: Offset(1, 3),
-                                    height: double.infinity,
+                                    height: AppSize.s90.h,
                                     width: double.infinity,
                                     horizontalMargin: AppSize.s0.w,
                                     verticalMargin: AppSize.s4.h,
@@ -73,11 +73,10 @@ class NewsScreen extends StatelessWidget {
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 2,
+                                  flex:2,
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(
-                                      // horizontal: AppSize.s5.w,
-                                      vertical: AppSize.s15.h,
+                                      vertical: AppSize.s5.h,
                                     ),
                                     child: Column(
                                       mainAxisAlignment:
