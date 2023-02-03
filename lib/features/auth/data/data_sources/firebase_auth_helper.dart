@@ -11,7 +11,11 @@ const String userNameDocPath = 'name';
 class FirebaseAuthHelper {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: [
+      'email',
+    ],
+  );
 
   Future<void> loginViaEmail(LoginRequest loginRequest) async {
     await _firebaseAuth.signInWithEmailAndPassword(
