@@ -31,7 +31,7 @@ class ServiceWidget extends StatelessWidget {
           horizontal: AppSize.s10.w,
         ),
         padding: EdgeInsets.symmetric(horizontal: AppSize.s8.w),
-        height: AppSize.s65.h,
+        height: AppSize.s70.h,
         width: double.infinity,
         decoration: BoxDecoration(
           color: ColorManager.white,
@@ -49,10 +49,11 @@ class ServiceWidget extends StatelessWidget {
                   ),
                   child: Container(
                     decoration: BoxDecoration(
-                        border: Border.all(
-                          color: ColorManager.primary,
-                        ),
-                        shape: BoxShape.circle),
+                      border: Border.all(
+                        color: ColorManager.primary,
+                      ),
+                      shape: BoxShape.circle,
+                    ),
                     child: CircleAvatar(
                       radius: AppSize.s34.r,
                       backgroundColor: ColorManager.darkWhite,
@@ -68,7 +69,7 @@ class ServiceWidget extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: AppSize.s130.w,
+                  width: MediaQuery.of(context).size.width / 2,
                   child: Text(
                     service.serviceName,
                     style: getAlmaraiBoldStyle(

@@ -1,5 +1,4 @@
 import 'package:asrar_app/config/app_localizations.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +8,7 @@ import '../../../../../config/color_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../blocs/ad_image_bloc/ad_image_bloc.dart';
+import '../general/cached_network_image_widget.dart';
 
 class AdImageView extends StatelessWidget {
   const AdImageView({Key? key}) : super(key: key);
@@ -47,34 +47,17 @@ class AdImageView extends StatelessWidget {
               itemCount: state.list.length,
               shrinkWrap: true,
               itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  margin: EdgeInsets.symmetric(
-                    vertical: AppSize.s12.h,
-                    horizontal: AppSize.s10.w,
-                  ),
+                return CachedNetworkImageWidget(
+                  image: state.list[index].url,
                   height: AppSize.s220.h,
                   width: AppSize.s340.w,
-                  child: CachedNetworkImage(
-                    imageUrl: state.list[index].url,
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(AppSize.s18.r),
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
-                    placeholder: (context, url) => const Center(
-                      child: CircularProgressIndicator(
-                        color: ColorManager.primary,
-                      ),
-                    ),
-                    errorWidget: (context, url, error) => const Icon(
-                      Icons.error,
-                      color: ColorManager.error,
-                    ),
+                  shapeBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(AppSize.s10.r),
+                    borderSide: BorderSide(color: ColorManager.transparent)
                   ),
+                  offset: Offset(0,0),
+                  horizontalMargin: AppSize.s10.w,
+                  verticalMargin: AppSize.s12.h,
                 );
               },
             ),

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../config/color_manager.dart';
+import '../../../../../config/routes_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
@@ -41,7 +42,11 @@ class NewsScreen extends StatelessWidget {
                       itemCount: state.newsList.length,
                       itemBuilder: (BuildContext context, int index) {
                         return InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, Routes.newsDetailsRoute,
+                                arguments: state.newsList[index]);
+                          },
                           child: Container(
                             margin: EdgeInsets.symmetric(
                               vertical: AppSize.s8.h,
@@ -59,6 +64,8 @@ class NewsScreen extends StatelessWidget {
                                 Expanded(
                                   child: CachedNetworkImageWidget(
                                     offset: Offset(1, 3),
+                                    height: double.infinity,
+                                    width: double.infinity,
                                     horizontalMargin: AppSize.s0.w,
                                     verticalMargin: AppSize.s4.h,
                                     image: state.newsList[index].newsImageUrl,

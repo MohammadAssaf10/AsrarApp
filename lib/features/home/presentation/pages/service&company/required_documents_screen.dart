@@ -9,6 +9,8 @@ import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../../domain/entities/service_entities.dart';
+import '../../widgets/general/home_button_widgets.dart';
+import '../pay/pay_screen.dart';
 
 class RequiredDocumentsScreen extends StatelessWidget {
   const RequiredDocumentsScreen(
@@ -41,9 +43,11 @@ class RequiredDocumentsScreen extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: AppSize.s30.w,),
+              padding: EdgeInsets.symmetric(
+                horizontal: AppSize.s30.w,
+              ),
               child: ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
+                // physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: service.requiredDocuments.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -68,6 +72,24 @@ class RequiredDocumentsScreen extends StatelessWidget {
                     ),
                   );
                 },
+              ),
+            ),
+            SizedBox(height: AppSize.s15.h),
+            Center(
+              child: OptionButton(
+                onTap: () {
+                  print("${MediaQuery.of(context).size.height}");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PayScreen(),
+                    ),
+                  );
+                },
+                title: AppStrings.checkout.tr(context),
+                height: AppSize.s35.h,
+                width: AppSize.s200.w,
+                fontSize: AppSize.s18.sp,
               ),
             ),
           ],

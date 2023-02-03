@@ -61,6 +61,7 @@ class AppStrings {
   static const String checkout = "checkout";
   static const String totalPrice = "total_price";
   static const String news = "news";
+  static const String theNews = "the_news";
 
   // exception handler
   static const String success = "Success";

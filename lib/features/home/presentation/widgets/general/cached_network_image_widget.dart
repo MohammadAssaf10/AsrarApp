@@ -11,12 +11,16 @@ class CachedNetworkImageWidget extends StatelessWidget {
     required this.offset,
     required this.horizontalMargin,
     required this.verticalMargin,
+    required this.height,
+    required this.width,
   });
   final String image;
   final ShapeBorder shapeBorder;
   final Offset offset;
   final double horizontalMargin;
   final double verticalMargin;
+  final double height;
+  final double width;
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
@@ -24,6 +28,8 @@ class CachedNetworkImageWidget extends StatelessWidget {
       fit: BoxFit.fill,
       imageBuilder: (context, imageProvider) {
         return Container(
+          height: height,
+          width: width,
           margin: EdgeInsets.symmetric(
             horizontal: horizontalMargin,
             vertical: verticalMargin,

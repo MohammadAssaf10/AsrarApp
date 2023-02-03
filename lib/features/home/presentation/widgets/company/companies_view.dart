@@ -43,7 +43,7 @@ class CompaniesView extends StatelessWidget {
         } else if (state is CompanyLoadedState) {
           if (state.company.isNotEmpty) {
             return SizedBox(
-              height: AppSize.s200.h,
+              height: MediaQuery.of(context).size.height/3.2,
               child: GridView.builder(
                 itemCount: state.company.length,
                 shrinkWrap: true,
@@ -67,6 +67,8 @@ class CompaniesView extends StatelessWidget {
                     },
                     child: CachedNetworkImageWidget(
                       image: state.company[index].image,
+                      height: AppSize.s0.h,
+                      width: AppSize.s0.w,
                       offset: Offset(0, 6),
                       horizontalMargin: AppSize.s10.w,
                       verticalMargin: AppSize.s5.h,

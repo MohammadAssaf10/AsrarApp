@@ -4,8 +4,10 @@ import '../core/app/di.dart';
 import '../features/auth/presentation/pages/auth_view.dart';
 import '../features/auth/presentation/pages/password_reset_view.dart';
 import '../features/home/domain/entities/company_entities.dart';
+import '../features/home/domain/entities/news_entities.dart';
 import '../features/home/domain/entities/service_entities.dart';
 import '../features/home/presentation/pages/main/main_view.dart';
+import '../features/home/presentation/pages/news/news_details_screen.dart';
 import '../features/home/presentation/pages/shop/cart_screen.dart';
 import '../features/home/presentation/pages/news/news_screen.dart';
 import '../features/home/presentation/pages/service&company/required_documents_screen.dart';
@@ -24,6 +26,7 @@ class Routes {
   static const String shopRoute = "/shop";
   static const String cartRoute = "/cart";
   static const String newsRoute = "/news";
+  static const String newsDetailsRoute = "/newsDetails";
 
   // auth rotes
   static const String auth = '/auth';
@@ -45,6 +48,13 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => CartScreen());
       case Routes.newsRoute:
         return MaterialPageRoute(builder: (_) => NewsScreen());
+      case Routes.newsDetailsRoute:
+        {
+          final arg = settings.arguments as NewsEntities;
+          return MaterialPageRoute(
+            builder: (context) => NewsDetailsScreen(arg),
+          );
+        }
       case Routes.serviceRoute:
         {
           final arg = settings.arguments as CompanyEntities;
