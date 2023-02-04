@@ -8,7 +8,7 @@ import '../../../../core/data/exception_handler.dart';
 import '../../../../core/data/failure.dart';
 import '../../../../core/network/network_info.dart';
 
-class GetCompanyUseCase {
+class GetCompaniesUseCase {
   final NetworkInfo _networkInfo = instance<NetworkInfo>();
   Future<Either<Failure, List<CompanyEntities>>> call() async {
     if (await _networkInfo.isConnected) {

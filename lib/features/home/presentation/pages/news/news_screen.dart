@@ -138,7 +138,7 @@ class NewsScreen extends StatelessWidget {
                     return Container(
                       margin: EdgeInsets.symmetric(vertical: AppSize.s240.h),
                       child: Text(
-                        AppStrings.noServices.tr(context),
+                        AppStrings.noNews.tr(context),
                         style: getAlmaraiRegularStyle(
                           fontSize: AppSize.s20.sp,
                           color: ColorManager.error,

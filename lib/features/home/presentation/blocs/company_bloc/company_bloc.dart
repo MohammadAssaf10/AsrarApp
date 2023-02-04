@@ -2,14 +2,14 @@ import 'package:asrar_app/features/home/domain/entities/company_entities.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../domain/use_cases/get_company.dart';
+import '../../../domain/use_cases/get_companies.dart';
 
 part 'company_event.dart';
 
 part 'company_state.dart';
 
 class CompanyBloc extends Bloc<CompanyEvent, CompanyState> {
-  final GetCompanyUseCase getCompanyUseCase;
+  final GetCompaniesUseCase getCompanyUseCase;
 
   CompanyBloc({required this.getCompanyUseCase}) : super(CompanyInitial()) {
     on<CompanyEvent>((event, emit) async {

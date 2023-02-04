@@ -7,12 +7,13 @@ import '../../config/app_localizations.dart';
 import '../../config/routes_manager.dart';
 import '../../config/theme_manager.dart';
 import '../../features/auth/presentation/bloc/authentication_bloc.dart';
+import '../../features/home/presentation/blocs/course_bloc/course_bloc.dart';
 import '../../features/home/presentation/blocs/news_bloc/news_bloc.dart';
 import '../../features/home/presentation/blocs/product_bloc/product_bloc.dart';
 import '../../features/home/presentation/blocs/services_bloc/bloc/services_bloc.dart';
 import '../../language_cubit/language_cubit.dart';
 import 'language.dart';
-import '../../features/home/domain/use_cases/get_company.dart';
+import '../../features/home/domain/use_cases/get_companies.dart';
 import '../../features/home/domain/use_cases/get_file.dart';
 import '../../features/home/presentation/blocs/ad_image_bloc/ad_image_bloc.dart';
 import '../../features/home/presentation/blocs/company_bloc/company_bloc.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) =>
-              CompanyBloc(getCompanyUseCase: instance<GetCompanyUseCase>())
+              CompanyBloc(getCompanyUseCase: instance<GetCompaniesUseCase>())
                 ..add(GetCompanyEvent()),
         ),
         BlocProvider(
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<ServicesBloc>(create: (context) => ServicesBloc()),
         BlocProvider<ProductBloc>(create: (context) => ProductBloc()),
         BlocProvider<NewsBloc>(create: (context) => NewsBloc()),
+        BlocProvider<CourseBloc>(create: (context) => CourseBloc()),
         BlocProvider<AuthenticationBloc>(
             lazy: false,
             create: ((context) =>
@@ -59,7 +61,6 @@ class MyApp extends StatelessWidget {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
                 title: "اسرار",
-                
                 localizationsDelegates: const [
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate,

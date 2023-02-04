@@ -29,17 +29,6 @@ class NewsEntities extends Equatable {
     ];
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'newsId': newsId,
-      'timestamp': timestamp,
-      'newsTitle': newsTitle,
-      'newsContent': newsContent,
-      'newsImageName': newsImageName,
-      'newsImageUrl': newsImageUrl,
-    };
-  }
-
   factory NewsEntities.fromMap(Map<String, dynamic> map) {
     return NewsEntities(
       newsId: map['newsId'],

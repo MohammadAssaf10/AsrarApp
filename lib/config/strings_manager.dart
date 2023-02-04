@@ -53,6 +53,8 @@ class AppStrings {
   static const String subscribe = "subscribe";
   static const String termsOfUse = "terms_of_use";
   static const String noServices = "no_services";
+  static const String noProducts = "no_products";
+  static const String noNews = "no_News";
   static const String services = "services";
   static const String searchForYourServices = "search_for_your_services";
   static const String requiredDocuments = "required_documents";
@@ -62,6 +64,7 @@ class AppStrings {
   static const String totalPrice = "total_price";
   static const String news = "news";
   static const String theNews = "the_news";
+  static const String courses = "courses";
 
   // exception handler
   static const String success = "Success";

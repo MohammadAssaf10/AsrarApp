@@ -49,6 +49,7 @@
   "total_price": "السعر الإجمالي",
   "news": "الأخبار",
   "the_news": "الخبر",
+  "courses": "الدورات",
 
   "Success": "نحاج",
   "Bad request error": "طلب خاطئ",
@@ -73,6 +74,8 @@
   "Invalid action code": "كود غير صالح",
   "no_internet_error": "تحقق من اتصالك بالإنترنت وحاول مرة أخرى",
   "no_services": "لا توجد خدمات",
+  "no_products": "لا توجد منتجات",
+  "noNews": "لا يوجد أخبار",
   "services": "الخدمات",
   "search_for_your_services": "ابحث عن خدماتك",
   "required_documents": "المستندات المطلوبة:"

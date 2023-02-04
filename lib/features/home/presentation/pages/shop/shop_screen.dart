@@ -81,7 +81,7 @@ class ShopScreen extends StatelessWidget {
                       ),
                       alignment: Alignment.center,
                       child: Text(
-                        AppStrings.noServices.tr(context),
+                        AppStrings.noProducts.tr(context),
                         style: getAlmaraiRegularStyle(
                           fontSize: AppSize.s20.sp,
                           color: ColorManager.error,

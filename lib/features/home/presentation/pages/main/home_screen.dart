@@ -10,6 +10,7 @@ import '../../../../../config/routes_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
+import '../../blocs/course_bloc/course_bloc.dart';
 import '../../blocs/news_bloc/news_bloc.dart';
 import '../../blocs/product_bloc/product_bloc.dart';
 import '../../widgets/ad/ad_image_view.dart';
@@ -79,9 +80,11 @@ class HomeScreen extends StatelessWidget {
                   ),
                   OptionButton(
                     onTap: () {
-                      print("الدورات");
+                      BlocProvider.of<CourseBloc>(context)
+                          .add(GetCoursesListEvent());
+                      Navigator.pushNamed(context, Routes.courseRoute);
                     },
-                    title: "الدورات",
+                    title: AppStrings.courses.tr(context),
                     height: double.infinity,
                     width: AppSize.s100.w,
                     fontSize: AppSize.s16.sp,
@@ -109,7 +112,7 @@ class HomeScreen extends StatelessWidget {
             ),
             SizedBox(height: AppSize.s10.h),
             Container(
-              margin:   EdgeInsets.symmetric(
+              margin: EdgeInsets.symmetric(
                 vertical: AppSize.s5.h,
                 horizontal: AppSize.s15.w,
               ),
@@ -130,5 +133,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
-

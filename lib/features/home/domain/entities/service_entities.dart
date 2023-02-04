@@ -21,15 +21,6 @@ class ServiceEntities extends Equatable {
         requiredDocuments,
       ];
 
-  Map<String, dynamic> toMap() {
-    return {
-      'companyName': companyName,
-      'serviceName': serviceName,
-      'servicePrice': servicePrice,
-      'requiredDocuments': requiredDocuments,
-    };
-  }
-
   factory ServiceEntities.fromMap(Map<String, dynamic> map) {
     return ServiceEntities(
       companyName: map['companyName'],

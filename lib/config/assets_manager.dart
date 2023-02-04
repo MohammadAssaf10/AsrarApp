@@ -4,6 +4,7 @@ const String jsonPath = "assets/json";
 
 class ImageAssets {
   static const String maskGroup = "$imagePath/maskGroup.png";
+  static const String asrarCourse = "$imagePath/asrarCourse.png";
 }
 
 class IconAssets {
