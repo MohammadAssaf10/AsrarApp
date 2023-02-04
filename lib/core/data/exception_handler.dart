@@ -1,7 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../config/strings_manager.dart';
+import 'dio_exception_handler.dart';
 import 'firebase_auth_exception_handler.dart';
 import 'failure.dart';
 import 'firebase_exception_handler.dart';
@@ -10,8 +12,9 @@ class ExceptionHandler implements Exception {
   late final Failure failure;
 
   ExceptionHandler.handle(exception) {
- if (kDebugMode) {
-      print("\x1B[31m exception cached: ${exception.runtimeType} ${exception.toString()} \x1B[0m");
+    if (kDebugMode) {
+      print(
+          "\x1B[31m exception cached: ${exception.runtimeType} ${exception.toString()} \x1B[0m");
     }
     bool found = false;
 
@@ -22,6 +25,11 @@ class ExceptionHandler implements Exception {
 
     if (!found && exception is FirebaseException) {
       failure = FirebaseExceptionHandler.handle(exception).getFailure();
+      found = true;
+    }
+
+    if (!found && exception is DioError) {
+      failure = getDioFailure(exception);
       found = true;
     }
 
@@ -71,4 +79,29 @@ class ResponseCode {
 class ApiInternalStatus {
   static const int success = 0;
   static const int failure = 1;
+}
+
+class ResponseMessage {
+  static const String success = AppStrings.success; // success with data
+  static const String noContent =
+      AppStrings.success; // success with no data (no content)
+  static const String badRequestError =
+      AppStrings.badRequestError; // failure, API rejected request
+  static const String unauthorized =
+      AppStrings.unauthorizedError; // failure, user is not authorized
+  static const String forbidden =
+      AppStrings.forbiddenError; //  failure, API rejected request
+  static const String internalServerError =
+      AppStrings.internalServerError; // failure, crash in server side
+  static const String notFound =
+      AppStrings.notFoundError; // failure, crash in server side
+
+  // local status code
+  static const String connectTimeout = AppStrings.timeoutError;
+  static const String cancel = AppStrings.defaultError;
+  static const String receiveTimeout = AppStrings.timeoutError;
+  static const String sendTimeout = AppStrings.timeoutError;
+  static const String cacheError = AppStrings.cacheError;
+  static const String noInternetConnection = AppStrings.noInternetError;
+  static const String defaultError = AppStrings.defaultError;
 }

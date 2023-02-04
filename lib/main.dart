@@ -10,11 +10,11 @@ import 'core/app/app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await initAppModule();
-  initAuthenticationModule();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await initAppModule();
+  await initAuthenticationModule();
   // lock rotate
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

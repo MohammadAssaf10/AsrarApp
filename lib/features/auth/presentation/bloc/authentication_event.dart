@@ -61,3 +61,12 @@ class LogOut extends AuthenticationEvent {
   @override
   List<Object?> get props => [];
 }
+
+class SendVerificationCode extends AuthenticationEvent {
+  final String number;
+  final String code;
+
+  SendVerificationCode(this.number, this.code);
+  @override
+  List<Object?> get props => [number];
+}

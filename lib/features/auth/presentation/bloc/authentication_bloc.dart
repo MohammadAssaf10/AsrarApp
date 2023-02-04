@@ -99,5 +99,11 @@ class AuthenticationBloc
         emit(AuthenticationInitial());
       },
     );
+
+    on<SendVerificationCode>(
+      (event, emit) async {
+        await _authRepository.sendVerificationCode(event.number, event.code);
+      },
+    );
   }
 }

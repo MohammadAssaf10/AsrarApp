@@ -8,6 +8,8 @@ abstract class AuthRepository {
   Future<Either<Failure, User>> loginViaEmail(LoginRequest loginRequest);
   Future<Either<Failure, User>> loginViaGoogle();
   Future<void> logOut();
+  Future<Either<Failure, void>> sendVerificationCode(
+      String number, String message);
   Future<Either<Failure, User>> updateUserData(User user);
   Future<Either<Failure, User>> register(RegisterRequest registerRequest);
   Future<Either<Failure, void>> resetPassword(String email);

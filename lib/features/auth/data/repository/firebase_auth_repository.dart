@@ -7,13 +7,16 @@ import '../../../../core/network/network_info.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/repository/auth_repository.dart';
 import '../data_sources/firebase_auth_helper.dart';
+import '../data_sources/whatsapp_api.dart';
 import '../models/requests.dart';
 
 class FirebaseAuthRepository implements AuthRepository {
   final FirebaseAuthHelper _authHelper;
   final NetworkInfo _networkInfo;
+  final WhatsappApi _whatsappApi;
 
-  FirebaseAuthRepository(this._authHelper, this._networkInfo);
+  FirebaseAuthRepository(
+      this._authHelper, this._networkInfo, this._whatsappApi);
 
   @override
   Future<Either<Failure, User>> loginViaEmail(LoginRequest loginRequest) async {
@@ -111,5 +114,20 @@ class FirebaseAuthRepository implements AuthRepository {
   @override
   Future<void> logOut() async {
     await _authHelper.logout();
+  }
+
+  @override
+  Future<Either<Failure, void>> sendVerificationCode(
+      String number, String code) async {
+    try {
+      await _whatsappApi.sendCode(
+          number: number,
+          message: 'رمز التحقق الخاص بك هو: $code',
+          instance_id: WhatsAppApiConstance.instance.instance_id,
+          access_token: WhatsAppApiConstance.instance.access_token);
+      return Right(null);
+    } catch (e) {
+      return Left(ExceptionHandler.handle(e).failure);
+    }
   }
 }
