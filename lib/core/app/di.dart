@@ -8,7 +8,7 @@ import '../../features/auth/data/repository/repository_impl.dart';
 import '../../features/auth/domain/repository/repository.dart';
 import '../../features/home/data/repositories/file_repository_impl.dart';
 import '../../features/home/domain/repositories/file_repository.dart';
-import '../../features/home/domain/use_cases/get_company.dart';
+import '../../features/home/domain/use_cases/get_companies.dart';
 import '../../features/home/domain/use_cases/get_file.dart';
 import '../network/network_info.dart';
 
@@ -45,6 +45,6 @@ void initHomeModule() {
     instance.registerLazySingleton<GetFileUseCase>(
         () => GetFileUseCase(instance<FileRepository>()));
     instance
-        .registerLazySingleton<GetCompanyUseCase>(() => GetCompanyUseCase());
+        .registerLazySingleton<GetCompaniesUseCase>(() => GetCompaniesUseCase());
   }
 }

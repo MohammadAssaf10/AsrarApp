@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../config/color_manager.dart';
-import '../../../../config/strings_manager.dart';
+import '../../../../../config/color_manager.dart';
+import '../../../../../config/strings_manager.dart';
+import '../../pages/main/about_us.dart';
+import '../../pages/main/terms_of_use_screen.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({Key? key}) : super(key: key);
@@ -73,9 +75,16 @@ class DrawerList extends StatelessWidget {
         child: Column(
           children: [
             MenuItem(
-              title: AppStrings.info.tr(context),
+              title: AppStrings.aboutUs.tr(context),
               icon: IconAssets.info,
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AboutUsScreen(),
+                  ),
+                );
+              },
             ),
             MenuItem(
               title: AppStrings.whatsApp.tr(context),
@@ -95,7 +104,14 @@ class DrawerList extends StatelessWidget {
             MenuItem(
               title: AppStrings.termsOfUse.tr(context),
               icon: IconAssets.termsOfUse,
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TermsOfUseScreen(),
+                  ),
+                );
+              },
             ),
             MenuItem(
               title: AppStrings.signOut.tr(context),

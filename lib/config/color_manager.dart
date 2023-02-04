@@ -11,6 +11,7 @@ class ColorManager {
   static const Color transparent = Colors.transparent;
 
   static const Color black = Colors.black;
+  static const Color lightBlack = Color(0xFF363636);
   static const Color white = Colors.white;
   static const Color darkWhite = Color.fromARGB(255, 250, 250, 250);
 

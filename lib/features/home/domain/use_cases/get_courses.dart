@@ -1,26 +1,26 @@
-import 'package:asrar_app/core/data/exception_handler.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/app/constants.dart';
 import '../../../../core/app/di.dart';
+import '../../../../core/data/exception_handler.dart';
 import '../../../../core/data/failure.dart';
 import '../../../../core/network/network_info.dart';
-import '../entities/product_entities.dart';
+import '../entities/course_entities.dart';
 
-class GetShopProductsUseCase {
+class GetCoursesUseCase {
   final FirebaseFirestore db = FirebaseFirestore.instance;
   final NetworkInfo _networkInfo = instance<NetworkInfo>();
 
-  Future<Either<Failure, List<ProductEntities>>> call() async {
+  Future<Either<Failure, List<CourseEntities>>> call() async {
     if (await _networkInfo.isConnected) {
       try {
-        List<ProductEntities> productsList = [];
-        final products = await db.collection(FireBaseCollection.products).get();
-        for (var doc in products.docs) {
-          productsList.add(ProductEntities.fromMap(doc.data()));
-        }
-        return Right(productsList);
+        List<CourseEntities> coursesList = [];
+        final courses = await db.collection(FireBaseCollection.courses).get();
+        for (var doc in courses.docs)
+          coursesList.add(CourseEntities.fromMap(doc.data()));
+        coursesList.sort((a, b) => a.timestamp.compareTo(b.timestamp));
+        return Right(coursesList);
       } catch (e) {
         return Left(ExceptionHandler.handle(e).failure);
       }

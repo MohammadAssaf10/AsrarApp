@@ -91,6 +91,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
                     return null;
                   },
                 ),
+                SizedBox(height: AppSize.s15.h),
                 TextFrom(
                   controller: _phoneNumberTextEditingController,
                   icon: Icons.phone,
@@ -139,7 +140,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
             ),
           ),
           SizedBox(
-            height: AppSize.s100.h,
+            height: AppSize.s50.h,
           ),
           FullElevatedButton(
             onPressed: () {
@@ -149,14 +150,15 @@ class _NewAccountFormState extends State<NewAccountForm> {
                 validateUserName = true;
               });
               if (_key.currentState!.validate()) {
-                BlocProvider.of<AuthenticationBloc>(context)
-                    .add(RegisterButtonPressed(
-                  RegisterRequest(
-                      name: _nameTextEditingController.text,
-                      email: _emailTextEditingController.text,
-                      password: _passwordTextEditingController.text,
-                      phoneNumber: _phoneNumberTextEditingController.text),
-                ));
+                BlocProvider.of<AuthenticationBloc>(context).add(
+                  RegisterButtonPressed(
+                    RegisterRequest(
+                        name: _nameTextEditingController.text,
+                        email: _emailTextEditingController.text,
+                        password: _passwordTextEditingController.text,
+                        phoneNumber: _phoneNumberTextEditingController.text),
+                  ),
+                );
               }
             },
             text: AppStrings.registerNewAccount.tr(context),

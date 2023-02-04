@@ -13,15 +13,6 @@ class CompanyEntities extends Equatable {
     required this.name,
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      'companyRanking': companyRanking,
-      'fullName': fullName,
-      'name': name,
-      'image': image,
-    };
-  }
-
   factory CompanyEntities.fromMap(Map<String, dynamic> map) {
     return CompanyEntities(
       companyRanking: map['companyRanking'],

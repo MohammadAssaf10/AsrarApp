@@ -22,8 +22,8 @@ class AppStrings {
       "name_should_atLeast_3_character";
   static const String emailFormatNotCorrect = "email_format_not_correct";
   static const String pleaseEnterMobileNumber = "please_enter_mobile_number";
-  static const String mobileNumberShouldAtLeast5Character =
-      "mobile_number_should_at_least_5_character";
+  static const String mobileNumberShouldAtLeast9Character =
+      "mobile_number_should_at_least_9_character";
   static const String passwordShouldAtLeast6Character =
       "password_should_at_least_6_Character";
   static const String mobileNumberFormatNotCorrect =
@@ -47,17 +47,25 @@ class AppStrings {
   static const String customerService = "customers_service";
   static const String asrarForElectronicServices =
       "asrar_for_electronic_services";
-  static const String info = "info";
+  static const String aboutUs = "about_us";
   static const String whatsApp = "whats_app";
   static const String googleTranslate = "google_translate";
   static const String subscribe = "subscribe";
   static const String termsOfUse = "terms_of_use";
   static const String noServices = "no_services";
+  static const String noProducts = "no_products";
+  static const String noNews = "no_News";
   static const String services = "services";
   static const String searchForYourServices = "search_for_your_services";
   static const String requiredDocuments = "required_documents";
   static const String addOrder = "add_order";
   static const String whatsAppNumber = "whatsApp_number";
+  static const String checkout = "checkout";
+  static const String totalPrice = "total_price";
+  static const String news = "news";
+  static const String theNews = "the_news";
+  static const String courses = "courses";
+
   // exception handler
   static const String success = "Success";
   static const String badRequestError = "Bad request error";

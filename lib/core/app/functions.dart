@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:asrar_app/config/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -7,20 +9,18 @@ import 'package:lottie/lottie.dart';
 
 import '../../config/color_manager.dart';
 import '../../config/strings_manager.dart';
-import '../../config/strings_manager.dart';
 import '../../config/styles_manager.dart';
 import '../../config/values_manager.dart';
-import '../../features/home/presentation/widgets/home_button_widgets.dart';
-import '../../config/app_localizations.dart';
+import '../../features/home/presentation/widgets/general/home_button_widgets.dart';
 import '../../core/app/extensions.dart';
 
 String? nameValidator(String? name, BuildContext context) {
   if (name.nullOrEmpty()) {
-    return "";//AppStrings.pleaseEnterName.tr(context);
+    return ""; //AppStrings.pleaseEnterName.tr(context);
   }
 
   if (name!.length < 3) {
-    return "";//AppStrings.nameTooShort.tr(context);
+    return ""; //AppStrings.nameTooShort.tr(context);
   }
 
   return null;
@@ -28,7 +28,7 @@ String? nameValidator(String? name, BuildContext context) {
 
 String? mobileNumberValidator(String? phone, BuildContext context) {
   if (phone.nullOrEmpty()) {
-    return "";//AppStrings.pleaseEnterName.tr(context);
+    return ""; //AppStrings.pleaseEnterName.tr(context);
   }
 
   if (!isMobileNumberCorrect(phone!)) {
@@ -66,6 +66,16 @@ bool isEmailFormatCorrect(String email) {
 
 bool isMobileNumberCorrect(String mobileNumber) {
   return RegExp(r"^[+]*[0-9]+").hasMatch(mobileNumber);
+}
+
+///places: The desired number of digits after the comma
+double dp(double val, int places) {
+  num mod = pow(10.0, places);
+  return ((val * mod).round().toDouble() / mod);
+}
+
+double stringToDouble(String str) {
+  return double.parse(str);
 }
 
 _isCurrentDialogShowing(BuildContext context) =>
@@ -137,19 +147,20 @@ void showCustomDialog(BuildContext context,
 void showOrderDialog(
   BuildContext context,
   String title,
-  String hintTitle,
   String number,
+  String totalPrice,
   Function acceptOnTap,
 ) {
   dismissDialog(context);
   TextEditingController controller = TextEditingController();
   controller = TextEditingController(text: number);
+
   showDialog(
     context: context,
     builder: (_) {
       return AlertDialog(
         title: Text(
-          title,
+          "${AppStrings.totalPrice.tr(context)}: $totalPrice ر.س",
           style: getAlmaraiRegularStyle(
             fontSize: AppSize.s20.sp,
             color: ColorManager.primary,
@@ -159,27 +170,29 @@ void showOrderDialog(
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
+              Center(
+                child: Text(
+                  title,
+                  style: getAlmaraiRegularStyle(
+                    fontSize: AppSize.s20.sp,
                     color: ColorManager.primary,
                   ),
-                  borderRadius: BorderRadius.circular(
-                    AppSize.s18.r,
-                  ),
-                ),
-                child: TextField(
-                  controller: controller,
                   textAlign: TextAlign.center,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(
-                      RegExp("[0-9]"),
-                    ),
-                  ],
-                  decoration: InputDecoration(
-                    hintText: hintTitle,
+                ),
+              ),
+              SizedBox(height: AppSize.s5.h),
+              TextFormField(
+                controller: controller,
+                textAlign: TextAlign.center,
+                
+                keyboardType: TextInputType.phone,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(
+                    RegExp("[0-9]"),
                   ),
+                ],
+                decoration: InputDecoration(
+                  hintText: title,
                 ),
               ),
             ],
@@ -192,9 +205,10 @@ void showOrderDialog(
               children: [
                 OptionButton(
                   onTap: () {
-                    acceptOnTap();
+                    if (controller.text.isNotEmpty &&
+                        controller.text.length == 10) acceptOnTap();
                   },
-                  title: AppStrings.addOrder.tr(context),
+                  title: AppStrings.checkout.tr(context),
                   height: AppSize.s35.h,
                   width: AppSize.s110.w,
                   fontSize: AppSize.s18.sp,

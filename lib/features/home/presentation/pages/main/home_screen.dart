@@ -4,17 +4,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../config/assets_manager.dart';
-import '../../../../config/color_manager.dart';
-import '../../../../config/routes_manager.dart';
-import '../../../../config/strings_manager.dart';
-import '../../../../config/styles_manager.dart';
-import '../../../../config/values_manager.dart';
-import '../blocs/product_bloc/product_bloc.dart';
-import '../widgets/ad_image_view.dart';
-import '../widgets/companies_view.dart';
-import '../widgets/drawer.dart';
-import '../widgets/home_button_widgets.dart';
+import '../../../../../config/assets_manager.dart';
+import '../../../../../config/color_manager.dart';
+import '../../../../../config/routes_manager.dart';
+import '../../../../../config/strings_manager.dart';
+import '../../../../../config/styles_manager.dart';
+import '../../../../../config/values_manager.dart';
+import '../../blocs/course_bloc/course_bloc.dart';
+import '../../blocs/news_bloc/news_bloc.dart';
+import '../../blocs/product_bloc/product_bloc.dart';
+import '../../widgets/ad/ad_image_view.dart';
+import '../../widgets/company/companies_view.dart';
+import '../../widgets/general/drawer.dart';
+import '../../widgets/general/home_button_widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -40,7 +42,6 @@ class HomeScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AdImageView(),
             OptionsWidget(
@@ -63,9 +64,11 @@ class HomeScreen extends StatelessWidget {
                   ),
                   OptionButton(
                     onTap: () {
-                      print("أخبار");
+                      BlocProvider.of<NewsBloc>(context)
+                          .add(GetNewsListEvent());
+                      Navigator.pushNamed(context, Routes.newsRoute);
                     },
-                    title: "أخبار",
+                    title: AppStrings.news.tr(context),
                     height: double.infinity,
                     width: AppSize.s100.w,
                     fontSize: AppSize.s16.sp,
@@ -77,9 +80,11 @@ class HomeScreen extends StatelessWidget {
                   ),
                   OptionButton(
                     onTap: () {
-                      print("الدورات");
+                      BlocProvider.of<CourseBloc>(context)
+                          .add(GetCoursesListEvent());
+                      Navigator.pushNamed(context, Routes.courseRoute);
                     },
-                    title: "الدورات",
+                    title: AppStrings.courses.tr(context),
                     height: double.infinity,
                     width: AppSize.s100.w,
                     fontSize: AppSize.s16.sp,
@@ -106,13 +111,15 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: AppSize.s10.h),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: AppSize.s8.h,
+            Container(
+              margin: EdgeInsets.symmetric(
+                vertical: AppSize.s5.h,
                 horizontal: AppSize.s15.w,
               ),
+              width: MediaQuery.of(context).size.width,
               child: Text(
                 AppStrings.services.tr(context),
+                textAlign: TextAlign.start,
                 style: getAlmaraiBoldStyle(
                   fontSize: AppSize.s18.sp,
                   color: ColorManager.darkPrimary,

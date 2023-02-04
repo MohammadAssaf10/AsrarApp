@@ -24,8 +24,18 @@ ThemeData getApplicationTheme() {
       titleTextStyle: getAlmaraiRegularStyle(
           fontSize: AppSize.s17.sp, color: ColorManager.white),
     ),
-    // input decoration theme (text form field)
     errorColor: ColorManager.error,
+    textSelectionTheme: TextSelectionThemeData(
+      cursorColor: ColorManager.primary,
+      selectionHandleColor: ColorManager.primary,
+    ),
+    textTheme: TextTheme(
+      subtitle1: getAlmaraiRegularStyle(
+        fontSize: AppSize.s18.sp,
+        color: ColorManager.primary,
+      ),
+    ),
+    // input decoration theme (text form field)
     inputDecorationTheme: InputDecorationTheme(
       // hint style
       hintStyle: getAlmaraiBoldStyle(
@@ -36,13 +46,34 @@ ThemeData getApplicationTheme() {
           color: ColorManager.error, fontSize: AppSize.s16.sp),
 
       // enabled border style
-      enabledBorder: InputBorder.none,
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: ColorManager.grey, width: AppSize.s1_5.w),
+        borderRadius: BorderRadius.all(
+          Radius.circular(AppSize.s18.r),
+        ),
+      ),
       // focused border style
-      focusedBorder: InputBorder.none,
+      focusedBorder: OutlineInputBorder(
+        borderSide:
+            BorderSide(color: ColorManager.primary, width: AppSize.s1_5.w),
+        borderRadius: BorderRadius.all(
+          Radius.circular(AppSize.s18.r),
+        ),
+      ),
       // error border style
-      errorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: ColorManager.error)),
-      // focused border style
+      errorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: ColorManager.error),
+        borderRadius: BorderRadius.all(
+          Radius.circular(AppSize.s18.r),
+        ),
+      ),
+      // focused error border style
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: ColorManager.error),
+        borderRadius: BorderRadius.all(
+          Radius.circular(AppSize.s18.r),
+        ),
+      ),
     ),
     // icon theme
     iconTheme: IconThemeData(color: ColorManager.white, size: AppSize.s25.sp),

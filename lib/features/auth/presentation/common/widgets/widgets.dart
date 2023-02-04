@@ -16,7 +16,8 @@ class TextFrom extends StatelessWidget {
     this.onChange,
     this.keyboardType,
     this.controller,
-    this.onFieldSubmitted, this.onTap,
+    this.onFieldSubmitted,
+    this.onTap,
   }) : super(key: key);
 
   final String? Function(String?)? validator;
@@ -37,22 +38,23 @@ class TextFrom extends StatelessWidget {
       validator: validator,
       keyboardType: keyboardType,
       onChanged: onChange,
-      style: TextStyle(fontSize: AppSize.s16.sp),
       decoration: InputDecoration(
-          errorStyle: TextStyle(fontSize: 14.sp),
-          label: Row(
-            children: [
-              Icon(
-                icon,
-                color: ColorManager.grey,
-              ),
-              Text(
-                label,
-                style: TextStyle(
-                    color: ColorManager.grey, fontSize: AppSize.s16.sp),
-              ),
-            ],
-          )),
+        errorStyle: TextStyle(fontSize: 14.sp),
+        label: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              icon,
+              color: ColorManager.grey,
+            ),
+            Text(
+              label,
+              style:
+                  TextStyle(color: ColorManager.grey, fontSize: AppSize.s16.sp),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
