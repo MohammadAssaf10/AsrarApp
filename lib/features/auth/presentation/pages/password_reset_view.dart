@@ -22,7 +22,7 @@ class PasswordResetView extends StatelessWidget {
       appBar: AppBar(
         title: Text(AppStrings.resetPassword.tr(context)),
       ),
-      body: BlocListener<AuthenticationBloc, AuthenticationState>(
+      body: BlocListener<AuthenticationBloc, AuthenticationStateA>(
         listener: (context, state) {
           manageDialog(context, state);
         },
@@ -47,8 +47,7 @@ class PasswordResetView extends StatelessWidget {
                     onPressed: () {
                       if (_key.currentState!.validate()) {
                         BlocProvider.of<AuthenticationBloc>(context).add(
-                            SendVerificationCodeButtonPressed(
-                                _emailController.text));
+                            ResetPasswordButtonPressed(_emailController.text));
                       }
                     },
                     text: AppStrings.resetPassword.tr(context)),

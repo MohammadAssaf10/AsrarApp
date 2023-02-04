@@ -1,12 +1,10 @@
 part of 'authentication_bloc.dart';
 
-abstract class AuthenticationState {
-  const AuthenticationState();
-}
+abstract class AuthenticationStateA {}
 
-class AuthenticationInitial extends AuthenticationState {}
+class AuthenticationInitial extends AuthenticationStateA {}
 
-class AuthenticationSuccess extends AuthenticationState {
+class AuthenticationSuccess extends AuthenticationStateA {
   final User user;
 
   AuthenticationSuccess({
@@ -17,22 +15,69 @@ class AuthenticationSuccess extends AuthenticationState {
   String toString() => 'AuthenticationSuccess(user: $user)';
 }
 
-class AuthenticationInProgress extends AuthenticationState {}
-
-class ResetPasswordRequestSuccess extends AuthenticationState {}
-
-class AuthenticationFailed extends AuthenticationState {
-  final String message;
-
-  const AuthenticationFailed(this.message);
+class AuthenticationInProgress extends AuthenticationStateA {
+  final User? user;
+  AuthenticationInProgress({
+    this.user,
+  });
 
   @override
-  List<Object?> get props => [message];
+  String toString() => 'AuthenticationInProgress(user: $user)';
 }
 
-class PhoneNumberNeeded extends AuthenticationState {
+class ResetPasswordRequestSuccess extends AuthenticationStateA {}
+
+class AuthenticationFailed extends AuthenticationStateA {
+  final String message;
+
+  AuthenticationFailed(this.message);
+}
+
+class PhoneNumberNeeded extends AuthenticationInProgress {
+  PhoneNumberNeeded({
+    required super.user,
+  });
   @override
-  String toString() {
-    return super.toString();
+  String toString() => 'PhoneNumberNeeded(user: $user)';
+}
+
+class VerificationCodeNeeded extends AuthenticationInProgress {
+  VerificationCodeNeeded({
+    required super.user,
+  });
+
+  @override
+  String toString() => 'VerificationCodeNeeded(user: $user)';
+}
+
+enum AuthStatus {
+  init,
+  loading,
+  success,
+  failed,
+  phoneNumberNeeded,
+  verificationCodeNeeded
+}
+
+class AuthenticationState {
+  final AuthStatus status;
+  final User? user;
+  
+  AuthenticationState({
+    required this.status,
+    this.user,
+  });
+
+  AuthenticationState copyWith({
+    AuthStatus? status,
+    User? user,
+  }) {
+    return AuthenticationState(
+      status: status ?? this.status,
+      user: user ?? this.user,
+    );
   }
+
+  @override
+  String toString() => 'AuthenticationState(status: $status, user: $user)';
 }

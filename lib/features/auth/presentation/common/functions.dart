@@ -14,7 +14,7 @@ import 'widgets/widgets.dart';
 ShapeBorder roundedBorder({double radius = 30}) =>
     RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius.r));
 
-manageDialog(BuildContext context, AuthenticationState state) async {
+manageDialog(BuildContext context, AuthenticationStateA state) async {
   if (state is AuthenticationInProgress) {
     showCustomDialog(context);
   } else if (state is AuthenticationFailed) {

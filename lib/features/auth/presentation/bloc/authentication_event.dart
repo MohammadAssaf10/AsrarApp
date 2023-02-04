@@ -48,10 +48,10 @@ class RegisterButtonPressed extends AuthenticationEvent {
   List<Object?> get props => [registerRequest];
 }
 
-class SendVerificationCodeButtonPressed extends AuthenticationEvent {
+class ResetPasswordButtonPressed extends AuthenticationEvent {
   final String email;
 
-  const SendVerificationCodeButtonPressed(this.email);
+  const ResetPasswordButtonPressed(this.email);
 
   @override
   List<Object?> get props => [email];

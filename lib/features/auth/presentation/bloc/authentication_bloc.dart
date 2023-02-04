@@ -1,3 +1,4 @@
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -10,7 +11,7 @@ part 'authentication_event.dart';
 part 'authentication_state.dart';
 
 class AuthenticationBloc
-    extends Bloc<AuthenticationEvent, AuthenticationState> {
+    extends Bloc<AuthenticationEvent, AuthenticationStateA> {
   final AuthRepository _authRepository = di.instance<AuthRepository>();
 
   static AuthenticationBloc instance = AuthenticationBloc._();
@@ -36,7 +37,7 @@ class AuthenticationBloc
       });
     });
 
-    on<SendVerificationCodeButtonPressed>((event, emit) async {
+    on<ResetPasswordButtonPressed>((event, emit) async {
       emit(AuthenticationInProgress());
       (await _authRepository.resetPassword(event.email)).fold((failure) {
         emit(AuthenticationFailed(failure.message));
@@ -64,7 +65,7 @@ class AuthenticationBloc
           },
           (user) {
             if (user.phoneNumber.isEmpty) {
-              emit(PhoneNumberNeeded());
+              emit(PhoneNumberNeeded(user: user));
             } else {
               emit(AuthenticationSuccess(user: user));
             }
@@ -102,7 +103,14 @@ class AuthenticationBloc
 
     on<SendVerificationCode>(
       (event, emit) async {
-        await _authRepository.sendVerificationCode(event.number, event.code);
+        (await _authRepository.sendVerificationCode(event.number, event.code))
+            .fold(((failure) {
+          emit(AuthenticationFailed(failure.message));
+        }), ((r) {
+          if (emit is AuthenticationInProgress) {
+            // emit(VerificationCodeNeeded(user: state.user));
+          }
+        }));
       },
     );
   }

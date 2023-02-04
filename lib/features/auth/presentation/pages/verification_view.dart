@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,7 +22,7 @@ class VerificationView extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              BlocBuilder<AuthenticationBloc, AuthenticationState>(
+              BlocBuilder<AuthenticationBloc, AuthenticationStateA>(
                 builder: (context, state) {
                   if (state is AuthenticationSuccess)
                     return Text(state.user.phoneNumber);
