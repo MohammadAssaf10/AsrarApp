@@ -29,7 +29,7 @@ manageDialog(BuildContext context, AuthenticationState state) async {
       Navigator.pushReplacementNamed(context, Routes.homeRoute);
     });
   } else if (state.status == AuthStatus.resetPasswordSent) {
-    showCustomDialog(context, message: AppStrings.resetEmailSendMessage);
+    showCustomDialog(context, message: AppStrings.resetEmailSendMessage.tr(context));
   } else if (state.status == AuthStatus.verificationCodeNeeded) {
     Navigator.pushNamed(context, Routes.verificationView);
   } else if (state.status == AuthStatus.phoneNumberNeeded) {
