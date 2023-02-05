@@ -1,3 +1,4 @@
+import 'package:asrar_app/features/auth/presentation/bloc/authentication_bloc.dart';
 import 'package:flutter/material.dart';
 
 import '../core/app/di.dart';
@@ -42,49 +43,11 @@ class Routes {
 
 class RouteGenerator {
   static Route getRoute(RouteSettings settings) {
+    AuthenticationBloc authenticationBloc = AuthenticationBloc.instance;
     switch (settings.name) {
       case Routes.splash:
         return MaterialPageRoute(builder: (_) => SplashScreen());
 
-      case Routes.homeRoute:
-        initHomeModule();
-        return MaterialPageRoute(builder: (_) => MainView());
-      case Routes.shopRoute:
-        return MaterialPageRoute(builder: (_) => ShopScreen());
-      case Routes.cartRoute:
-        return MaterialPageRoute(builder: (_) => CartScreen());
-      case Routes.newsRoute:
-        return MaterialPageRoute(builder: (_) => NewsScreen());
-      case Routes.courseRoute:
-        return MaterialPageRoute(builder: (_) => CoursesScreen());
-      case Routes.courseDetailsRoute:
-        {
-          final arg = settings.arguments as CourseEntities;
-          return MaterialPageRoute(
-            builder: (context) => CourseDetailsScereen(arg),
-          );
-        }
-      case Routes.newsDetailsRoute:
-        {
-          final arg = settings.arguments as NewsEntities;
-          return MaterialPageRoute(
-            builder: (context) => NewsDetailsScreen(arg),
-          );
-        }
-      case Routes.serviceRoute:
-        {
-          final arg = settings.arguments as CompanyEntities;
-          return MaterialPageRoute(
-            builder: (context) => ServicesScreen(arg),
-          );
-        }
-      case Routes.requiredDocumentsRoute:
-        {
-          final arg = settings.arguments as ServiceEntities;
-          return MaterialPageRoute(
-            builder: (context) => RequiredDocumentsScreen(arg),
-          );
-        }
       case Routes.auth:
         return MaterialPageRoute(builder: (_) => Auth());
 
@@ -93,9 +56,54 @@ class RouteGenerator {
 
       case Routes.passwordReset:
         return MaterialPageRoute(builder: ((context) => PasswordResetView()));
-      default:
-        return unDefinedRoute();
     }
+
+    if (authenticationBloc.state.status == AuthStatus.loading)
+      switch (settings.name) {
+        case Routes.homeRoute:
+          initHomeModule();
+          return MaterialPageRoute(builder: (_) => MainView());
+        case Routes.shopRoute:
+          return MaterialPageRoute(builder: (_) => ShopScreen());
+        case Routes.cartRoute:
+          return MaterialPageRoute(builder: (_) => CartScreen());
+        case Routes.newsRoute:
+          return MaterialPageRoute(builder: (_) => NewsScreen());
+        case Routes.courseRoute:
+          return MaterialPageRoute(builder: (_) => CoursesScreen());
+        case Routes.courseDetailsRoute:
+          {
+            final arg = settings.arguments as CourseEntities;
+            return MaterialPageRoute(
+              builder: (context) => CourseDetailsScereen(arg),
+            );
+          }
+        case Routes.newsDetailsRoute:
+          {
+            final arg = settings.arguments as NewsEntities;
+            return MaterialPageRoute(
+              builder: (context) => NewsDetailsScreen(arg),
+            );
+          }
+        case Routes.serviceRoute:
+          {
+            final arg = settings.arguments as CompanyEntities;
+            return MaterialPageRoute(
+              builder: (context) => ServicesScreen(arg),
+            );
+          }
+        case Routes.requiredDocumentsRoute:
+          {
+            final arg = settings.arguments as ServiceEntities;
+            return MaterialPageRoute(
+              builder: (context) => RequiredDocumentsScreen(arg),
+            );
+          }
+
+        default:
+          return unDefinedRoute();
+      }
+    return unDefinedRoute();
   }
 
   static Route unDefinedRoute() {

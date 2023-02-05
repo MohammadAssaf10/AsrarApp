@@ -51,11 +51,15 @@ class AuthenticationBloc
     });
 
     on<AppStarted>((event, emit) async {
-      (await _authRepository.getCurrentUserIfExists()).fold(((l) {}), ((user) {
+      emit(state.copyWith(status: AuthStatus.loading));
+      (await _authRepository.getCurrentUserIfExists()).fold(((l) {
+        emit(state.copyWith(status: AuthStatus.init));
+      }), ((user) {
         if (user != null) {
           if (user.safeToContinue()) {
             emit(state.copyWith(status: AuthStatus.loggedIn, user: user));
-          }
+            emit(state.copyWith(status: AuthStatus.init));
+          } else {}
         }
       }));
     });
@@ -100,7 +104,6 @@ class AuthenticationBloc
       },
     );
 
-      
     on<SendVerificationCode>(
       (event, emit) async {
         (await _authRepository.sendVerificationCode(event.number, event.code))
