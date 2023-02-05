@@ -51,6 +51,7 @@
   "news": "الأخبار",
   "the_news": "الخبر",
   "courses": "الدورات",
+  "free": "مجاناً",
 
   "Success": "نحاج",
   "Bad request error": "طلب خاطئ",
@@ -79,5 +80,6 @@
   "noNews": "لا يوجد أخبار",
   "services": "الخدمات",
   "search_for_your_services": "ابحث عن خدماتك",
-  "required_documents": "المستندات المطلوبة:"
+  "required_documents": "المستندات المطلوبة:",
+  "show_details": "عرض التفاصيل"
 }

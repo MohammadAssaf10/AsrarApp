@@ -115,11 +115,17 @@ class NewsScreen extends StatelessWidget {
                                                 color: ColorManager.grey,
                                               ),
                                             ),
-                                            Text(
-                                              "عرض التفاصيل",
-                                              style: getAlmaraiRegularStyle(
-                                                fontSize: AppSize.s14.sp,
-                                                color: ColorManager.grey,
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: AppSize.s10.w,
+                                              ),
+                                              child: Text(
+                                                AppStrings.showDetails
+                                                    .tr(context),
+                                                style: getAlmaraiRegularStyle(
+                                                  fontSize: AppSize.s14.sp,
+                                                  color: ColorManager.grey,
+                                                ),
                                               ),
                                             ),
                                           ],

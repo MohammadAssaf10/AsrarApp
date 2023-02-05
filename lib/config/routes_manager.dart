@@ -5,8 +5,10 @@ import '../features/auth/presentation/pages/auth_view.dart';
 import '../features/auth/presentation/pages/password_reset_view.dart';
 import '../features/auth/presentation/pages/verification_view.dart';
 import '../features/home/domain/entities/company_entities.dart';
+import '../features/home/domain/entities/course_entities.dart';
 import '../features/home/domain/entities/news_entities.dart';
 import '../features/home/domain/entities/service_entities.dart';
+import '../features/home/presentation/pages/course/course_details_screen.dart';
 import '../features/home/presentation/pages/course/course_screen.dart';
 import '../features/home/presentation/pages/main/main_view.dart';
 import '../features/home/presentation/pages/news/news_details_screen.dart';
@@ -30,6 +32,7 @@ class Routes {
   static const String newsRoute = "/news";
   static const String courseRoute = "/course";
   static const String newsDetailsRoute = "/newsDetails";
+  static const String courseDetailsRoute = "/courseDetails";
 
   // auth rotes
   static const String auth = '/auth';
@@ -54,6 +57,13 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => NewsScreen());
       case Routes.courseRoute:
         return MaterialPageRoute(builder: (_) => CoursesScreen());
+      case Routes.courseDetailsRoute:
+        {
+          final arg = settings.arguments as CourseEntities;
+          return MaterialPageRoute(
+            builder: (context) => CourseDetailsScereen(arg),
+          );
+        }
       case Routes.newsDetailsRoute:
         {
           final arg = settings.arguments as NewsEntities;
