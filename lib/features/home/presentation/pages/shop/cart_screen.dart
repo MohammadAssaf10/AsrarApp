@@ -38,11 +38,11 @@ class CartScreen extends StatelessWidget {
                   if (cartList.isNotEmpty) {
                     final state =
                         BlocProvider.of<AuthenticationBloc>(context).state;
-                    if (state is AuthenticationSuccess)
+                    if (state.status == AuthStatus.loggedIn)
                       showOrderDialog(
                         context,
                         AppStrings.whatsAppNumber.tr(context),
-                        state.user.phoneNumber,
+                        state.user!.phoneNumber,
                         dp(totalProductsPrice, 2).toString(),
                         () {
                           Navigator.push(
