@@ -46,8 +46,6 @@ class FirebaseAuthRepository implements AuthRepository {
     // try to register
     try {
       await _authHelper.register(registerRequest);
-
-      await _authHelper.updateUserData(registerRequest);
     } catch (e) {
       return Left(ExceptionHandler.handle(e).failure);
     }
@@ -100,7 +98,10 @@ class FirebaseAuthRepository implements AuthRepository {
         // first sign create the user
         if (e is firebase.FirebaseAuthException &&
             e.code == "auth/user-not-found") {
-          User user = await _authHelper.createUserDocument(firebaseUser);
+          User user = User(
+              name: firebaseUser.displayName!,
+              email: firebaseUser.email!,
+              phoneNumber: '');
 
           return Right(user);
         } else

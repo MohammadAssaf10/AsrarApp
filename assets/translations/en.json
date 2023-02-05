@@ -15,6 +15,7 @@
   "mobile_number": "Phone number",
   "name_too_short": "name too short",
   "enterYourMobileNumber": "enter your phone number",
+  "enterYourWhatsappNumber": "enter your whatsapp number",
   "includingCountryCodeLike": "including country code like \n966 11 111 1111",
   "already_have_account": "Already have account",
   "name_should_atLeast_3_character": "Name should at least 3 character",

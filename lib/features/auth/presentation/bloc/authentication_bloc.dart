@@ -87,13 +87,9 @@ class AuthenticationBloc
         emit(state.copyWith(status: AuthStatus.failed));
       } else {
         user = user.copyWith(phoneNumber: event.mobileNumber);
-        (await _authRepository.updateUserData(user)).fold((failure) {
-          emit(state.copyWith(
-              status: AuthStatus.failed, message: failure.message));
-        }, (user) {
-          emit(state.copyWith(
-              status: AuthStatus.verificationCodeNeeded, user: user));
-        });
+
+        emit(state.copyWith(
+            status: AuthStatus.verificationCodeNeeded, user: user));
       }
     });
 

@@ -17,7 +17,7 @@ class AppStrings {
   static const String userName = "user_name";
   static const String mobileNumber = "mobile_number";
   static const String nameTooShort = "name_too_short";
-  static const String enterYourMobileNumber = "enterYourMobileNumber";
+  static const String enterYourWhatsappNumber = "enterYourWhatsappNumber";
   static const String includingCountryCodeLike = "includingCountryCodeLike";
   static const String alreadyHaveAccount = "already_have_account";
   static const String nameShouldAtLeast3Character =

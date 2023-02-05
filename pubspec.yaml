@@ -34,6 +34,7 @@ dependencies:
   pretty_dio_logger: ^1.1.1
   retrofit: ^3.0.1+1
   json_annotation: ^4.8.0
+  intl_phone_field: ^3.1.0
 
 dev_dependencies:
   flutter_test:

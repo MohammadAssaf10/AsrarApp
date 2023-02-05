@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 import '../../../../config/assets_manager.dart';
 import '../../../../config/routes_manager.dart';
@@ -35,13 +36,15 @@ manageDialog(BuildContext context, AuthenticationState state) async {
     dismissDialog(context);
 
     final phoneNumber = await phoneDialog(context);
-    BlocProvider.of<AuthenticationBloc>(context)
-        .add(MobileNumberEntered(mobileNumber: phoneNumber));
+    if (phoneNumber.isNotEmpty)
+      BlocProvider.of<AuthenticationBloc>(context)
+          .add(MobileNumberEntered(mobileNumber: phoneNumber));
   }
 }
 
 Future<String> phoneDialog(BuildContext context) async {
-  TextEditingController _phoneController = TextEditingController();
+  String _phoneNumber = '';
+  String _countryCode = '';
   GlobalKey<FormState> _key = GlobalKey();
 
   await showDialog(
@@ -55,7 +58,7 @@ Future<String> phoneDialog(BuildContext context) async {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  AppStrings.enterYourMobileNumber.tr(context),
+                  AppStrings.enterYourWhatsappNumber.tr(context),
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
                 Text(
@@ -66,20 +69,26 @@ Future<String> phoneDialog(BuildContext context) async {
                 Form(
                   key: _key,
                   autovalidateMode: AutovalidateMode.always,
-                  child: TextFrom(
-                      validator: (phone) {
-                        return mobileNumberValidator(phone, context);
-                      },
-                      controller: _phoneController,
-                      icon: Icons.phone,
-                      label: AppStrings.mobileNumber.tr(context)),
+                  child: IntlPhoneField(
+                    decoration: InputDecoration(
+                      labelText: AppStrings.mobileNumber.tr(context),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(),
+                      ),
+                    ),
+                    initialCountryCode: 'SA',
+                    onChanged: (phone) {
+                      _countryCode = phone.countryCode;
+                      _phoneNumber = phone.number;
+                    },
+                  ),
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 FullElevatedButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      if (_key.currentState!.validate()) Navigator.pop(context);
                     },
                     text: AppStrings.sendVerificationCode.tr(context))
               ],
@@ -87,6 +96,13 @@ Future<String> phoneDialog(BuildContext context) async {
           ),
         );
       });
+  if (_phoneNumber[0] == '0') {
+    _phoneNumber = _phoneNumber.replaceFirst('0', '');
+  }
 
-  return _phoneController.text.replaceAll(' ', '').replaceAll('-', '');
+  _phoneNumber = _countryCode + _phoneNumber;
+  return _phoneNumber
+      .replaceAll(' ', '')
+      .replaceAll('-', '')
+      .replaceAll('+', '');
 }
