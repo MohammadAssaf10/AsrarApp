@@ -47,8 +47,7 @@ class PasswordResetView extends StatelessWidget {
                     onPressed: () {
                       if (_key.currentState!.validate()) {
                         BlocProvider.of<AuthenticationBloc>(context).add(
-                            SendVerificationCodeButtonPressed(
-                                _emailController.text));
+                            ResetPasswordButtonPressed(_emailController.text));
                       }
                     },
                     text: AppStrings.resetPassword.tr(context)),

@@ -1,39 +1,43 @@
 part of 'authentication_bloc.dart';
 
-abstract class AuthenticationState extends Equatable {
-  const AuthenticationState();
+enum AuthStatus {
+  init,
+  loading,
+  loggedIn,
+  failed,
+  resetPasswordSent,
+  phoneNumberNeeded,
+  verificationCodeNeeded
 }
 
-class AuthenticationInitial extends AuthenticationState {
-  @override
-  List<Object> get props => [];
-}
+// don' forget to remove '?? this.user' from [copyWith] when regenerate it
+class AuthenticationState extends Equatable {
+  final AuthStatus status;
+  final User? user;
+  final String? message;
 
-class AuthenticationSuccess extends AuthenticationState {
-  final User user;
-
-  AuthenticationSuccess({
-    required this.user,
+  AuthenticationState({
+    required this.status,
+    this.user,
+    this.message,
   });
-  @override
-  List<Object?> get props => [user];
-}
 
-class AuthenticationInProgress extends AuthenticationState {
-  @override
-  List<Object?> get props => [];
-}
-
-class ResetPasswordRequestSuccess extends AuthenticationState {
-  @override
-  List<Object?> get props => [];
-}
-
-class AuthenticationFailed extends AuthenticationState {
-  final String message;
-
-  const AuthenticationFailed(this.message);
+  AuthenticationState copyWith({
+    AuthStatus? status,
+    User? user,
+    String? message,
+  }) {
+    return AuthenticationState(
+      status: status ?? this.status,
+      user: user ?? this.user,
+      message: message,
+    );
+  }
 
   @override
-  List<Object?> get props => [message];
+  String toString() =>
+      'AuthenticationState(status: $status, user: $user, message: $message)';
+
+  @override
+  List<Object?> get props => [status, user, message];
 }

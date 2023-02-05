@@ -63,6 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '493016441872',
     projectId: 'asrar-82d33',
     storageBucket: 'asrar-82d33.appspot.com',
+    androidClientId: '493016441872-3dk91ahr6u7ld2q66na1dbkitvs99cth.apps.googleusercontent.com',
     iosClientId: '493016441872-p6oord5l09b3h498uh50k4327v7e9hae.apps.googleusercontent.com',
     iosBundleId: 'com.example.asrarApp',
   );

@@ -23,6 +23,7 @@
   "mobile_number_format_not_correct": "Mobile number format not correct",
   "reset_password": "Reset password",
   "verification_code": "Verification code",
+  "verificationCodeSentTo": "verification code sent to",
   "send_verification_code": "Send verification code",
   "new_password": "New password",
   "we_send_you_an_email_please_check_your_email_address": "We have sent a message to you check your email",

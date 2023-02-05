@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../config/app_localizations.dart';
+import '../../../../config/assets_manager.dart';
 import '../../../../config/color_manager.dart';
 import '../../../../config/routes_manager.dart';
 import '../../../../config/strings_manager.dart';
@@ -49,6 +51,23 @@ class _AuthState extends State<Auth> {
                   SizedBox(width: double.infinity),
                   if (_login) LoginForm(),
                   if (!_login) NewAccountForm(),
+                  Divider(),
+                  Center(child: Text('او')),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            BlocProvider.of<AuthenticationBloc>(context)
+                                .add(GoogleLoginButtonPressed());
+                          },
+                          child: SvgPicture.asset(IconAssets.gmail)),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      SvgPicture.asset(IconAssets.apple),
+                    ],
+                  ),
                   Center(
                     child: TextButton(
                       child: Text(
