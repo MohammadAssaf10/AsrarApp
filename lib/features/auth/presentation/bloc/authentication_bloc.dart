@@ -1,4 +1,3 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -11,38 +10,43 @@ part 'authentication_event.dart';
 part 'authentication_state.dart';
 
 class AuthenticationBloc
-    extends Bloc<AuthenticationEvent, AuthenticationStateA> {
+    extends Bloc<AuthenticationEvent, AuthenticationState> {
   final AuthRepository _authRepository = di.instance<AuthRepository>();
 
   static AuthenticationBloc instance = AuthenticationBloc._();
 
-  AuthenticationBloc._() : super(AuthenticationInitial()) {
+  AuthenticationBloc._() : super(AuthenticationState(status: AuthStatus.init)) {
     // login
     on<LoginButtonPressed>((event, emit) async {
-      emit(AuthenticationInProgress());
+      emit(state.copyWith(status: AuthStatus.loading));
       (await _authRepository.loginViaEmail(event.loginRequest)).fold((failure) {
-        emit(AuthenticationFailed(failure.message));
+        emit(state.copyWith(
+            status: AuthStatus.failed, message: failure.message));
       }, (user) {
-        emit(AuthenticationSuccess(user: user));
+        emit(state.copyWith(
+            status: AuthStatus.verificationCodeNeeded, user: user));
       });
     });
 
     // register
     on<RegisterButtonPressed>((event, emit) async {
-      emit(AuthenticationInProgress());
+      emit(state.copyWith(status: AuthStatus.loading));
       (await _authRepository.register(event.registerRequest)).fold((failure) {
-        emit(AuthenticationFailed(failure.message));
+        emit(state.copyWith(
+            status: AuthStatus.failed, message: failure.message));
       }, (user) {
-        emit(AuthenticationSuccess(user: user));
+        emit(state.copyWith(
+            status: AuthStatus.verificationCodeNeeded, user: user));
       });
     });
 
     on<ResetPasswordButtonPressed>((event, emit) async {
-      emit(AuthenticationInProgress());
+      emit(state.copyWith(status: AuthStatus.loading));
       (await _authRepository.resetPassword(event.email)).fold((failure) {
-        emit(AuthenticationFailed(failure.message));
+        emit(state.copyWith(
+            status: AuthStatus.failed, message: failure.message));
       }, (_) {
-        emit(ResetPasswordRequestSuccess());
+        emit(state.copyWith(status: AuthStatus.resetPasswordSent));
       });
     });
 
@@ -50,7 +54,7 @@ class AuthenticationBloc
       (await _authRepository.getCurrentUserIfExists()).fold(((l) {}), ((user) {
         if (user != null) {
           if (user.safeToContinue()) {
-            emit(AuthenticationSuccess(user: user));
+            emit(state.copyWith(status: AuthStatus.loggedIn, user: user));
           }
         }
       }));
@@ -58,16 +62,19 @@ class AuthenticationBloc
 
     on<GoogleLoginButtonPressed>(
       (event, emit) async {
-        emit(AuthenticationInProgress());
+        emit(state.copyWith(status: AuthStatus.loading));
         await (await _authRepository.loginViaGoogle()).fold(
           (failure) {
-            emit(AuthenticationFailed(failure.message));
+            emit(state.copyWith(
+                status: AuthStatus.failed, message: failure.message));
           },
           (user) {
             if (user.phoneNumber.isEmpty) {
-              emit(PhoneNumberNeeded(user: user));
+              emit(state.copyWith(
+                  status: AuthStatus.phoneNumberNeeded, user: user));
             } else {
-              emit(AuthenticationSuccess(user: user));
+              emit(state.copyWith(
+                  status: AuthStatus.verificationCodeNeeded, user: user));
             }
           },
         );
@@ -75,42 +82,43 @@ class AuthenticationBloc
     );
 
     on<MobileNumberEntered>((event, emit) async {
-      await (await _authRepository.getCurrentUserIfExists()).fold(
-        ((failure) {
-          emit(AuthenticationFailed(failure.message));
-        }),
-        ((user) async {
-          if (user == null) {
-            emit(AuthenticationFailed(''));
-          } else {
-            user = user.copyWith(phoneNumber: event.mobileNumber);
-            (await _authRepository.updateUserData(user)).fold(((failure) {
-              emit(AuthenticationFailed(failure.message));
-            }), ((user) {
-              emit(AuthenticationSuccess(user: user));
-            }));
-          }
-        }),
-      );
+      var user = state.user;
+      if (user == null) {
+        emit(state.copyWith(status: AuthStatus.failed));
+      } else {
+        user = user.copyWith(phoneNumber: event.mobileNumber);
+        (await _authRepository.updateUserData(user)).fold((failure) {
+          emit(state.copyWith(
+              status: AuthStatus.failed, message: failure.message));
+        }, (user) {
+          emit(state.copyWith(
+              status: AuthStatus.verificationCodeNeeded, user: user));
+        });
+      }
     });
 
     on<LogOut>(
       (event, emit) async {
         await _authRepository.logOut();
-        emit(AuthenticationInitial());
+        emit(state.copyWith(status: AuthStatus.init));
       },
     );
 
     on<SendVerificationCode>(
       (event, emit) async {
         (await _authRepository.sendVerificationCode(event.number, event.code))
-            .fold(((failure) {
-          emit(AuthenticationFailed(failure.message));
-        }), ((r) {
-          if (emit is AuthenticationInProgress) {
-            // emit(VerificationCodeNeeded(user: state.user));
-          }
-        }));
+            .fold((failure) {
+          emit(state.copyWith(
+              status: AuthStatus.failed, message: failure.message));
+        }, (r) {
+          emit(state.copyWith(status: AuthStatus.verificationCodeNeeded));
+        });
+      },
+    );
+
+    on<VerificationCodeSubmitted>(
+      (event, emit) {
+        emit(state.copyWith(status: AuthStatus.loggedIn));
       },
     );
   }

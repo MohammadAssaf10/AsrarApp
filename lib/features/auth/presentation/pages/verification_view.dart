@@ -1,12 +1,37 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../config/app_localizations.dart';
+import '../../../../config/strings_manager.dart';
 import '../bloc/authentication_bloc.dart';
 import '../common/widgets/widgets.dart';
 
-class VerificationView extends StatelessWidget {
+class VerificationView extends StatefulWidget {
   const VerificationView({super.key});
+
+  @override
+  State<VerificationView> createState() => _VerificationViewState();
+}
+
+class _VerificationViewState extends State<VerificationView> {
+  late int code;
+  late AuthenticationBloc authenticationBloc;
+  final TextEditingController _codeTextEditingController =
+      TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    code = Random().nextInt(8999) + 1000;
+
+    authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+    authenticationBloc.add(SendVerificationCode(
+        authenticationBloc.state.user!.phoneNumber, code.toString()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,25 +43,41 @@ class VerificationView extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('تم ارسال رمز التحقق الى الرقم التالي'),
+              Text(AppStrings.verificationCode.tr(context)),
               SizedBox(
                 height: 10,
               ),
-              BlocBuilder<AuthenticationBloc, AuthenticationStateA>(
-                builder: (context, state) {
-                  if (state is AuthenticationSuccess)
-                    return Text(state.user.phoneNumber);
-                  return SizedBox();
-                },
-              ),
+              Text(authenticationBloc.state.user!.phoneNumber),
               SizedBox(
                 height: 10,
               ),
-              TextFrom(icon: Icons.comment_rounded, label: 'رمز التحقق'),
+              TextFrom(
+                  controller: _codeTextEditingController,
+                  icon: Icons.comment_rounded,
+                  label: AppStrings.verificationCode.tr(context)),
               SizedBox(
                 height: 10,
               ),
-              FullElevatedButton(onPressed: () {}, text: 'تسجيل الدخول')
+              FullElevatedButton(
+                  onPressed: () {
+                    if (_codeTextEditingController.text == code.toString()) {
+                      authenticationBloc.add(VerificationCodeSubmitted());
+                    } else {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                              child: Padding(
+                                padding: const EdgeInsets.all(18.0),
+                                child: Text(
+                                  'الكود الذي ادخلته خاطئ'
+                                ),
+                              ),
+                            );
+                          });
+                    }
+                  },
+                  text: AppStrings.signIn.tr(context))
             ],
           ),
         ),

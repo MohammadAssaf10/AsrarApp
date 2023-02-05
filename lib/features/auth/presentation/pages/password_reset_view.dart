@@ -22,7 +22,7 @@ class PasswordResetView extends StatelessWidget {
       appBar: AppBar(
         title: Text(AppStrings.resetPassword.tr(context)),
       ),
-      body: BlocListener<AuthenticationBloc, AuthenticationStateA>(
+      body: BlocListener<AuthenticationBloc, AuthenticationState>(
         listener: (context, state) {
           manageDialog(context, state);
         },

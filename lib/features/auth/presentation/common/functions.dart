@@ -14,21 +14,23 @@ import 'widgets/widgets.dart';
 ShapeBorder roundedBorder({double radius = 30}) =>
     RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius.r));
 
-manageDialog(BuildContext context, AuthenticationStateA state) async {
-  if (state is AuthenticationInProgress) {
+manageDialog(BuildContext context, AuthenticationState state) async {
+  if (state.status == AuthStatus.loading) {
     showCustomDialog(context);
-  } else if (state is AuthenticationFailed) {
+  } else if (state.status == AuthStatus.failed) {
     showCustomDialog(context,
-        jsonPath: JsonAssets.error, message: state.message.tr(context));
-  } else if (state is AuthenticationSuccess) {
+        jsonPath: JsonAssets.error, message: state.message!.tr(context));
+  } else if (state.status == AuthStatus.loggedIn) {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       dismissDialog(context);
       // TODO: navigate to main view
-      Navigator.pushReplacementNamed(context, Routes.verificationView);
+      Navigator.pushReplacementNamed(context, Routes.homeRoute);
     });
-  } else if (state is ResetPasswordRequestSuccess) {
+  } else if (state.status == AuthStatus.resetPasswordSent) {
     showCustomDialog(context, message: AppStrings.resetEmailSendMessage);
-  } else if (state is PhoneNumberNeeded) {
+  } else if (state.status == AuthStatus.verificationCodeNeeded) {
+    Navigator.pushNamed(context, Routes.verificationView);
+  } else if (state.status == AuthStatus.phoneNumberNeeded) {
     dismissDialog(context);
     TextEditingController _phoneController = TextEditingController();
     GlobalKey<FormState> _key = GlobalKey();

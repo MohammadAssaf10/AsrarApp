@@ -30,6 +30,7 @@ class AppStrings {
       "mobile_number_format_not_correct";
   static const String resetPassword = "reset_password";
   static const String verificationCode = "verification_code";
+  static const String verificationCodeSentTo = "verificationCodeSentTo";
   static const String sendVerificationCode = "send_verification_code";
   static const String newPassword = "new_password";
   static const String resetEmailSendMessage =

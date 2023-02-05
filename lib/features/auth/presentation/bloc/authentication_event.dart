@@ -70,3 +70,8 @@ class SendVerificationCode extends AuthenticationEvent {
   @override
   List<Object?> get props => [number];
 }
+
+class VerificationCodeSubmitted extends AuthenticationEvent {
+  @override
+  List<Object?> get props => [];
+}

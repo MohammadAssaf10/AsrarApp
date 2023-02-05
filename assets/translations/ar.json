@@ -23,6 +23,7 @@
   "mobile_number_format_not_correct": "رقم الجوال غير صحيحة",
   "reset_password": "اعادة تعيين كلمة المرور",
   "verification_code": "رمز التحقق",
+  "verificationCodeSentTo" : "تم ارسال رمز التحقق الى الرقم التالي",
   "send_verification_code": "ارسل رمز التحقق",
   "new_password": "كلمة السر الجديدة",
   "we_send_you_an_email_please_check_your_email_address": "لقد قمنا بارسال رسالة لك تحقق من بريدك الالكتروني",

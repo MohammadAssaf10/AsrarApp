@@ -1,83 +1,43 @@
 part of 'authentication_bloc.dart';
 
-abstract class AuthenticationStateA {}
-
-class AuthenticationInitial extends AuthenticationStateA {}
-
-class AuthenticationSuccess extends AuthenticationStateA {
-  final User user;
-
-  AuthenticationSuccess({
-    required this.user,
-  });
-
-  @override
-  String toString() => 'AuthenticationSuccess(user: $user)';
-}
-
-class AuthenticationInProgress extends AuthenticationStateA {
-  final User? user;
-  AuthenticationInProgress({
-    this.user,
-  });
-
-  @override
-  String toString() => 'AuthenticationInProgress(user: $user)';
-}
-
-class ResetPasswordRequestSuccess extends AuthenticationStateA {}
-
-class AuthenticationFailed extends AuthenticationStateA {
-  final String message;
-
-  AuthenticationFailed(this.message);
-}
-
-class PhoneNumberNeeded extends AuthenticationInProgress {
-  PhoneNumberNeeded({
-    required super.user,
-  });
-  @override
-  String toString() => 'PhoneNumberNeeded(user: $user)';
-}
-
-class VerificationCodeNeeded extends AuthenticationInProgress {
-  VerificationCodeNeeded({
-    required super.user,
-  });
-
-  @override
-  String toString() => 'VerificationCodeNeeded(user: $user)';
-}
-
 enum AuthStatus {
   init,
   loading,
-  success,
+  loggedIn,
   failed,
+  resetPasswordSent,
   phoneNumberNeeded,
   verificationCodeNeeded
 }
 
-class AuthenticationState {
+// don' forget to remove '?? this.user' from [copyWith] when regenerate it
+class AuthenticationState extends Equatable {
   final AuthStatus status;
   final User? user;
-  
+  final String? message;
+
   AuthenticationState({
     required this.status,
     this.user,
+    this.message,
   });
 
   AuthenticationState copyWith({
     AuthStatus? status,
     User? user,
+    String? message,
   }) {
     return AuthenticationState(
       status: status ?? this.status,
       user: user ?? this.user,
+      message: message,
     );
   }
 
   @override
-  String toString() => 'AuthenticationState(status: $status, user: $user)';
+  String toString() =>
+      'AuthenticationState(status: $status, user: $user, message: $message)';
+
+  @override
+  List<Object?> get props => [status, user, message];
 }

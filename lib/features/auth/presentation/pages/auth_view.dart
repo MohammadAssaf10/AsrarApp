@@ -26,7 +26,7 @@ class _AuthState extends State<Auth> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthenticationBloc, AuthenticationStateA>(
+    return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {
         manageDialog(context, state);
       },
