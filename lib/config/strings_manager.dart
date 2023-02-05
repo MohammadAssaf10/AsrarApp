@@ -65,6 +65,8 @@ class AppStrings {
   static const String news = "news";
   static const String theNews = "the_news";
   static const String courses = "courses";
+  static const String showDetails = "show_details";
+  static const String free = "free";
 
   // exception handler
   static const String success = "Success";

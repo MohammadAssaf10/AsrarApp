@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../config/assets_manager.dart';
 import '../../../../../config/color_manager.dart';
+import '../../../../../config/routes_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
@@ -46,7 +47,13 @@ class CoursesScreen extends StatelessWidget {
                       itemCount: state.courseList.length,
                       itemBuilder: (BuildContext context, int index) {
                         return InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              Routes.courseDetailsRoute,
+                              arguments: state.courseList[index],
+                            );
+                          },
                           child: Container(
                             margin: EdgeInsets.symmetric(
                               vertical: AppSize.s8.h,
@@ -65,16 +72,15 @@ class CoursesScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Expanded(
-                                  child: Container(
+                                  child: Card(
                                     margin: EdgeInsets.symmetric(
                                       vertical: AppSize.s2.h,
                                     ),
-                                    decoration: ShapeDecoration(
-                                      shape: CircleBorder(
-                                        side: BorderSide(
-                                          color: ColorManager.backgroundColor,
-                                          width: AppSize.s1_5.w,
-                                        ),
+                                    elevation: AppSize.s4,
+                                    shape: CircleBorder(
+                                      side: BorderSide(
+                                        color: ColorManager.backgroundColor,
+                                        width: AppSize.s1_5.w,
                                       ),
                                     ),
                                     child: Image.asset(ImageAssets.asrarCourse),
@@ -106,14 +112,13 @@ class CoursesScreen extends StatelessWidget {
                                       Container(
                                         margin: EdgeInsets.symmetric(
                                           horizontal: AppSize.s8.w,
-                                          vertical: AppSize.s5.h,
+                                          vertical: AppSize.s4.h,
                                         ),
                                         child: Text(
                                           state.courseList[index].coursePrice
                                                   .startsWith("0")
-                                              ? "مجاناً"
-                                              : state.courseList[index]
-                                                  .coursePrice,
+                                              ? AppStrings.free.tr(context)
+                                              : "${state.courseList[index].coursePrice} ر.س",
                                           style: getAlmaraiRegularStyle(
                                             fontSize: AppSize.s16.sp,
                                             color: ColorManager.darkPrimary,
@@ -121,6 +126,35 @@ class CoursesScreen extends StatelessWidget {
                                           maxLines: 2,
                                           softWrap: true,
                                           overflow: TextOverflow.visible,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          top: AppSize.s5.h,
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              state.courseList[index].timestamp
+                                                  .toDate()
+                                                  .toString()
+                                                  .substring(0, 10),
+                                              style: getAlmaraiRegularStyle(
+                                                fontSize: AppSize.s14.sp,
+                                                color: ColorManager.grey,
+                                              ),
+                                            ),
+                                            Text(
+                                              AppStrings.showDetails
+                                                  .tr(context),
+                                              style: getAlmaraiRegularStyle(
+                                                fontSize: AppSize.s14.sp,
+                                                color: ColorManager.grey,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
