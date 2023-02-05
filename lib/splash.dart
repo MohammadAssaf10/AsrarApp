@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:asrar_app/features/auth/presentation/common/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -39,11 +38,14 @@ class SplashScreen extends StatelessWidget {
               child: Text('Home')),
           ElevatedButton(
               onPressed: () {
-                final code = Random().nextInt(9999);
-                BlocProvider.of<AuthenticationBloc>(context)
-                    .add(SendVerificationCode('963931464912', code.toString()));
+                phoneDialog(context);
               },
-              child: Text('send verification code')),
+              child: Text('phone dialog')),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, Routes.verificationView);
+              },
+              child: Text('verificationView')),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [

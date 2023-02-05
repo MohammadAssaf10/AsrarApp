@@ -43,7 +43,7 @@ class _VerificationViewState extends State<VerificationView> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(AppStrings.verificationCode.tr(context)),
+              Text(AppStrings.verificationCodeSentTo.tr(context)),
               SizedBox(
                 height: 10,
               ),
@@ -69,9 +69,7 @@ class _VerificationViewState extends State<VerificationView> {
                             return Dialog(
                               child: Padding(
                                 padding: const EdgeInsets.all(18.0),
-                                child: Text(
-                                  'الكود الذي ادخلته خاطئ'
-                                ),
+                                child: Text('الكود الذي ادخلته خاطئ'),
                               ),
                             );
                           });
