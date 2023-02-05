@@ -87,13 +87,9 @@ class AuthenticationBloc
         emit(state.copyWith(status: AuthStatus.failed));
       } else {
         user = user.copyWith(phoneNumber: event.mobileNumber);
-        (await _authRepository.updateUserData(user)).fold((failure) {
-          emit(state.copyWith(
-              status: AuthStatus.failed, message: failure.message));
-        }, (user) {
-          emit(state.copyWith(
-              status: AuthStatus.verificationCodeNeeded, user: user));
-        });
+
+        emit(state.copyWith(
+            status: AuthStatus.verificationCodeNeeded, user: user));
       }
     });
 
@@ -104,6 +100,7 @@ class AuthenticationBloc
       },
     );
 
+      
     on<SendVerificationCode>(
       (event, emit) async {
         (await _authRepository.sendVerificationCode(event.number, event.code))
@@ -117,8 +114,13 @@ class AuthenticationBloc
     );
 
     on<VerificationCodeSubmitted>(
-      (event, emit) {
-        emit(state.copyWith(status: AuthStatus.loggedIn));
+      (event, emit) async {
+        emit(state.copyWith(status: AuthStatus.loading));
+        (await _authRepository.updateUserData(state.user!)).fold((l) {
+          emit(state.copyWith(status: AuthStatus.failed, message: l.message));
+        }, (r) {
+          emit(state.copyWith(status: AuthStatus.loggedIn));
+        });
       },
     );
   }
