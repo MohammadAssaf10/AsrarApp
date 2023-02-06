@@ -54,6 +54,7 @@
   "courses": "Courses",
   "show_details": "Show details",
   "free": "Free",
+  "sorry_we_could_not_open_that_link": "Sorry, we couldn't open that link. Please try again later",
 
   "Success": "Success",
   "Bad request error": "Bad request error",

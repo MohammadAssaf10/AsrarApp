@@ -68,6 +68,7 @@ class AppStrings {
   static const String courses = "courses";
   static const String showDetails = "show_details";
   static const String free = "free";
+  static const String sorryWeCouldNotOpenThatLink = "sorry_we_could_not_open_that_link";
 
   // exception handler
   static const String success = "Success";

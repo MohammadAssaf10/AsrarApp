@@ -14,7 +14,6 @@ import '../../features/home/presentation/blocs/services_bloc/bloc/services_bloc.
 import '../../language_cubit/language_cubit.dart';
 import 'language.dart';
 import '../../features/home/domain/use_cases/get_companies.dart';
-import '../../features/home/domain/use_cases/get_file.dart';
 import '../../features/home/presentation/blocs/ad_image_bloc/ad_image_bloc.dart';
 import '../../features/home/presentation/blocs/company_bloc/company_bloc.dart';
 import 'di.dart';
@@ -37,9 +36,7 @@ class MyApp extends StatelessWidget {
                 ..add(GetCompanyEvent()),
         ),
         BlocProvider(
-          create: (context) =>
-              AdImageBloc(getFileUseCase: instance<GetFileUseCase>())
-                ..add(GetAdImage()),
+          create: (context) => AdImageBloc()..add(GetAdImages()),
         ),
         BlocProvider<LanguageCubit>(create: (context) => LanguageCubit()),
         BlocProvider<ServicesBloc>(create: (context) => ServicesBloc()),
