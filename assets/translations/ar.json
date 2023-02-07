@@ -14,6 +14,9 @@
   "user_name": "اسم المستخدم",
   "mobile_number": "رقم الجوال",
   "name_too_short": "الاسم قصير جدا",
+  "enterYourMobileNumber": "ادخل رقم هاتفك",
+  "enterYourWhatsappNumber": "ادخل رقم الواتساب",
+  "includingCountryCodeLike": "متضمنا رمز الدولة مثال: \n966 11 111 1111",
   "already_have_account": "لديك حساب بالفعل؟",
   "name_should_atLeast_3_character": "الاسم يجب ان يحوي على 3 محارف على الاقل",
   "email_format_not_correct": "البريد الالكتروني غير صحيحة",
@@ -23,12 +26,11 @@
   "mobile_number_format_not_correct": "رقم الجوال غير صحيحة",
   "reset_password": "اعادة تعيين كلمة المرور",
   "verification_code": "رمز التحقق",
-  "verificationCodeSentTo" : "تم ارسال رمز التحقق الى الرقم التالي",
+  "verificationCodeSentTo": "تم ارسال رمز التحقق عبر واتساب الى الرقم التالي",
   "send_verification_code": "ارسل رمز التحقق",
   "new_password": "كلمة السر الجديدة",
   "we_send_you_an_email_please_check_your_email_address": "لقد قمنا بارسال رسالة لك تحقق من بريدك الالكتروني",
   "continue as guest": "المتابعة كضيف",
-
   "asrar": "اسرار",
   "asrar_services": "خدمات أسرار",
   "home": "البيت",
@@ -52,12 +54,14 @@
   "the_news": "الخبر",
   "courses": "الدورات",
   "free": "مجاناً",
+
   "sorry_we_could_not_open_that_link": "عذراً ، لم نتمكن من فتح هذا الرابط. يرجى المحاولة مرة أخرى في وقت لاحق.",
   "jobs": "الوظائف",
   "cart": "سلة التسوق",
   "no_jobs": "لا يوجد وظائف",
   "no_courses": "لا يوجد دورات",
   "no_news": "لا يوجد أخبار",
+
 
   "Success": "نحاج",
   "Bad request error": "طلب خاطئ",
@@ -69,7 +73,6 @@
   "Default error": "الخطا الافتراضي",
   "Cache error": "خطا في التخزين الداخلي",
   "No internet error": "لا يوجد اتصال بالانترنت",
- 
   "Email already exists": "البريد مسجل مسبقا",
   "Wrong password": "كلمة المرور خاطئة",
   "Invalid email": "البريد غير صحيح",
