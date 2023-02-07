@@ -1,21 +1,21 @@
-import 'package:asrar_app/features/home/domain/entities/company_entities.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../domain/use_cases/get_companies.dart';
+import '../../../../../core/app/di.dart';
+import '../../../domain/entities/company_entities.dart';
+import '../../../domain/repository/home_repository.dart';
 
 part 'company_event.dart';
 
 part 'company_state.dart';
 
 class CompanyBloc extends Bloc<CompanyEvent, CompanyState> {
-  final GetCompaniesUseCase getCompanyUseCase;
-
-  CompanyBloc({required this.getCompanyUseCase}) : super(CompanyInitial()) {
+  final HomeRepository homeRepository = instance<HomeRepository>();
+  CompanyBloc() : super(CompanyInitial()) {
     on<CompanyEvent>((event, emit) async {
       if (event is GetCompanyEvent) {
         emit(CompanyLoadingState());
-        final company = await getCompanyUseCase();
+        final company = await homeRepository.getCompanies();
         company.fold(
           (failure) => emit(CompanyErrorState(errorMessage: failure.message)),
           (company) => emit(

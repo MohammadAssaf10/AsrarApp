@@ -5,7 +5,7 @@ import '../../../../../config/assets_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../widgets/general/navigation_bar_bottom.dart';
-import '../service&company/customers_service_screen.dart';
+import 'customers_service_screen.dart';
 import 'home_screen.dart';
 import 'orders_screen.dart';
 import 'my_wallet_screen.dart';

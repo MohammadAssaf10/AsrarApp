@@ -6,10 +6,13 @@ import '../features/auth/presentation/pages/password_reset_view.dart';
 import '../features/auth/presentation/pages/verification_view.dart';
 import '../features/home/domain/entities/company_entities.dart';
 import '../features/home/domain/entities/course_entities.dart';
+import '../features/home/domain/entities/job_entities.dart';
 import '../features/home/domain/entities/news_entities.dart';
 import '../features/home/domain/entities/service_entities.dart';
 import '../features/home/presentation/pages/course/course_details_screen.dart';
 import '../features/home/presentation/pages/course/course_screen.dart';
+import '../features/home/presentation/pages/job/job_details_screen.dart';
+import '../features/home/presentation/pages/job/job_screen.dart';
 import '../features/home/presentation/pages/main/main_view.dart';
 import '../features/home/presentation/pages/news/news_details_screen.dart';
 import '../features/home/presentation/pages/shop/cart_screen.dart';
@@ -33,6 +36,8 @@ class Routes {
   static const String courseRoute = "/course";
   static const String newsDetailsRoute = "/newsDetails";
   static const String courseDetailsRoute = "/courseDetails";
+  static const String jobRoute = "/job";
+  static const String jobDetailsRoute = "/jobDetails";
 
   // auth rotes
   static const String auth = '/auth';
@@ -57,6 +62,15 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => NewsScreen());
       case Routes.courseRoute:
         return MaterialPageRoute(builder: (_) => CoursesScreen());
+      case Routes.jobRoute:
+        return MaterialPageRoute(builder: (_) => JobScreen());
+      case Routes.jobDetailsRoute:
+        {
+          final arg = settings.arguments as JobEntities;
+          return MaterialPageRoute(
+            builder: (context) => JobDetailsScreen(arg),
+          );
+        }
       case Routes.courseDetailsRoute:
         {
           final arg = settings.arguments as CourseEntities;

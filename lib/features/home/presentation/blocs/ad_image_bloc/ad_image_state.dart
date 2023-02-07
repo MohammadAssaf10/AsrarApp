@@ -9,13 +9,13 @@ class AdImageInitial extends AdImageState {
   List<Object> get props => [];
 }
 
-class AdImageLoadedState extends AdImageState {
-  final List<FileEntities> list;
+class AdImagesLoadedState extends AdImageState {
+  final List<AdImageEntities> adImagelist;
 
-  const AdImageLoadedState({required this.list});
+  const AdImagesLoadedState({required this.adImagelist});
 
   @override
-  List<Object?> get props => [list];
+  List<Object?> get props => [adImagelist];
 }
 
 class AdImageLoadingState extends AdImageState {

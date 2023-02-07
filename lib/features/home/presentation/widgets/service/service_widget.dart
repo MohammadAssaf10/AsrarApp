@@ -27,7 +27,7 @@ class ServiceWidget extends StatelessWidget {
       },
       child: Container(
         margin: EdgeInsets.symmetric(
-          vertical: AppSize.s8.h,
+          vertical: AppSize.s5.h,
           horizontal: AppSize.s10.w,
         ),
         padding: EdgeInsets.symmetric(horizontal: AppSize.s8.w),

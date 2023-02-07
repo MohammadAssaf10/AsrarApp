@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:asrar_app/config/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
@@ -13,6 +12,7 @@ import '../../config/styles_manager.dart';
 import '../../config/values_manager.dart';
 import '../../features/home/presentation/widgets/general/home_button_widgets.dart';
 import '../../core/app/extensions.dart';
+import '../../features/home/presentation/widgets/general/input_form_field.dart';
 
 String? nameValidator(String? name, BuildContext context) {
   if (name.nullOrEmpty()) {
@@ -180,20 +180,13 @@ void showOrderDialog(
                   textAlign: TextAlign.center,
                 ),
               ),
-              SizedBox(height: AppSize.s5.h),
-              TextFormField(
+              SizedBox(height: AppSize.s10.h),
+              InputFormField(
                 controller: controller,
+                hintText: title,
+                height: AppSize.s40.h,
+                regExp: RegExp('[0-9]'),
                 textAlign: TextAlign.center,
-                
-                keyboardType: TextInputType.phone,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(
-                    RegExp("[0-9]"),
-                  ),
-                ],
-                decoration: InputDecoration(
-                  hintText: title,
-                ),
               ),
             ],
           ),

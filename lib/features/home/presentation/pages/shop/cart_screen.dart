@@ -16,53 +16,49 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: cartList.length,
-              itemBuilder: (_, int index) {
-                return cartWidget(
-                  product: cartList[index],
-                );
-              },
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: AppSize.s10.h,
-              ),
-              child: OptionButton(
-                onTap: () {
-                  if (cartList.isNotEmpty) {
-                    final state =
-                        BlocProvider.of<AuthenticationBloc>(context).state;
-                    if (state.status == AuthStatus.loggedIn)
-                      showOrderDialog(
+      appBar: AppBar(
+        title: Text(AppStrings.cart.tr(context)),
+      ),
+      body: ListView(
+        children: [
+          ListView.builder(
+            physics: ScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: cartList.length,
+            itemBuilder: (_, int index) {
+              return cartWidget(
+                product: cartList[index],
+              );
+            },
+          ),
+          OptionButton(
+            onTap: () {
+              if (cartList.isNotEmpty) {
+                final state =
+                    BlocProvider.of<AuthenticationBloc>(context).state;
+                if (state.status == AuthStatus.loggedIn)
+                  showOrderDialog(
+                    context,
+                    AppStrings.whatsAppNumber.tr(context),
+                    state.user!.phoneNumber,
+                    dp(totalProductsPrice, 2).toString(),
+                    () {
+                      Navigator.push(
                         context,
-                        AppStrings.whatsAppNumber.tr(context),
-                        state.user!.phoneNumber,
-                        dp(totalProductsPrice, 2).toString(),
-                        () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => PayScreen(),
-                            ),
-                          );
-                        },
+                        MaterialPageRoute(
+                          builder: (context) => PayScreen(),
+                        ),
                       );
-                  }
-                },
-                title: AppStrings.addOrder.tr(context),
-                height: AppSize.s40.h,
-                width: AppSize.s200.w,
-                fontSize: AppSize.s22.sp,
-              ),
-            ),
-          ],
-        ),
+                    },
+                  );
+              }
+            },
+            title: AppStrings.addOrder.tr(context),
+            height: AppSize.s40.h,
+            width: AppSize.s200.w,
+            fontSize:AppSize.s22.sp
+          ),
+        ],
       ),
     );
   }
