@@ -7,10 +7,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/color_manager.dart';
 import '../../../../../config/routes_manager.dart';
 import '../../../../../config/strings_manager.dart';
-import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../blocs/company_bloc/company_bloc.dart';
 import '../../blocs/services_bloc/bloc/services_bloc.dart';
+import '../general/empty_list_view.dart';
 import '../general/error_view.dart';
 import '../general/loading_view.dart';
 
@@ -37,6 +37,7 @@ class CompaniesView extends StatelessWidget {
             return SizedBox(
               height: MediaQuery.of(context).size.height / 3.2,
               child: GridView.builder(
+                physics: ScrollPhysics(),
                 itemCount: state.company.length,
                 shrinkWrap: true,
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -72,16 +73,10 @@ class CompaniesView extends StatelessWidget {
               ),
             );
           } else {
-            return Container(
-              margin: EdgeInsets.symmetric(vertical: AppSize.s60.h),
-              alignment: Alignment.center,
-              child: Text(
-                AppStrings.noServices.tr(context),
-                style: getAlmaraiRegularStyle(
-                  fontSize: AppSize.s20.sp,
-                  color: ColorManager.error,
-                ),
-              ),
+            return EmptyListView(
+              emptyListMessage: AppStrings.noServices.tr(context),
+              height: MediaQuery.of(context).size.height / 3,
+              width: MediaQuery.of(context).size.width,
             );
           }
         }

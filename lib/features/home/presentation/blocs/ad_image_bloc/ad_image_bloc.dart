@@ -1,20 +1,21 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../../../core/app/di.dart';
 import '../../../domain/entities/ad_image_entities.dart';
-import '../../../domain/use_cases/get_ad_image.dart';
+import '../../../domain/repository/home_repository.dart';
 
 part 'ad_image_event.dart';
 
 part 'ad_image_state.dart';
 
 class AdImageBloc extends Bloc<AdImageEvent, AdImageState> {
-  final GetAdImageUseCase getAdImageUseCase = GetAdImageUseCase();
+  final HomeRepository homeRepository=instance<HomeRepository>();
   AdImageBloc() : super(AdImageInitial()) {
     on<AdImageEvent>((event, emit) async {
       if (event is GetAdImages) {
         emit(AdImageLoadingState());
-        (await getAdImageUseCase()).fold((failure) {
+        (await homeRepository.getAdImages()).fold((failure) {
           emit(AdImageErrorState(errorMessage: failure.message));
         }, (adImagelist) {
           emit(AdImagesLoadedState(adImagelist: adImagelist));

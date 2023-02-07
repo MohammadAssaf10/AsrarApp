@@ -9,48 +9,48 @@ import '../../../../../config/routes_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
-import '../../blocs/course_bloc/course_bloc.dart';
+import '../../blocs/job_bloc/job_bloc.dart';
 import '../../widgets/general/empty_list_view.dart';
 import '../../widgets/general/error_view.dart';
 import '../../widgets/general/loading_view.dart';
 
-class CoursesScreen extends StatelessWidget {
-  const CoursesScreen({super.key});
+class JobScreen extends StatelessWidget {
+  const JobScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppStrings.courses.tr(context),
+          AppStrings.jobs.tr(context),
         ),
       ),
-      body: BlocBuilder<CourseBloc, CourseState>(
+      body: BlocBuilder<JobBloc, JobState>(
         builder: (context, state) {
-          if (state is CourseLoadingState) {
+          if (state is JobLoadingState) {
             return LoadingView(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height / 1.2,
             );
-          } else if (state is CourseErrorState) {
+          } else if (state is JobErrorState) {
             return ErrorView(
               errorMessage: state.errorMessage.tr(context),
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height / 1.2,
             );
-          } else if (state is CourseLoadedState) {
-            if (state.courseList.isNotEmpty) {
+          } else if (state is JobsLoadedState) {
+            if (state.jobsList.isNotEmpty) {
               return ListView.builder(
                 physics: ScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: state.courseList.length,
+                itemCount: state.jobsList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return InkWell(
                     onTap: () {
                       Navigator.pushNamed(
                         context,
-                        Routes.courseDetailsRoute,
-                        arguments: state.courseList[index],
+                        Routes.jobDetailsRoute,
+                        arguments: state.jobsList[index],
                       );
                     },
                     child: Container(
@@ -80,7 +80,7 @@ class CoursesScreen extends StatelessWidget {
                                   width: AppSize.s1_5.w,
                                 ),
                               ),
-                              child: Image.asset(ImageAssets.asrarCourse),
+                              child: Image.asset(ImageAssets.asrarJob),
                             ),
                           ),
                           Expanded(
@@ -95,7 +95,7 @@ class CoursesScreen extends StatelessWidget {
                                     horizontal: AppSize.s5.w,
                                   ),
                                   child: Text(
-                                    state.courseList[index].courseTitile,
+                                    state.jobsList[index].jobTitle,
                                     style: getAlmaraiRegularStyle(
                                       fontSize: AppSize.s18.sp,
                                       color: ColorManager.darkPrimary,
@@ -105,32 +105,13 @@ class CoursesScreen extends StatelessWidget {
                                     overflow: TextOverflow.visible,
                                   ),
                                 ),
-                                Container(
-                                  margin: EdgeInsets.symmetric(
-                                    horizontal: AppSize.s8.w,
-                                    vertical: AppSize.s4.h,
-                                  ),
-                                  child: Text(
-                                    state.courseList[index].coursePrice
-                                            .startsWith("0")
-                                        ? AppStrings.free.tr(context)
-                                        : "${state.courseList[index].coursePrice} ر.س",
-                                    style: getAlmaraiRegularStyle(
-                                      fontSize: AppSize.s16.sp,
-                                      color: ColorManager.darkPrimary,
-                                    ),
-                                    maxLines: 2,
-                                    softWrap: true,
-                                    overflow: TextOverflow.visible,
-                                  ),
-                                ),
-                                SizedBox(height: AppSize.s8.h),
+                                SizedBox(height: AppSize.s20.h),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      state.courseList[index].timestamp
+                                      state.jobsList[index].timestamp
                                           .toDate()
                                           .toString()
                                           .substring(0, 10),
@@ -157,10 +138,9 @@ class CoursesScreen extends StatelessWidget {
                   );
                 },
               );
-            }
-            else
-            return EmptyListView(
-                emptyListMessage: AppStrings.noCourses.tr(context),
+            } else
+              return EmptyListView(
+                emptyListMessage: AppStrings.noJobs.tr(context),
                 height: MediaQuery.of(context).size.height / 1.2,
                 width: MediaQuery.of(context).size.width,
               );

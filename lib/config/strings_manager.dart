@@ -55,7 +55,7 @@ class AppStrings {
   static const String termsOfUse = "terms_of_use";
   static const String noServices = "no_services";
   static const String noProducts = "no_products";
-  static const String noNews = "no_News";
+  static const String noNews = "no_news";
   static const String services = "services";
   static const String searchForYourServices = "search_for_your_services";
   static const String requiredDocuments = "required_documents";
@@ -69,6 +69,10 @@ class AppStrings {
   static const String showDetails = "show_details";
   static const String free = "free";
   static const String sorryWeCouldNotOpenThatLink = "sorry_we_could_not_open_that_link";
+  static const String jobs = "jobs";
+  static const String cart = "cart";
+  static const String noJobs = "no_jobs";
+  static const String noCourses = "no_courses";
 
   // exception handler
   static const String success = "Success";

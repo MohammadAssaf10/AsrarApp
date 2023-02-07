@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -7,7 +8,8 @@ import '../../features/auth/data/data_sources/firebase_auth_helper.dart';
 import '../../features/auth/data/data_sources/whatsapp_api.dart';
 import '../../features/auth/data/repository/firebase_auth_repository.dart';
 import '../../features/auth/domain/repository/auth_repository.dart';
-import '../../features/home/domain/use_cases/get_companies.dart';
+import '../../features/home/data/repository/home_repository_impl.dart';
+import '../../features/home/domain/repository/home_repository.dart';
 import '../network/dio_factory.dart';
 import '../network/network_info.dart';
 import 'language.dart';
@@ -45,7 +47,8 @@ Future<void> initAuthenticationModule() async {
     try {
       await whatsAppApiConstants.getWhatsAppApiConstants();
     } catch (e) {
-      print('\x1B[31m fuck from di failed to fetch whatsapp api stuff from firebase');
+      print(
+          '\x1B[31m fuck from di failed to fetch whatsapp api stuff from firebase');
     }
 
     Dio dio = await instance<DioFactory>().getDio();
@@ -60,8 +63,12 @@ Future<void> initAuthenticationModule() async {
 }
 
 void initHomeModule() {
-  if (!GetIt.I.isRegistered<GetCompaniesUseCase>()) {
-    instance
-        .registerLazySingleton<GetCompaniesUseCase>(() => GetCompaniesUseCase());
+  if (!GetIt.I.isRegistered<HomeRepository>()) {
+    instance.registerLazySingleton<HomeRepository>(() {
+      return HomeRepositoryImpl(
+        networkInfo: instance<NetworkInfo>(),
+        firestore: FirebaseFirestore.instance,
+      );
+    });
   }
 }

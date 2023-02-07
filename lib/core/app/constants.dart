@@ -5,4 +5,5 @@ class FireBaseCollection {
   static String products = "products";
   static String news = "news";
   static String courses = "courses";
+  static String jobs = "jobs";
 }

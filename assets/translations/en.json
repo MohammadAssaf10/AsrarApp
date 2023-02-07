@@ -54,6 +54,11 @@
   "courses": "Courses",
   "show_details": "Show details",
   "free": "Free",
+  "jobs": "Jobs",
+  "cart": "Cart",
+  "no_courses": "No courses",
+  "no_jobs": "No jobs",
+  "no_news": "No news",
   "sorry_we_could_not_open_that_link": "Sorry, we couldn't open that link. Please try again later",
 
   "Success": "Success",

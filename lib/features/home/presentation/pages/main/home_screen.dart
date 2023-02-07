@@ -11,6 +11,7 @@ import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../blocs/course_bloc/course_bloc.dart';
+import '../../blocs/job_bloc/job_bloc.dart';
 import '../../blocs/news_bloc/news_bloc.dart';
 import '../../blocs/product_bloc/product_bloc.dart';
 import '../../widgets/ad/ad_image_view.dart';
@@ -40,95 +41,94 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            AdImageView(),
-            OptionsWidget(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  OptionButton(
-                    onTap: () {
-                      print("وظائف");
-                    },
-                    title: "وظائف",
-                    height: double.infinity,
-                    width: AppSize.s100.w,
-                    fontSize: AppSize.s16.sp,
-                  ),
-                  Container(
-                    color: ColorManager.grey,
-                    height: double.infinity,
-                    width: AppSize.s2.w,
-                  ),
-                  OptionButton(
-                    onTap: () {
-                      BlocProvider.of<NewsBloc>(context)
-                          .add(GetNewsListEvent());
-                      Navigator.pushNamed(context, Routes.newsRoute);
-                    },
-                    title: AppStrings.news.tr(context),
-                    height: double.infinity,
-                    width: AppSize.s100.w,
-                    fontSize: AppSize.s16.sp,
-                  ),
-                  Container(
-                    color: ColorManager.grey,
-                    height: double.infinity,
-                    width: AppSize.s2.w,
-                  ),
-                  OptionButton(
-                    onTap: () {
-                      BlocProvider.of<CourseBloc>(context)
-                          .add(GetCoursesListEvent());
-                      Navigator.pushNamed(context, Routes.courseRoute);
-                    },
-                    title: AppStrings.courses.tr(context),
-                    height: double.infinity,
-                    width: AppSize.s100.w,
-                    fontSize: AppSize.s16.sp,
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: AppSize.s10.h),
-            OptionsWidget(
-              child: MaterialButton(
-                onPressed: () {
-                  BlocProvider.of<ProductBloc>(context)
-                      .add(GetProductsListEvent());
-                  Navigator.pushNamed(context, Routes.shopRoute);
-                },
-                child: Text(
-                  AppStrings.shop.tr(context),
-                  textAlign: TextAlign.center,
-                  style: getAlmaraiBoldStyle(
-                    fontSize: 18.sp,
-                    color: ColorManager.white,
-                  ),
+      body: ListView(
+        children: [
+          AdImageView(),
+          OptionsWidget(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                OptionButton(
+                  onTap: () {
+                    BlocProvider.of<JobBloc>(context).add(GetJobsListEvent());
+                    Navigator.pushNamed(context, Routes.jobRoute);
+                  },
+                  title: AppStrings.jobs.tr(context),
+                  height: double.infinity,
+                  width: AppSize.s100.w,
+                  fontSize: AppSize.s16.sp,
                 ),
-              ),
+                Container(
+                  color: ColorManager.grey,
+                  height: double.infinity,
+                  width: AppSize.s2.w,
+                ),
+                OptionButton(
+                  onTap: () {
+                    BlocProvider.of<NewsBloc>(context)
+                        .add(GetNewsListEvent());
+                    Navigator.pushNamed(context, Routes.newsRoute);
+                  },
+                  title: AppStrings.news.tr(context),
+                  height: double.infinity,
+                  width: AppSize.s100.w,
+                  fontSize: AppSize.s16.sp,
+                ),
+                Container(
+                  color: ColorManager.grey,
+                  height: double.infinity,
+                  width: AppSize.s2.w,
+                ),
+                OptionButton(
+                  onTap: () {
+                    BlocProvider.of<CourseBloc>(context)
+                        .add(GetCoursesListEvent());
+                    Navigator.pushNamed(context, Routes.courseRoute);
+                  },
+                  title: AppStrings.courses.tr(context),
+                  height: double.infinity,
+                  width: AppSize.s100.w,
+                  fontSize: AppSize.s16.sp,
+                ),
+              ],
             ),
-            SizedBox(height: AppSize.s10.h),
-            Container(
-              margin: EdgeInsets.symmetric(
-                vertical: AppSize.s5.h,
-                horizontal: AppSize.s15.w,
-              ),
-              width: MediaQuery.of(context).size.width,
+          ),
+          SizedBox(height: AppSize.s10.h),
+          OptionsWidget(
+            child: MaterialButton(
+              onPressed: () {
+                BlocProvider.of<ProductBloc>(context)
+                    .add(GetProductsListEvent());
+                Navigator.pushNamed(context, Routes.shopRoute);
+              },
               child: Text(
-                AppStrings.services.tr(context),
-                textAlign: TextAlign.start,
+                AppStrings.shop.tr(context),
+                textAlign: TextAlign.center,
                 style: getAlmaraiBoldStyle(
-                  fontSize: AppSize.s18.sp,
-                  color: ColorManager.darkPrimary,
+                  fontSize: 18.sp,
+                  color: ColorManager.white,
                 ),
               ),
             ),
-            CompaniesView(),
-          ],
-        ),
+          ),
+          SizedBox(height: AppSize.s10.h),
+          Container(
+            margin: EdgeInsets.symmetric(
+              vertical: AppSize.s5.h,
+              horizontal: AppSize.s15.w,
+            ),
+            width: MediaQuery.of(context).size.width,
+            child: Text(
+              AppStrings.services.tr(context),
+              textAlign: TextAlign.start,
+              style: getAlmaraiBoldStyle(
+                fontSize: AppSize.s18.sp,
+                color: ColorManager.darkPrimary,
+              ),
+            ),
+          ),
+          CompaniesView(),
+        ],
       ),
     );
   }

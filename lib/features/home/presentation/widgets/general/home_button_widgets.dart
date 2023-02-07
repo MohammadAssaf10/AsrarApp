@@ -40,8 +40,7 @@ class OptionButton extends StatelessWidget {
   final double fontSize;
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => onTap(),
+    return Center(
       child: Container(
         width: width,
         height: height,
@@ -52,11 +51,16 @@ class OptionButton extends StatelessWidget {
             AppSize.s18.r,
           ),
         ),
-        child: Text(
-          title,
-          style: getAlmaraiRegularStyle(
-            fontSize: fontSize,
-            color: ColorManager.white,
+        child: MaterialButton(
+          onPressed: () {
+            onTap();
+          },
+          child: Text(
+            title,
+            style: getAlmaraiRegularStyle(
+              fontSize: fontSize,
+              color: ColorManager.white,
+            ),
           ),
         ),
       ),

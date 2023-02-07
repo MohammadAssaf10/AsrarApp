@@ -8,15 +8,14 @@ import '../../config/routes_manager.dart';
 import '../../config/theme_manager.dart';
 import '../../features/auth/presentation/bloc/authentication_bloc.dart';
 import '../../features/home/presentation/blocs/course_bloc/course_bloc.dart';
+import '../../features/home/presentation/blocs/job_bloc/job_bloc.dart';
 import '../../features/home/presentation/blocs/news_bloc/news_bloc.dart';
 import '../../features/home/presentation/blocs/product_bloc/product_bloc.dart';
 import '../../features/home/presentation/blocs/services_bloc/bloc/services_bloc.dart';
 import '../../language_cubit/language_cubit.dart';
 import 'language.dart';
-import '../../features/home/domain/use_cases/get_companies.dart';
 import '../../features/home/presentation/blocs/ad_image_bloc/ad_image_bloc.dart';
 import '../../features/home/presentation/blocs/company_bloc/company_bloc.dart';
-import 'di.dart';
 
 class MyApp extends StatelessWidget {
   // named constructor
@@ -31,22 +30,18 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-              CompanyBloc(getCompanyUseCase: instance<GetCompaniesUseCase>())
-                ..add(GetCompanyEvent()),
-        ),
-        BlocProvider(
-          create: (context) => AdImageBloc()..add(GetAdImages()),
-        ),
+            create: (context) => CompanyBloc()..add(GetCompanyEvent())),
+        BlocProvider(create: (context) => AdImageBloc()..add(GetAdImages())),
         BlocProvider<LanguageCubit>(create: (context) => LanguageCubit()),
         BlocProvider<ServicesBloc>(create: (context) => ServicesBloc()),
         BlocProvider<ProductBloc>(create: (context) => ProductBloc()),
         BlocProvider<NewsBloc>(create: (context) => NewsBloc()),
         BlocProvider<CourseBloc>(create: (context) => CourseBloc()),
+        BlocProvider<JobBloc>(create: (context) => JobBloc()),
         BlocProvider<AuthenticationBloc>(
-            lazy: false,
-            create: ((context) =>
-                AuthenticationBloc.instance..add(AppStarted())))
+          lazy: false,
+          create: ((context) => AuthenticationBloc.instance..add(AppStarted())),
+        )
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),
@@ -57,7 +52,7 @@ class MyApp extends StatelessWidget {
             builder: (context, state) {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
-                title: "اسرار",
+                title: "أسرار",
                 localizationsDelegates: const [
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate,

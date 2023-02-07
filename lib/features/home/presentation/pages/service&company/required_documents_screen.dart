@@ -23,77 +23,74 @@ class RequiredDocumentsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(service.serviceName),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: AppSize.s40.h),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: AppSize.s10.h,
-                horizontal: AppSize.s30.w,
-              ),
-              child: Text(
-                AppStrings.requiredDocuments.tr(context),
-                style: getAlmaraiBoldStyle(
-                  fontSize: AppSize.s22.sp,
-                  color: ColorManager.darkPrimary,
-                ),
-                textAlign: TextAlign.start,
-              ),
+      body: ListView(
+        children: [
+          SizedBox(height: AppSize.s40.h),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: AppSize.s10.h,
+              horizontal: AppSize.s30.w,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: AppSize.s30.w,
+            child: Text(
+              AppStrings.requiredDocuments.tr(context),
+              style: getAlmaraiBoldStyle(
+                fontSize: AppSize.s22.sp,
+                color: ColorManager.darkPrimary,
               ),
-              child: ListView.builder(
-                // physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: service.requiredDocuments.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: EdgeInsets.symmetric(vertical: AppSize.s5.h),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(IconAssets.dot),
-                        SizedBox(width: AppSize.s3.w),
-                        SizedBox(
-                          width: AppSize.s260.w,
-                          child: Text(
-                            service.requiredDocuments[index],
-                            style: getAlmaraiRegularStyle(
-                              fontSize: AppSize.s20.sp,
-                              color: ColorManager.darkPrimary,
-                            ),
-                            maxLines: 3,
+              textAlign: TextAlign.start,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: AppSize.s30.w,
+            ),
+            child: ListView.builder(
+              // physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: service.requiredDocuments.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(vertical: AppSize.s5.h),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(IconAssets.dot),
+                      SizedBox(width: AppSize.s3.w),
+                      SizedBox(
+                        width: AppSize.s260.w,
+                        child: Text(
+                          service.requiredDocuments[index],
+                          style: getAlmaraiRegularStyle(
+                            fontSize: AppSize.s20.sp,
+                            color: ColorManager.darkPrimary,
                           ),
+                          maxLines: 3,
                         ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
-            SizedBox(height: AppSize.s15.h),
-            Center(
-              child: OptionButton(
-                onTap: () {
-                  print("${MediaQuery.of(context).size.height}");
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PayScreen(),
-                    ),
-                  );
-                },
-                title: AppStrings.checkout.tr(context),
-                height: AppSize.s35.h,
-                width: AppSize.s200.w,
-                fontSize: AppSize.s18.sp,
-              ),
+          ),
+          SizedBox(height: AppSize.s15.h),
+          Center(
+            child: OptionButton(
+              onTap: () {
+                print("${MediaQuery.of(context).size.height}");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PayScreen(),
+                  ),
+                );
+              },
+              title: AppStrings.checkout.tr(context),
+              height: AppSize.s35.h,
+              width: AppSize.s200.w,
+              fontSize: AppSize.s18.sp,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
