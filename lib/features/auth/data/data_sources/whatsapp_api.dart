@@ -2,9 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
 
-import 'models/responses.dart';
+import '../models/responses.dart';
 
 part 'whatsapp_api.g.dart';
+
+const kAPI = 'API';
+const kWHATSAPPAPI = 'WHATSAPPAPI';
 
 class WhatsAppApiConstance {
   String baseUrl;
@@ -30,8 +33,8 @@ class WhatsAppApiConstance {
 
   Future<void> getWhatsAppApiConstants() async {
     final map = (await firestore.FirebaseFirestore.instance
-            .collection('API')
-            .doc('WHATSAPPAPI')
+            .collection(kAPI)
+            .doc(kWHATSAPPAPI)
             .get())
         .data();
 
