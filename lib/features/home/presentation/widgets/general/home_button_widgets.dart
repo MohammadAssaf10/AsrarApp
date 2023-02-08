@@ -52,6 +52,7 @@ class OptionButton extends StatelessWidget {
           ),
         ),
         child: MaterialButton(
+          height: height,
           onPressed: () {
             onTap();
           },
