@@ -198,8 +198,7 @@ void showOrderDialog(
               children: [
                 OptionButton(
                   onTap: () {
-                    if (controller.text.isNotEmpty &&
-                        controller.text.length == 10) acceptOnTap();
+                    if (controller.text.isNotEmpty) acceptOnTap();
                   },
                   title: AppStrings.checkout.tr(context),
                   height: AppSize.s35.h,
