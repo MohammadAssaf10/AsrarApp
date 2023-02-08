@@ -6,17 +6,19 @@ import '../../../../core/data/failure.dart';
 import '../../../../core/network/network_info.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/repository/auth_repository.dart';
+import '../data_sources/auth_preference.dart';
 import '../data_sources/firebase_auth_helper.dart';
 import '../data_sources/whatsapp_api.dart';
 import '../models/requests.dart';
 
-class FirebaseAuthRepository implements AuthRepository {
+class registering implements AuthRepository {
   final FirebaseAuthHelper _authHelper;
   final NetworkInfo _networkInfo;
   final WhatsappApi _whatsappApi;
+  final AuthPreference _authPreference;
 
-  FirebaseAuthRepository(
-      this._authHelper, this._networkInfo, this._whatsappApi);
+  registering(this._authHelper, this._networkInfo, this._whatsappApi,
+      this._authPreference);
 
   @override
   Future<Either<Failure, User>> loginViaEmail(LoginRequest loginRequest) async {
@@ -53,8 +55,12 @@ class FirebaseAuthRepository implements AuthRepository {
     return Right(registerRequest);
   }
 
+  // this method called in every signIn or registering
+  // because if it from google it can be the first sign in
   Future<Either<Failure, User>> updateUserData(User user) async {
     try {
+      _authPreference.setUserLoggedIn();
+      _authPreference.setUser(user);
       return Right(await _authHelper.updateUserData(user));
     } catch (e) {
       return Left(ExceptionHandler.handle(e).failure);
@@ -74,11 +80,9 @@ class FirebaseAuthRepository implements AuthRepository {
   @override
   Future<Either<Failure, User?>> getCurrentUserIfExists() async {
     try {
-      firebase.User? firebaseUser = _authHelper.getCurrentUser();
+      if (!_authPreference.isUserLoggedIn()) return const Right(null);
 
-      if (firebaseUser == null) return const Right(null);
-
-      User user = await _authHelper.getUser(firebaseUser.email!);
+      User user = _authPreference.getUser();
       return Right(user);
     } catch (e) {
       return Left(ExceptionHandler.handle(e).failure);
@@ -114,6 +118,7 @@ class FirebaseAuthRepository implements AuthRepository {
 
   @override
   Future<void> logOut() async {
+    _authPreference.setUserLoggedOut();
     await _authHelper.logout();
   }
 

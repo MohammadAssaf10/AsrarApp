@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../features/auth/data/data_sources/auth_preference.dart';
 import '../../features/auth/data/data_sources/firebase_auth_helper.dart';
 import '../../features/auth/data/data_sources/whatsapp_api.dart';
 import '../../features/auth/data/repository/firebase_auth_repository.dart';
@@ -33,6 +34,9 @@ Future<void> initAppModule() async {
   instance
       .registerLazySingleton<FirebaseAuthHelper>(() => FirebaseAuthHelper());
 
+  instance.registerLazySingleton<AuthPreference>(
+      () => AuthPreference(instance<SharedPreferences>()));
+
   // language pref
   instance.registerLazySingleton(
       () => LanguageCacheHelper(instance<SharedPreferences>()));
@@ -49,17 +53,19 @@ Future<void> initAuthenticationModule() async {
     try {
       await whatsAppApiConstants.getWhatsAppApiConstants();
     } catch (e) {
-      print('\x1B[31m fuck from di failed to fetch whatsapp api stuff from firebase');
+      print(
+          '\x1B[31m fuck from di failed to fetch whatsapp api stuff from firebase');
     }
 
     Dio dio = await instance<DioFactory>().getDio();
     instance.registerLazySingleton<WhatsappApi>(
         () => WhatsappApi(dio, baseUrl: whatsAppApiConstants.baseUrl));
 
-    instance.registerLazySingleton<AuthRepository>(() => FirebaseAuthRepository(
+    instance.registerLazySingleton<AuthRepository>(() => registering(
         instance<FirebaseAuthHelper>(),
         instance<NetworkInfo>(),
-        instance<WhatsappApi>()));
+        instance<WhatsappApi>(),
+        instance<AuthPreference>()));
   }
 }
 
@@ -70,7 +76,7 @@ void initHomeModule() {
         networkInfo: instance<NetworkInfo>()));
     instance.registerLazySingleton<GetFileUseCase>(
         () => GetFileUseCase(instance<FileRepository>()));
-    instance
-        .registerLazySingleton<GetCompaniesUseCase>(() => GetCompaniesUseCase());
+    instance.registerLazySingleton<GetCompaniesUseCase>(
+        () => GetCompaniesUseCase());
   }
 }
