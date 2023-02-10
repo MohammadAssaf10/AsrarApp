@@ -6,4 +6,8 @@ class FireBaseCollection {
   static String news = "news";
   static String courses = "courses";
   static String jobs = "jobs";
+  static String subscriptions = "subscriptions";
+  static String shopOrders = "shopOrders";
 }
+
+enum OrderStatus { inProgress, pending, finished, canceled }

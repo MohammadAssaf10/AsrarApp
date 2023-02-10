@@ -14,12 +14,13 @@ import '../features/home/presentation/pages/course/course_screen.dart';
 import '../features/home/presentation/pages/job/job_details_screen.dart';
 import '../features/home/presentation/pages/job/job_screen.dart';
 import '../features/home/presentation/pages/main/main_view.dart';
+import '../features/home/presentation/pages/main/subscription_screen.dart';
 import '../features/home/presentation/pages/news/news_details_screen.dart';
-import '../features/home/presentation/pages/shop/cart_screen.dart';
+import '../features/shop/presentation/pages/cart_screen.dart';
 import '../features/home/presentation/pages/news/news_screen.dart';
 import '../features/home/presentation/pages/service&company/required_documents_screen.dart';
 import '../features/home/presentation/pages/service&company/services_screen.dart';
-import '../features/home/presentation/pages/shop/shop_screen.dart';
+import '../features/shop/presentation/pages/shop_screen.dart';
 import '../splash.dart';
 import 'strings_manager.dart';
 
@@ -38,6 +39,7 @@ class Routes {
   static const String courseDetailsRoute = "/courseDetails";
   static const String jobRoute = "/job";
   static const String jobDetailsRoute = "/jobDetails";
+  static const String subscriptionRoute = "/subscription";
 
   // auth rotes
   static const String auth = '/auth';
@@ -64,6 +66,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => CoursesScreen());
       case Routes.jobRoute:
         return MaterialPageRoute(builder: (_) => JobScreen());
+      case Routes.subscriptionRoute:
+        return MaterialPageRoute(builder: (_) => SubscriptionScreen());
       case Routes.jobDetailsRoute:
         {
           final arg = settings.arguments as JobEntities;

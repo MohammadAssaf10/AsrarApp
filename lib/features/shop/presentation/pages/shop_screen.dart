@@ -3,16 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../config/color_manager.dart';
-import '../../../../../config/routes_manager.dart';
-import '../../../../../config/strings_manager.dart';
-import '../../../../../config/values_manager.dart';
-import '../../../../../core/app/functions.dart';
-import '../../blocs/product_bloc/product_bloc.dart';
-import '../../widgets/general/empty_list_view.dart';
-import '../../widgets/general/error_view.dart';
-import '../../widgets/general/loading_view.dart';
-import '../../widgets/shop/product_widget.dart';
+import '../../../../config/color_manager.dart';
+import '../../../../config/routes_manager.dart';
+import '../../../../config/strings_manager.dart';
+import '../../../../config/values_manager.dart';
+import '../../../../core/app/functions.dart';
+import '../bloc/product_bloc/product_bloc.dart';
+import '../../../home/presentation/widgets/general/empty_list_view.dart';
+import '../../../home/presentation/widgets/general/error_view.dart';
+import '../../../home/presentation/widgets/general/loading_view.dart';
+import '../common/function.dart';
+import '../common/widgets/product_widget.dart';
 
 class ShopScreen extends StatelessWidget {
   const ShopScreen({super.key});
@@ -21,7 +22,7 @@ class ShopScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("متجر أسرار"),
+        title: Text(AppStrings.asrarShop.tr(context)),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -33,7 +34,7 @@ class ShopScreen extends StatelessWidget {
           else
             showCustomDialog(
               context,
-              message: "الرجاء اختيار منتجات",
+              message: AppStrings.pleaseChooseProducts.tr(context),
             );
         },
         backgroundColor: ColorManager.primary,
@@ -71,13 +72,12 @@ class ShopScreen extends StatelessWidget {
                   );
                 },
               );
-            } else 
+            } else
               return EmptyListView(
                 emptyListMessage: AppStrings.noProducts.tr(context),
                 height: MediaQuery.of(context).size.height / 1.2,
                 width: MediaQuery.of(context).size.width,
               );
-            
           }
           return SizedBox();
         },

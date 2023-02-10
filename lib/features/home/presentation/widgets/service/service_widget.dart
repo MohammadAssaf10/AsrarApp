@@ -85,6 +85,7 @@ class ServiceWidget extends StatelessWidget {
             ),
             Text(
               "${service.servicePrice} ر.س",
+              textDirection: TextDirection.rtl,
               style: getAlmaraiRegularStyle(
                 fontSize: AppSize.s18.sp,
                 color: ColorManager.darkPrimary,

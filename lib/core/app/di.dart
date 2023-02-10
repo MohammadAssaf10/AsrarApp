@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -11,6 +10,8 @@ import '../../features/auth/data/repository/firebase_auth_repository.dart';
 import '../../features/auth/domain/repository/auth_repository.dart';
 import '../../features/home/data/repository/home_repository_impl.dart';
 import '../../features/home/domain/repository/home_repository.dart';
+import '../../features/shop/data/repositories/shop_repository_impl.dart';
+import '../../features/shop/domain/repositories/shop_repository.dart';
 import '../network/dio_factory.dart';
 import '../network/network_info.dart';
 import 'language.dart';
@@ -74,8 +75,13 @@ void initHomeModule() {
     instance.registerLazySingleton<HomeRepository>(() {
       return HomeRepositoryImpl(
         networkInfo: instance<NetworkInfo>(),
-        firestore: FirebaseFirestore.instance,
+      );
+    });
+       instance.registerLazySingleton<ShopRepository>(() {
+      return ShopRepositoryImpl(
+        networkInfo: instance<NetworkInfo>(),
       );
     });
   }
 }
+

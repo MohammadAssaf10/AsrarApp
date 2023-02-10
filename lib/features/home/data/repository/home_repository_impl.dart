@@ -1,3 +1,4 @@
+import 'package:asrar_app/features/home/domain/entities/subscription_entities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 
@@ -10,16 +11,14 @@ import '../../domain/entities/company_entities.dart';
 import '../../domain/entities/course_entities.dart';
 import '../../domain/entities/job_entities.dart';
 import '../../domain/entities/news_entities.dart';
-import '../../domain/entities/product_entities.dart';
 import '../../domain/entities/service_entities.dart';
 import '../../domain/repository/home_repository.dart';
 
 class HomeRepositoryImpl extends HomeRepository {
-  final FirebaseFirestore firestore;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final NetworkInfo networkInfo;
   HomeRepositoryImpl({
     required this.networkInfo,
-    required this.firestore,
   });
   @override
   Future<Either<Failure, List<AdImageEntities>>> getAdImages() async {
@@ -113,23 +112,6 @@ class HomeRepositoryImpl extends HomeRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductEntities>>> getShopProducts() async {
-    if (await networkInfo.isConnected) {
-      try {
-        List<ProductEntities> productsList = [];
-        final products =
-            await firestore.collection(FireBaseCollection.products).get();
-        for (var doc in products.docs)
-          productsList.add(ProductEntities.fromMap(doc.data()));
-        return Right(productsList);
-      } catch (e) {
-        return Left(ExceptionHandler.handle(e).failure);
-      }
-    } else
-      return Left(DataSourceExceptions.noInternetConnections.getFailure());
-  }
-
-  @override
   Future<Either<Failure, List<JobEntities>>> getJobs() async {
     if (await networkInfo.isConnected) {
       try {
@@ -138,6 +120,23 @@ class HomeRepositoryImpl extends HomeRepository {
         for (var doc in jobs.docs)
           jobsList.add(JobEntities.fromMap(doc.data()));
         return Right(jobsList);
+      } catch (e) {
+        return Left(ExceptionHandler.handle(e).failure);
+      }
+    } else
+      return Left(DataSourceExceptions.noInternetConnections.getFailure());
+  }
+
+  @override
+  Future<Either<Failure, List<SubscriptionEntities>>> getSubscriptions() async {
+    if (await networkInfo.isConnected) {
+      try {
+        List<SubscriptionEntities> SubscriptionsList = [];
+        final Subscriptions =
+            await firestore.collection(FireBaseCollection.subscriptions).get();
+        for (var doc in Subscriptions.docs)
+          SubscriptionsList.add(SubscriptionEntities.fromMap(doc.data()));
+        return Right(SubscriptionsList);
       } catch (e) {
         return Left(ExceptionHandler.handle(e).failure);
       }

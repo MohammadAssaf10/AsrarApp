@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../../config/assets_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/values_manager.dart';
+import '../../../../../core/app/functions.dart';
 import '../../../domain/entities/company_entities.dart';
 import '../../widgets/general/input_form_field.dart';
 import '../../widgets/service/services_view.dart';
@@ -30,8 +31,9 @@ class ServicesScreen extends StatelessWidget {
                   child: InputFormField(
                     controller: controller,
                     labelText: AppStrings.searchForYourServices.tr(context),
-                    regExp: RegExp('[" "a-zآ-يA-Z]'),
+                    regExp: getTextWithNumberInputFormat(),
                     height: AppSize.s40.h,
+                    textInputType: TextInputType.text,
                     horizontalContentPadding: AppSize.s12.w,
                   ),
                 ),
