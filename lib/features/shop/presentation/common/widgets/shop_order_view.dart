@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../config/color_manager.dart';
+import '../../../../../config/routes_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../../../../core/app/constants.dart';
@@ -61,6 +62,13 @@ class ShopOrderView extends StatelessWidget {
             itemCount: state.shopOrderList.length,
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    Routes.shopOrderDetailsRoute,
+                    arguments: state.shopOrderList[index],
+                  );
+                },
                 child: Container(
                   height: AppSize.s80.h,
                   margin: EdgeInsets.symmetric(
@@ -85,7 +93,7 @@ class ShopOrderView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                AppStrings.orderNumber.tr(context),
+                                AppStrings.orderNNumber.tr(context),
                                 textAlign: TextAlign.center,
                                 style: getAlmaraiBoldStyle(
                                   fontSize: AppSize.s18.sp,

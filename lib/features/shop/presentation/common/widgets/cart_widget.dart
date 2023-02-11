@@ -38,16 +38,15 @@ class _cartWidgetState extends State<cartWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: AppSize.s110.h,
-      width: double.infinity,
+      height: AppSize.s100.h,
       margin: EdgeInsets.symmetric(
-        horizontal: AppSize.s10.w,
+        horizontal: AppSize.s8.w,
         vertical: AppSize.s8.h,
       ),
       decoration: BoxDecoration(
         color: ColorManager.white,
         borderRadius: BorderRadius.circular(
-          AppSize.s20.r,
+          AppSize.s18.r,
         ),
       ),
       child: Row(
@@ -57,21 +56,19 @@ class _cartWidgetState extends State<cartWidget> {
             child: CachedNetworkImageWidget(
               image: widget.product.productImageUrl,
               shapeBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: ColorManager.transparent,
-                ),
+                borderSide: BorderSide.none,
                 borderRadius: BorderRadius.circular(
-                  AppSize.s20.r,
+                  AppSize.s18.r,
                 ),
               ),
               offset: Offset(0, 0),
-              height: MediaQuery.of(context).size.height,
+              height: AppSize.s100.h,
             ),
           ),
           Expanded(
             child: Container(
               margin: EdgeInsets.symmetric(
-                horizontal: AppSize.s5.w,
+                horizontal: AppSize.s8.w,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -84,11 +81,11 @@ class _cartWidgetState extends State<cartWidget> {
                       color: ColorManager.primary,
                     ),
                     textAlign: TextAlign.start,
-                    maxLines: 4,
+                    maxLines: 2,
                     softWrap: true,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(height: AppSize.s4.h),
+                  SizedBox(height: AppSize.s3.h),
                   Text(
                     "${dp(totalProductPrice, 2)} ر.س",
                     style: getAlmaraiBoldStyle(
@@ -97,68 +94,58 @@ class _cartWidgetState extends State<cartWidget> {
                     ),
                     textAlign: TextAlign.start,
                     textDirection: TextDirection.rtl,
-                    maxLines: 1,
-                    softWrap: true,
-                    overflow: TextOverflow.visible,
                   ),
                 ],
               ),
             ),
           ),
           Expanded(
-            child: Material(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: AppSize.s5.h,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircleAvatar(
+                  radius: AppSize.s20.r,
+                  backgroundColor: ColorManager.primary,
+                  child: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        widget.product.productCount++;
+                        totalProductPrice = widget.product.productCount *
+                            stringToDouble(widget.product.productPrice);
+                      });
+                    },
+                    icon: Icon(
+                      Icons.add,
+                      color: ColorManager.white,
+                    ),
+                  ),
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    CircleAvatar(
-                      radius: AppSize.s20.r,
-                      backgroundColor: ColorManager.primary,
-                      child: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            widget.product.productCount++;
-                            totalProductPrice = widget.product.productCount *
-                                stringToDouble(widget.product.productPrice);
-                          });
-                        },
-                        icon: Icon(
-                          Icons.add,
-                          color: ColorManager.white,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: AppSize.s5.w),
-                      child: Text(
-                        widget.product.productCount.toString(),
-                      ),
-                    ),
-                    CircleAvatar(
-                      radius: AppSize.s20.r,
-                      backgroundColor: ColorManager.primary,
-                      child: IconButton(
-                        onPressed: () {
-                          if (widget.product.productCount > 1) {
-                            setState(() {
-                              widget.product.productCount--;
-                              totalProductPrice = widget.product.productCount *
-                                  stringToDouble(widget.product.productPrice);
-                            });
-                          }
-                        },
-                        icon: Icon(
-                          Icons.remove,
-                          color: ColorManager.white,
-                        ),
-                      ),
-                    ),
-                  ],
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: AppSize.s5.w),
+                  child: Text(
+                    widget.product.productCount.toString(),
+                  ),
                 ),
-              ),
+                CircleAvatar(
+                  radius: AppSize.s20.r,
+                  backgroundColor: ColorManager.primary,
+                  child: IconButton(
+                    onPressed: () {
+                      if (widget.product.productCount > 1) {
+                        setState(() {
+                          widget.product.productCount--;
+                          totalProductPrice = widget.product.productCount *
+                              stringToDouble(widget.product.productPrice);
+                        });
+                      }
+                    },
+                    icon: Icon(
+                      Icons.remove,
+                      color: ColorManager.white,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

@@ -60,6 +60,9 @@ class AppStrings {
   static const String termsOfUse = "terms_of_use";
   static const String noServices = "no_services";
   static const String noProducts = "no_products";
+  static const String productName = "product_name";
+  static const String productPrice = "product_price";
+  static const String number = "number";
   static const String noNews = "no_news";
   static const String services = "services";
   static const String searchForYourServices = "search_for_your_services";
@@ -84,6 +87,7 @@ class AppStrings {
   static const String orderAddedSuccessfully = "order_added_successfully";
   static const String orderCancelledSuccessfully = "order_cancelled_successfully";
   static const String shopOrders = "shop_orders";
+  static const String orderNNumber = "order_n_number";
   static const String orderNumber = "order_number";
   static const String orderStatus = "order_status";
   static const String orderSPrice = "order_price";
