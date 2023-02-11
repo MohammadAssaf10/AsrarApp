@@ -46,6 +46,7 @@ class AppStrings {
   static const String shop = "shop";
   static const String profile = "profile";
   static const String orders = "orders";
+  static const String order = "order";
   static const String myWallet = "my_wallet";
   static const String customerService = "customers_service";
   static const String asrarForElectronicServices =
@@ -54,9 +55,14 @@ class AppStrings {
   static const String whatsApp = "whats_app";
   static const String googleTranslate = "google_translate";
   static const String subscribe = "subscribe";
+  static const String subscriptions = "subscriptions";
+  static const String noSubscriptions = "no_subscriptions";
   static const String termsOfUse = "terms_of_use";
   static const String noServices = "no_services";
   static const String noProducts = "no_products";
+  static const String productName = "product_name";
+  static const String productPrice = "product_price";
+  static const String number = "number";
   static const String noNews = "no_news";
   static const String services = "services";
   static const String searchForYourServices = "search_for_your_services";
@@ -70,12 +76,27 @@ class AppStrings {
   static const String courses = "courses";
   static const String showDetails = "show_details";
   static const String free = "free";
-  static const String sorryWeCouldNotOpenThatLink = "sorry_we_could_not_open_that_link";
+  static const String sorryWeCouldNotOpenThatLink =
+      "sorry_we_could_not_open_that_link";
   static const String jobs = "jobs";
   static const String cart = "cart";
   static const String noJobs = "no_jobs";
   static const String noCourses = "no_courses";
-
+  static const String asrarShop = "asrar_shop";
+  static const String pleaseChooseProducts = "please_choose_products";
+  static const String orderAddedSuccessfully = "order_added_successfully";
+  static const String orderCancelledSuccessfully = "order_cancelled_successfully";
+  static const String shopOrders = "shop_orders";
+  static const String orderNNumber = "order_n_number";
+  static const String orderNumber = "order_number";
+  static const String orderStatus = "order_status";
+  static const String orderSPrice = "order_price";
+  static const String pending = "pending";
+  static const String inProgress = "inProgress";
+  static const String finished = "finished";
+  static const String canceled = "canceled";
+  static const String canceling = "canceling";
+  static const String noOrders = "no_orders";
   // exception handler
   static const String success = "Success";
   static const String badRequestError = "Bad request error";
@@ -108,7 +129,6 @@ class AppStrings {
   static const String unauthenticated = "unauthenticated";
   static const String retryLimitExceeded = "retry_limit_exceeded";
   static const String invalidChecksum = "invalid_checksum";
-  static const String canceled = "canceled";
   static const String cancel = "cancel";
   static const String invalidEventName = "invalid_event_name";
   static const String invalidUrl = "invalid_url";

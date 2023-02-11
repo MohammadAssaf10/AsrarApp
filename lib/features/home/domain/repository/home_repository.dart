@@ -6,8 +6,8 @@ import '../entities/company_entities.dart';
 import '../entities/course_entities.dart';
 import '../entities/job_entities.dart';
 import '../entities/news_entities.dart';
-import '../entities/product_entities.dart';
 import '../entities/service_entities.dart';
+import '../entities/subscription_entities.dart';
 
 abstract class HomeRepository {
   Future<Either<Failure, List<AdImageEntities>>> getAdImages();
@@ -16,6 +16,6 @@ abstract class HomeRepository {
   Future<Either<Failure, List<NewsEntities>>> getNews();
   Future<Either<Failure, List<ServiceEntities>>> getServices(
       String companyName);
-  Future<Either<Failure, List<ProductEntities>>> getShopProducts();
   Future<Either<Failure, List<JobEntities>>> getJobs();
+  Future<Either<Failure, List<SubscriptionEntities>>> getSubscriptions();
 }

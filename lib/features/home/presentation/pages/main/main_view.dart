@@ -1,13 +1,16 @@
 import 'package:asrar_app/config/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/assets_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/values_manager.dart';
+import '../../../../auth/presentation/bloc/authentication_bloc.dart';
+import '../../../../shop/presentation/bloc/shop_order_bloc/shop_order_bloc.dart';
 import '../../widgets/general/navigation_bar_bottom.dart';
 import 'customers_service_screen.dart';
 import 'home_screen.dart';
-import 'orders_screen.dart';
+import '../../../../shop/presentation/pages/orders_screen.dart';
 import 'my_wallet_screen.dart';
 import 'profile_screen.dart';
 
@@ -46,7 +49,16 @@ class MainView extends StatelessWidget {
                   NavigationBarBottom(
                     title: AppStrings.orders.tr(context),
                     icon: IconAssets.orders,
-                    onPress: () => _controller.jumpToPage(0),
+                    onPress: () {
+                      final state =
+                          BlocProvider.of<AuthenticationBloc>(context).state;
+                      BlocProvider.of<ShopOrderBloc>(context).add(
+                        GetShopOrderEvent(
+                          userEmail: state.user!.email,
+                        ),
+                      );
+                      _controller.jumpToPage(0);
+                    },
                   ),
                   NavigationBarBottom(
                     title: AppStrings.myWallet.tr(context),

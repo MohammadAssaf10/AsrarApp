@@ -119,6 +119,7 @@ class CoursesScreen extends StatelessWidget {
                                       fontSize: AppSize.s16.sp,
                                       color: ColorManager.darkPrimary,
                                     ),
+                                    textDirection: TextDirection.rtl,
                                     maxLines: 2,
                                     softWrap: true,
                                     overflow: TextOverflow.visible,

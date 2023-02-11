@@ -1,19 +1,26 @@
-import 'package:equatable/equatable.dart';
-
-class ProductEntities extends Equatable {
+class ProductEntities {
   final String productName;
   final String productImageUrl;
   final String productImageName;
   final String productPrice;
-  const ProductEntities({
+  int productCount;
+  ProductEntities({
     required this.productName,
     required this.productImageUrl,
     required this.productImageName,
     required this.productPrice,
+    required this.productCount,
   });
-  @override
-  List<Object> get props =>
-      [productName, productImageUrl, productPrice, productImageName];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'productName': productName,
+      'productImageUrl': productImageUrl,
+      'productImageName': productImageName,
+      'productPrice': productPrice,
+      'productCount': productCount,
+    };
+  }
 
   factory ProductEntities.fromMap(Map<String, dynamic> map) {
     return ProductEntities(
@@ -21,11 +28,11 @@ class ProductEntities extends Equatable {
       productImageUrl: map['productImageUrl'],
       productImageName: map['productImageName'],
       productPrice: map['productPrice'],
+      productCount: map['productCount'],
     );
   }
-
   @override
   String toString() {
-    return 'ProductEntities(productName: $productName, productImageUrl: $productImageUrl, productImageName: $productImageName, productPrice: $productPrice)';
+    return 'ProductEntities(productName: $productName, productImageUrl: $productImageUrl, productImageName: $productImageName, productPrice: $productPrice, productCount: $productCount)';
   }
 }

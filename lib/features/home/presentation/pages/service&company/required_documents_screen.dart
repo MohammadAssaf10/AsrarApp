@@ -45,7 +45,7 @@ class RequiredDocumentsScreen extends StatelessWidget {
               horizontal: AppSize.s30.w,
             ),
             child: ListView.builder(
-              // physics: NeverScrollableScrollPhysics(),
+              physics: ScrollPhysics(),
               shrinkWrap: true,
               itemCount: service.requiredDocuments.length,
               itemBuilder: (BuildContext context, int index) {

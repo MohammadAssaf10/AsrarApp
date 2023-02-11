@@ -3,11 +3,14 @@ import 'package:asrar_app/config/assets_manager.dart';
 import 'package:asrar_app/config/styles_manager.dart';
 import 'package:asrar_app/config/values_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../config/color_manager.dart';
+import '../../../../../config/routes_manager.dart';
 import '../../../../../config/strings_manager.dart';
+import '../../blocs/subscription_bloc/subscription_bloc.dart';
 import '../../pages/main/about_us.dart';
 import '../../pages/main/terms_of_use_screen.dart';
 
@@ -99,7 +102,11 @@ class DrawerList extends StatelessWidget {
             MenuItem(
               title: AppStrings.subscribe.tr(context),
               icon: IconAssets.subscribe,
-              onTap: () {},
+              onTap: () {
+                BlocProvider.of<SubscriptionBloc>(context)
+                    .add(GetSubscriptionsEvent());
+                Navigator.pushNamed(context, Routes.subscriptionRoute);
+              },
             ),
             MenuItem(
               title: AppStrings.termsOfUse.tr(context),

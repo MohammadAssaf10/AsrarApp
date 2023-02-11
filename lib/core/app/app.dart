@@ -10,8 +10,10 @@ import '../../features/auth/presentation/bloc/authentication_bloc.dart';
 import '../../features/home/presentation/blocs/course_bloc/course_bloc.dart';
 import '../../features/home/presentation/blocs/job_bloc/job_bloc.dart';
 import '../../features/home/presentation/blocs/news_bloc/news_bloc.dart';
-import '../../features/home/presentation/blocs/product_bloc/product_bloc.dart';
 import '../../features/home/presentation/blocs/services_bloc/bloc/services_bloc.dart';
+import '../../features/home/presentation/blocs/subscription_bloc/subscription_bloc.dart';
+import '../../features/shop/presentation/bloc/product_bloc/product_bloc.dart';
+import '../../features/shop/presentation/bloc/shop_order_bloc/shop_order_bloc.dart';
 import '../../language_cubit/language_cubit.dart';
 import 'language.dart';
 import '../../features/home/presentation/blocs/ad_image_bloc/ad_image_bloc.dart';
@@ -35,9 +37,11 @@ class MyApp extends StatelessWidget {
         BlocProvider<LanguageCubit>(create: (context) => LanguageCubit()),
         BlocProvider<ServicesBloc>(create: (context) => ServicesBloc()),
         BlocProvider<ProductBloc>(create: (context) => ProductBloc()),
+        BlocProvider<ShopOrderBloc>(create: (context) => ShopOrderBloc()),
         BlocProvider<NewsBloc>(create: (context) => NewsBloc()),
         BlocProvider<CourseBloc>(create: (context) => CourseBloc()),
         BlocProvider<JobBloc>(create: (context) => JobBloc()),
+        BlocProvider<SubscriptionBloc>(create: (context) => SubscriptionBloc()),
         BlocProvider<AuthenticationBloc>(
           lazy: false,
           create: ((context) => AuthenticationBloc.instance..add(AppStarted())),

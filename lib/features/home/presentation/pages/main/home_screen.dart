@@ -10,10 +10,10 @@ import '../../../../../config/routes_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
+import '../../../../shop/presentation/bloc/product_bloc/product_bloc.dart';
 import '../../blocs/course_bloc/course_bloc.dart';
 import '../../blocs/job_bloc/job_bloc.dart';
 import '../../blocs/news_bloc/news_bloc.dart';
-import '../../blocs/product_bloc/product_bloc.dart';
 import '../../widgets/ad/ad_image_view.dart';
 import '../../widgets/company/companies_view.dart';
 import '../../widgets/general/drawer.dart';
@@ -35,10 +35,10 @@ class HomeScreen extends StatelessWidget {
             onPressed: () {},
             icon: SvgPicture.asset(IconAssets.notification),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: SvgPicture.asset(IconAssets.share),
-          ),
+          // IconButton(
+          //   onPressed: () {},
+          //   icon: SvgPicture.asset(IconAssets.share),
+          // ),
         ],
       ),
       body: ListView(
@@ -65,8 +65,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 OptionButton(
                   onTap: () {
-                    BlocProvider.of<NewsBloc>(context)
-                        .add(GetNewsListEvent());
+                    BlocProvider.of<NewsBloc>(context).add(GetNewsListEvent());
                     Navigator.pushNamed(context, Routes.newsRoute);
                   },
                   title: AppStrings.news.tr(context),
@@ -97,9 +96,9 @@ class HomeScreen extends StatelessWidget {
           OptionsWidget(
             child: MaterialButton(
               onPressed: () {
+                Navigator.pushNamed(context, Routes.shopRoute);
                 BlocProvider.of<ProductBloc>(context)
                     .add(GetProductsListEvent());
-                Navigator.pushNamed(context, Routes.shopRoute);
               },
               child: Text(
                 AppStrings.shop.tr(context),

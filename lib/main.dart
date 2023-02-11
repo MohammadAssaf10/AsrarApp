@@ -7,7 +7,7 @@ import 'core/app/di.dart';
 import 'firebase_options.dart';
 import 'bloc_observer.dart';
 import 'core/app/app.dart';
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(

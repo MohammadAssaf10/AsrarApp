@@ -36,6 +36,7 @@ class AdImageView extends StatelessWidget {
           return Container(
             height: AppSize.s200.h,
             child: ListView.builder(
+              physics: ScrollPhysics(),
               scrollDirection: Axis.horizontal,
               itemCount: state.adImagelist.length,
               shrinkWrap: true,

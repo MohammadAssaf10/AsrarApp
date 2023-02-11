@@ -10,9 +10,7 @@ import '../../config/color_manager.dart';
 import '../../config/strings_manager.dart';
 import '../../config/styles_manager.dart';
 import '../../config/values_manager.dart';
-import '../../features/home/presentation/widgets/general/home_button_widgets.dart';
 import '../../core/app/extensions.dart';
-import '../../features/home/presentation/widgets/general/input_form_field.dart';
 
 String? nameValidator(String? name, BuildContext context) {
   if (name.nullOrEmpty()) {
@@ -68,6 +66,26 @@ bool isMobileNumberCorrect(String mobileNumber) {
   return RegExp(r"^[+]*[0-9]+").hasMatch(mobileNumber);
 }
 
+RegExp getNumberInputFormat() {
+  return RegExp(r'^[0-9]+');
+}
+
+RegExp getDoubleInputFormat() {
+  return RegExp(r'(^\d*\.?\d*)');
+}
+
+RegExp getTextWithNumberInputFormat() {
+  return RegExp(r"^[a-zA-Z0-9ء-ي\s]+");
+}
+
+RegExp getArabicAndEnglishTextInputFormat() {
+  return RegExp(r"^[a-zA-Zء-ي\s]+");
+}
+
+RegExp getAllKeyboradInputFormat() {
+  return RegExp(r"^([،a-zA-Z\u0020-\u007Eء-ي\n]+)");
+}
+
 ///places: The desired number of digits after the comma
 double dp(double val, int places) {
   num mod = pow(10.0, places);
@@ -93,135 +111,47 @@ void showCustomDialog(BuildContext context,
     dismissDialog(context);
     showDialog(
       context: context,
-      builder: (_) => Center(
-        child: Padding(
-          padding: EdgeInsets.all(AppSize.s8.h),
-          child: Card(
-            color: ColorManager.white,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (jsonPath != null)
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: AppSize.s10.h,
-                      horizontal: AppSize.s10.w,
-                    ),
-                    child: Lottie.asset(jsonPath),
-                  ),
-                if (message != null)
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: AppSize.s10.h,
-                      horizontal: AppSize.s10.w,
-                    ),
-                    child: Center(
-                      child: Text(
-                        message,
-                        style: getAlmaraiRegularStyle(
-                          fontSize: AppSize.s16.sp,
-                          color: ColorManager.primary,
-                        ),
-                      ),
-                    ),
-                  ),
-                if (jsonPath == null && message == null)
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: AppSize.s8.h,
-                      horizontal: AppSize.s8.w,
-                    ),
-                    child: const CircularProgressIndicator(
+      builder: (_) => Dialog(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (jsonPath != null)
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: AppSize.s10.h,
+                  horizontal: AppSize.s10.w,
+                ),
+                child: Lottie.asset(jsonPath),
+              ),
+            if (message != null)
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: AppSize.s10.h,
+                  horizontal: AppSize.s10.w,
+                ),
+                child: Center(
+                  child: Text(
+                    message,
+                    style: getAlmaraiRegularStyle(
+                      fontSize: AppSize.s16.sp,
                       color: ColorManager.primary,
                     ),
                   ),
-              ],
-            ),
-          ),
+                ),
+              ),
+            if (jsonPath == null && message == null)
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: AppSize.s8.h,
+                  horizontal: AppSize.s8.w,
+                ),
+                child: const CircularProgressIndicator(
+                  color: ColorManager.primary,
+                ),
+              ),
+          ],
         ),
       ),
     );
   });
-}
-
-void showOrderDialog(
-  BuildContext context,
-  String title,
-  String number,
-  String totalPrice,
-  Function acceptOnTap,
-) {
-  dismissDialog(context);
-  TextEditingController controller = TextEditingController();
-  controller = TextEditingController(text: number);
-
-  showDialog(
-    context: context,
-    builder: (_) {
-      return AlertDialog(
-        title: Text(
-          "${AppStrings.totalPrice.tr(context)}: $totalPrice ر.س",
-          style: getAlmaraiRegularStyle(
-            fontSize: AppSize.s20.sp,
-            color: ColorManager.primary,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              Center(
-                child: Text(
-                  title,
-                  style: getAlmaraiRegularStyle(
-                    fontSize: AppSize.s20.sp,
-                    color: ColorManager.primary,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              SizedBox(height: AppSize.s10.h),
-              InputFormField(
-                controller: controller,
-                hintText: title,
-                height: AppSize.s40.h,
-                regExp: RegExp('[0-9]'),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                OptionButton(
-                  onTap: () {
-                    if (controller.text.isNotEmpty) acceptOnTap();
-                  },
-                  title: AppStrings.checkout.tr(context),
-                  height: AppSize.s35.h,
-                  width: AppSize.s110.w,
-                  fontSize: AppSize.s18.sp,
-                ),
-                SizedBox(
-                  width: AppSize.s5.w,
-                ),
-                OptionButton(
-                  onTap: () {
-                    dismissDialog(context);
-                  },
-                  title: AppStrings.cancel.tr(context),
-                  height: AppSize.s35.h,
-                  width: AppSize.s110.w,
-                  fontSize: AppSize.s20.sp,
-                ),
-              ],
-            ),
-          )
-        ],
-      );
-    },
-  );
 }

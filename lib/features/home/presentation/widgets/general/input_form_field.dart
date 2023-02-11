@@ -9,6 +9,7 @@ class InputFormField extends StatelessWidget {
     required this.regExp,
     this.controller,
     required this.height,
+    required this.textInputType,
     this.horizontalContentPadding = 0,
     this.textAlign=TextAlign.start,
   }) : super(key: key);
@@ -19,6 +20,7 @@ class InputFormField extends StatelessWidget {
   final double height;
   final double horizontalContentPadding;
   final TextAlign textAlign;
+  final TextInputType textInputType;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -26,6 +28,7 @@ class InputFormField extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         textAlign: textAlign,
+        keyboardType: textInputType,
         inputFormatters: [
           FilteringTextInputFormatter.allow(regExp),
         ],
