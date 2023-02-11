@@ -1,0 +1,59 @@
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+
+import '../../../../../core/app/di.dart';
+import '../../../../auth/domain/entities/user.dart';
+import '../../../domain/entities/service_order.dart';
+import '../../../domain/repository/service_order_repository.dart';
+
+part 'service_order_event.dart';
+part 'service_order_state.dart';
+
+class ServiceOrderBloc extends Bloc<ServiceOrderEvent, ServiceOrderState> {
+  ServiceOrderRepository _serviceOrderRepository = instance();
+
+  ServiceOrderBloc()
+      : super(ServiceOrderState(
+            serviceOrderListStatus: Status.init,
+            serviceOrderList: [],
+            processStatus: Status.init)) {
+    on<GetOrders>((event, emit) async {
+      emit(state.copyWith(serviceOrderListStatus: Status.loading));
+
+      (await _serviceOrderRepository.getUserOrder(event.user)).fold(
+        (l) {
+          emit(state.copyWith(serviceOrderListStatus: Status.failed));
+        },
+        (r) {
+          emit(state.copyWith(serviceOrderListStatus: Status.success, serviceOrderList: r));
+        },
+      );
+    });
+
+    on<AddOrder>((event, emit) async {
+      emit(state.copyWith(processStatus: Status.loading));
+
+      (await _serviceOrderRepository.addOrder(event.serviceOrder)).fold(
+        (l) {
+          emit(state.copyWith(processStatus: Status.failed));
+        },
+        (r) {
+          emit(state.copyWith(processStatus: Status.success));
+        },
+      );
+    });
+
+    on<CancelOrder>((event, emit) async {
+      emit(state.copyWith(processStatus: Status.loading));
+
+      (await _serviceOrderRepository.cancelOrder(event.serviceOrder)).fold(
+        (l) {
+          emit(state.copyWith(processStatus: Status.failed));
+        },
+        (r) {
+          emit(state.copyWith(processStatus: Status.success));
+        },
+      );
+    });
+  }
+}

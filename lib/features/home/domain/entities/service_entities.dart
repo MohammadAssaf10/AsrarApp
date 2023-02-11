@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 
 class ServiceEntities extends Equatable {
@@ -23,10 +25,10 @@ class ServiceEntities extends Equatable {
 
   factory ServiceEntities.fromMap(Map<String, dynamic> map) {
     return ServiceEntities(
-      companyName: map['companyName'],
-      serviceName: map['serviceName'],
-      servicePrice: map['servicePrice'],
-      requiredDocuments: map['requiredDocuments'],
+      companyName: map['companyName'] ?? '',
+      serviceName: map['serviceName'] ?? '',
+      servicePrice: map['servicePrice'] ?? '',
+      requiredDocuments: List<dynamic>.from(map['requiredDocuments']),
     );
   }
 
@@ -34,4 +36,19 @@ class ServiceEntities extends Equatable {
   String toString() {
     return 'ServiceEntities(companyName: $companyName, serviceName: $serviceName, servicePrice: $servicePrice, requiredDocuments: $requiredDocuments)';
   }
+
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
+  
+    result.addAll({'companyName': companyName});
+    result.addAll({'serviceName': serviceName});
+    result.addAll({'servicePrice': servicePrice});
+    result.addAll({'requiredDocuments': requiredDocuments});
+  
+    return result;
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ServiceEntities.fromJson(String source) => ServiceEntities.fromMap(json.decode(source));
 }
