@@ -34,8 +34,7 @@ class ShopOrderView extends StatelessWidget {
             ),
           );
         } else if (state is ShopOrderCancelledSuccessfullyState) {
-          showCustomDialog(context,
-              message: AppStrings.orderCancelledSuccessfully.tr(context));
+          showCustomDialog(context, message: AppStrings.orderCancelledSuccessfully.tr(context));
           BlocProvider.of<ShopOrderBloc>(context).add(
             GetShopOrderEvent(
               userEmail: authState.user!.email,
@@ -96,16 +95,15 @@ class ShopOrderView extends StatelessWidget {
                                 AppStrings.orderNNumber.tr(context),
                                 textAlign: TextAlign.center,
                                 style: getAlmaraiBoldStyle(
-                                  fontSize: AppSize.s17.sp,
+                                  fontSize: AppSize.s16.sp,
                                   color: ColorManager.primary,
                                 ),
                               ),
                               Text(
-                                state.shopOrderList[index].shopOrderId
-                                    .toString(),
+                                state.shopOrderList[index].shopOrderId.toString(),
                                 textAlign: TextAlign.center,
                                 style: getAlmaraiBoldStyle(
-                                  fontSize: AppSize.s17.sp,
+                                  fontSize: AppSize.s16.sp,
                                   color: ColorManager.primary,
                                 ),
                               ),
@@ -120,7 +118,7 @@ class ShopOrderView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "${AppStrings.orderStatus.tr(context)}: ${state.shopOrderList[index].orderStatus.tr(context)}",
+                              "${AppStrings.status.tr(context)}: ${state.shopOrderList[index].orderStatus.tr(context)}",
                               style: getAlmaraiRegularStyle(
                                 fontSize: AppSize.s18.sp,
                                 color: ColorManager.primary,
@@ -128,7 +126,7 @@ class ShopOrderView extends StatelessWidget {
                             ),
                             SizedBox(height: AppSize.s4.h),
                             Text(
-                              "${AppStrings.orderSPrice.tr(context)}: ${state.shopOrderList[index].totalPrice} ر.س",
+                              "${AppStrings.price.tr(context)}: ${state.shopOrderList[index].totalPrice} ر.س",
                               style: getAlmaraiRegularStyle(
                                 fontSize: AppSize.s18.sp,
                                 color: ColorManager.primary,
@@ -138,23 +136,20 @@ class ShopOrderView extends StatelessWidget {
                         ),
                       ),
                       Visibility(
-                        visible: state.shopOrderList[index].orderStatus ==
-                                OrderStatus.pending.name
+                        visible: state.shopOrderList[index].orderStatus == OrderStatus.pending.name
                             ? false
                             : true,
                         child: SizedBox(width: AppSize.s50.w),
                       ),
                       Visibility(
-                        visible: state.shopOrderList[index].orderStatus ==
-                                OrderStatus.pending.name
+                        visible: state.shopOrderList[index].orderStatus == OrderStatus.pending.name
                             ? true
                             : false,
                         child: Center(
                           child: IconButton(
                             onPressed: () {
                               BlocProvider.of<ShopOrderBloc>(context).add(
-                                CancelShopOrderEvent(
-                                    shopOrder: state.shopOrderList[index]),
+                                CancelShopOrderEvent(shopOrder: state.shopOrderList[index]),
                               );
                             },
                             icon: Icon(

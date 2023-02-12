@@ -9,7 +9,6 @@ import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../../../../core/app/constants.dart';
 import '../../../../../core/app/functions.dart';
-import '../../../../auth/presentation/bloc/authentication_bloc.dart';
 import '../../../domain/entities/service_order.dart';
 import '../../blocs/service_order/service_order_bloc.dart';
 import '../../widgets/general/empty_list_view.dart';
@@ -20,8 +19,6 @@ class ServiceOrderView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ServiceOrderBloc, ServiceOrderState>(
-      bloc: BlocProvider.of<ServiceOrderBloc>(context)
-        ..add(GetOrders(user: BlocProvider.of<AuthenticationBloc>(context).state.user!)),
       listener: (context, state) {
         if (state.processStatus == Status.loading) {
           showCustomDialog(context);
@@ -68,7 +65,19 @@ class OrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return Container(
+      height: AppSize.s80.h,
+      margin: EdgeInsets.symmetric(
+        horizontal: AppSize.s8.w,
+        vertical: AppSize.s5.h,
+      ),
+      decoration: ShapeDecoration(
+        shape: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(AppSize.s18.r),
+        ),
+        color: ColorManager.white,
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -83,7 +92,7 @@ class OrderCard extends StatelessWidget {
                     AppStrings.orderNNumber.tr(context),
                     textAlign: TextAlign.center,
                     style: getAlmaraiBoldStyle(
-                      fontSize: AppSize.s18.sp,
+                      fontSize: AppSize.s16.sp,
                       color: ColorManager.primary,
                     ),
                   ),
@@ -92,7 +101,7 @@ class OrderCard extends StatelessWidget {
                     order.id.toString(),
                     textAlign: TextAlign.center,
                     style: getAlmaraiBoldStyle(
-                      fontSize: AppSize.s18.sp,
+                      fontSize: AppSize.s16.sp,
                       color: ColorManager.primary,
                     ),
                   ),
@@ -107,7 +116,7 @@ class OrderCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${AppStrings.orderName.tr(context)}: ${order.service.serviceName}",
+                  "${AppStrings.service.tr(context)}: ${order.service.serviceName}",
                   style: getAlmaraiRegularStyle(
                     fontSize: AppSize.s18.sp,
                     color: ColorManager.primary,
@@ -115,7 +124,7 @@ class OrderCard extends StatelessWidget {
                 ),
                 SizedBox(height: AppSize.s10.h),
                 Text(
-                  "${AppStrings.orderStatus.tr(context)}: ${order.status.tr(context)}",
+                  "${AppStrings.status.tr(context)}: ${order.status.tr(context)}",
                   style: getAlmaraiRegularStyle(
                     fontSize: AppSize.s18.sp,
                     color: ColorManager.primary,

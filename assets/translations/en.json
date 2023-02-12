@@ -75,7 +75,9 @@
   "order_n_number": "Order\nNumber",
   "order_number": "Order Number",
   "order_status": "Order Status",
+  "status": "Status",
   "order_price": "Order Price",
+  "price": "Price",
   "orderName": "Order name",
   "product_name": "Product Name",
   "product_price": "Product Price",
@@ -112,6 +114,7 @@
   "no_services": "No Services",
   "no_products": "No Products",
   "services": "Services",
+  "service": "Service",
   "search_for_your_services": "Search For Your Services",
   "required_documents": "Required Documents:"
 }
