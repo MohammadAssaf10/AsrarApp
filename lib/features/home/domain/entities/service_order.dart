@@ -3,14 +3,7 @@ import 'dart:convert';
 import '../../../auth/domain/entities/user.dart';
 import 'service_entities.dart';
 
-class OrderStatus {
-  static const pending = 'pending';
-  static const inProgress = 'inProgress';
-  static const completed = 'completed';
-  static const canceled = 'canceled';
-}
-
-/// [status] must be one of the [OrderStatus]
+/// [status] must be one of the [OrderStatus] 
 class ServiceOrder {
   final int id;
   final ServiceEntities service;

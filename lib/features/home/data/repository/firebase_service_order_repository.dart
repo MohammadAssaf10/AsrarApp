@@ -55,8 +55,15 @@ class FirebaseServiceOrderRepository extends ServiceOrderRepository {
     if (!await _networkInfo.isConnected) {
       return Left(DataSourceExceptions.noInternetConnections.getFailure());
     }
-    // TODO: implement cancelOrder
-    throw UnimplementedError();
+    try {
+      await _firestore
+          .collection(FireBaseCollection.serviceOrder)
+          .doc(serviceOrder.id.toString())
+          .update({"status" : OrderStatus.canceled.name});
+      return Right(null);
+    } catch (e) {
+      return Left(ExceptionHandler.handle(e).failure);
+    }
   }
 
   @override
