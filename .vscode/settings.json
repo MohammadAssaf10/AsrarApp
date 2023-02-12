@@ -3,5 +3,6 @@
         "WHATSAPPAPI",
         "التحقق",
         "الخاص"
-    ]
+    ],
+    "debug.console.wordWrap": false
 }

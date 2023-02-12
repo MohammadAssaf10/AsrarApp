@@ -10,6 +10,7 @@ import '../../features/auth/presentation/bloc/authentication_bloc.dart';
 import '../../features/home/presentation/blocs/course_bloc/course_bloc.dart';
 import '../../features/home/presentation/blocs/job_bloc/job_bloc.dart';
 import '../../features/home/presentation/blocs/news_bloc/news_bloc.dart';
+import '../../features/home/presentation/blocs/service_order/service_order_bloc.dart';
 import '../../features/home/presentation/blocs/services_bloc/bloc/services_bloc.dart';
 import '../../features/home/presentation/blocs/subscription_bloc/subscription_bloc.dart';
 import '../../features/shop/presentation/bloc/product_bloc/product_bloc.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<NewsBloc>(create: (context) => NewsBloc()),
         BlocProvider<CourseBloc>(create: (context) => CourseBloc()),
         BlocProvider<JobBloc>(create: (context) => JobBloc()),
+        BlocProvider<ServiceOrderBloc>(create: (context) => ServiceOrderBloc()),
         BlocProvider<SubscriptionBloc>(create: (context) => SubscriptionBloc()),
         BlocProvider<AuthenticationBloc>(
           lazy: false,
