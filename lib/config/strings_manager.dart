@@ -20,16 +20,13 @@ class AppStrings {
   static const String enterYourWhatsappNumber = "enterYourWhatsappNumber";
   static const String includingCountryCodeLike = "includingCountryCodeLike";
   static const String alreadyHaveAccount = "already_have_account";
-  static const String nameShouldAtLeast3Character =
-      "name_should_atLeast_3_character";
+  static const String nameShouldAtLeast3Character = "name_should_atLeast_3_character";
   static const String emailFormatNotCorrect = "email_format_not_correct";
   static const String pleaseEnterMobileNumber = "please_enter_mobile_number";
   static const String mobileNumberShouldAtLeast9Character =
       "mobile_number_should_at_least_9_character";
-  static const String passwordShouldAtLeast6Character =
-      "password_should_at_least_6_Character";
-  static const String mobileNumberFormatNotCorrect =
-      "mobile_number_format_not_correct";
+  static const String passwordShouldAtLeast6Character = "password_should_at_least_6_Character";
+  static const String mobileNumberFormatNotCorrect = "mobile_number_format_not_correct";
   static const String resetPassword = "reset_password";
   static const String verificationCode = "verification_code";
   static const String verificationCodeSentTo = "verificationCodeSentTo";
@@ -38,6 +35,8 @@ class AppStrings {
   static const String resetEmailSendMessage =
       "we_send_you_an_email_please_check_your_email_address";
   static const String continueAsGuest = 'continue as guest';
+
+  static const String confirm = 'confirm';
 
   // home
   static const String asrar = "asrar";
@@ -49,8 +48,7 @@ class AppStrings {
   static const String order = "order";
   static const String myWallet = "my_wallet";
   static const String customerService = "customers_service";
-  static const String asrarForElectronicServices =
-      "asrar_for_electronic_services";
+  static const String asrarForElectronicServices = "asrar_for_electronic_services";
   static const String aboutUs = "about_us";
   static const String whatsApp = "whats_app";
   static const String googleTranslate = "google_translate";
@@ -76,8 +74,7 @@ class AppStrings {
   static const String courses = "courses";
   static const String showDetails = "show_details";
   static const String free = "free";
-  static const String sorryWeCouldNotOpenThatLink =
-      "sorry_we_could_not_open_that_link";
+  static const String sorryWeCouldNotOpenThatLink = "sorry_we_could_not_open_that_link";
   static const String jobs = "jobs";
   static const String cart = "cart";
   static const String noJobs = "no_jobs";

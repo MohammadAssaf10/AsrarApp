@@ -57,8 +57,7 @@ String? cantBeEmpty(String? v, BuildContext context) {
 }
 
 bool isEmailFormatCorrect(String email) {
-  return RegExp(
-          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+  return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
       .hasMatch(email);
 }
 
@@ -96,8 +95,7 @@ double stringToDouble(String str) {
   return double.parse(str);
 }
 
-_isCurrentDialogShowing(BuildContext context) =>
-    ModalRoute.of(context)?.isCurrent != true;
+_isCurrentDialogShowing(BuildContext context) => ModalRoute.of(context)?.isCurrent != true;
 
 dismissDialog(BuildContext context) {
   if (_isCurrentDialogShowing(context)) {
@@ -105,8 +103,7 @@ dismissDialog(BuildContext context) {
   }
 }
 
-void showCustomDialog(BuildContext context,
-    {String? message, String? jsonPath}) {
+void showCustomDialog(BuildContext context, {String? message, String? jsonPath}) {
   SchedulerBinding.instance.addPostFrameCallback((_) {
     dismissDialog(context);
     showDialog(
@@ -154,4 +151,54 @@ void showCustomDialog(BuildContext context,
       ),
     );
   });
+}
+
+Future<bool> showConfirmDialog(BuildContext context,
+    {String? text, Function? executeWhenConfirm, Function? executeWhenCancel}) async {
+  bool confirm = false;
+
+  await showDialog(
+    context: context,
+    builder: (context) {
+      return Dialog(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                text?.tr(context) ?? '${AppStrings.confirm.tr(context)}?',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              SizedBox(height: AppSize.s10.h),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  OutlinedButton(
+                    onPressed: () {
+                      confirm = true;
+                      if (executeWhenConfirm != null) executeWhenConfirm();
+                      Navigator.pop(context);
+                    },
+                    child: Text(AppStrings.confirm.tr(context)),
+                  ),
+                  SizedBox(width: AppSize.s10.h),
+                  OutlinedButton(
+                    onPressed: () {
+                      confirm = false;
+                      if (executeWhenCancel != null) executeWhenCancel();
+                      Navigator.pop(context);
+                    },
+                    child: Text(AppStrings.cancel.tr(context)),
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+
+  return confirm;
 }

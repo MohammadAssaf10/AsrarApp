@@ -147,9 +147,11 @@ class CancelButton extends StatelessWidget {
     return Center(
       child: IconButton(
         onPressed: () {
-          BlocProvider.of<ServiceOrderBloc>(context).add(
-            CancelOrder(serviceOrder: order),
-          );
+          showConfirmDialog(context, executeWhenConfirm: () {
+            BlocProvider.of<ServiceOrderBloc>(context).add(
+              CancelOrder(serviceOrder: order),
+            );
+          });
         },
         icon: Icon(
           Icons.delete,

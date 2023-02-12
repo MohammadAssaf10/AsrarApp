@@ -92,14 +92,18 @@ class RequiredDocumentsScreen extends StatelessWidget {
               child: OptionButton(
                 onTap: () {
                   // TODO: remove this (but it after the payment screen)
+
                   var user = BlocProvider.of<AuthenticationBloc>(context).state.user!;
-                  BlocProvider.of<ServiceOrderBloc>(context).add(AddOrder(
-                      serviceOrder: ServiceOrder(
-                    id: 0,
-                    service: service,
-                    user: user,
-                    status: OrderStatus.pending.name,
-                  )));
+                  showConfirmDialog(context, executeWhenConfirm: () {
+                    BlocProvider.of<ServiceOrderBloc>(context).add(AddOrder(
+                        serviceOrder: ServiceOrder(
+                      id: 0,
+                      service: service,
+                      user: user,
+                      status: OrderStatus.pending.name,
+                    )));
+                  });
+
                   // TODO: remove comment
                   // Navigator.push(context, MaterialPageRoute(builder: (context) => PayScreen()));
                 },
