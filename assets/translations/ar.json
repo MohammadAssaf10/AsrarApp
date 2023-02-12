@@ -66,6 +66,7 @@
   "order_number": "رقم الطلب",
   "order_status": "حالة الطلب",
   "order_price": "تكلفة الطلب",
+  "orderName": "اسم الطلب",
   "product_name": "اسم المنتج",
   "product_price": "سعر المنتج",
   "number": "العدد",

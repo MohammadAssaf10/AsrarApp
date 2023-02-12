@@ -48,7 +48,9 @@ class ServiceOrderView extends StatelessWidget {
           shrinkWrap: true,
           itemCount: state.serviceOrderList.length,
           itemBuilder: (BuildContext context, int index) {
-            return OrderCard(order: state.serviceOrderList[index],);
+            return OrderCard(
+              order: state.serviceOrderList[index],
+            );
           },
         );
       },
@@ -58,7 +60,8 @@ class ServiceOrderView extends StatelessWidget {
 
 class OrderCard extends StatelessWidget {
   const OrderCard({
-    Key? key, required this.order,
+    Key? key,
+    required this.order,
   }) : super(key: key);
 
   final ServiceOrder order;
@@ -104,6 +107,14 @@ class OrderCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
+                  "${AppStrings.orderName.tr(context)}: ${order.service.serviceName}",
+                  style: getAlmaraiRegularStyle(
+                    fontSize: AppSize.s18.sp,
+                    color: ColorManager.primary,
+                  ),
+                ),
+                SizedBox(height: AppSize.s10.h),
+                Text(
                   "${AppStrings.orderStatus.tr(context)}: ${order.status.tr(context)}",
                   style: getAlmaraiRegularStyle(
                     fontSize: AppSize.s18.sp,
@@ -111,39 +122,39 @@ class OrderCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: AppSize.s4.h),
-                Text(
-                  "${AppStrings.orderSPrice.tr(context)}: ${order.service.servicePrice} ر.س",
-                  style: getAlmaraiRegularStyle(
-                    fontSize: AppSize.s18.sp,
-                    color: ColorManager.primary,
-                  ),
-                ),
               ],
             ),
           ),
-          Visibility(
-            visible:
-                order.status == OrderStatus.pending.name ? false : true,
-            child: SizedBox(width: AppSize.s50.w),
-          ),
-          Visibility(
-            visible:
-                order.status == OrderStatus.pending.name ? true : false,
-            child: Center(
-              child: IconButton(
-                onPressed: () {
-                  BlocProvider.of<ServiceOrderBloc>(context).add(
-                    CancelOrder(serviceOrder: order),
-                  );
-                },
-                icon: Icon(
-                  Icons.delete,
-                  color: ColorManager.primary,
-                ),
-              ),
-            ),
-          ),
+          (order.status == OrderStatus.pending.name)
+              ? CancelButton(order: order)
+              : SizedBox(width: AppSize.s50.w),
         ],
+      ),
+    );
+  }
+}
+
+class CancelButton extends StatelessWidget {
+  const CancelButton({
+    Key? key,
+    required this.order,
+  }) : super(key: key);
+
+  final ServiceOrder order;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: IconButton(
+        onPressed: () {
+          BlocProvider.of<ServiceOrderBloc>(context).add(
+            CancelOrder(serviceOrder: order),
+          );
+        },
+        icon: Icon(
+          Icons.delete,
+          color: ColorManager.primary,
+        ),
       ),
     );
   }

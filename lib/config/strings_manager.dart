@@ -91,6 +91,7 @@ class AppStrings {
   static const String orderNumber = "order_number";
   static const String orderStatus = "order_status";
   static const String orderSPrice = "order_price";
+  static const String orderName = "orderName";
   static const String pending = "pending";
   static const String inProgress = "inProgress";
   static const String finished = "finished";

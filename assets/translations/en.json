@@ -75,6 +75,7 @@
   "order_number": "Order Number",
   "order_status": "Order Status",
   "order_price": "Order Price",
+  "orderName": "Order name",
   "product_name": "Product Name",
   "product_price": "Product Price",
   "number": "Number",
