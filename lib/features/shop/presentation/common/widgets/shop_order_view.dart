@@ -96,17 +96,16 @@ class ShopOrderView extends StatelessWidget {
                                 AppStrings.orderNNumber.tr(context),
                                 textAlign: TextAlign.center,
                                 style: getAlmaraiBoldStyle(
-                                  fontSize: AppSize.s18.sp,
+                                  fontSize: AppSize.s17.sp,
                                   color: ColorManager.primary,
                                 ),
                               ),
-                              SizedBox(height: AppSize.s2.h),
                               Text(
                                 state.shopOrderList[index].shopOrderId
                                     .toString(),
                                 textAlign: TextAlign.center,
                                 style: getAlmaraiBoldStyle(
-                                  fontSize: AppSize.s18.sp,
+                                  fontSize: AppSize.s17.sp,
                                   color: ColorManager.primary,
                                 ),
                               ),

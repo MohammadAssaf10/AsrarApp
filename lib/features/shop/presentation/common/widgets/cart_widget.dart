@@ -81,7 +81,7 @@ class _cartWidgetState extends State<cartWidget> {
                       color: ColorManager.primary,
                     ),
                     textAlign: TextAlign.start,
-                    maxLines: 2,
+                    maxLines: 3,
                     softWrap: true,
                     overflow: TextOverflow.ellipsis,
                   ),
