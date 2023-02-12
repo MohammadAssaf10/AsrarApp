@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../../../core/app/constants.dart';
 import '../../../../../core/app/di.dart';
 import '../../../../auth/domain/entities/user.dart';
 import '../../../domain/entities/service_order.dart';
@@ -22,9 +23,11 @@ class ServiceOrderBloc extends Bloc<ServiceOrderEvent, ServiceOrderState> {
 
       (await _serviceOrderRepository.getUserOrder(event.user)).fold(
         (l) {
-          emit(state.copyWith(serviceOrderListStatus: Status.failed));
+          emit(state.copyWith(serviceOrderListStatus: Status.failed, message: l.message));
         },
         (r) {
+          r.sort((a, b) => (a.id < b.id) ? 1 : 0);
+
           emit(state.copyWith(serviceOrderListStatus: Status.success, serviceOrderList: r));
         },
       );
@@ -35,7 +38,7 @@ class ServiceOrderBloc extends Bloc<ServiceOrderEvent, ServiceOrderState> {
 
       (await _serviceOrderRepository.addOrder(event.serviceOrder)).fold(
         (l) {
-          emit(state.copyWith(processStatus: Status.failed));
+          emit(state.copyWith(processStatus: Status.failed, message: l.message));
         },
         (r) {
           emit(state.copyWith(processStatus: Status.success));
@@ -48,10 +51,14 @@ class ServiceOrderBloc extends Bloc<ServiceOrderEvent, ServiceOrderState> {
 
       (await _serviceOrderRepository.cancelOrder(event.serviceOrder)).fold(
         (l) {
-          emit(state.copyWith(processStatus: Status.failed));
+          emit(state.copyWith(processStatus: Status.failed, message: l.message));
         },
         (r) {
-          emit(state.copyWith(processStatus: Status.success));
+          var list = state.serviceOrderList;
+          list.remove(event.serviceOrder);
+          list.add(event.serviceOrder.copyWith(status: OrderStatus.canceled.name));
+          list.sort((a, b) => (a.id < b.id) ? 1 : 0);
+          emit(state.copyWith(processStatus: Status.success, serviceOrderList: list));
         },
       );
     });

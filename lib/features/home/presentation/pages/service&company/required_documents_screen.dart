@@ -9,6 +9,8 @@ import '../../../../../config/color_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
+import '../../../../../core/app/constants.dart';
+import '../../../../../core/app/functions.dart';
 import '../../../../auth/presentation/bloc/authentication_bloc.dart';
 import '../../../domain/entities/service_entities.dart';
 import '../../../domain/entities/service_order.dart';
@@ -77,25 +79,35 @@ class RequiredDocumentsScreen extends StatelessWidget {
           ),
           SizedBox(height: AppSize.s15.h),
           Center(
-            child: OptionButton(
-              onTap: () {
-                print("${MediaQuery.of(context).size.height}");
-                // TODO: remove this (but it after the payment screen)
-                var user = BlocProvider.of<AuthenticationBloc>(context).state.user!;
-                BlocProvider.of<ServiceOrderBloc>(context).add(AddOrder(
-                    serviceOrder: ServiceOrder(
-                  id: 0,
-                  service: service,
-                  user: user,
-                  status: OrderStatus.pending,
-                )));
-                // TODO: remove comment
-                // Navigator.push(context, MaterialPageRoute(builder: (context) => PayScreen()));
+            child: BlocListener<ServiceOrderBloc, ServiceOrderState>(
+              listener: (context, state) {
+                if (state.processStatus == Status.loading) {
+                  showCustomDialog(context);
+                } else if (state.processStatus == Status.failed) {
+                  showCustomDialog(context, message: state.message!.tr(context));
+                } else if (state.processStatus == Status.success) {
+                  showCustomDialog(context, message: AppStrings.orderAddedSuccessfully.tr(context));
+                }
               },
-              title: AppStrings.checkout.tr(context),
-              height: AppSize.s35.h,
-              width: AppSize.s200.w,
-              fontSize: AppSize.s18.sp,
+              child: OptionButton(
+                onTap: () {
+                  // TODO: remove this (but it after the payment screen)
+                  var user = BlocProvider.of<AuthenticationBloc>(context).state.user!;
+                  BlocProvider.of<ServiceOrderBloc>(context).add(AddOrder(
+                      serviceOrder: ServiceOrder(
+                    id: 0,
+                    service: service,
+                    user: user,
+                    status: OrderStatus.pending.name,
+                  )));
+                  // TODO: remove comment
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) => PayScreen()));
+                },
+                title: AppStrings.checkout.tr(context),
+                height: AppSize.s35.h,
+                width: AppSize.s200.w,
+                fontSize: AppSize.s18.sp,
+              ),
             ),
           ),
         ],

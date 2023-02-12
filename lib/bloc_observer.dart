@@ -11,13 +11,13 @@ class MyBlocObserver extends BlocObserver {
   @override
   void onEvent(Bloc bloc, Object? event) {
     super.onEvent(bloc, event);
-    debugPrint('\x1B[35m onEvent -- ${bloc.runtimeType},\n $event');
+    debugPrint('\x1B[35m onEvent -- ${bloc.runtimeType},\n\x1B[35m $event');
   }
 
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
-    debugPrint('\x1B[36m onTransition -- ${bloc.runtimeType},\n $transition');
+    debugPrint('\x1B[36m onTransition -- ${bloc.runtimeType},\n\x1B[36m $transition');
   }
 
   @override
@@ -29,7 +29,7 @@ class MyBlocObserver extends BlocObserver {
 
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
-    debugPrint('\x1B[31m onError -- ${bloc.runtimeType},\n $error');
+    debugPrint('\x1B[31m onError -- ${bloc.runtimeType},\n\x1B[31m $error');
     super.onError(bloc, error, stackTrace);
   }
 
