@@ -37,7 +37,7 @@ class FirebaseServiceOrderRepository extends ServiceOrderRepository {
     }
 
     try {
-      serviceOrder.copyWith(id: (await getLastId()) + 1);
+      serviceOrder = serviceOrder.copyWith(id: (await getLastId()) + 1);
 
       _firestore
           .collection(FireBaseCollection.serviceOrder)

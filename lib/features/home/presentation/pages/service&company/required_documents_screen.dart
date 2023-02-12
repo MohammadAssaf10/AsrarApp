@@ -14,7 +14,6 @@ import '../../../domain/entities/service_entities.dart';
 import '../../../domain/entities/service_order.dart';
 import '../../blocs/service_order/service_order_bloc.dart';
 import '../../widgets/general/home_button_widgets.dart';
-import '../pay/pay_screen.dart';
 
 class RequiredDocumentsScreen extends StatelessWidget {
   const RequiredDocumentsScreen(
@@ -84,9 +83,14 @@ class RequiredDocumentsScreen extends StatelessWidget {
                 // TODO: remove this (but it after the payment screen)
                 var user = BlocProvider.of<AuthenticationBloc>(context).state.user!;
                 BlocProvider.of<ServiceOrderBloc>(context).add(AddOrder(
-                    serviceOrder:
-                        ServiceOrder(id: 0, service: service, user: user, status: OrderStatus.pending)));
-                Navigator.push(context, MaterialPageRoute(builder: (context) => PayScreen()));
+                    serviceOrder: ServiceOrder(
+                  id: 0,
+                  service: service,
+                  user: user,
+                  status: OrderStatus.pending,
+                )));
+                // TODO: remove comment
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => PayScreen()));
               },
               title: AppStrings.checkout.tr(context),
               height: AppSize.s35.h,
