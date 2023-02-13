@@ -101,7 +101,7 @@ class HomeScreen extends StatelessWidget {
                     .add(GetProductsListEvent());
               },
               child: Text(
-                AppStrings.shop.tr(context),
+                AppStrings.myShop.tr(context),
                 textAlign: TextAlign.center,
                 style: getAlmaraiBoldStyle(
                   fontSize: 18.sp,

@@ -11,6 +11,7 @@ import '../../../../../config/values_manager.dart';
 import '../../../../../core/app/constants.dart';
 import '../../../../../core/app/functions.dart';
 import '../../../../auth/presentation/bloc/authentication_bloc.dart';
+import '../../../../home/presentation/widgets/general/cancel_button.dart';
 import '../../../../home/presentation/widgets/general/empty_list_view.dart';
 import '../../../../home/presentation/widgets/general/error_view.dart';
 import '../../../../home/presentation/widgets/general/loading_view.dart';
@@ -21,9 +22,13 @@ class ShopOrderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authState = BlocProvider.of<AuthenticationBloc>(context).state;
     return BlocConsumer<ShopOrderBloc, ShopOrderState>(
+      bloc: BlocProvider.of<ShopOrderBloc>(context)
+        ..add(GetShopOrderEvent(userEmail: authState.user!.email)),
+      // bloc: ShopOrderBloc()
+      //   ..add(GetShopOrderEvent(userEmail: authState.user!.email)),
       listener: (context, state) {
-        final authState = BlocProvider.of<AuthenticationBloc>(context).state;
         if (state is CancelShopOrderLoadingState) {
           showCustomDialog(context);
         } else if (state is CancelShopOrderErrorState) {
@@ -34,7 +39,8 @@ class ShopOrderView extends StatelessWidget {
             ),
           );
         } else if (state is ShopOrderCancelledSuccessfullyState) {
-          showCustomDialog(context, message: AppStrings.orderCancelledSuccessfully.tr(context));
+          showCustomDialog(context,
+              message: AppStrings.orderCancelledSuccessfully.tr(context));
           BlocProvider.of<ShopOrderBloc>(context).add(
             GetShopOrderEvent(
               userEmail: authState.user!.email,
@@ -100,7 +106,8 @@ class ShopOrderView extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                state.shopOrderList[index].shopOrderId.toString(),
+                                state.shopOrderList[index].shopOrderId
+                                    .toString(),
                                 textAlign: TextAlign.center,
                                 style: getAlmaraiBoldStyle(
                                   fontSize: AppSize.s16.sp,
@@ -135,30 +142,18 @@ class ShopOrderView extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Visibility(
-                        visible: state.shopOrderList[index].orderStatus == OrderStatus.pending.name
-                            ? false
-                            : true,
-                        child: SizedBox(width: AppSize.s50.w),
-                      ),
-                      Visibility(
-                        visible: state.shopOrderList[index].orderStatus == OrderStatus.pending.name
-                            ? true
-                            : false,
-                        child: Center(
-                          child: IconButton(
-                            onPressed: () {
-                              BlocProvider.of<ShopOrderBloc>(context).add(
-                                CancelShopOrderEvent(shopOrder: state.shopOrderList[index]),
-                              );
-                            },
-                            icon: Icon(
-                              Icons.delete,
-                              color: ColorManager.primary,
-                            ),
-                          ),
-                        ),
-                      ),
+                      (state.shopOrderList[index].orderStatus ==
+                              OrderStatus.pending.name)
+                          ? CancelButton(onTap: () {
+                              showConfirmDialog(context,
+                                  executeWhenConfirm: () {
+                                BlocProvider.of<ShopOrderBloc>(context).add(
+                                  CancelShopOrderEvent(
+                                      shopOrder: state.shopOrderList[index]),
+                                );
+                              });
+                            })
+                          : SizedBox(width: AppSize.s50.w),
                     ],
                   ),
                 ),
