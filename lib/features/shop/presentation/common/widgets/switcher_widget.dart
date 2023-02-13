@@ -83,7 +83,7 @@ class _SwitcherWidgetState extends State<SwitcherWidget> {
                   ),
                   alignment: Alignment.center,
                   child: Text(
-                    AppStrings.shopOrders.tr(context),
+                    AppStrings.shop.tr(context),
                     style: getAlmaraiRegularStyle(
                       fontSize: AppSize.s16.sp,
                       color: isFirst ? ColorManager.white : ColorManager.primary,
@@ -115,7 +115,7 @@ class _SwitcherWidgetState extends State<SwitcherWidget> {
                   ),
                   alignment: Alignment.center,
                   child: Text(
-                    "الخدمات",
+                    AppStrings.services.tr(context),
                     style: getAlmaraiRegularStyle(
                       fontSize: AppSize.s16.sp,
                       color: isFirst ? ColorManager.primary : ColorManager.white,

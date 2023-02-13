@@ -35,7 +35,8 @@
   "asrar_services": "خدمات أسرار",
   "home": "البيت",
   "profile": "حسابي",
-  "shop": "متجرنا",
+  "my_shop": "متجرنا",
+  "shop": "المتجر",
   "orders": "طلباتي",
   "order": "الطلب",
   "my_wallet": "محفظتي",
@@ -113,6 +114,7 @@
   "no_products": "لا يوجد منتجات",
   "noNews": "لا يوجد أخبار",
   "service": "الخدمة",
+  "services": "الخدمات",
   "search_for_your_services": "ابحث عن خدماتك",
   "required_documents": "المستندات المطلوبة:",
   "show_details": "عرض التفاصيل"
