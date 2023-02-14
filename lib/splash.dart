@@ -1,4 +1,3 @@
-import 'package:asrar_app/features/auth/presentation/common/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,11 +22,6 @@ class SplashScreen extends StatelessWidget {
               child: Text('Auth')),
           ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, Routes.verificationView);
-              },
-              child: Text('verification')),
-          ElevatedButton(
-              onPressed: () {
                 BlocProvider.of<AuthenticationBloc>(context).add(LogOut());
               },
               child: Text('logout')),
@@ -36,16 +30,6 @@ class SplashScreen extends StatelessWidget {
                 Navigator.pushNamed(context, Routes.homeRoute);
               },
               child: Text('Home')),
-          ElevatedButton(
-              onPressed: () {
-                phoneDialog(context);
-              },
-              child: Text('phone dialog')),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, Routes.verificationView);
-              },
-              child: Text('verificationView')),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [

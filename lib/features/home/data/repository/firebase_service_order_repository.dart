@@ -21,7 +21,7 @@ class FirebaseServiceOrderRepository extends ServiceOrderRepository {
   Future<int> getLastId() async {
     int id = 0;
 
-    final data = await _firestore.collection(FireBaseCollection.serviceOrder).get();
+    final data = await _firestore.collection(FireBaseConstants.serviceOrder).get();
 
     for (var doc in data.docs) {
       if (doc['id'] > id) id = doc['id'];
@@ -40,7 +40,7 @@ class FirebaseServiceOrderRepository extends ServiceOrderRepository {
       serviceOrder = serviceOrder.copyWith(id: (await getLastId()) + 1);
 
       _firestore
-          .collection(FireBaseCollection.serviceOrder)
+          .collection(FireBaseConstants.serviceOrder)
           .doc(serviceOrder.id.toString())
           .set(serviceOrder.toMap());
 
@@ -57,9 +57,9 @@ class FirebaseServiceOrderRepository extends ServiceOrderRepository {
     }
     try {
       await _firestore
-          .collection(FireBaseCollection.serviceOrder)
+          .collection(FireBaseConstants.serviceOrder)
           .doc(serviceOrder.id.toString())
-          .update({"status" : OrderStatus.canceled.name});
+          .update({"status": OrderStatus.canceled.name});
       return Right(null);
     } catch (e) {
       return Left(ExceptionHandler.handle(e).failure);
@@ -75,12 +75,15 @@ class FirebaseServiceOrderRepository extends ServiceOrderRepository {
     try {
       List<ServiceOrder> servicesOrderList = [];
 
-      final servicesOrderSnapShot =
-          await _firestore.collection(FireBaseCollection.serviceOrder).get();
+      final servicesOrderSnapShot = await _firestore
+          .collection(FireBaseConstants.serviceOrder)
+          .where(FireBaseConstants.user, isEqualTo: user.toMap())
+          .get();
       for (var doc in servicesOrderSnapShot.docs) {
         var serviceOrder = ServiceOrder.fromMap(doc.data());
 
-        if (user == serviceOrder.user) servicesOrderList.add(serviceOrder);
+        // if (user == serviceOrder.user)
+        servicesOrderList.add(serviceOrder);
       }
       return Right(servicesOrderList);
     } catch (e) {
