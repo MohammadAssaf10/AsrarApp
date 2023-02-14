@@ -13,8 +13,6 @@ import '../../../home/presentation/widgets/general/home_button_widgets.dart';
 import '../../../home/presentation/widgets/general/input_form_field.dart';
 import '../../domain/entities/product_entities.dart';
 
-List<ProductEntities> cartList = [];
-
 Future<int> getLastId() async {
   int id = 0;
   final data = await FirebaseFirestore.instance
@@ -35,6 +33,7 @@ void showOrderDialog(
   String title,
   String number,
   TextEditingController controller,
+  List<ProductEntities> cartList,
   Function acceptOnTap,
 ) {
   dismissDialog(context);
@@ -44,7 +43,7 @@ void showOrderDialog(
     builder: (_) {
       return AlertDialog(
         title: Text(
-          "${AppStrings.totalPrice.tr(context)}: ${getTotalProductsPrice()} ر.س",
+          "${AppStrings.totalPrice.tr(context)}: ${getTotalProductsPrice(cartList)} ر.س",
           style: getAlmaraiRegularStyle(
             fontSize: AppSize.s20.sp,
             color: ColorManager.primary,
@@ -111,7 +110,7 @@ void showOrderDialog(
   );
 }
 
-String getTotalProductsPrice() {
+String getTotalProductsPrice(List<ProductEntities> cartList) {
   double totalPrice = 0.0;
   cartList.forEach((product) {
     totalPrice = totalPrice +
@@ -120,4 +119,3 @@ String getTotalProductsPrice() {
   totalPrice = dp(totalPrice, 2);
   return totalPrice.toString();
 }
-

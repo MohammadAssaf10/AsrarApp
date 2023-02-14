@@ -8,11 +8,11 @@ import '../../../../config/routes_manager.dart';
 import '../../../../config/strings_manager.dart';
 import '../../../../config/values_manager.dart';
 import '../../../../core/app/functions.dart';
+import '../../domain/entities/product_entities.dart';
 import '../bloc/product_bloc/product_bloc.dart';
 import '../../../home/presentation/widgets/general/empty_list_view.dart';
 import '../../../home/presentation/widgets/general/error_view.dart';
 import '../../../home/presentation/widgets/general/loading_view.dart';
-import '../common/function.dart';
 import '../common/widgets/product_widget.dart';
 
 class ShopScreen extends StatelessWidget {
@@ -20,6 +20,7 @@ class ShopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<ProductEntities> cartList = [];
     return Scaffold(
       appBar: AppBar(
         title: Text(AppStrings.asrarShop.tr(context)),
@@ -30,6 +31,7 @@ class ShopScreen extends StatelessWidget {
             Navigator.pushNamed(
               context,
               Routes.cartRoute,
+              arguments: cartList,
             );
           else
             showCustomDialog(
@@ -69,6 +71,12 @@ class ShopScreen extends StatelessWidget {
                 itemBuilder: (_, int index) {
                   return ProductWidget(
                     product: state.productsList[index],
+                    addToList: () {
+                      cartList.add(state.productsList[index]);
+                    },
+                    deleteFromList: () {
+                      cartList.remove(state.productsList[index]);
+                    },
                   );
                 },
               );

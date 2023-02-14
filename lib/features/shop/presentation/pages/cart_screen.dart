@@ -10,23 +10,32 @@ import '../../../../config/styles_manager.dart';
 import '../../../../config/values_manager.dart';
 import '../../../../core/app/functions.dart';
 import '../../../auth/presentation/bloc/authentication_bloc.dart';
+import '../../domain/entities/product_entities.dart';
 import '../../domain/entities/shop_order_entities.dart';
 import '../bloc/shop_order_bloc/shop_order_bloc.dart';
 import '../common/function.dart';
 import '../common/widgets/cart_widget.dart';
 
 class CartScreen extends StatefulWidget {
-  const CartScreen({super.key});
+  CartScreen(this.cartList);
+  final List<ProductEntities> cartList;
 
   @override
   State<CartScreen> createState() => _CartScreenState();
 }
 
 class _CartScreenState extends State<CartScreen> {
-  TextEditingController controller = TextEditingController();
+  @override
+  void dispose() {
+    super.dispose();
+    widget.cartList.forEach((element) {
+      element.productCount = 1;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController controller = TextEditingController();
     return BlocListener<ShopOrderBloc, ShopOrderState>(
       listener: (context, state) {
         if (state is ShopOrderLoadingState) {
@@ -45,10 +54,10 @@ class _CartScreenState extends State<CartScreen> {
         body: ListView.builder(
           physics: ScrollPhysics(),
           shrinkWrap: true,
-          itemCount: cartList.length,
+          itemCount: widget.cartList.length,
           itemBuilder: (_, int index) {
             return cartWidget(
-              product: cartList[index],
+              product: widget.cartList[index],
             );
           },
         ),
@@ -61,31 +70,28 @@ class _CartScreenState extends State<CartScreen> {
           height: AppSize.s40.h,
           child: ElevatedButton(
             onPressed: () {
-              if (cartList.isNotEmpty) {
-                final state =
-                    BlocProvider.of<AuthenticationBloc>(context).state;
-                if (state.status == AuthStatus.loggedIn) {
-                  showOrderDialog(
-                    context,
-                    AppStrings.whatsAppNumber.tr(context),
-                    state.user!.phoneNumber,
-                    controller,
-                    () async {
-                      final int lastID = await getLastId() + 1;
-                      final ShopOrderEntities shopOrder = ShopOrderEntities(
+              final state = BlocProvider.of<AuthenticationBloc>(context).state;
+              if (state.status == AuthStatus.loggedIn) {
+                showOrderDialog(
+                  context,
+                  AppStrings.whatsAppNumber.tr(context),
+                  state.user!.phoneNumber,
+                  controller,
+                  widget.cartList,
+                  () async {
+                    final int lastID = await getLastId() + 1;
+                    final ShopOrderEntities shopOrder = ShopOrderEntities(
                         shopOrderId: lastID,
-                        email: state.user!.email,
+                        user: state.user!,
                         phoneNumber: controller.text,
-                        products: cartList,
-                        totalPrice: getTotalProductsPrice(),
-                        orderStatus: OrderStatus.pending.name
-                      );
-                      BlocProvider.of<ShopOrderBloc>(context).add(
-                        AddShopOrderEvent(shopOrder: shopOrder),
-                      );
-                    },
-                  );
-                }
+                        products: widget.cartList,
+                        totalPrice: getTotalProductsPrice(widget.cartList),
+                        orderStatus: OrderStatus.pending.name);
+                    BlocProvider.of<ShopOrderBloc>(context).add(
+                      AddShopOrderEvent(shopOrder: shopOrder),
+                    );
+                  },
+                );
               }
             },
             child: Text(
