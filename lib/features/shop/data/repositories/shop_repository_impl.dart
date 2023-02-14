@@ -55,7 +55,7 @@ class ShopRepositoryImpl extends ShopRepository {
         final shopOrders =
             await firestore.collection(FireBaseCollection.shopOrders).get();
         for (var doc in shopOrders.docs) {
-          if (doc["email"] == userEmail)
+          if (doc["user"]["email"] == userEmail)
             shopOrderList.add(ShopOrderEntities.fromMap(doc.data()));
         }
         shopOrderList.sort((a, b) => b.shopOrderId.compareTo(a.shopOrderId));

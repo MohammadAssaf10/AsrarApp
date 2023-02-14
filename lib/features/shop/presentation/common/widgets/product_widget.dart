@@ -6,27 +6,23 @@ import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../../domain/entities/product_entities.dart';
 import '../../../../home/presentation/widgets/general/cached_network_image_widget.dart';
-import '../function.dart';
-
 
 class ProductWidget extends StatefulWidget {
   ProductWidget({
     super.key,
     required this.product,
+    required this.addToList,
+    required this.deleteFromList,
   });
   final ProductEntities product;
+  final Function addToList;
+  final Function deleteFromList;
 
   @override
   State<ProductWidget> createState() => _ProductWidgetState();
 }
 
 class _ProductWidgetState extends State<ProductWidget> {
-  @override
-  void dispose() {
-    cartList.clear();
-    super.dispose();
-  }
-
   bool isSelect = false;
   @override
   Widget build(BuildContext context) {
@@ -36,9 +32,9 @@ class _ProductWidgetState extends State<ProductWidget> {
           isSelect = !isSelect;
         });
         if (isSelect == true) {
-          cartList.add(widget.product);
+          widget.addToList();
         } else {
-          cartList.remove(widget.product);
+          widget.deleteFromList();
         }
       },
       child: Container(

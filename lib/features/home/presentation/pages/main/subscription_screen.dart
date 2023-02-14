@@ -75,12 +75,20 @@ class SubscriptionScreen extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                           SizedBox(height: AppSize.s4.h),
-                          Text(
-                            "${state.subscriptionList[index].subscriptionPrice} ر.س",
-                            textDirection: TextDirection.rtl,
-                            style: getAlmaraiRegularStyle(
-                              fontSize: AppSize.s16.sp,
-                              color: ColorManager.white,
+                          Visibility(
+                            visible: state.subscriptionList[index]
+                                        .subscriptionPrice==""
+                                ? false
+                                : true,
+                            child: Text(
+                             state.subscriptionList[index]
+                                        .subscriptionPrice.startsWith("0")?AppStrings.free.tr(context):"${state.subscriptionList[index]
+                                        .subscriptionPrice} ر.س",
+                              textDirection: TextDirection.rtl,
+                              style: getAlmaraiRegularStyle(
+                                fontSize: AppSize.s16.sp,
+                                color: ColorManager.white,
+                              ),
                             ),
                           ),
                         ],

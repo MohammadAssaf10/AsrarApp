@@ -16,6 +16,7 @@ import '../features/home/presentation/pages/job/job_screen.dart';
 import '../features/home/presentation/pages/main/main_view.dart';
 import '../features/home/presentation/pages/main/subscription_screen.dart';
 import '../features/home/presentation/pages/news/news_details_screen.dart';
+import '../features/shop/domain/entities/product_entities.dart';
 import '../features/shop/domain/entities/shop_order_entities.dart';
 import '../features/shop/presentation/common/widgets/shop_order_details_view.dart';
 import '../features/shop/presentation/pages/cart_screen.dart';
@@ -62,7 +63,10 @@ class RouteGenerator {
       case Routes.shopRoute:
         return MaterialPageRoute(builder: (_) => ShopScreen());
       case Routes.cartRoute:
-        return MaterialPageRoute(builder: (_) => CartScreen());
+        {
+          final arg = settings.arguments as List<ProductEntities>;
+          return MaterialPageRoute(builder: (_) => CartScreen(arg));
+        }
       case Routes.newsRoute:
         return MaterialPageRoute(builder: (_) => NewsScreen());
       case Routes.courseRoute:

@@ -7,7 +7,6 @@ import '../../../../../config/values_manager.dart';
 import '../../../../../core/app/functions.dart';
 import '../../../../home/presentation/widgets/general/cached_network_image_widget.dart';
 import '../../../domain/entities/product_entities.dart';
-import '../function.dart';
 
 class cartWidget extends StatefulWidget {
   const cartWidget({
@@ -25,14 +24,6 @@ class _cartWidgetState extends State<cartWidget> {
   void initState() {
     totalProductPrice = stringToDouble(widget.product.productPrice);
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    cartList.forEach((product) {
-      product.productCount = 1;
-    });
-    super.dispose();
   }
 
   @override
