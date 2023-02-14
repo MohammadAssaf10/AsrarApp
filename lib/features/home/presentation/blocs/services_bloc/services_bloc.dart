@@ -2,8 +2,9 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../../../core/app/di.dart';
-import '../../../../domain/entities/service_entities.dart';
-import '../../../../domain/repository/home_repository.dart';
+import '../../../domain/entities/service_entities.dart';
+import '../../../domain/repository/home_repository.dart';
+
 
 part 'services_event.dart';
 part 'services_state.dart';

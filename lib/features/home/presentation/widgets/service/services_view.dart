@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../config/strings_manager.dart';
-import '../../blocs/services_bloc/bloc/services_bloc.dart';
+import '../../blocs/services_bloc/services_bloc.dart';
 import '../general/empty_list_view.dart';
 import '../general/error_view.dart';
 import '../general/loading_view.dart';

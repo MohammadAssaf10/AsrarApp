@@ -1,4 +1,4 @@
-class FireBaseCollection {
+class FireBaseConstants {
   static String adImages = "adImages";
   static String companies = "companies";
   static String services = "services";
@@ -9,6 +9,7 @@ class FireBaseCollection {
   static String serviceOrder = "serviceOrder";
   static String subscriptions = "subscriptions";
   static String shopOrders = "shopOrders";
+  static String user = "user";
 }
 
 enum OrderStatus { inProgress, pending, finished, canceled }

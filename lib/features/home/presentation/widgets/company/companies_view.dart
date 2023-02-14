@@ -9,7 +9,7 @@ import '../../../../../config/routes_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../blocs/company_bloc/company_bloc.dart';
-import '../../blocs/services_bloc/bloc/services_bloc.dart';
+import '../../blocs/services_bloc/services_bloc.dart';
 import '../general/empty_list_view.dart';
 import '../general/error_view.dart';
 import '../general/loading_view.dart';

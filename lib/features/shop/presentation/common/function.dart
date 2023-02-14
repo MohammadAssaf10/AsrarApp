@@ -17,9 +17,7 @@ List<ProductEntities> cartList = [];
 
 Future<int> getLastId() async {
   int id = 0;
-  final data = await FirebaseFirestore.instance
-      .collection(FireBaseCollection.shopOrders)
-      .get();
+  final data = await FirebaseFirestore.instance.collection(FireBaseConstants.shopOrders).get();
   if (data.size > 0) {
     for (var doc in data.docs) {
       if (doc["shopOrderId"] > id) {
@@ -114,10 +112,8 @@ void showOrderDialog(
 String getTotalProductsPrice() {
   double totalPrice = 0.0;
   cartList.forEach((product) {
-    totalPrice = totalPrice +
-        (product.productCount * stringToDouble(product.productPrice));
+    totalPrice = totalPrice + (product.productCount * stringToDouble(product.productPrice));
   });
   totalPrice = dp(totalPrice, 2);
   return totalPrice.toString();
 }
-

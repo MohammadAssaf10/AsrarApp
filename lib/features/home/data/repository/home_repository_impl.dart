@@ -16,17 +16,18 @@ import '../../domain/repository/home_repository.dart';
 
 class HomeRepositoryImpl extends HomeRepository {
   final FirebaseFirestore firestore;
-  final NetworkInfo networkInfo;  
-  HomeRepositoryImpl(this.firestore, {
+  final NetworkInfo networkInfo;
+  HomeRepositoryImpl(
+    this.firestore, {
     required this.networkInfo,
   });
-  
+
   @override
   Future<Either<Failure, List<AdImageEntities>>> getAdImages() async {
     if (await networkInfo.isConnected) {
       try {
         List<AdImageEntities> adImagesList = [];
-        final adImages = await firestore.collection(FireBaseCollection.adImages).get();
+        final adImages = await firestore.collection(FireBaseConstants.adImages).get();
         for (var doc in adImages.docs) adImagesList.add(AdImageEntities.fromMap(doc.data()));
         return Right(adImagesList);
       } catch (e) {
@@ -41,7 +42,7 @@ class HomeRepositoryImpl extends HomeRepository {
     if (await networkInfo.isConnected) {
       try {
         List<CompanyEntities> companiesList = [];
-        final companies = await firestore.collection(FireBaseCollection.companies).get();
+        final companies = await firestore.collection(FireBaseConstants.companies).get();
         for (var doc in companies.docs) companiesList.add(CompanyEntities.fromMap(doc.data()));
         companiesList.sort((a, b) => a.companyRanking.compareTo(b.companyRanking));
         return Right(companiesList);
@@ -57,7 +58,7 @@ class HomeRepositoryImpl extends HomeRepository {
     if (await networkInfo.isConnected) {
       try {
         List<CourseEntities> coursesList = [];
-        final courses = await firestore.collection(FireBaseCollection.courses).get();
+        final courses = await firestore.collection(FireBaseConstants.courses).get();
         for (var doc in courses.docs) coursesList.add(CourseEntities.fromMap(doc.data()));
         coursesList.sort((a, b) => a.timestamp.compareTo(b.timestamp));
         return Right(coursesList);
@@ -73,7 +74,7 @@ class HomeRepositoryImpl extends HomeRepository {
     if (await networkInfo.isConnected) {
       try {
         List<NewsEntities> newsList = [];
-        final news = await firestore.collection(FireBaseCollection.news).get();
+        final news = await firestore.collection(FireBaseConstants.news).get();
         for (var doc in news.docs) newsList.add(NewsEntities.fromMap(doc.data()));
         newsList.sort((a, b) => a.timestamp.compareTo(b.timestamp));
         return Right(newsList);
@@ -89,7 +90,7 @@ class HomeRepositoryImpl extends HomeRepository {
     if (await networkInfo.isConnected) {
       try {
         final List<ServiceEntities> servicesList = [];
-        final services = await firestore.collection(FireBaseCollection.services).get();
+        final services = await firestore.collection(FireBaseConstants.services).get();
         for (var doc in services.docs) {
           if (doc["companyName"] == companyName)
             servicesList.add(ServiceEntities.fromMap(doc.data()));
@@ -107,9 +108,8 @@ class HomeRepositoryImpl extends HomeRepository {
     if (await networkInfo.isConnected) {
       try {
         List<JobEntities> jobsList = [];
-        final jobs = await firestore.collection(FireBaseCollection.jobs).get();
-        for (var doc in jobs.docs)
-          jobsList.add(JobEntities.fromMap(doc.data()));
+        final jobs = await firestore.collection(FireBaseConstants.jobs).get();
+        for (var doc in jobs.docs) jobsList.add(JobEntities.fromMap(doc.data()));
         return Right(jobsList);
       } catch (e) {
         return Left(ExceptionHandler.handle(e).failure);
@@ -123,8 +123,7 @@ class HomeRepositoryImpl extends HomeRepository {
     if (await networkInfo.isConnected) {
       try {
         List<SubscriptionEntities> SubscriptionsList = [];
-        final Subscriptions =
-            await firestore.collection(FireBaseCollection.subscriptions).get();
+        final Subscriptions = await firestore.collection(FireBaseConstants.subscriptions).get();
         for (var doc in Subscriptions.docs)
           SubscriptionsList.add(SubscriptionEntities.fromMap(doc.data()));
         return Right(SubscriptionsList);
@@ -134,6 +133,4 @@ class HomeRepositoryImpl extends HomeRepository {
     } else
       return Left(DataSourceExceptions.noInternetConnections.getFailure());
   }
-
-  
 }
