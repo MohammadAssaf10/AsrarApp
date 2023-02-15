@@ -9,6 +9,7 @@ import '../features/home/domain/entities/course_entities.dart';
 import '../features/home/domain/entities/job_entities.dart';
 import '../features/home/domain/entities/news_entities.dart';
 import '../features/home/domain/entities/service_entities.dart';
+import '../features/home/presentation/pages/chat/chat_screen.dart';
 import '../features/home/presentation/pages/course/course_details_screen.dart';
 import '../features/home/presentation/pages/course/course_screen.dart';
 import '../features/home/presentation/pages/job/job_details_screen.dart';
@@ -16,13 +17,13 @@ import '../features/home/presentation/pages/job/job_screen.dart';
 import '../features/home/presentation/pages/main/main_view.dart';
 import '../features/home/presentation/pages/main/subscription_screen.dart';
 import '../features/home/presentation/pages/news/news_details_screen.dart';
+import '../features/home/presentation/pages/news/news_screen.dart';
+import '../features/home/presentation/pages/service&company/required_documents_screen.dart';
+import '../features/home/presentation/pages/service&company/services_screen.dart';
 import '../features/shop/domain/entities/product_entities.dart';
 import '../features/shop/domain/entities/shop_order_entities.dart';
 import '../features/shop/presentation/common/widgets/shop_order_details_view.dart';
 import '../features/shop/presentation/pages/cart_screen.dart';
-import '../features/home/presentation/pages/news/news_screen.dart';
-import '../features/home/presentation/pages/service&company/required_documents_screen.dart';
-import '../features/home/presentation/pages/service&company/services_screen.dart';
 import '../features/shop/presentation/pages/shop_screen.dart';
 import '../splash.dart';
 import 'strings_manager.dart';
@@ -44,6 +45,7 @@ class Routes {
   static const String jobRoute = "/job";
   static const String jobDetailsRoute = "/jobDetails";
   static const String subscriptionRoute = "/subscription";
+  static const String chatRoute = "/chat";
 
   // auth rotes
   static const String auth = '/auth';
@@ -110,6 +112,11 @@ class RouteGenerator {
             builder: (context) => ServicesScreen(arg),
           );
         }
+      case Routes.chatRoute:
+        return MaterialPageRoute(
+          builder: (context) => ChatScreen(),
+        );
+
       case Routes.requiredDocumentsRoute:
         {
           final arg = settings.arguments as ServiceEntities;
