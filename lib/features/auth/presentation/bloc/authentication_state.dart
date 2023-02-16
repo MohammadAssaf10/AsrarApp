@@ -13,7 +13,7 @@ enum AuthStatus {
 // don' forget to remove '?? this.user' from [copyWith] when regenerate it
 class AuthenticationState extends Equatable {
   final AuthStatus status;
-  final User? user;
+  final UserEntities? user;
   final String? message;
 
   AuthenticationState({
@@ -24,7 +24,7 @@ class AuthenticationState extends Equatable {
 
   AuthenticationState copyWith({
     AuthStatus? status,
-    User? user,
+    UserEntities? user,
     String? message,
   }) {
     return AuthenticationState(

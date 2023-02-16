@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../domain/entities/user.dart' as domain;
+import '../../domain/entities/user.dart';
 import '../models/requests.dart';
 
 const String userCollectionPath = 'Users';
@@ -11,6 +13,8 @@ const String userNameDocPath = 'name';
 class FirebaseAuthHelper {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseMessaging _messaging = FirebaseMessaging.instance;
+
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: [
       'email',
@@ -20,6 +24,21 @@ class FirebaseAuthHelper {
   Future<void> loginViaEmail(LoginRequest loginRequest) async {
     await _firebaseAuth.signInWithEmailAndPassword(
         email: loginRequest.email, password: loginRequest.password);
+    final String? userToken = await _messaging.getToken();
+    if (userToken != null) {
+      final user = await _firestore
+          .collection(userCollectionPath)
+          .doc(loginRequest.email)
+          .get();
+      final List userTokenList = user['userTokenList'];
+      if (!userTokenList.contains(userToken)) {
+        userTokenList.add(userToken);
+        await _firestore
+            .collection(userCollectionPath)
+            .doc(loginRequest.email)
+            .update({"userTokenList": userTokenList});
+      }
+    }
   }
 
   Future<UserCredential> loginViaGoogle() async {
@@ -35,7 +54,7 @@ class FirebaseAuthHelper {
     return _firebaseAuth.signInWithCredential(credential);
   }
 
-  Future<domain.User> getUser(String email) async {
+  Future<domain.UserEntities> getUser(String email) async {
     final userMap =
         (await _firestore.collection(userCollectionPath).doc(email).get())
             .data();
@@ -44,7 +63,7 @@ class FirebaseAuthHelper {
       throw FirebaseAuthException(code: "auth/user-not-found");
     }
 
-    return domain.User.fromMap(userMap);
+    return domain.UserEntities.fromMap(userMap);
   }
 
   User? getCurrentUser() {
@@ -56,7 +75,7 @@ class FirebaseAuthHelper {
         email: registerRequest.email, password: registerRequest.password);
   }
 
-  Future<domain.User> updateUserData(domain.User user) async {
+  Future<domain.UserEntities> updateUserData(domain.UserEntities user) async {
     await _firestore
         .collection(userCollectionPath)
         .doc(user.email)
@@ -65,8 +84,8 @@ class FirebaseAuthHelper {
     return user;
   }
 
-  Future<domain.User> createUserDocument(User firebaseUser) async {
-    return await updateUserData(domain.User.fromMap({
+  Future<domain.UserEntities> createUserDocument(User firebaseUser) async {
+    return await updateUserData(domain.UserEntities.fromMap({
       'name': firebaseUser.displayName,
       'email': firebaseUser.email,
       'phoneNumber': firebaseUser.phoneNumber
@@ -77,7 +96,20 @@ class FirebaseAuthHelper {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
-  logout() async {
+  Future<void> logout(UserEntities user) async {
+    final String? userToken = await _messaging.getToken();
+    if (userToken != null) {
+      final userDoc =
+          await _firestore.collection(userCollectionPath).doc(user.email).get();
+      final List userTokenList = userDoc['userTokenList'];
+      if (userTokenList.contains(userToken)) {
+        userTokenList.remove(userToken);
+        await _firestore
+            .collection(userCollectionPath)
+            .doc(user.email)
+            .update({"userTokenList": userTokenList});
+      }
+    }
     await _firebaseAuth.signOut();
   }
 }

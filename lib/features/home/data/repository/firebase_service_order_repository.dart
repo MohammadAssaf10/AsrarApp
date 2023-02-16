@@ -67,7 +67,7 @@ class FirebaseServiceOrderRepository extends ServiceOrderRepository {
   }
 
   @override
-  Future<Either<Failure, List<ServiceOrder>>> getUserOrder(User user) async {
+  Future<Either<Failure, List<ServiceOrder>>> getUserOrder(UserEntities user) async {
     if (!await _networkInfo.isConnected) {
       return Left(DataSourceExceptions.noInternetConnections.getFailure());
     }

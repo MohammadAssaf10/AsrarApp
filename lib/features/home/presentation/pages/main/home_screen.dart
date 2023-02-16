@@ -10,6 +10,7 @@ import '../../../../../config/routes_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
+import '../../../../../core/app/functions.dart';
 import '../../../../shop/presentation/bloc/product_bloc/product_bloc.dart';
 import '../../blocs/course_bloc/course_bloc.dart';
 import '../../blocs/job_bloc/job_bloc.dart';
@@ -32,7 +33,9 @@ class HomeScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () async {
+              await sendNotificationToUser("ch383Jt-TkKJOsDr71oC14:APA91bFmqWXl5sXQCYg45HncZ96Gnu2ETcUHb4xPzfkiAYRpFITA3HGB680dpsvCR53YpTiHX8yseuISOr3HP2lFhUdeCnk9uGvdLv6gXx7VupqXxRc_isoo-oQAUlM-JCxpcisYhefh","Asrar","fuck you");
+            },
             icon: SvgPicture.asset(IconAssets.notification),
           ),
           // IconButton(

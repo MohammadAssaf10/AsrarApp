@@ -7,7 +7,7 @@ import 'service_entities.dart';
 class ServiceOrder {
   final int id;
   final ServiceEntities service;
-  final User user;
+  final UserEntities user;
   final String status;
 
   ServiceOrder({
@@ -20,7 +20,7 @@ class ServiceOrder {
   ServiceOrder copyWith({
     int? id,
     ServiceEntities? service,
-    User? user,
+    UserEntities? user,
     String? status,
   }) {
     return ServiceOrder(
@@ -46,7 +46,7 @@ class ServiceOrder {
     return ServiceOrder(
       id: map['id']?.toInt() ?? 0,
       service: ServiceEntities.fromMap(map['service']),
-      user: User.fromMap(map['user']),
+      user: UserEntities.fromMap(map['user']),
       status: map['status'] ?? '',
     );
   }
