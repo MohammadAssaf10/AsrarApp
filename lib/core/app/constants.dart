@@ -10,6 +10,7 @@ class FireBaseConstants {
   static String subscriptions = "subscriptions";
   static String shopOrders = "shopOrders";
   static String user = "user";
+  static String messages = "messages";
 }
 
 enum OrderStatus { inProgress, pending, finished, canceled }

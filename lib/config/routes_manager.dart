@@ -1,15 +1,18 @@
+import 'package:asrar_app/features/chat/presentation/blocs/bloc/chat_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../core/app/di.dart';
 import '../features/auth/presentation/pages/auth_view.dart';
 import '../features/auth/presentation/pages/password_reset_view.dart';
 import '../features/auth/presentation/pages/verification_view.dart';
+import '../features/chat/presentation/pages/chat_screen.dart';
 import '../features/home/domain/entities/company_entities.dart';
 import '../features/home/domain/entities/course_entities.dart';
 import '../features/home/domain/entities/job_entities.dart';
 import '../features/home/domain/entities/news_entities.dart';
 import '../features/home/domain/entities/service_entities.dart';
-import '../features/home/presentation/pages/chat/chat_screen.dart';
+import '../features/home/domain/entities/service_order.dart';
 import '../features/home/presentation/pages/course/course_details_screen.dart';
 import '../features/home/presentation/pages/course/course_screen.dart';
 import '../features/home/presentation/pages/job/job_details_screen.dart';
@@ -112,11 +115,19 @@ class RouteGenerator {
             builder: (context) => ServicesScreen(arg),
           );
         }
-      case Routes.chatRoute:
-        return MaterialPageRoute(
-          builder: (context) => ChatScreen(),
-        );
 
+      case Routes.chatRoute:
+        {
+          final arg = settings.arguments as ServiceOrder;
+          return MaterialPageRoute(
+            builder: (context) => BlocProvider(
+              create: (context) => ChatBloc()..add(ChatStarted(serviceOrder: arg)),
+              lazy: false,
+              child: ChatScreen(),
+            ),
+          );
+        }
+        
       case Routes.requiredDocumentsRoute:
         {
           final arg = settings.arguments as ServiceEntities;

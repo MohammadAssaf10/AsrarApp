@@ -1,3 +1,5 @@
+import 'package:asrar_app/features/chat/data/reposetories/firebase_chat_reposetory.dart';
+import 'package:asrar_app/features/chat/domain/repositories/chat_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -76,11 +78,15 @@ void initHomeModule() {
         FirebaseFirestore.instance,
       );
     });
-       instance.registerLazySingleton<ShopRepository>(() {
+    instance.registerLazySingleton<ShopRepository>(() {
       return ShopRepositoryImpl(
         networkInfo: instance<NetworkInfo>(),
       );
     });
+
+    instance.registerLazySingleton<ChatRepository>(() => FirebaseChatRepository(
+          FirebaseFirestore.instance,
+          instance<NetworkInfo>(),
+        ));
   }
 }
-

@@ -88,6 +88,7 @@ class RequiredDocumentsScreen extends StatelessWidget {
                   showCustomDialog(context, message: state.message!.tr(context));
                 } else if (state.processStatus == Status.success) {
                   dismissDialog(context);
+                  // TODO: Fix This Shit
                   // showCustomDialog(context, message: AppStrings.orderAddedSuccessfully.tr(context));
                   Navigator.pushNamed(context, Routes.chatRoute);
                 }
