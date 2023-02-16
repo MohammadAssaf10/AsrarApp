@@ -1,16 +1,21 @@
+import 'dart:convert';
 import 'dart:math';
 
-import 'package:asrar_app/config/app_localizations.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
+
+import 'package:asrar_app/config/app_localizations.dart';
 
 import '../../config/color_manager.dart';
 import '../../config/strings_manager.dart';
 import '../../config/styles_manager.dart';
 import '../../config/values_manager.dart';
 import '../../core/app/extensions.dart';
+import 'constants.dart';
 
 String? nameValidator(String? name, BuildContext context) {
   if (name.nullOrEmpty()) {
@@ -57,7 +62,8 @@ String? cantBeEmpty(String? v, BuildContext context) {
 }
 
 bool isEmailFormatCorrect(String email) {
-  return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+  return RegExp(
+          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
       .hasMatch(email);
 }
 
@@ -95,7 +101,8 @@ double stringToDouble(String str) {
   return double.parse(str);
 }
 
-_isCurrentDialogShowing(BuildContext context) => ModalRoute.of(context)?.isCurrent != true;
+_isCurrentDialogShowing(BuildContext context) =>
+    ModalRoute.of(context)?.isCurrent != true;
 
 dismissDialog(BuildContext context) {
   if (_isCurrentDialogShowing(context)) {
@@ -103,7 +110,8 @@ dismissDialog(BuildContext context) {
   }
 }
 
-void showCustomDialog(BuildContext context, {String? message, String? jsonPath}) {
+void showCustomDialog(BuildContext context,
+    {String? message, String? jsonPath}) {
   SchedulerBinding.instance.addPostFrameCallback((_) {
     dismissDialog(context);
     showDialog(
@@ -154,7 +162,9 @@ void showCustomDialog(BuildContext context, {String? message, String? jsonPath})
 }
 
 Future<bool> showConfirmDialog(BuildContext context,
-    {String? text, Function? executeWhenConfirm, Function? executeWhenCancel}) async {
+    {String? text,
+    Function? executeWhenConfirm,
+    Function? executeWhenCancel}) async {
   bool confirm = false;
 
   await showDialog(
@@ -201,4 +211,56 @@ Future<bool> showConfirmDialog(BuildContext context,
   );
 
   return confirm;
+}
+
+Future<void> sendNotificationToUser(
+    String token, String title, String nMessage) async {
+  try {
+    // Create a FirebaseMessaging instance
+    final FirebaseMessaging messaging = FirebaseMessaging.instance;
+    await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: true,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+    //what do you do when sent notification and app opened
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      if (message.notification != null) {
+        print("Notification Title:${message.notification!.title}");
+        print("Notification Body:${message.notification!.body}");
+      }
+    });
+    // FirebaseMessaging.onBackgroundMessage((RemoteMessage message) {});
+
+    // Define the message to send
+    var message = {
+      'notification': {
+        'title': title,
+        'body': nMessage,
+      },
+      'data': {
+        'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+        'id': '1',
+        'status': 'done'
+      },
+      'to': token
+    };
+
+    // Send the message to the FCM API
+    await http.post(
+      Uri.parse('https://fcm.googleapis.com/fcm/send'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'key=${FireBaseConstants.serverKey}',
+      },
+      body: jsonEncode(message),
+    );
+    print("Notification sent successfully");
+  } catch (e) {
+    print('Error sending notification: $e');
+  }
 }

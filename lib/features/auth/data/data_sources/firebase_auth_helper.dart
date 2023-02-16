@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../domain/entities/user.dart' as domain;
@@ -11,6 +12,8 @@ const String userNameDocPath = 'name';
 class FirebaseAuthHelper {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseMessaging _messaging = FirebaseMessaging.instance;
+
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: [
       'email',
@@ -77,7 +80,39 @@ class FirebaseAuthHelper {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
-  logout() async {
+  Future<void> logout(String userEmail) async {
     await _firebaseAuth.signOut();
+  }
+
+  Future<void> addUserToken(String userEmail) async {
+    final String? userToken = await _messaging.getToken();
+    if (userToken != null) {
+      final userDoc =
+          await _firestore.collection(userCollectionPath).doc(userEmail).get();
+      final List userTokenList = userDoc['userTokenList'];
+      if (!userTokenList.contains(userToken)) {
+        userTokenList.add(userToken);
+        await _firestore
+            .collection(userCollectionPath)
+            .doc(userEmail)
+            .update({"userTokenList": userTokenList});
+      }
+    }
+  }
+
+  Future<void> deleteUserToken(String userEmail) async {
+    final String? userToken = await _messaging.getToken();
+    if (userToken != null) {
+      final userDoc =
+          await _firestore.collection(userCollectionPath).doc(userEmail).get();
+      final List userTokenList = userDoc['userTokenList'];
+      if (userTokenList.contains(userToken)) {
+        userTokenList.remove(userToken);
+        await _firestore
+            .collection(userCollectionPath)
+            .doc(userEmail)
+            .update({"userTokenList": userTokenList});
+      }
+    }
   }
 }

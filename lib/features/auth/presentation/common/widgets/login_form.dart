@@ -103,16 +103,20 @@ class _LoginFormState extends State<LoginForm> {
             height: AppSize.s50.h,
           ),
           FullElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               setState(() {
                 validateEmail = true;
                 validatePassword = true;
               });
               if (_key.currentState!.validate()) {
                 BlocProvider.of<AuthenticationBloc>(context).add(
-                    LoginButtonPressed(LoginRequest(
-                        _emailTextEditingController.text,
-                        _passwordTextEditingController.text)));
+                  LoginButtonPressed(
+                    LoginRequest(
+                      _emailTextEditingController.text,
+                      _passwordTextEditingController.text,
+                    ),
+                  ),
+                );
               }
             },
             text: AppStrings.signIn.tr(context),

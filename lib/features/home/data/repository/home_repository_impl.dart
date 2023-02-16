@@ -110,6 +110,7 @@ class HomeRepositoryImpl extends HomeRepository {
         List<JobEntities> jobsList = [];
         final jobs = await firestore.collection(FireBaseConstants.jobs).get();
         for (var doc in jobs.docs) jobsList.add(JobEntities.fromMap(doc.data()));
+        jobsList.sort((a, b) => a.timestamp.compareTo(b.timestamp));
         return Right(jobsList);
       } catch (e) {
         return Left(ExceptionHandler.handle(e).failure);

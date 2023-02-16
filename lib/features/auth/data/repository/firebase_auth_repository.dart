@@ -29,7 +29,7 @@ class registering implements AuthRepository {
 
     try {
       await _authHelper.loginViaEmail(loginRequest);
-
+      await _authHelper.addUserToken(loginRequest.email);
       User user = await _authHelper.getUser(loginRequest.email);
       return Right(user);
     } catch (e) {
@@ -105,7 +105,8 @@ class registering implements AuthRepository {
           User user = User(
               name: firebaseUser.displayName!,
               email: firebaseUser.email!,
-              phoneNumber: '');
+              phoneNumber: '',
+              userTokenList: []);
 
           return Right(user);
         } else
@@ -117,9 +118,15 @@ class registering implements AuthRepository {
   }
 
   @override
-  Future<void> logOut() async {
-    _authPreference.setUserLoggedOut();
-    await _authHelper.logout();
+  Future<Either<Failure, void>> logOut(String userEmail) async {
+    try {
+      _authPreference.setUserLoggedOut();
+      await _authHelper.deleteUserToken(userEmail);
+      await _authHelper.logout(userEmail);
+      return const Right(null);
+    } catch (e) {
+      return Left(ExceptionHandler.handle(e).failure);
+    }
   }
 
   @override

@@ -5,7 +5,6 @@ import '../../domain/entities/user.dart';
 class LoginRequest extends Equatable {
   final String email;
   final String password;
-
   const LoginRequest(this.email, this.password);
 
   @override
@@ -15,5 +14,11 @@ class LoginRequest extends Equatable {
 class RegisterRequest extends User {
   final String password;
 
-  RegisterRequest({required super.name, required super.email, required this.password, required super.phoneNumber});
+  RegisterRequest({
+    required super.name,
+    required super.email,
+    required this.password,
+    required super.phoneNumber,
+    required super.userTokenList,
+  });
 }
