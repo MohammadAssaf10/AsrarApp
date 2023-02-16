@@ -21,8 +21,7 @@ class registering implements AuthRepository {
       this._authPreference);
 
   @override
-  Future<Either<Failure, UserEntities>> loginViaEmail(
-      LoginRequest loginRequest) async {
+  Future<Either<Failure, User>> loginViaEmail(LoginRequest loginRequest) async {
     // check internet connection
     if (!(await _networkInfo.isConnected)) {
       return Left(DataSourceExceptions.noInternetConnections.getFailure());
@@ -30,8 +29,8 @@ class registering implements AuthRepository {
 
     try {
       await _authHelper.loginViaEmail(loginRequest);
-
-      UserEntities user = await _authHelper.getUser(loginRequest.email);
+      await _authHelper.addUserToken(loginRequest.email);
+      User user = await _authHelper.getUser(loginRequest.email);
       return Right(user);
     } catch (e) {
       return Left(ExceptionHandler.handle(e).failure);
@@ -39,7 +38,7 @@ class registering implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, UserEntities>> register(
+  Future<Either<Failure, User>> register(
       RegisterRequest registerRequest) async {
     // check internet connection
     if (!(await _networkInfo.isConnected)) {
@@ -58,8 +57,7 @@ class registering implements AuthRepository {
 
   // this method called in every signIn or registering
   // because if it from google it can be the first sign in
-  Future<Either<Failure, UserEntities>> updateUserData(
-      UserEntities user) async {
+  Future<Either<Failure, User>> updateUserData(User user) async {
     try {
       _authPreference.setUserLoggedIn();
       _authPreference.setUser(user);
@@ -80,11 +78,11 @@ class registering implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, UserEntities?>> getCurrentUserIfExists() async {
+  Future<Either<Failure, User?>> getCurrentUserIfExists() async {
     try {
       if (!_authPreference.isUserLoggedIn()) return const Right(null);
 
-      UserEntities user = _authPreference.getUser();
+      User user = _authPreference.getUser();
       return Right(user);
     } catch (e) {
       return Left(ExceptionHandler.handle(e).failure);
@@ -92,19 +90,19 @@ class registering implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, UserEntities>> loginViaGoogle() async {
+  Future<Either<Failure, User>> loginViaGoogle() async {
     try {
       final firebaseUser = (await _authHelper.loginViaGoogle()).user!;
 
       try {
         // the user sign before
-        UserEntities user = await _authHelper.getUser(firebaseUser.email!);
+        User user = await _authHelper.getUser(firebaseUser.email!);
         return Right(user);
       } catch (e) {
         // first sign create the user
         if (e is firebase.FirebaseAuthException &&
             e.code == "auth/user-not-found") {
-          UserEntities user = UserEntities(
+          User user = User(
               name: firebaseUser.displayName!,
               email: firebaseUser.email!,
               phoneNumber: '',
@@ -120,10 +118,11 @@ class registering implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, void>> logOut(UserEntities user) async {
+  Future<Either<Failure, void>> logOut(String userEmail) async {
     try {
       _authPreference.setUserLoggedOut();
-      await _authHelper.logout(user);
+      await _authHelper.deleteUserToken(userEmail);
+      await _authHelper.logout(userEmail);
       return const Right(null);
     } catch (e) {
       return Left(ExceptionHandler.handle(e).failure);

@@ -96,7 +96,7 @@ class AuthenticationBloc
     on<LogOut>(
       (event, emit) async {
         var user = state.user;
-        if (user != null) await _authRepository.logOut(user);
+        if (user != null) await _authRepository.logOut(user.email);
         emit(state.copyWith(status: AuthStatus.init));
       },
     );

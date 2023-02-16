@@ -4,7 +4,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../domain/entities/user.dart' as domain;
-import '../../domain/entities/user.dart';
 import '../models/requests.dart';
 
 const String userCollectionPath = 'Users';
@@ -24,21 +23,6 @@ class FirebaseAuthHelper {
   Future<void> loginViaEmail(LoginRequest loginRequest) async {
     await _firebaseAuth.signInWithEmailAndPassword(
         email: loginRequest.email, password: loginRequest.password);
-    final String? userToken = await _messaging.getToken();
-    if (userToken != null) {
-      final user = await _firestore
-          .collection(userCollectionPath)
-          .doc(loginRequest.email)
-          .get();
-      final List userTokenList = user['userTokenList'];
-      if (!userTokenList.contains(userToken)) {
-        userTokenList.add(userToken);
-        await _firestore
-            .collection(userCollectionPath)
-            .doc(loginRequest.email)
-            .update({"userTokenList": userTokenList});
-      }
-    }
   }
 
   Future<UserCredential> loginViaGoogle() async {
@@ -54,7 +38,7 @@ class FirebaseAuthHelper {
     return _firebaseAuth.signInWithCredential(credential);
   }
 
-  Future<domain.UserEntities> getUser(String email) async {
+  Future<domain.User> getUser(String email) async {
     final userMap =
         (await _firestore.collection(userCollectionPath).doc(email).get())
             .data();
@@ -63,7 +47,7 @@ class FirebaseAuthHelper {
       throw FirebaseAuthException(code: "auth/user-not-found");
     }
 
-    return domain.UserEntities.fromMap(userMap);
+    return domain.User.fromMap(userMap);
   }
 
   User? getCurrentUser() {
@@ -75,7 +59,7 @@ class FirebaseAuthHelper {
         email: registerRequest.email, password: registerRequest.password);
   }
 
-  Future<domain.UserEntities> updateUserData(domain.UserEntities user) async {
+  Future<domain.User> updateUserData(domain.User user) async {
     await _firestore
         .collection(userCollectionPath)
         .doc(user.email)
@@ -84,8 +68,8 @@ class FirebaseAuthHelper {
     return user;
   }
 
-  Future<domain.UserEntities> createUserDocument(User firebaseUser) async {
-    return await updateUserData(domain.UserEntities.fromMap({
+  Future<domain.User> createUserDocument(User firebaseUser) async {
+    return await updateUserData(domain.User.fromMap({
       'name': firebaseUser.displayName,
       'email': firebaseUser.email,
       'phoneNumber': firebaseUser.phoneNumber
@@ -96,20 +80,39 @@ class FirebaseAuthHelper {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
-  Future<void> logout(UserEntities user) async {
+  Future<void> logout(String userEmail) async {
+    await _firebaseAuth.signOut();
+  }
+
+  Future<void> addUserToken(String userEmail) async {
     final String? userToken = await _messaging.getToken();
     if (userToken != null) {
       final userDoc =
-          await _firestore.collection(userCollectionPath).doc(user.email).get();
+          await _firestore.collection(userCollectionPath).doc(userEmail).get();
+      final List userTokenList = userDoc['userTokenList'];
+      if (!userTokenList.contains(userToken)) {
+        userTokenList.add(userToken);
+        await _firestore
+            .collection(userCollectionPath)
+            .doc(userEmail)
+            .update({"userTokenList": userTokenList});
+      }
+    }
+  }
+
+  Future<void> deleteUserToken(String userEmail) async {
+    final String? userToken = await _messaging.getToken();
+    if (userToken != null) {
+      final userDoc =
+          await _firestore.collection(userCollectionPath).doc(userEmail).get();
       final List userTokenList = userDoc['userTokenList'];
       if (userTokenList.contains(userToken)) {
         userTokenList.remove(userToken);
         await _firestore
             .collection(userCollectionPath)
-            .doc(user.email)
+            .doc(userEmail)
             .update({"userTokenList": userTokenList});
       }
     }
-    await _firebaseAuth.signOut();
   }
 }

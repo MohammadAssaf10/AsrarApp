@@ -24,11 +24,11 @@ class AuthPreference {
     _sharedPreferences.setBool(kIsUserLoggedInKey, false);
   }
 
-  void setUser(UserEntities user) {
+  void setUser(User user) {
     _sharedPreferences.setString(kUser, user.toJson());
   }
 
-  UserEntities getUser() {
-    return UserEntities.fromJson(_sharedPreferences.getString(kUser) ?? '');
+  User getUser() {
+    return User.fromJson(_sharedPreferences.getString(kUser) ?? '');
   }
 }

@@ -2,26 +2,26 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
-class UserEntities {
+class User {
   String name;
   String email;
   String phoneNumber;
   List<String> userTokenList;
 
-  UserEntities({
+  User({
     required this.name,
     required this.email,
     required this.phoneNumber,
     required this.userTokenList,
   });
 
-  UserEntities copyWith({
+  User copyWith({
     String? name,
     String? email,
     String? phoneNumber,
     List<String>? userTokenList,
   }) {
-    return UserEntities(
+    return User(
       name: name ?? this.name,
       email: email ?? this.email,
       phoneNumber: phoneNumber ?? this.phoneNumber,
@@ -38,8 +38,8 @@ class UserEntities {
     };
   }
 
-  factory UserEntities.fromMap(Map<String, dynamic> map) {
-    return UserEntities(
+  factory User.fromMap(Map<String, dynamic> map) {
+    return User(
       name: map['name'] ?? '',
       email: map['email'] ?? '',
       phoneNumber: map['phoneNumber'] ?? '',
@@ -49,7 +49,7 @@ class UserEntities {
 
   String toJson() => json.encode(toMap());
 
-  factory UserEntities.fromJson(String source) => UserEntities.fromMap(json.decode(source));
+  factory User.fromJson(String source) => User.fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -60,7 +60,7 @@ class UserEntities {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is UserEntities &&
+    return other is User &&
         other.name == name &&
         other.email == email &&
         other.phoneNumber == phoneNumber &&

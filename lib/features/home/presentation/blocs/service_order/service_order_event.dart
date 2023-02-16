@@ -25,7 +25,7 @@ class CancelOrder extends ServiceOrderEvent {
 }
 
 class GetOrders extends ServiceOrderEvent {
-  final UserEntities user;
+  final User user;
   
   GetOrders({
     required this.user,

@@ -3,7 +3,7 @@ import 'product_entities.dart';
 
 class ShopOrderEntities {
   final int shopOrderId;
-  final UserEntities user;
+  final User user;
   final String phoneNumber;
   final List<ProductEntities> products;
   final String totalPrice;
@@ -31,7 +31,7 @@ class ShopOrderEntities {
   factory ShopOrderEntities.fromMap(Map<String, dynamic> map) {
     return ShopOrderEntities(
       shopOrderId: map['shopOrderId'],
-      user: UserEntities.fromMap(map['user']),
+      user: User.fromMap(map['user']),
       phoneNumber: map['phoneNumber'],
       products: List<ProductEntities>.from(
           map['products']?.map((x) => ProductEntities.fromMap(x))),

@@ -11,7 +11,7 @@ class LoginRequest extends Equatable {
   List<Object?> get props => [email, password];
 }
 
-class RegisterRequest extends UserEntities {
+class RegisterRequest extends User {
   final String password;
 
   RegisterRequest({
