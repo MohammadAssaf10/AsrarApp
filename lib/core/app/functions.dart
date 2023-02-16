@@ -15,6 +15,7 @@ import '../../config/strings_manager.dart';
 import '../../config/styles_manager.dart';
 import '../../config/values_manager.dart';
 import '../../core/app/extensions.dart';
+import 'constants.dart';
 
 String? nameValidator(String? name, BuildContext context) {
   if (name.nullOrEmpty()) {
@@ -212,22 +213,28 @@ Future<bool> showConfirmDialog(BuildContext context,
   return confirm;
 }
 
-final String serverKey =
-    'AAAAcsoR5BA:APA91bErG1Nb6XMvRUERMyZ7TOD3X7XspXJNeiDvGbsRKH7vfT0TFfQo1oFzZJRIhfBEzvv4gxqJ5GX9DXG9zDOqxJbHhd4YZPvKCRtlhRaGgYnfJkqC2rRgR358YIIHLYh01rdf8zns';
-// Create a FirebaseMessaging instance
 Future<void> sendNotificationToUser(
     String token, String title, String nMessage) async {
   try {
     // Create a FirebaseMessaging instance
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-
-    // Set the server key for FCM
-    await messaging.requestPermission();
-    await messaging.setForegroundNotificationPresentationOptions(
+    final FirebaseMessaging messaging = FirebaseMessaging.instance;
+    await messaging.requestPermission(
       alert: true,
+      announcement: false,
       badge: true,
+      carPlay: true,
+      criticalAlert: false,
+      provisional: false,
       sound: true,
     );
+    //what do you do when sent notification and app opened
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      if (message.notification != null) {
+        print("Notification Title:${message.notification!.title}");
+        print("Notification Body:${message.notification!.body}");
+      }
+    });
+    // FirebaseMessaging.onBackgroundMessage((RemoteMessage message) {});
 
     // Define the message to send
     var message = {
@@ -248,7 +255,7 @@ Future<void> sendNotificationToUser(
       Uri.parse('https://fcm.googleapis.com/fcm/send'),
       headers: <String, String>{
         'Content-Type': 'application/json',
-        'Authorization': 'key=$serverKey',
+        'Authorization': 'key=${FireBaseConstants.serverKey}',
       },
       body: jsonEncode(message),
     );
