@@ -12,30 +12,39 @@ import '../../domain/repositories/chat_repository.dart';
 class FirebaseChatRepository extends ChatRepository {
   final FirebaseFirestore _firestore;
   final NetworkInfo _networkInfo;
+  final ServiceOrder serviceOrder;
+  final DocumentReference orderReference;
 
   FirebaseChatRepository(
     this._firestore,
     this._networkInfo,
-  );
-  @override
-  Future<Either<Failure, void>> sendMessage() {
-    // TODO: implement sendMessage
-    throw UnimplementedError();
-  }
+    this.serviceOrder,
+  ) : orderReference =
+            _firestore.collection(FireBaseConstants.serviceOrder).doc(serviceOrder.id.toString());
 
   @override
-  Future<Either<Failure, Stream<List<Message>>>> startChatStream(ServiceOrder serviceOrder) async {
+  Future<Either<Failure, void>> sendMessage(TextMessage message) async {
     if (!await _networkInfo.isConnected) {
       return Left(DataSourceExceptions.noInternetConnections.getFailure());
     }
 
     try {
-      return Right(_firestore
-          .collection(FireBaseConstants.serviceOrder)
-          .doc(serviceOrder.id.toString())
-          .collection(FireBaseConstants.messages)
-          .snapshots()
-          .map(
+      await orderReference.collection(FireBaseConstants.messages).add(message.toMap());
+
+      return Right(null);
+    } catch (e) {
+      return Left(ExceptionHandler.handle(e).failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, Stream<List<Message>>>> startChatStream() async {
+    if (!await _networkInfo.isConnected) {
+      return Left(DataSourceExceptions.noInternetConnections.getFailure());
+    }
+
+    try {
+      return Right(orderReference.collection(FireBaseConstants.messages).snapshots().map(
         (event) {
           List<Message> list = [];
           for (var doc in event.docs) {

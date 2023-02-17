@@ -1,4 +1,3 @@
-import 'package:asrar_app/features/chat/domain/repositories/chat_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -11,8 +10,10 @@ import '../../features/auth/data/data_sources/whatsapp_api.dart';
 import '../../features/auth/data/repository/firebase_auth_repository.dart';
 import '../../features/auth/domain/repository/auth_repository.dart';
 import '../../features/chat/data/repositories/firebase_chat_repository.dart';
+import '../../features/chat/domain/repositories/chat_repository.dart';
 import '../../features/home/data/repository/firebase_service_order_repository.dart';
 import '../../features/home/data/repository/home_repository_impl.dart';
+import '../../features/home/domain/entities/service_order.dart';
 import '../../features/home/domain/repository/home_repository.dart';
 import '../../features/home/domain/repository/service_order_repository.dart';
 import '../../features/shop/data/repositories/shop_repository_impl.dart';
@@ -83,10 +84,12 @@ void initHomeModule() {
         networkInfo: instance<NetworkInfo>(),
       );
     });
+  }
+}
 
-    instance.registerLazySingleton<ChatRepository>(() => FirebaseChatRepository(
-          FirebaseFirestore.instance,
-          instance<NetworkInfo>(),
-        ));
+void initChatModule(ServiceOrder serviceOrder) {
+  if (!GetIt.I.isRegistered<ChatRepository>()) {
+    instance.registerLazySingleton<ChatRepository>(() =>
+        FirebaseChatRepository(FirebaseFirestore.instance, instance<NetworkInfo>(), serviceOrder));
   }
 }

@@ -17,7 +17,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   ChatBloc() : super(ChatState.init()) {
     on<ChatStarted>((event, emit) async {
-      await (await _chatRepository.startChatStream(event.serviceOrder)).fold(
+      await (await _chatRepository.startChatStream()).fold(
         (l) {
           print(l);
         },
@@ -31,7 +31,20 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
     on<_MessageReserved>(
       (event, emit) {
-        emit(state.copyWith(messagesList: event.messageList));
+        final list = event.messageList;
+        list.sort((a, b) => a.details.createdAt.compareTo(b.details.createdAt));
+        emit(state.copyWith(messagesList: list));
+      },
+    );
+
+    on<MessageSent>(
+      (event, emit) async {
+        (await _chatRepository.sendMessage(event.message)).fold(
+          (l) {
+            emit(state.copyWith(status: Status.failed, message: l.message));
+          },
+          (r) {},
+        );
       },
     );
 

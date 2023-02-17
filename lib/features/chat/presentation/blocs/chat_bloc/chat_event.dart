@@ -21,7 +21,7 @@ class ChatEnded extends ChatEvent {
 }
 
 class MessageSent extends ChatEvent {
-  final Message message;
+  final TextMessage message;
 
   MessageSent({required this.message});
 

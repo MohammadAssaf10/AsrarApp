@@ -1,32 +1,264 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-abstract class Message {
-  Timestamp createdAt;
-  String content;
+enum MessageType { text, image, audio }
 
-  Message({
+/// [type] must be [MessageType.'any'.name]
+// * steps to regenerate data class
+// - in [toMap] make [createdAt.millisecondsSinceEpoch]
+// - in [fromMap] make [fromMillisecondsSinceEpoch]
+class MessageDetails {
+  Sender sender;
+  Timestamp createdAt;
+  String type;
+
+  MessageDetails({
+    required this.sender,
     required this.createdAt,
-    required this.content,
+    required this.type,
   });
 
-  factory Message.fromMap(Map map) {
-    return TMessage(createdAt: Timestamp.now(), content: map["content"] ?? '');
+  MessageDetails copyWith({
+    Sender? sender,
+    Timestamp? createdAt,
+    String? type,
+  }) {
+    return MessageDetails(
+      sender: sender ?? this.sender,
+      createdAt: createdAt ?? this.createdAt,
+      type: type ?? this.type,
+    );
   }
 
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
+
+    result.addAll({'sender': sender.toMap()});
+    result.addAll({'createdAt': createdAt.millisecondsSinceEpoch});
+    result.addAll({'type': type});
+
+    return result;
+  }
+
+  factory MessageDetails.fromMap(Map<String, dynamic> map) {
+    return MessageDetails(
+      sender: Sender.fromMap(map['sender'] ?? {}),
+      createdAt: Timestamp.fromMillisecondsSinceEpoch(map['createdAt']),
+      type: map['type'] ?? '',
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory MessageDetails.fromJson(String source) => MessageDetails.fromMap(json.decode(source));
+
   @override
-  String toString() => 'Message(createdAt: $createdAt)';
+  String toString() => 'MessageDetails(sender: $sender, createdAt: $createdAt, type: $type)';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Message && other.createdAt == createdAt;
+    return other is MessageDetails &&
+        other.sender == sender &&
+        other.createdAt == createdAt &&
+        other.type == type;
   }
 
   @override
-  int get hashCode => createdAt.hashCode;
+  int get hashCode => sender.hashCode ^ createdAt.hashCode ^ type.hashCode;
 }
 
-class TMessage extends Message {
-  TMessage({required super.createdAt, required super.content});
+class Sender {
+  String name;
+  String email;
+
+  Sender({
+    required this.name,
+    required this.email,
+  });
+
+  Sender copyWith({
+    String? name,
+    String? email,
+  }) {
+    return Sender(
+      name: name ?? this.name,
+      email: email ?? this.email,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
+
+    result.addAll({'name': name});
+    result.addAll({'email': email});
+
+    return result;
+  }
+
+  factory Sender.fromMap(Map<String, dynamic> map) {
+    return Sender(
+      name: map['name'] ?? '',
+      email: map['email'] ?? '',
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Sender.fromJson(String source) => Sender.fromMap(json.decode(source));
+
+  @override
+  String toString() => 'Sender(name: $name, email: $email)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Sender && other.name == name && other.email == email;
+  }
+
+  @override
+  int get hashCode => name.hashCode ^ email.hashCode;
+}
+
+abstract class Message {
+  MessageDetails details;
+
+  Message({required this.details});
+
+  bool isMine(String email) => email == details.sender.email;
+
+  factory Message.fromMap(Map<String, dynamic> map) {
+    String? messageType = map['details']['type'];
+
+    if (messageType == MessageType.text.name)
+      return TextMessage.fromMap(map);
+    else if (messageType == MessageType.image.name)
+      return ImageMessage.fromMap(map);
+    else
+      return EmptyMessage.fromMap(map);
+  }
+}
+
+class TextMessage extends Message {
+  String content;
+
+  TextMessage({
+    required this.content,
+    required super.details,
+  });
+
+  factory TextMessage.create(String content, Sender sender) {
+    return TextMessage(
+        content: content,
+        details: MessageDetails(
+            sender: sender, createdAt: Timestamp.now(), type: MessageType.text.name));
+  }
+
+  TextMessage copyWith({
+    String? content,
+    MessageDetails? details,
+  }) {
+    return TextMessage(
+      content: content ?? this.content,
+      details: details ?? this.details,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
+
+    result.addAll({'content': content});
+    result.addAll({'details': details.toMap()});
+
+    return result;
+  }
+
+  factory TextMessage.fromMap(Map<String, dynamic> map) {
+    return TextMessage(
+      content: map['content'] ?? '',
+      details: MessageDetails.fromMap(map['details']),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory TextMessage.fromJson(String source) => TextMessage.fromMap(json.decode(source));
+
+  @override
+  String toString() => 'TextMessage(content: $content, details: $details)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is TextMessage && other.content == content && other.details == details;
+  }
+
+  @override
+  int get hashCode => content.hashCode ^ details.hashCode;
+}
+
+class ImageMessage extends Message {
+  String imageUrl;
+
+  ImageMessage({
+    required this.imageUrl,
+    required super.details,
+  });
+
+  ImageMessage copyWith({
+    String? imageUrl,
+    MessageDetails? details,
+  }) {
+    return ImageMessage(
+      imageUrl: imageUrl ?? this.imageUrl,
+      details: details ?? this.details,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
+
+    result.addAll({'imageUrl': imageUrl});
+    result.addAll({'details': details.toMap()});
+
+    return result;
+  }
+
+  factory ImageMessage.fromMap(Map<String, dynamic> map) {
+    return ImageMessage(
+      imageUrl: map['imageUrl'] ?? '',
+      details: MessageDetails.fromMap(map['details']),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ImageMessage.fromJson(String source) => ImageMessage.fromMap(json.decode(source));
+
+  @override
+  String toString() => 'ImageMessage(imageUrl: $imageUrl, details: $details)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is ImageMessage && other.imageUrl == imageUrl && other.details == details;
+  }
+
+  @override
+  int get hashCode => imageUrl.hashCode ^ details.hashCode;
+}
+
+class EmptyMessage extends Message {
+  EmptyMessage({required super.details});
+
+  factory EmptyMessage.fromMap(Map<String, dynamic> map) {
+    return EmptyMessage(
+      details: MessageDetails.fromMap(map['details']),
+    );
+  }
 }
