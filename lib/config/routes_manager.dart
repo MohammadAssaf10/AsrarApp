@@ -1,4 +1,6 @@
+import 'package:asrar_app/features/chat/presentation/blocs/bloc/chat_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../core/app/di.dart';
@@ -6,6 +8,7 @@ import '../features/auth/presentation/pages/auth_view.dart';
 import '../features/auth/presentation/pages/password_reset_view.dart';
 import '../features/auth/presentation/pages/verification_view.dart';
 import '../features/chat/presentation/blocs/bloc/chat_bloc.dart';
+import '../features/chat/presentation/pages/chat_screen.dart';
 import '../features/chat/presentation/pages/chat_screen.dart';
 import '../features/home/domain/entities/company_entities.dart';
 import '../features/home/domain/entities/course_entities.dart';
