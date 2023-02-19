@@ -24,17 +24,21 @@ ThemeData getApplicationTheme() {
       titleTextStyle: getAlmaraiRegularStyle(
           fontSize: AppSize.s17.sp, color: ColorManager.white),
     ),
+    
     errorColor: ColorManager.error,
+    
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: ColorManager.primary,
       selectionHandleColor: ColorManager.primary,
     ),
+    
     textTheme: TextTheme(
       subtitle1: getAlmaraiRegularStyle(
         fontSize: AppSize.s18.sp,
         color: ColorManager.primary,
       ),
     ),
+    
     // input decoration theme (text form field)
     inputDecorationTheme: InputDecorationTheme(
       // hint style

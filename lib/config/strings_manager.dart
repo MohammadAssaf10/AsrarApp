@@ -41,6 +41,7 @@ class AppStrings {
   static const String continueAsGuest = 'continue as guest';
 
   static const String confirm = 'confirm';
+ 
 
   // home
   static const String asrar = "asrar";

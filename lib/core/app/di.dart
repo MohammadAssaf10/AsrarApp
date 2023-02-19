@@ -9,9 +9,12 @@ import '../../features/auth/data/data_sources/firebase_auth_helper.dart';
 import '../../features/auth/data/data_sources/whatsapp_api.dart';
 import '../../features/auth/data/repository/firebase_auth_repository.dart';
 import '../../features/auth/domain/repository/auth_repository.dart';
+import '../../features/chat/data/repositories/firebase_chat_repository.dart';
+import '../../features/chat/domain/repositories/chat_repository.dart';
 import '../../features/home/data/repository/file_repository_impl.dart';
 import '../../features/home/data/repository/firebase_service_order_repository.dart';
 import '../../features/home/data/repository/home_repository_impl.dart';
+import '../../features/home/domain/entities/service_order.dart';
 import '../../features/home/domain/repository/file_repository.dart';
 import '../../features/home/domain/repository/home_repository.dart';
 import '../../features/home/domain/repository/service_order_repository.dart';
@@ -94,5 +97,12 @@ void initHomeModule() {
     instance.registerLazySingleton<FileRepository>(() {
       return FileRepositoryImpl();
     });
+  }
+}
+
+void initChatModule(ServiceOrder serviceOrder) {
+  if (!GetIt.I.isRegistered<ChatRepository>()) {
+    instance.registerLazySingleton<ChatRepository>(() =>
+        FirebaseChatRepository(FirebaseFirestore.instance, instance<NetworkInfo>(), serviceOrder));
   }
 }

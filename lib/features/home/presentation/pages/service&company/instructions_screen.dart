@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../../config/app_localizations.dart';
 import '../../../../../config/assets_manager.dart';
 import '../../../../../config/color_manager.dart';
+import '../../../../../config/routes_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
@@ -86,7 +87,10 @@ class InstructionsScreen extends StatelessWidget {
                 } else if (state.processStatus == Status.failed) {
                   showCustomDialog(context, message: state.message!.tr(context));
                 } else if (state.processStatus == Status.success) {
-                  showCustomDialog(context, message: AppStrings.orderAddedSuccessfully.tr(context));
+                  dismissDialog(context);
+                  // TODO: Fix This Shit
+                  // showCustomDialog(context, message: AppStrings.orderAddedSuccessfully.tr(context));
+                  Navigator.pushNamed(context, Routes.chatRoute);
                 }
               },
               child: OptionButton(
