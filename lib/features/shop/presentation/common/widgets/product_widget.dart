@@ -64,7 +64,6 @@ class _ProductWidgetState extends State<ProductWidget> {
                     AppSize.s20.r,
                   ),
                 ),
-                offset: Offset(0, 2),
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
               ),

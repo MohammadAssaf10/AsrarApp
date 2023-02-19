@@ -28,6 +28,10 @@ class AppStrings {
   static const String passwordShouldAtLeast6Character = "password_should_at_least_6_Character";
   static const String mobileNumberFormatNotCorrect = "mobile_number_format_not_correct";
   static const String resetPassword = "reset_password";
+  static const String changePassword = "change_password";
+  static const String selectImageSource = "select_image_source";
+  static const String camera = "camera";
+  static const String gallery = "gallery";
   static const String verificationCode = "verification_code";
   static const String verificationCodeSentTo = "verificationCodeSentTo";
   static const String sendVerificationCode = "send_verification_code";
@@ -67,7 +71,7 @@ class AppStrings {
   static const String services = "services";
   static const String service = "service";
   static const String searchForYourServices = "search_for_your_services";
-  static const String requiredDocuments = "required_documents";
+  static const String instructions = "instructions";
   static const String addOrder = "add_order";
   static const String whatsAppNumber = "whatsApp_number";
   static const String checkout = "checkout";
@@ -84,6 +88,8 @@ class AppStrings {
   static const String noCourses = "no_courses";
   static const String asrarShop = "asrar_shop";
   static const String pleaseChooseProducts = "please_choose_products";
+  static const String pleaseLogin = "please_login";
+  static const String advancedSettings = "advanced_settings";
   static const String orderAddedSuccessfully = "order_added_successfully";
   static const String orderCancelledSuccessfully = "order_cancelled_successfully";
   static const String orderNNumber = "order_n_number";
@@ -98,6 +104,7 @@ class AppStrings {
   static const String canceled = "canceled";
   static const String canceling = "canceling";
   static const String noOrders = "no_orders";
+  static const String save = "save";
   // exception handler
   static const String success = "Success";
   static const String badRequestError = "Bad request error";

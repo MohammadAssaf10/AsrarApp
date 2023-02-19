@@ -21,7 +21,7 @@ class NewsDetailsScreen extends StatelessWidget {
         ),
       ),
       body: ListView(
-        physics: ScrollPhysics(),
+        shrinkWrap: true,
         padding: EdgeInsets.symmetric(
           vertical: AppSize.s15.h,
           horizontal: AppSize.s8.w,
@@ -35,7 +35,6 @@ class NewsDetailsScreen extends StatelessWidget {
               borderSide: BorderSide(color: ColorManager.transparent),
               borderRadius: BorderRadius.circular(AppSize.s10.r),
             ),
-            offset: Offset(0, 0),
           ),
           Padding(
             padding: EdgeInsets.symmetric(

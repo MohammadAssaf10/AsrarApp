@@ -1,9 +1,12 @@
 import 'package:asrar_app/config/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/assets_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/values_manager.dart';
+import '../../../../auth/presentation/bloc/authentication_bloc.dart';
+import '../../blocs/user_bloc/user_bloc.dart';
 import '../../widgets/general/navigation_bar_bottom.dart';
 import 'customers_service_screen.dart';
 import 'home_screen.dart';
@@ -18,6 +21,14 @@ class MainView extends StatelessWidget {
     return Scaffold(
       body: PageView(
         controller: _controller,
+        onPageChanged: (v) {
+          if (v == 4) {
+            final authState =
+                BlocProvider.of<AuthenticationBloc>(context).state;
+            BlocProvider.of<UserBloc>(context)
+              ..add(GetUserInfo(email: authState.user!.email));
+          }
+        },
         children: [
           OrdersScreen(),
           MyWalletScreen(),
@@ -68,7 +79,9 @@ class MainView extends StatelessWidget {
                   NavigationBarBottom(
                     title: AppStrings.profile.tr(context),
                     icon: IconAssets.profile,
-                    onPress: () => _controller.jumpToPage(4),
+                    onPress: () {
+                      _controller.jumpToPage(4);
+                    },
                   ),
                 ],
               )

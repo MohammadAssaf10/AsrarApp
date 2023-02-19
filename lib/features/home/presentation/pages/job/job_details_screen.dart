@@ -17,6 +17,7 @@ class JobDetailsScreen extends StatelessWidget {
         title: Text(job.jobTitle),
       ),
       body: ListView(
+        shrinkWrap: true,
         physics: ScrollPhysics(),
         padding: EdgeInsets.symmetric(
           vertical: AppSize.s15.h,
@@ -33,7 +34,6 @@ class JobDetailsScreen extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(AppSize.s10.r),
             ),
-            offset: Offset(0, 0),
           ),
           Padding(
             padding: EdgeInsets.symmetric(

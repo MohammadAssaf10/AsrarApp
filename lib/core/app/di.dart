@@ -9,8 +9,10 @@ import '../../features/auth/data/data_sources/firebase_auth_helper.dart';
 import '../../features/auth/data/data_sources/whatsapp_api.dart';
 import '../../features/auth/data/repository/firebase_auth_repository.dart';
 import '../../features/auth/domain/repository/auth_repository.dart';
+import '../../features/home/data/repository/file_repository_impl.dart';
 import '../../features/home/data/repository/firebase_service_order_repository.dart';
 import '../../features/home/data/repository/home_repository_impl.dart';
+import '../../features/home/domain/repository/file_repository.dart';
 import '../../features/home/domain/repository/home_repository.dart';
 import '../../features/home/domain/repository/service_order_repository.dart';
 import '../../features/shop/data/repositories/shop_repository_impl.dart';
@@ -30,18 +32,22 @@ Future<void> initAppModule() async {
   instance.registerLazySingleton<SharedPreferences>(() => sharedPref);
 
   // network info
-  instance.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(InternetConnectionChecker()));
-
-  instance.registerLazySingleton<FirebaseAuthHelper>(() => FirebaseAuthHelper());
+  instance.registerLazySingleton<NetworkInfo>(
+      () => NetworkInfoImpl(InternetConnectionChecker()));
 
   instance
-      .registerLazySingleton<AuthPreference>(() => AuthPreference(instance<SharedPreferences>()));
+      .registerLazySingleton<FirebaseAuthHelper>(() => FirebaseAuthHelper());
+
+  instance.registerLazySingleton<AuthPreference>(
+      () => AuthPreference(instance<SharedPreferences>()));
 
   // language pref
-  instance.registerLazySingleton(() => LanguageCacheHelper(instance<SharedPreferences>()));
+  instance.registerLazySingleton(
+      () => LanguageCacheHelper(instance<SharedPreferences>()));
 
   // dio factory
-  instance.registerLazySingleton<DioFactory>(() => DioFactory(instance<LanguageCacheHelper>()));
+  instance.registerLazySingleton<DioFactory>(
+      () => DioFactory(instance<LanguageCacheHelper>()));
 }
 
 Future<void> initAuthenticationModule() async {
@@ -51,36 +57,42 @@ Future<void> initAuthenticationModule() async {
     try {
       await whatsAppApiConstants.getWhatsAppApiConstants();
     } catch (e) {
-      print('\x1B[31m fuck from di failed to fetch whatsapp api stuff from firebase');
+      print(
+          '\x1B[31m fuck from di failed to fetch whatsapp api stuff from firebase');
     }
 
     Dio dio = await instance<DioFactory>().getDio();
     instance.registerLazySingleton<WhatsappApi>(
         () => WhatsappApi(dio, baseUrl: whatsAppApiConstants.baseUrl));
 
-    instance.registerLazySingleton<AuthRepository>(() => registering(instance<FirebaseAuthHelper>(),
-        instance<NetworkInfo>(), instance<WhatsappApi>(), instance<AuthPreference>()));
+    instance.registerLazySingleton<AuthRepository>(() => registering(
+        instance<FirebaseAuthHelper>(),
+        instance<NetworkInfo>(),
+        instance<WhatsappApi>(),
+        instance<AuthPreference>()));
   }
 }
 
 void initHomeModule() {
   if (!GetIt.I.isRegistered<HomeRepository>()) {
-    instance.registerLazySingleton<ServiceOrderRepository>(() => FirebaseServiceOrderRepository(
-          FirebaseFirestore.instance,
-          instance<NetworkInfo>(),
-        ));
+    instance.registerLazySingleton<ServiceOrderRepository>(
+        () => FirebaseServiceOrderRepository(
+              FirebaseFirestore.instance,
+              instance<NetworkInfo>(),
+            ));
 
     instance.registerLazySingleton<HomeRepository>(() {
       return HomeRepositoryImpl(
         networkInfo: instance<NetworkInfo>(),
-        FirebaseFirestore.instance,
       );
     });
-       instance.registerLazySingleton<ShopRepository>(() {
+    instance.registerLazySingleton<ShopRepository>(() {
       return ShopRepositoryImpl(
         networkInfo: instance<NetworkInfo>(),
       );
     });
+    instance.registerLazySingleton<FileRepository>(() {
+      return FileRepositoryImpl();
+    });
   }
 }
-

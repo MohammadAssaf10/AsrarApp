@@ -21,7 +21,7 @@ import '../features/shop/domain/entities/shop_order_entities.dart';
 import '../features/shop/presentation/common/widgets/shop_order_details_view.dart';
 import '../features/shop/presentation/pages/cart_screen.dart';
 import '../features/home/presentation/pages/news/news_screen.dart';
-import '../features/home/presentation/pages/service&company/required_documents_screen.dart';
+import '../features/home/presentation/pages/service&company/instructions_screen.dart';
 import '../features/home/presentation/pages/service&company/services_screen.dart';
 import '../features/shop/presentation/pages/shop_screen.dart';
 import '../splash.dart';
@@ -33,7 +33,7 @@ class Routes {
   // home route
   static const String homeRoute = "/home";
   static const String serviceRoute = "/service";
-  static const String requiredDocumentsRoute = "/requiredDocuments";
+  static const String InstructionsRoute = "/instructions";
   static const String shopRoute = "/shop";
   static const String cartRoute = "/cart";
   static const String newsRoute = "/news";
@@ -110,11 +110,11 @@ class RouteGenerator {
             builder: (context) => ServicesScreen(arg),
           );
         }
-      case Routes.requiredDocumentsRoute:
+      case Routes.InstructionsRoute:
         {
           final arg = settings.arguments as ServiceEntities;
           return MaterialPageRoute(
-            builder: (context) => RequiredDocumentsScreen(arg),
+            builder: (context) => InstructionsScreen(arg),
           );
         }
       case Routes.auth:

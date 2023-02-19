@@ -20,5 +20,7 @@ class RegisterRequest extends User {
     required this.password,
     required super.phoneNumber,
     required super.userTokenList,
+    required super.imageURL,
+    required super.imageName,
   });
 }

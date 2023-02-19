@@ -9,27 +9,32 @@ class CachedNetworkImageWidget extends StatelessWidget {
     super.key,
     required this.image,
     required this.shapeBorder,
-    required this.offset,
     this.horizontalMargin = 0,
     this.verticalMargin = 0,
     this.height = 0,
     this.width = 0,
+    this.blurRadius=4,
+    this.offset=Offset.zero,
+    this.boxFit=BoxFit.fill,
   });
   final String image;
   final ShapeBorder shapeBorder;
-  final Offset offset;
   final double horizontalMargin;
   final double verticalMargin;
   final double height;
   final double width;
+  final double blurRadius;
+  final Offset offset;
+  final BoxFit boxFit;
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
+      height: height,
+      width: width,
       imageUrl: image,
+      fit: boxFit,
       imageBuilder: (context, imageProvider) {
         return Container(
-          height: height,
-          width: width,
           margin: EdgeInsets.symmetric(
             horizontal: horizontalMargin,
             vertical: verticalMargin,
@@ -38,22 +43,23 @@ class CachedNetworkImageWidget extends StatelessWidget {
             shadows: [
               BoxShadow(
                 color: ColorManager.grey,
-                blurRadius: 4.0,
-                offset: offset,
+                blurRadius: blurRadius,
+                spreadRadius: 1,
+                offset: offset
               ),
             ],
             shape: shapeBorder,
             image: DecorationImage(
               image: imageProvider,
-              fit: BoxFit.fill,
+              fit: boxFit,
             ),
           ),
         );
       },
       placeholder: (context, url) {
         return LoadingView(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
+          height: height,
+          width: width,
         );
       },
       errorWidget: (context, url, error) {

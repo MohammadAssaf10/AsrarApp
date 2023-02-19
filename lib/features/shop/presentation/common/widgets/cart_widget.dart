@@ -52,7 +52,6 @@ class _cartWidgetState extends State<cartWidget> {
                   AppSize.s18.r,
                 ),
               ),
-              offset: Offset(0, 0),
               height: AppSize.s100.h,
             ),
           ),

@@ -11,7 +11,9 @@ class InputFormField extends StatelessWidget {
     required this.height,
     required this.textInputType,
     this.horizontalContentPadding = 0,
-    this.textAlign=TextAlign.start,
+    this.textAlign = TextAlign.start,
+    this.onChanage,
+    this.suffixIcon,
   }) : super(key: key);
   final String? labelText;
   final String? hintText;
@@ -21,11 +23,22 @@ class InputFormField extends StatelessWidget {
   final double horizontalContentPadding;
   final TextAlign textAlign;
   final TextInputType textInputType;
+  final Function(String)? onChanage;
+  final Widget? suffixIcon;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: height,
       child: TextFormField(
+        onTap: () {
+          if (controller!.selection ==
+              TextSelection.fromPosition(
+                  TextPosition(offset: controller!.text.length - 1))) {
+            controller!.selection = TextSelection.fromPosition(
+                TextPosition(offset: controller!.text.length));
+          }
+        },
+        onChanged: onChanage,
         controller: controller,
         textAlign: textAlign,
         keyboardType: textInputType,
@@ -33,11 +46,13 @@ class InputFormField extends StatelessWidget {
           FilteringTextInputFormatter.allow(regExp),
         ],
         decoration: InputDecoration(
-            labelText: labelText,
-            hintText: hintText,
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: horizontalContentPadding,
-            )),
+          labelText: labelText,
+          suffixIcon: suffixIcon,
+          hintText: hintText,
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: horizontalContentPadding,
+          ),
+        ),
       ),
     );
   }

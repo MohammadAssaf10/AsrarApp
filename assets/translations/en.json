@@ -117,5 +117,12 @@
   "services": "Services",
   "service": "Service",
   "search_for_your_services": "Search For Your Services",
-  "required_documents": "Required Documents:"
+  "please_login": "Please Login",
+  "change_password": "Change Password",
+  "camera": "Camera",
+  "gallery": "Gallery",
+  "advanced_settings": "Advanced Settings",
+  "select_image_source": "Select Image Source",
+  "save": "Save",
+  "instructions": "Instructions: "
 }

@@ -106,6 +106,8 @@ class registering implements AuthRepository {
               name: firebaseUser.displayName!,
               email: firebaseUser.email!,
               phoneNumber: '',
+              imageURL: "",
+              imageName:"",
               userTokenList: []);
 
           return Right(user);
