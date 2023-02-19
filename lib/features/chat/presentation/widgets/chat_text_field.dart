@@ -39,7 +39,7 @@ class ChatTextField extends StatelessWidget {
               },
               icon: Icon(
                 Icons.send,
-                color: ColorManager.grey,
+                color: ColorManager.primary,
               )),
           Expanded(
             child: TextField(

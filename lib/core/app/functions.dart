@@ -4,6 +4,7 @@ import 'package:asrar_app/config/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../config/color_manager.dart';
@@ -153,8 +154,7 @@ void showCustomDialog(BuildContext context, {String? message, String? jsonPath})
   });
 }
 
-Future<bool> showConfirmDialog(BuildContext context,
-    {String? text, Function? executeWhenConfirm, Function? executeWhenCancel}) async {
+Future<bool> showConfirmDialog(BuildContext context, {String? text, Function? executeWhenConfirm, Function? executeWhenCancel}) async {
   bool confirm = false;
 
   await showDialog(
@@ -202,3 +202,33 @@ Future<bool> showConfirmDialog(BuildContext context,
 
   return confirm;
 }
+
+Future<XFile?> openImagePicker(BuildContext context) async { 
+   final ImagePicker picker = ImagePicker(); 
+  
+   XFile? image = await showDialog( 
+     context: context, 
+     builder: (BuildContext context) { 
+       return SimpleDialog( 
+         title: Text(AppStrings.selectImageSource.tr(context)), 
+         children: [ 
+           SimpleDialogOption( 
+             child: Text(AppStrings.camera.tr(context)), 
+             onPressed: () async { 
+               Navigator.pop( 
+                   context, await picker.pickImage(source: ImageSource.camera)); 
+             }, 
+           ), 
+           SimpleDialogOption( 
+             child: Text(AppStrings.gallery.tr(context)), 
+             onPressed: () async { 
+               Navigator.pop( 
+                   context, await picker.pickImage(source: ImageSource.gallery)); 
+             }, 
+           ), 
+         ], 
+       ); 
+     }, 
+   ); 
+   return image; 
+ }

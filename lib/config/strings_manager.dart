@@ -37,6 +37,9 @@ class AppStrings {
   static const String continueAsGuest = 'continue as guest';
 
   static const String confirm = 'confirm';
+  static const String gallery = 'gallery';
+  static const String camera = 'camera';
+  static const String selectImageSource = 'selectImageSource';
 
   // home
   static const String asrar = "asrar";
