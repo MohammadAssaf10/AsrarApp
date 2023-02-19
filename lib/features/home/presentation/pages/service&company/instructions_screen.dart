@@ -17,8 +17,8 @@ import '../../../domain/entities/service_order.dart';
 import '../../blocs/service_order/service_order_bloc.dart';
 import '../../widgets/general/home_button_widgets.dart';
 
-class RequiredDocumentsScreen extends StatelessWidget {
-  const RequiredDocumentsScreen(
+class InstructionsScreen extends StatelessWidget {
+  const InstructionsScreen(
     this.service,
   );
   final ServiceEntities service;
@@ -37,7 +37,7 @@ class RequiredDocumentsScreen extends StatelessWidget {
               horizontal: AppSize.s30.w,
             ),
             child: Text(
-              AppStrings.requiredDocuments.tr(context),
+              AppStrings.instructions.tr(context),
               style: getAlmaraiBoldStyle(
                 fontSize: AppSize.s22.sp,
                 color: ColorManager.darkPrimary,

@@ -6,12 +6,16 @@ class User {
   String name;
   String email;
   String phoneNumber;
+  String imageURL;
+  String imageName;
   List<String> userTokenList;
 
   User({
     required this.name,
     required this.email,
     required this.phoneNumber,
+    required this.imageURL,
+    required this.imageName,
     required this.userTokenList,
   });
 
@@ -19,12 +23,16 @@ class User {
     String? name,
     String? email,
     String? phoneNumber,
+    String? imageURL,
+    String? imageName,
     List<String>? userTokenList,
   }) {
     return User(
       name: name ?? this.name,
       email: email ?? this.email,
       phoneNumber: phoneNumber ?? this.phoneNumber,
+      imageURL: imageURL ?? this.imageURL,
+      imageName: imageName ?? this.imageName,
       userTokenList: userTokenList ?? this.userTokenList,
     );
   }
@@ -34,6 +42,8 @@ class User {
       'name': name,
       'email': email,
       'phoneNumber': phoneNumber,
+      'imageURL': imageURL,
+      'imageName': imageName,
       'userTokenList': userTokenList,
     };
   }
@@ -43,6 +53,8 @@ class User {
       name: map['name'] ?? '',
       email: map['email'] ?? '',
       phoneNumber: map['phoneNumber'] ?? '',
+      imageURL: map['imageURL'] ?? '',
+      imageName: map['imageName'] ?? '',
       userTokenList: List<String>.from(map['userTokenList']),
     );
   }
@@ -53,7 +65,7 @@ class User {
 
   @override
   String toString() {
-    return 'User(name: $name, email: $email, phoneNumber: $phoneNumber, userTokenList: $userTokenList)';
+    return 'User(name: $name, email: $email, phoneNumber: $phoneNumber, imageURL: $imageURL, imageName: $imageName, userTokenList: $userTokenList)';
   }
 
   @override
@@ -64,6 +76,8 @@ class User {
         other.name == name &&
         other.email == email &&
         other.phoneNumber == phoneNumber &&
+        other.imageURL == imageURL &&
+        other.imageName == imageName &&
         listEquals(other.userTokenList, userTokenList);
   }
 
@@ -72,6 +86,8 @@ class User {
     return name.hashCode ^
         email.hashCode ^
         phoneNumber.hashCode ^
+        imageURL.hashCode ^
+        imageName.hashCode ^
         userTokenList.hashCode;
   }
 

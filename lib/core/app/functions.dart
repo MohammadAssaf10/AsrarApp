@@ -1,11 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
+import 'package:dartz/dartz.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:asrar_app/config/app_localizations.dart';
@@ -15,6 +19,9 @@ import '../../config/strings_manager.dart';
 import '../../config/styles_manager.dart';
 import '../../config/values_manager.dart';
 import '../../core/app/extensions.dart';
+import '../../features/home/domain/entities/file_entities.dart';
+import '../data/exception_handler.dart';
+import '../data/failure.dart';
 import 'constants.dart';
 
 String? nameValidator(String? name, BuildContext context) {
@@ -264,3 +271,53 @@ Future<void> sendNotificationToUser(
     print('Error sending notification: $e');
   }
 }
+
+// path: just file path
+Future<FileEntities> uploadFile(String path, XFile xFile) async {
+  final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
+  final Reference ref = firebaseStorage.ref(path);
+  await ref.putFile(File(xFile.path));
+  final fileURL = await ref.getDownloadURL();
+  final FileEntities file = FileEntities(name: xFile.name, url: fileURL);
+  return file;
+}
+
+// fullPath: file path with name
+Future<void> deleteFile(String fullPath) async {
+  final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
+  final Reference ref = firebaseStorage.ref(fullPath);
+  await ref.delete();
+}
+  Future<XFile?> selectFile(BuildContext context) async {
+    final ImagePicker picker = ImagePicker();
+    XFile? image = await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            title: Text(
+              AppStrings.selectImageSource.tr(context),
+            ),
+            children: [
+              SimpleDialogOption(
+                child: Text(
+                  AppStrings.camera.tr(context),
+                ),
+                onPressed: () async {
+                  Navigator.pop(context,
+                      await picker.pickImage(source: ImageSource.camera));
+                },
+              ),
+              SimpleDialogOption(
+                child: Text(
+                  AppStrings.gallery.tr(context),
+                ),
+                onPressed: () async {
+                  Navigator.pop(context,
+                      await picker.pickImage(source: ImageSource.gallery));
+                },
+              )
+            ],
+          );
+        });
+    return image;
+  }

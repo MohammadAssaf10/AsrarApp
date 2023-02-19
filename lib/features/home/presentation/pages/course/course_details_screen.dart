@@ -17,6 +17,7 @@ class CourseDetailsScereen extends StatelessWidget {
         title: Text(course.courseTitile),
       ),
       body: ListView(
+        shrinkWrap: true,
         physics: ScrollPhysics(),
         padding: EdgeInsets.symmetric(
           vertical: AppSize.s15.h,
@@ -31,7 +32,6 @@ class CourseDetailsScereen extends StatelessWidget {
               borderSide: BorderSide(color: ColorManager.transparent),
               borderRadius: BorderRadius.circular(AppSize.s10.r),
             ),
-            offset: Offset(0, 0),
           ),
           Padding(
             padding: EdgeInsets.symmetric(

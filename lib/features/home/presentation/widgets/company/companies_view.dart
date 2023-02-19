@@ -19,24 +19,23 @@ class CompaniesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CompanyBloc, CompanyState>(
-      builder: (context, state) {
-        if (state is CompanyLoadingState) {
-          return LoadingView(
-            height: MediaQuery.of(context).size.height / 3,
-            width: MediaQuery.of(context).size.width,
-          );
-        } else if (state is CompanyErrorState) {
-          return ErrorView(
-            errorMessage: state.errorMessage.tr(context),
-            height: MediaQuery.of(context).size.height / 3,
-            width: MediaQuery.of(context).size.width,
-          );
-        } else if (state is CompanyLoadedState) {
-          if (state.company.isNotEmpty) {
-            return SizedBox(
-              height: MediaQuery.of(context).size.height / 3.2,
-              child: GridView.builder(
+    return Expanded(
+      child: BlocBuilder<CompanyBloc, CompanyState>(
+        builder: (context, state) {
+          if (state is CompanyLoadingState) {
+            return LoadingView(
+              height: MediaQuery.of(context).size.height / 3,
+              width: MediaQuery.of(context).size.width,
+            );
+          } else if (state is CompanyErrorState) {
+            return ErrorView(
+              errorMessage: state.errorMessage.tr(context),
+              height: MediaQuery.of(context).size.height / 3,
+              width: MediaQuery.of(context).size.width,
+            );
+          } else if (state is CompanyLoadedState) {
+            if (state.company.isNotEmpty) {
+              return GridView.builder(
                 physics: ScrollPhysics(),
                 itemCount: state.company.length,
                 shrinkWrap: true,
@@ -70,18 +69,18 @@ class CompaniesView extends StatelessWidget {
                     ),
                   );
                 },
-              ),
-            );
-          } else {
-            return EmptyListView(
-              emptyListMessage: AppStrings.noServices.tr(context),
-              height: MediaQuery.of(context).size.height / 3,
-              width: MediaQuery.of(context).size.width,
-            );
+              );
+            } else {
+              return EmptyListView(
+                emptyListMessage: AppStrings.noServices.tr(context),
+                height: MediaQuery.of(context).size.height / 3,
+                width: MediaQuery.of(context).size.width,
+              );
+            }
           }
-        }
-        return SizedBox();
-      },
+          return SizedBox();
+        },
+      ),
     );
   }
 }

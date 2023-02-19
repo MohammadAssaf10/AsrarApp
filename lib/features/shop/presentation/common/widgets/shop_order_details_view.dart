@@ -50,7 +50,6 @@ class ShopOrederDetailsView extends StatelessWidget {
                         AppSize.s18.r,
                       ),
                     ),
-                    offset: Offset(0, 0),
                     height: MediaQuery.of(context).size.height,
                   ),
                 ),

@@ -19,23 +19,23 @@ class AdImageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AdImageBloc, AdImageState>(
-      builder: (context, state) {
-        if (state is AdImageLoadingState)
-          return LoadingView(
-            height: AppSize.s200.h,
-            width: MediaQuery.of(context).size.width,
-          );
-        else if (state is AdImageErrorState)
-          return ErrorView(
-            errorMessage: state.errorMessage.tr(context),
-            height: AppSize.s200.h,
-            width: MediaQuery.of(context).size.width,
-          );
-        else if (state is AdImagesLoadedState) if (state.adImagelist.isNotEmpty)
-          return Container(
-            height: AppSize.s200.h,
-            child: ListView.builder(
+    return Expanded(
+      child: BlocBuilder<AdImageBloc, AdImageState>(
+        builder: (context, state) {
+          if (state is AdImageLoadingState)
+            return LoadingView(
+              height: AppSize.s200.h,
+              width: MediaQuery.of(context).size.width,
+            );
+          else if (state is AdImageErrorState)
+            return ErrorView(
+              errorMessage: state.errorMessage.tr(context),
+              height: AppSize.s200.h,
+              width: MediaQuery.of(context).size.width,
+            );
+          else if (state is AdImagesLoadedState) if (state
+              .adImagelist.isNotEmpty)
+            return ListView.builder(
               physics: ScrollPhysics(),
               scrollDirection: Axis.horizontal,
               itemCount: state.adImagelist.length,
@@ -61,32 +61,33 @@ class AdImageView extends StatelessWidget {
                   child: CachedNetworkImageWidget(
                     image: state.adImagelist[index].adImageUrl,
                     height: AppSize.s220.h,
-                    width: AppSize.s340.w,
+                    width: AppSize.s360.w,
                     shapeBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(AppSize.s10.r),
                       borderSide: BorderSide(color: ColorManager.transparent),
                     ),
-                    offset: Offset(0, 0),
                     horizontalMargin: AppSize.s8.w,
                     verticalMargin: AppSize.s12.h,
                   ),
                 );
               },
-            ),
-          );
-        else
-          return Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: AppSize.s12.h,
-              horizontal: AppSize.s12.w,
-            ),
-            child: Image.asset(
-              ImageAssets.maskGroup,
-              width: double.infinity,
-            ),
-          );
-        return SizedBox();
-      },
+            );
+          else
+            return Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: AppSize.s12.h,
+                horizontal: AppSize.s8.w,
+              ),
+              child: Image.asset(
+                ImageAssets.maskGroup,
+                fit: BoxFit.fill,
+                height: AppSize.s220.h,
+                width: AppSize.s360.w,
+              ),
+            );
+          return SizedBox();
+        },
+      ),
     );
   }
 }

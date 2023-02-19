@@ -21,7 +21,7 @@ class ServiceWidget extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(
           context,
-          Routes.requiredDocumentsRoute,
+          Routes.InstructionsRoute,
           arguments: service,
         );
       },

@@ -44,7 +44,7 @@ ThemeData getApplicationTheme() {
           color: ColorManager.darkPrimary, fontSize: AppSize.s16.sp),
       errorStyle: getAlmaraiRegularStyle(
           color: ColorManager.error, fontSize: AppSize.s16.sp),
-
+      suffixIconColor: ColorManager.primary,
       // enabled border style
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: ColorManager.grey, width: AppSize.s1_5.w),

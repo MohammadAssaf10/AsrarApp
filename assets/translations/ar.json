@@ -116,6 +116,13 @@
   "service": "الخدمة",
   "services": "الخدمات",
   "search_for_your_services": "ابحث عن خدماتك",
-  "required_documents": "المستندات المطلوبة:",
+  "instructions": "التعليمات: ",
+  "advanced_settings": "إعدادات متقدمة",
+  "change_password": "تغيير كلمة المرور",
+  "select_image_source": "حدد مصدر الصورة",
+  "camera": "الكاميرا",
+  "gallery": "المعرض",
+  "please_login": "الرجاء تسجيل الدخول",
+  "save": "حفظ",
   "show_details": "عرض التفاصيل"
 }

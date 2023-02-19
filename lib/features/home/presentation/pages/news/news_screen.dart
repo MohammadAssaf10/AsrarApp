@@ -67,7 +67,7 @@ class NewsScreen extends StatelessWidget {
                         children: [
                           Expanded(
                             child: CachedNetworkImageWidget(
-                              offset: Offset(1, 3),
+                              // offset: Offset(1, 3),
                               height: AppSize.s90.h,
                               width: double.infinity,
                               verticalMargin: AppSize.s4.h,

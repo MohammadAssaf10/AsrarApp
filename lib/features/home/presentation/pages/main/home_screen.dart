@@ -34,7 +34,10 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () async {
-              await sendNotificationToUser("dtzf4JTlQ_SDjxWlblwQwM:APA91bHBpS8FTqpTOuc5tXtXumQuhhUO08zwD7ljH9eLLANorr6DzE_-td7PuK87hAsVxIEPqF2OVxDCq4eVEonJ0VX2Yq4zApaWMz-SGj-h8KHPdsO4x-8RETpc-7oV7IK4b8XMdWzO","Asrar","fuck you");
+              await sendNotificationToUser(
+                  "dtzf4JTlQ_SDjxWlblwQwM:APA91bHBpS8FTqpTOuc5tXtXumQuhhUO08zwD7ljH9eLLANorr6DzE_-td7PuK87hAsVxIEPqF2OVxDCq4eVEonJ0VX2Yq4zApaWMz-SGj-h8KHPdsO4x-8RETpc-7oV7IK4b8XMdWzO",
+                  "Asrar",
+                  "fuck you");
             },
             icon: SvgPicture.asset(IconAssets.notification),
           ),
@@ -44,7 +47,7 @@ class HomeScreen extends StatelessWidget {
           // ),
         ],
       ),
-      body: ListView(
+      body: Column(
         children: [
           AdImageView(),
           OptionsWidget(

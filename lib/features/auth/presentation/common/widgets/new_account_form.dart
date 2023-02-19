@@ -154,8 +154,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
                 final FirebaseMessaging messaging = FirebaseMessaging.instance;
                 final String? userToken = await messaging.getToken();
                 List<String> userTokenList = [];
-                if(userToken!=null)
-                userTokenList.add(userToken);
+                if (userToken != null) userTokenList.add(userToken);
                 BlocProvider.of<AuthenticationBloc>(context).add(
                   RegisterButtonPressed(
                     RegisterRequest(
@@ -164,6 +163,8 @@ class _NewAccountFormState extends State<NewAccountForm> {
                       password: _passwordTextEditingController.text,
                       phoneNumber: _phoneNumberTextEditingController.text,
                       userTokenList: userTokenList,
+                      imageURL: "",
+                      imageName: "",
                     ),
                   ),
                 );
