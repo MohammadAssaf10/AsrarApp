@@ -9,11 +9,12 @@ import '../../domain/entities/message.dart';
 import '../blocs/chat_bloc/chat_bloc.dart';
 
 class ChatTextField extends StatelessWidget {
-  ChatTextField({super.key});
+  ChatTextField({super.key, this.onSended});
 
   final TextEditingController _chatController = TextEditingController();
 
   late final Sender sender;
+  final Function? onSended;
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +30,11 @@ class ChatTextField extends StatelessWidget {
         children: [
           IconButton(
               onPressed: () {
+                if (onSended != null) onSended!();
                 if (_chatController.text.isNotEmpty) {
-                  BlocProvider.of<ChatBloc>(context).add(MessageSent(
-                      message: TextMessage.create(_chatController.text, sender)
-                      // TextMessage(
-                      //   content: _chatController.text,
-                      //   details: MessageDetails(
-                      //       sender: sender, createdAt: Timestamp.now(), type: MessageType.text.name),
-                      // ),
-                      ));
+                  BlocProvider.of<ChatBloc>(context)
+                      .add(MessageSent(message: TextMessage.create(_chatController.text, sender)));
+                  _chatController.clear();
                 }
               },
               icon: Icon(

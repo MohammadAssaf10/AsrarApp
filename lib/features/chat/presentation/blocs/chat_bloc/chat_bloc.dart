@@ -28,11 +28,11 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         },
       );
     });
-
+    
     on<_MessageReserved>(
       (event, emit) {
         final list = event.messageList;
-        list.sort((a, b) => a.details.createdAt.compareTo(b.details.createdAt));
+        list.sort((a, b) => b.details.createdAt.compareTo(a.details.createdAt));
         emit(state.copyWith(messagesList: list));
       },
     );

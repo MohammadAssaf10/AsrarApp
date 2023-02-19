@@ -5,7 +5,9 @@ import '../../../../config/values_manager.dart';
 import 'chat_text_field.dart';
 
 class ChatBottom extends StatelessWidget {
-  const ChatBottom({super.key});
+  const ChatBottom({super.key, this.onSended});
+
+  final Function? onSended;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class ChatBottom extends StatelessWidget {
             left: AppSize.s10.w, top: AppSize.s10.w, right: AppSize.s10.w, bottom: AppSize.s15.h),
         child: Row(
           children: [
-            Expanded(child: ChatTextField()),
+            Expanded(child: ChatTextField(onSended: onSended,)),
           ],
         ),
       ),
