@@ -13,6 +13,7 @@ class AppStrings {
   static const String password = "password";
   static const String pleaseEnterEmail = "please_enter_email";
   static const String pleaseEnterPassword = "please_enter_password";
+  static const String enterNewPassword = "enter_new_password";
   static const String shortPassword = "short_password";
   static const String userName = "user_name";
   static const String mobileNumber = "mobile_number";
@@ -105,6 +106,8 @@ class AppStrings {
   static const String canceled = "canceled";
   static const String canceling = "canceling";
   static const String noOrders = "no_orders";
+  static const String profileImageUpdated = "profile_image_updated";
+  static const String passwordUpdated = "password_updated";
   static const String save = "save";
   // exception handler
   static const String success = "Success";

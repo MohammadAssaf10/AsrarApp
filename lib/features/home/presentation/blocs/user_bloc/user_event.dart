@@ -18,3 +18,10 @@ class UpdateUserImageEvent extends UserEvent {
   @override
   List<Object?> get props => [email, image];
 }
+
+class UpdatePasswordEvent extends UserEvent {
+  final String newPassword;
+  UpdatePasswordEvent({required this.newPassword});
+  @override
+  List<Object?> get props => [newPassword];
+}
