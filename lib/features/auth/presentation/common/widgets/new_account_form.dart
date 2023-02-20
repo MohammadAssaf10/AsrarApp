@@ -1,4 +1,3 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,17 +23,13 @@ class NewAccountForm extends StatefulWidget {
 class _NewAccountFormState extends State<NewAccountForm> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
-  final TextEditingController _emailTextEditingController =
-      TextEditingController();
+  final TextEditingController _emailTextEditingController = TextEditingController();
 
-  final TextEditingController _passwordTextEditingController =
-      TextEditingController();
+  final TextEditingController _passwordTextEditingController = TextEditingController();
 
-  final TextEditingController _nameTextEditingController =
-      TextEditingController();
+  final TextEditingController _nameTextEditingController = TextEditingController();
 
-  final TextEditingController _phoneNumberTextEditingController =
-      TextEditingController();
+  final TextEditingController _phoneNumberTextEditingController = TextEditingController();
 
   bool validateEmail = false;
 
@@ -122,8 +117,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
                   validator: (v) {
                     if (validatePassword) {
                       if (v.nullOrEmpty() || v!.length < 6)
-                        return AppStrings.passwordShouldAtLeast6Character
-                            .tr(context);
+                        return AppStrings.passwordShouldAtLeast6Character.tr(context);
                     }
                     return null;
                   },
@@ -151,10 +145,6 @@ class _NewAccountFormState extends State<NewAccountForm> {
                 validateUserName = true;
               });
               if (_key.currentState!.validate()) {
-                final FirebaseMessaging messaging = FirebaseMessaging.instance;
-                final String? userToken = await messaging.getToken();
-                List<String> userTokenList = [];
-                if (userToken != null) userTokenList.add(userToken);
                 BlocProvider.of<AuthenticationBloc>(context).add(
                   RegisterButtonPressed(
                     RegisterRequest(
@@ -162,7 +152,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
                       email: _emailTextEditingController.text,
                       password: _passwordTextEditingController.text,
                       phoneNumber: _phoneNumberTextEditingController.text,
-                      userTokenList: userTokenList,
+                      userTokenList: [],
                       imageURL: "",
                       imageName: "",
                     ),
