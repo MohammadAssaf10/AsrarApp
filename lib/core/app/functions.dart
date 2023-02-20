@@ -19,6 +19,8 @@ import '../../config/styles_manager.dart';
 import '../../config/values_manager.dart';
 import '../../core/app/extensions.dart';
 import '../../features/home/domain/entities/file_entities.dart';
+import '../../features/home/presentation/widgets/general/home_button_widgets.dart';
+import '../../features/home/presentation/widgets/general/input_form_field.dart';
 import 'constants.dart';
 
 String? nameValidator(String? name, BuildContext context) {
@@ -66,7 +68,8 @@ String? cantBeEmpty(String? v, BuildContext context) {
 }
 
 bool isEmailFormatCorrect(String email) {
-  return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+  return RegExp(
+          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
       .hasMatch(email);
 }
 
@@ -104,7 +107,8 @@ double stringToDouble(String str) {
   return double.parse(str);
 }
 
-_isCurrentDialogShowing(BuildContext context) => ModalRoute.of(context)?.isCurrent != true;
+_isCurrentDialogShowing(BuildContext context) =>
+    ModalRoute.of(context)?.isCurrent != true;
 
 dismissDialog(BuildContext context) {
   if (_isCurrentDialogShowing(context)) {
@@ -112,7 +116,8 @@ dismissDialog(BuildContext context) {
   }
 }
 
-void showCustomDialog(BuildContext context, {String? message, String? jsonPath}) {
+void showCustomDialog(BuildContext context,
+    {String? message, String? jsonPath}) {
   SchedulerBinding.instance.addPostFrameCallback((_) {
     dismissDialog(context);
     showDialog(
@@ -163,7 +168,9 @@ void showCustomDialog(BuildContext context, {String? message, String? jsonPath})
 }
 
 Future<bool> showConfirmDialog(BuildContext context,
-    {String? text, Function? executeWhenConfirm, Function? executeWhenCancel}) async {
+    {String? text,
+    Function? executeWhenConfirm,
+    Function? executeWhenCancel}) async {
   bool confirm = false;
 
   await showDialog(
@@ -212,7 +219,48 @@ Future<bool> showConfirmDialog(BuildContext context,
   return confirm;
 }
 
-Future<void> sendNotificationToUser(String token, String title, String nMessage) async {
+void showNewPasswordDialog(
+  BuildContext context,
+  TextEditingController passwordController,
+  Function onTap,
+) {
+  showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            AppStrings.enterNewPassword.tr(context),
+            style: getAlmaraiRegularStyle(
+              fontSize: AppSize.s20.sp,
+              color: ColorManager.primary,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          content: InputFormField(
+            controller: passwordController,
+            hintText: AppStrings.newPassword.tr(context),
+            height: AppSize.s40.h,
+            textInputType: TextInputType.text,
+            regExp: getTextWithNumberInputFormat(),
+            textAlign: TextAlign.center,
+          ),
+          actions: [
+            OptionButton(
+              onTap: () {
+                if (passwordController.text.isNotEmpty) onTap();
+              },
+              title: AppStrings.save.tr(context),
+              height: AppSize.s35.h,
+              width: AppSize.s120.w,
+              fontSize: AppSize.s20.sp,
+            ),
+          ],
+        );
+      });
+}
+
+Future<void> sendNotificationToUser(
+    String token, String title, String nMessage) async {
   try {
     // Create a FirebaseMessaging instance
     final FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -240,7 +288,11 @@ Future<void> sendNotificationToUser(String token, String title, String nMessage)
         'title': title,
         'body': nMessage,
       },
-      'data': {'click_action': 'FLUTTER_NOTIFICATION_CLICK', 'id': '1', 'status': 'done'},
+      'data': {
+        'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+        'id': '1',
+        'status': 'done'
+      },
       'to': token
     };
 
@@ -291,7 +343,8 @@ Future<XFile?> selectFile(BuildContext context) async {
                 AppStrings.camera.tr(context),
               ),
               onPressed: () async {
-                Navigator.pop(context, await picker.pickImage(source: ImageSource.camera));
+                Navigator.pop(context,
+                    await picker.pickImage(source: ImageSource.camera));
               },
             ),
             SimpleDialogOption(
@@ -299,7 +352,8 @@ Future<XFile?> selectFile(BuildContext context) async {
                 AppStrings.gallery.tr(context),
               ),
               onPressed: () async {
-                Navigator.pop(context, await picker.pickImage(source: ImageSource.gallery));
+                Navigator.pop(context,
+                    await picker.pickImage(source: ImageSource.gallery));
               },
             )
           ],

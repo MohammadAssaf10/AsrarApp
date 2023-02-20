@@ -8,10 +8,8 @@ import '../../../../../config/color_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
-import '../../../../../core/app/di.dart';
 import '../../../../../core/app/functions.dart';
 import '../../../../auth/presentation/bloc/authentication_bloc.dart';
-import '../../../domain/repository/user_repository.dart';
 import '../../blocs/user_bloc/user_bloc.dart';
 import '../../widgets/general/error_view.dart';
 import '../../widgets/general/home_button_widgets.dart';
@@ -26,6 +24,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final TextEditingController passwordController = TextEditingController();
   XFile? image;
   @override
   Widget build(BuildContext context) {
@@ -35,7 +34,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: BlocConsumer<UserBloc, UserState>(
         listener: (context, state) {
           if (state is ImageUpdatedSuccessfullyState) {
-            showCustomDialog(context,message: "تم تحديث الصورة بنجاح");
+            showCustomDialog(context,
+                message: AppStrings.profileImageUpdated.tr(context));
+            BlocProvider.of<UserBloc>(context).add(
+              GetUserInfo(email: authState.user!.email),
+            );
+          }
+          if (state is PasswordUpdatedSuccessfullyState) {
+            showCustomDialog(context);
+          }
+          if (state is PasswordUpdatedErrorState) {
+            showCustomDialog(context, message: state.errorMessage.tr(context));
+            BlocProvider.of<UserBloc>(context).add(
+              GetUserInfo(email: authState.user!.email),
+            );
+          }
+          if (state is PasswordUpdatedSuccessfullyState) {
+            showCustomDialog(context,
+                message: AppStrings.passwordUpdated.tr(context));
             BlocProvider.of<UserBloc>(context).add(
               GetUserInfo(email: authState.user!.email),
             );
@@ -85,6 +101,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               UpdateUserImageEvent(
                                   email: authState.user!.email, image: image!),
                             );
+                            image = null;
                           },
                           title: AppStrings.save.tr(context),
                           height: AppSize.s30.h,
@@ -107,7 +124,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    showNewPasswordDialog(
+                      context,
+                      passwordController,
+                      () {
+                        BlocProvider.of<UserBloc>(context).add(
+                          UpdatePasswordEvent(
+                              newPassword: passwordController.text),
+                        );
+                      },
+                    );
+                  },
                   title: Row(
                     children: [
                       Icon(

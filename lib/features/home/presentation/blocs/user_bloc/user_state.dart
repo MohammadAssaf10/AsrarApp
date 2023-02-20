@@ -32,3 +32,19 @@ class ImageUpdatedSuccessfullyState extends UserState {
   @override
   List<Object?> get props => [];
 }
+
+class PasswordUpdatedLoadingState extends UserState {
+  @override
+  List<Object?> get props => [];
+}
+class PasswordUpdatedSuccessfullyState extends UserState {
+  @override
+  List<Object?> get props => [];
+}
+
+class PasswordUpdatedErrorState extends UserState {
+  final String errorMessage;
+  PasswordUpdatedErrorState({required this.errorMessage});
+  @override
+  List<Object?> get props => [errorMessage];
+}

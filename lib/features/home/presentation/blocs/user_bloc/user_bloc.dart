@@ -32,5 +32,14 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         emit(ImageUpdatedSuccessfullyState());
       });
     });
+    on<UpdatePasswordEvent>((event, emit) async {
+      emit(PasswordUpdatedLoadingState());
+      (await userRepository.updatePassword(event.newPassword))
+          .fold((failure) {
+            emit(PasswordUpdatedErrorState(errorMessage: failure.message));
+          }, (r) {
+            emit(PasswordUpdatedSuccessfullyState());
+          });
+    });
   }
 }
