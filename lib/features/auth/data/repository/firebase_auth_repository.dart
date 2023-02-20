@@ -17,8 +17,7 @@ class registering implements AuthRepository {
   final WhatsappApi _whatsappApi;
   final AuthPreference _authPreference;
 
-  registering(this._authHelper, this._networkInfo, this._whatsappApi,
-      this._authPreference);
+  registering(this._authHelper, this._networkInfo, this._whatsappApi, this._authPreference);
 
   @override
   Future<Either<Failure, User>> loginViaEmail(LoginRequest loginRequest) async {
@@ -29,7 +28,6 @@ class registering implements AuthRepository {
 
     try {
       await _authHelper.loginViaEmail(loginRequest);
-      await _authHelper.addUserToken(loginRequest.email);
       User user = await _authHelper.getUser(loginRequest.email);
       return Right(user);
     } catch (e) {
@@ -38,8 +36,7 @@ class registering implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, User>> register(
-      RegisterRequest registerRequest) async {
+  Future<Either<Failure, User>> register(RegisterRequest registerRequest) async {
     // check internet connection
     if (!(await _networkInfo.isConnected)) {
       return Left(DataSourceExceptions.noInternetConnections.getFailure());
@@ -59,8 +56,10 @@ class registering implements AuthRepository {
   // because if it from google it can be the first sign in
   Future<Either<Failure, User>> updateUserData(User user) async {
     try {
+      user.userTokenList = await _authHelper.addUserToken(user.email);
       _authPreference.setUserLoggedIn();
       _authPreference.setUser(user);
+
       return Right(await _authHelper.updateUserData(user));
     } catch (e) {
       return Left(ExceptionHandler.handle(e).failure);
@@ -100,14 +99,13 @@ class registering implements AuthRepository {
         return Right(user);
       } catch (e) {
         // first sign create the user
-        if (e is firebase.FirebaseAuthException &&
-            e.code == "auth/user-not-found") {
+        if (e is firebase.FirebaseAuthException && e.code == "auth/user-not-found") {
           User user = User(
               name: firebaseUser.displayName!,
               email: firebaseUser.email!,
               phoneNumber: '',
               imageURL: "",
-              imageName:"",
+              imageName: "",
               userTokenList: []);
 
           return Right(user);
@@ -132,8 +130,7 @@ class registering implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, void>> sendVerificationCode(
-      String number, String code) async {
+  Future<Either<Failure, void>> sendVerificationCode(String number, String code) async {
     try {
       await _whatsappApi.sendCode(
           number: number,

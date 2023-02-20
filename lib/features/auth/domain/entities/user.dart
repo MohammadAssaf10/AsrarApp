@@ -38,14 +38,16 @@ class User {
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'name': name,
-      'email': email,
-      'phoneNumber': phoneNumber,
-      'imageURL': imageURL,
-      'imageName': imageName,
-      'userTokenList': userTokenList,
-    };
+    final result = <String, dynamic>{};
+  
+    result.addAll({'name': name});
+    result.addAll({'email': email});
+    result.addAll({'phoneNumber': phoneNumber});
+    result.addAll({'imageURL': imageURL});
+    result.addAll({'imageName': imageName});
+    result.addAll({'userTokenList': userTokenList});
+  
+    return result;
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
@@ -55,7 +57,7 @@ class User {
       phoneNumber: map['phoneNumber'] ?? '',
       imageURL: map['imageURL'] ?? '',
       imageName: map['imageName'] ?? '',
-      userTokenList: List<String>.from(map['userTokenList']),
+      userTokenList: List<String>.from(map['userTokenList'] ?? []),
     );
   }
 

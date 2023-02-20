@@ -29,8 +29,7 @@ class FirebaseAuthHelper {
     await _googleSignIn.signOut();
     final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser!.authentication;
+    final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
 
     final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
@@ -39,9 +38,7 @@ class FirebaseAuthHelper {
   }
 
   Future<domain.User> getUser(String email) async {
-    final userMap =
-        (await _firestore.collection(userCollectionPath).doc(email).get())
-            .data();
+    final userMap = (await _firestore.collection(userCollectionPath).doc(email).get()).data();
 
     if (userMap == null) {
       throw FirebaseAuthException(code: "auth/user-not-found");
@@ -60,10 +57,7 @@ class FirebaseAuthHelper {
   }
 
   Future<domain.User> updateUserData(domain.User user) async {
-    await _firestore
-        .collection(userCollectionPath)
-        .doc(user.email)
-        .set(user.toMap());
+    await _firestore.collection(userCollectionPath).doc(user.email).set(user.toMap());
 
     return user;
   }
@@ -84,27 +78,43 @@ class FirebaseAuthHelper {
     await _firebaseAuth.signOut();
   }
 
-  Future<void> addUserToken(String userEmail) async {
+  Future<List<String>> createAndAddToUserListToken(String userEmail, String? token) async {
+    List<String> userListToken = [];
+    if (token != null) userListToken.add(token);
+    await _firestore
+        .collection(userCollectionPath)
+        .doc(userEmail)
+        .set({'userTokenList': userListToken});
+
+    return userListToken;
+  }
+
+  Future<List<String>> addUserToken(String userEmail) async {
     final String? userToken = await _messaging.getToken();
-    if (userToken != null) {
-      final userDoc =
-          await _firestore.collection(userCollectionPath).doc(userEmail).get();
-      final List userTokenList = userDoc['userTokenList'];
-      if (!userTokenList.contains(userToken)) {
+    final userDoc = await _firestore.collection(userCollectionPath).doc(userEmail).get();
+
+    try {
+      final List<String> userTokenList = userDoc['userTokenList']?.cast<String>() ?? [];
+
+      if (userToken != null && !userTokenList.contains(userToken)) {
         userTokenList.add(userToken);
         await _firestore
             .collection(userCollectionPath)
             .doc(userEmail)
             .update({"userTokenList": userTokenList});
+        userTokenList.add(userToken);
       }
+
+      return userTokenList;
+    } catch (e) {
+      return createAndAddToUserListToken(userEmail, userToken);
     }
   }
 
   Future<void> deleteUserToken(String userEmail) async {
     final String? userToken = await _messaging.getToken();
     if (userToken != null) {
-      final userDoc =
-          await _firestore.collection(userCollectionPath).doc(userEmail).get();
+      final userDoc = await _firestore.collection(userCollectionPath).doc(userEmail).get();
       final List userTokenList = userDoc['userTokenList'];
       if (userTokenList.contains(userToken)) {
         userTokenList.remove(userToken);
