@@ -27,3 +27,8 @@ class UserLoadedState extends UserState {
   @override
   List<Object?> get props => [user];
 }
+
+class ImageUpdatedSuccessfullyState extends UserState {
+  @override
+  List<Object?> get props => [];
+}

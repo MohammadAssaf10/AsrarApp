@@ -11,7 +11,7 @@ import '../../../../../config/values_manager.dart';
 import '../../../../../core/app/di.dart';
 import '../../../../../core/app/functions.dart';
 import '../../../../auth/presentation/bloc/authentication_bloc.dart';
-import '../../../domain/repository/file_repository.dart';
+import '../../../domain/repository/user_repository.dart';
 import '../../blocs/user_bloc/user_bloc.dart';
 import '../../widgets/general/error_view.dart';
 import '../../widgets/general/home_button_widgets.dart';
@@ -26,13 +26,21 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final FileRepository fileRepository = instance<FileRepository>();
   XFile? image;
   @override
   Widget build(BuildContext context) {
+    final authState = BlocProvider.of<AuthenticationBloc>(context).state;
     return Scaffold(
       appBar: AppBar(title: Text(AppStrings.profile.tr(context))),
-      body: BlocBuilder<UserBloc, UserState>(
+      body: BlocConsumer<UserBloc, UserState>(
+        listener: (context, state) {
+          if (state is ImageUpdatedSuccessfullyState) {
+            showCustomDialog(context,message: "تم تحديث الصورة بنجاح");
+            BlocProvider.of<UserBloc>(context).add(
+              GetUserInfo(email: authState.user!.email),
+            );
+          }
+        },
         builder: (context, state) {
           if (state is UserLoadingState)
             return LoadingView(
@@ -53,8 +61,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   userImage: state.user.imageURL,
                   imagePicked: image?.path,
                   onPress: () async {
-                    XFile? imageSelected =
-                        await selectFile(context);
+                    XFile? imageSelected = await selectFile(context);
                     setState(() {
                       image = imageSelected;
                     });
@@ -74,11 +81,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         padding: EdgeInsets.symmetric(vertical: AppSize.s15.h),
                         child: OptionButton(
                           onTap: () {
-                            final authState =
-                                BlocProvider.of<AuthenticationBloc>(context)
-                                    .state;
-                            fileRepository.updateUserImage(
-                                image!, authState.user!.email);
+                            BlocProvider.of<UserBloc>(context).add(
+                              UpdateUserImageEvent(
+                                  email: authState.user!.email, image: image!),
+                            );
                           },
                           title: AppStrings.save.tr(context),
                           height: AppSize.s30.h,

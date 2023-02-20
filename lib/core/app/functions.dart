@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:dartz/dartz.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +19,6 @@ import '../../config/styles_manager.dart';
 import '../../config/values_manager.dart';
 import '../../core/app/extensions.dart';
 import '../../features/home/domain/entities/file_entities.dart';
-import '../data/exception_handler.dart';
-import '../data/failure.dart';
 import 'constants.dart';
 
 String? nameValidator(String? name, BuildContext context) {
