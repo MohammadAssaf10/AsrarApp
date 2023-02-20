@@ -217,6 +217,14 @@ class ImageMessage extends Message {
     required super.details,
   });
 
+  /// imageUrl provided when upload image finish
+  factory ImageMessage.create(Sender sender) {
+    return ImageMessage(
+        imageUrl: 'imageUrl',
+        details: MessageDetails(
+            sender: sender, createdAt: Timestamp.now(), type: MessageType.image.name));
+  }
+
   ImageMessage copyWith({
     String? imageUrl,
     MessageDetails? details,
@@ -226,6 +234,7 @@ class ImageMessage extends Message {
       details: details ?? this.details,
     );
   }
+
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};

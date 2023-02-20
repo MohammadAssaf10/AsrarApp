@@ -4,6 +4,7 @@ enum Status { init, loading, success, failed }
 
 class ChatState extends Equatable {
   final Status status;
+  final Status fileUploadingStatus;
   final List<Message> messagesList;
   final String? message;
 
@@ -11,18 +12,21 @@ class ChatState extends Equatable {
     this.status,
     this.messagesList,
     this.message,
+    this.fileUploadingStatus,
   );
 
   ChatState.init()
       : messagesList = [],
         message = null,
-        status = Status.init;
+        status = Status.init,
+        fileUploadingStatus = Status.init;
 
   @override
-  List<Object> get props => [status, messagesList, message ?? ''];
+  List<Object> get props => [status, messagesList, message ?? '', fileUploadingStatus];
 
   ChatState copyWith({
     Status? status,
+    Status? fileUploadingStatus,
     List<Message>? messagesList,
     String? message,
   }) {
@@ -30,9 +34,11 @@ class ChatState extends Equatable {
       status ?? this.status,
       messagesList ?? this.messagesList,
       message,
+      fileUploadingStatus ?? this.fileUploadingStatus,
     );
   }
 
   @override
-  String toString() => 'ChatState(status: $status, messagesList: $messagesList, message: $message)';
+  String toString() =>
+      'ChatState(status: $status,fileUploading $fileUploadingStatus, messagesList: $messagesList, message: $message)';
 }

@@ -5,6 +5,7 @@ import '../../../../config/color_manager.dart';
 import '../../../../config/values_manager.dart';
 import '../../domain/entities/message.dart';
 import '../functions/functions.dart';
+import 'image_message_widget.dart';
 import 'text_message_widget.dart';
 
 class MessageWidget extends StatelessWidget {
@@ -42,9 +43,7 @@ class MessageWidget extends StatelessWidget {
           Card(
             margin: EdgeInsets.only(),
             color: getMessageColor(isMine),
-            child: TextMessageWidget(
-              message: message as TextMessage,
-            ),
+            child: MessageTypeDirector(message: message),
           ),
           Text(
             time,
@@ -53,5 +52,26 @@ class MessageWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class MessageTypeDirector extends StatelessWidget {
+  const MessageTypeDirector({super.key, required this.message});
+
+  final Message message;
+
+  @override
+  Widget build(BuildContext context) {
+    if (message is TextMessage)
+      return TextMessageWidget(
+        message: message as TextMessage,
+      );
+    else if (message is ImageMessage) {
+      return ImageMessageWidget(
+        message: message as ImageMessage,
+      );
+    } else {
+      return Container();
+    }
   }
 }

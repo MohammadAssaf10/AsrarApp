@@ -30,12 +30,13 @@ class TextMessageSent extends ChatEvent {
 }
 
 class ImageMessageSent extends ChatEvent {
+  final ImageMessage message;
   final XFile image;
 
-  ImageMessageSent(this.image);
-  
+  ImageMessageSent(this.image, this.message);
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [image, message];
 }
 
 class _MessageReserved extends ChatEvent {

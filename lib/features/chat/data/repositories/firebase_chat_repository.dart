@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/app/constants.dart';
+import '../../../../core/app/functions.dart';
 import '../../../../core/data/exception_handler.dart';
 import '../../../../core/data/failure.dart';
 import '../../../../core/network/network_info.dart';
@@ -53,6 +55,18 @@ class FirebaseChatRepository extends ChatRepository {
           return list;
         },
       ));
+    } catch (e) {
+      return Left(ExceptionHandler.handle(e).failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> uploadImage(XFile image) async {
+    try {
+      var file = await uploadFile(
+          '${FireBaseConstants.messages}/${serviceOrder.id}/images/${image.name}', image);
+      print(file.url);
+      return Right(file.url);
     } catch (e) {
       return Left(ExceptionHandler.handle(e).failure);
     }

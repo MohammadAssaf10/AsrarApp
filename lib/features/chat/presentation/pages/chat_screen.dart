@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/app/functions.dart';
 import '../../../auth/presentation/bloc/authentication_bloc.dart';
 import '../blocs/chat_bloc/chat_bloc.dart';
 import '../functions/functions.dart';
@@ -21,7 +22,18 @@ class ChatScreen extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: BlocBuilder<ChatBloc, ChatState>(
+            child: BlocConsumer<ChatBloc, ChatState>(
+              listenWhen: (previous, current) =>
+                  previous.fileUploadingStatus != current.fileUploadingStatus,
+              listener: (context, state) {
+                if (state.fileUploadingStatus == Status.loading) {
+                  showCustomDialog(context);
+                } else if (state.fileUploadingStatus == Status.success) {
+                  dismissDialog(context);
+                } else if (state.fileUploadingStatus == Status.failed) {
+                  showCustomDialog(context, message: state.message);
+                }
+              },
               builder: (context, state) {
                 return ListView.builder(
                   controller: _scrollController,

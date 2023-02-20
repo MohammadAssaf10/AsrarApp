@@ -50,7 +50,25 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     );
 
     on<ImageMessageSent>(
-      (event, emit) async {},
+      (event, emit) async {
+        emit(state.copyWith(fileUploadingStatus: Status.loading));
+        await (await _chatRepository.uploadImage(event.image)).fold(
+          (l) {
+            emit(state.copyWith(fileUploadingStatus: Status.failed, message: l.message));
+          },
+          (r) async {
+            emit(state.copyWith(fileUploadingStatus: Status.success));
+
+            var imageMessage = event.message.copyWith(imageUrl: r);
+            (await _chatRepository.sendMessage(imageMessage)).fold(
+              (l) {
+                emit(state.copyWith(status: Status.failed, message: l.message));
+              },
+              (r) {},
+            );
+          },
+        );
+      },
     );
 
     on<ChatEnded>((event, emit) {

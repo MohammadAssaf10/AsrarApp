@@ -1,19 +1,26 @@
-import 'package:asrar_app/core/app/functions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../config/color_manager.dart';
 import '../../../../config/values_manager.dart';
+import '../../../../core/app/functions.dart';
+import '../../../auth/presentation/bloc/authentication_bloc.dart';
+import '../../domain/entities/message.dart';
+import '../blocs/chat_bloc/chat_bloc.dart';
 import 'chat_text_field.dart';
 
 class ChatBottom extends StatelessWidget {
-  const ChatBottom({super.key, this.onSended});
+  ChatBottom({super.key, this.onSended});
 
   final Function? onSended;
+  late final Sender sender;
 
   @override
   Widget build(BuildContext context) {
+    var authUser = BlocProvider.of<AuthenticationBloc>(context).state.user!;
+    sender = Sender(name: authUser.name, email: authUser.email);
     return SafeArea(
       child: Container(
         color: Colors.white,
@@ -23,9 +30,11 @@ class ChatBottom extends StatelessWidget {
           children: [
             IconButton(
                 onPressed: () async {
+                  onSended;
                   XFile? image = await selectFile(context);
                   if (image != null) {
-                    
+                    BlocProvider.of<ChatBloc>(context)
+                        .add(ImageMessageSent(image, ImageMessage.create(sender)));
                   }
                 },
                 icon: Icon(
