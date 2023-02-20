@@ -7,11 +7,9 @@ import '../../../../core/app/functions.dart';
 import '../../../../core/data/exception_handler.dart';
 import '../../../../core/data/failure.dart';
 import '../../domain/entities/file_entities.dart';
-import '../../domain/repository/file_repository.dart';
+import '../../domain/repository/user_repository.dart';
 
-class FileRepositoryImpl extends FileRepository {
-
-
+class UserRepositoryImpl extends UserRepository {
   @override
   Future<Either<Failure, Unit>> updateUserImage(
       XFile image, String email) async {
