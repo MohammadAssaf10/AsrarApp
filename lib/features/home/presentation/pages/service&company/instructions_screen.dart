@@ -13,6 +13,7 @@ import '../../../../../config/values_manager.dart';
 import '../../../../../core/app/constants.dart';
 import '../../../../../core/app/functions.dart';
 import '../../../../auth/presentation/bloc/authentication_bloc.dart';
+import '../../../domain/entities/employee.dart';
 import '../../../domain/entities/service_entities.dart';
 import '../../../domain/entities/service_order.dart';
 import '../../blocs/service_order/service_order_bloc.dart';
@@ -105,6 +106,7 @@ class InstructionsScreen extends StatelessWidget {
                       service: service,
                       user: user,
                       status: OrderStatus.pending.name,
+                      employee: Employee.fromMap({}),
                     )));
                   });
 
