@@ -1,5 +1,7 @@
+import 'package:asrar_app/core/app/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../config/color_manager.dart';
 import '../../../../config/values_manager.dart';
@@ -20,8 +22,11 @@ class ChatBottom extends StatelessWidget {
         child: Row(
           children: [
             IconButton(
-                onPressed: () {
-                  
+                onPressed: () async {
+                  XFile? image = await selectFile(context);
+                  if (image != null) {
+                    
+                  }
                 },
                 icon: Icon(
                   Icons.camera_alt,

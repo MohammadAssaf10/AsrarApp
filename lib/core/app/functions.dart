@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:dartz/dartz.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +19,6 @@ import '../../config/styles_manager.dart';
 import '../../config/values_manager.dart';
 import '../../core/app/extensions.dart';
 import '../../features/home/domain/entities/file_entities.dart';
-import '../data/exception_handler.dart';
-import '../data/failure.dart';
 import 'constants.dart';
 
 String? nameValidator(String? name, BuildContext context) {
@@ -69,8 +66,7 @@ String? cantBeEmpty(String? v, BuildContext context) {
 }
 
 bool isEmailFormatCorrect(String email) {
-  return RegExp(
-          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+  return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
       .hasMatch(email);
 }
 
@@ -108,8 +104,7 @@ double stringToDouble(String str) {
   return double.parse(str);
 }
 
-_isCurrentDialogShowing(BuildContext context) =>
-    ModalRoute.of(context)?.isCurrent != true;
+_isCurrentDialogShowing(BuildContext context) => ModalRoute.of(context)?.isCurrent != true;
 
 dismissDialog(BuildContext context) {
   if (_isCurrentDialogShowing(context)) {
@@ -117,8 +112,7 @@ dismissDialog(BuildContext context) {
   }
 }
 
-void showCustomDialog(BuildContext context,
-    {String? message, String? jsonPath}) {
+void showCustomDialog(BuildContext context, {String? message, String? jsonPath}) {
   SchedulerBinding.instance.addPostFrameCallback((_) {
     dismissDialog(context);
     showDialog(
@@ -169,9 +163,7 @@ void showCustomDialog(BuildContext context,
 }
 
 Future<bool> showConfirmDialog(BuildContext context,
-    {String? text,
-    Function? executeWhenConfirm,
-    Function? executeWhenCancel}) async {
+    {String? text, Function? executeWhenConfirm, Function? executeWhenCancel}) async {
   bool confirm = false;
 
   await showDialog(
@@ -220,8 +212,7 @@ Future<bool> showConfirmDialog(BuildContext context,
   return confirm;
 }
 
-Future<void> sendNotificationToUser(
-    String token, String title, String nMessage) async {
+Future<void> sendNotificationToUser(String token, String title, String nMessage) async {
   try {
     // Create a FirebaseMessaging instance
     final FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -249,11 +240,7 @@ Future<void> sendNotificationToUser(
         'title': title,
         'body': nMessage,
       },
-      'data': {
-        'click_action': 'FLUTTER_NOTIFICATION_CLICK',
-        'id': '1',
-        'status': 'done'
-      },
+      'data': {'click_action': 'FLUTTER_NOTIFICATION_CLICK', 'id': '1', 'status': 'done'},
       'to': token
     };
 
@@ -288,36 +275,35 @@ Future<void> deleteFile(String fullPath) async {
   final Reference ref = firebaseStorage.ref(fullPath);
   await ref.delete();
 }
-  Future<XFile?> selectFile(BuildContext context) async {
-    final ImagePicker picker = ImagePicker();
-    XFile? image = await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return SimpleDialog(
-            title: Text(
-              AppStrings.selectImageSource.tr(context),
-            ),
-            children: [
-              SimpleDialogOption(
-                child: Text(
-                  AppStrings.camera.tr(context),
-                ),
-                onPressed: () async {
-                  Navigator.pop(context,
-                      await picker.pickImage(source: ImageSource.camera));
-                },
+
+Future<XFile?> selectFile(BuildContext context) async {
+  final ImagePicker picker = ImagePicker();
+  XFile? image = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: Text(
+            AppStrings.selectImageSource.tr(context),
+          ),
+          children: [
+            SimpleDialogOption(
+              child: Text(
+                AppStrings.camera.tr(context),
               ),
-              SimpleDialogOption(
-                child: Text(
-                  AppStrings.gallery.tr(context),
-                ),
-                onPressed: () async {
-                  Navigator.pop(context,
-                      await picker.pickImage(source: ImageSource.gallery));
-                },
-              )
-            ],
-          );
-        });
-    return image;
-  }
+              onPressed: () async {
+                Navigator.pop(context, await picker.pickImage(source: ImageSource.camera));
+              },
+            ),
+            SimpleDialogOption(
+              child: Text(
+                AppStrings.gallery.tr(context),
+              ),
+              onPressed: () async {
+                Navigator.pop(context, await picker.pickImage(source: ImageSource.gallery));
+              },
+            )
+          ],
+        );
+      });
+  return image;
+}

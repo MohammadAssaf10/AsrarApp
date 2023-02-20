@@ -23,7 +23,7 @@ class FirebaseChatRepository extends ChatRepository {
             _firestore.collection(FireBaseConstants.serviceOrder).doc(serviceOrder.id.toString());
 
   @override
-  Future<Either<Failure, void>> sendMessage(TextMessage message) async {
+  Future<Either<Failure, void>> sendMessage(Message message) async {
     if (!await _networkInfo.isConnected) {
       return Left(DataSourceExceptions.noInternetConnections.getFailure());
     }

@@ -32,8 +32,8 @@ class ChatTextField extends StatelessWidget {
               onPressed: () {
                 if (onSended != null) onSended!();
                 if (_chatController.text.isNotEmpty) {
-                  BlocProvider.of<ChatBloc>(context)
-                      .add(MessageSent(message: TextMessage.create(_chatController.text, sender)));
+                  BlocProvider.of<ChatBloc>(context).add(
+                      TextMessageSent(message: TextMessage.create(_chatController.text, sender)));
                   _chatController.clear();
                 }
               },

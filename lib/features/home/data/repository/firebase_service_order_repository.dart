@@ -75,15 +75,12 @@ class FirebaseServiceOrderRepository extends ServiceOrderRepository {
     try {
       List<ServiceOrder> servicesOrderList = [];
 
-      final servicesOrderSnapShot = await _firestore
-          .collection(FireBaseConstants.serviceOrder)
-          .where(FireBaseConstants.user, isEqualTo: user.toMap())
-          .get();
+      final servicesOrderSnapShot =
+          await _firestore.collection(FireBaseConstants.serviceOrder).get();
       for (var doc in servicesOrderSnapShot.docs) {
         var serviceOrder = ServiceOrder.fromMap(doc.data());
 
-        // if (user == serviceOrder.user)
-        servicesOrderList.add(serviceOrder);
+        if (user.email == serviceOrder.user.email) servicesOrderList.add(serviceOrder);
       }
       return Right(servicesOrderList);
     } catch (e) {

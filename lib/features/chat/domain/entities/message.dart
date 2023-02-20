@@ -140,6 +140,14 @@ abstract class Message {
     else
       return EmptyMessage.fromMap(map);
   }
+
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
+
+    result.addAll({'details': details.toMap()});
+
+    return result;
+  }
 }
 
 class TextMessage extends Message {

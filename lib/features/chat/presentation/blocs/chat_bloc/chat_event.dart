@@ -20,13 +20,22 @@ class ChatEnded extends ChatEvent {
   List<Object?> get props => [];
 }
 
-class MessageSent extends ChatEvent {
+class TextMessageSent extends ChatEvent {
   final TextMessage message;
 
-  MessageSent({required this.message});
+  TextMessageSent({required this.message});
 
   @override
   List<Object?> get props => [message];
+}
+
+class ImageMessageSent extends ChatEvent {
+  final XFile image;
+
+  ImageMessageSent(this.image);
+  
+  @override
+  List<Object?> get props => [];
 }
 
 class _MessageReserved extends ChatEvent {

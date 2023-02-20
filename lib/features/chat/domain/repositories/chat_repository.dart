@@ -5,5 +5,5 @@ import '../entities/message.dart';
 
 abstract class ChatRepository {
   Future<Either<Failure, Stream<List<Message>>>> startChatStream();
-  Future<Either<Failure, void>> sendMessage(TextMessage message);
+  Future<Either<Failure, void>> sendMessage(Message message);
 }

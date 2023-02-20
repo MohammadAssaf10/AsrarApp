@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../../core/app/di.dart';
 import '../../../../home/domain/entities/service_order.dart';
@@ -28,7 +29,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         },
       );
     });
-    
+
     on<_MessageReserved>(
       (event, emit) {
         final list = event.messageList;
@@ -37,7 +38,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       },
     );
 
-    on<MessageSent>(
+    on<TextMessageSent>(
       (event, emit) async {
         (await _chatRepository.sendMessage(event.message)).fold(
           (l) {
@@ -46,6 +47,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           (r) {},
         );
       },
+    );
+
+    on<ImageMessageSent>(
+      (event, emit) async {},
     );
 
     on<ChatEnded>((event, emit) {
