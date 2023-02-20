@@ -102,7 +102,6 @@ class FirebaseAuthHelper {
             .collection(userCollectionPath)
             .doc(userEmail)
             .update({"userTokenList": userTokenList});
-        userTokenList.add(userToken);
       }
 
       return userTokenList;
