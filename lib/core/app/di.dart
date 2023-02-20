@@ -101,8 +101,10 @@ void initHomeModule() {
 }
 
 void initChatModule(ServiceOrder serviceOrder) {
-  if (!GetIt.I.isRegistered<ChatRepository>()) {
-    instance.registerLazySingleton<ChatRepository>(() =>
-        FirebaseChatRepository(FirebaseFirestore.instance, instance<NetworkInfo>(), serviceOrder));
+  if (instance.isRegistered<ChatRepository>()) {
+    instance.unregister<ChatRepository>();
   }
+
+  instance.registerFactory<ChatRepository>(() =>
+      FirebaseChatRepository(FirebaseFirestore.instance, instance<NetworkInfo>(), serviceOrder));
 }
