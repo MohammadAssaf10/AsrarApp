@@ -56,7 +56,7 @@ class registering implements AuthRepository {
   // because if it from google it can be the first sign in
   Future<Either<Failure, User>> updateUserData(User user) async {
     try {
-      user.userTokenList = await _authHelper.addUserToken(user.email);
+      user.userTokenList = await _authHelper.addUserToken(user.id);
       _authPreference.setUserLoggedIn();
       _authPreference.setUser(user);
 
@@ -101,8 +101,9 @@ class registering implements AuthRepository {
         // first sign create the user
         if (e is firebase.FirebaseAuthException && e.code == "auth/user-not-found") {
           User user = User(
+              id: firebaseUser.uid,
               name: firebaseUser.displayName!,
-              email: firebaseUser.email!,
+              emailG: firebaseUser.email!,
               phoneNumber: '',
               imageURL: "",
               imageName: "",

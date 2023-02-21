@@ -15,8 +15,9 @@ class RegisterRequest extends User {
   final String password;
 
   RegisterRequest({
+    required super.id,
     required super.name,
-    required super.email,
+    required super.emailG,
     required this.password,
     required super.phoneNumber,
     required super.userTokenList,

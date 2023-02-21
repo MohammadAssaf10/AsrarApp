@@ -8,10 +8,8 @@ import '../../../../../config/color_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
-import '../../../../../core/app/di.dart';
 import '../../../../../core/app/functions.dart';
 import '../../../../auth/presentation/bloc/authentication_bloc.dart';
-import '../../../domain/repository/user_repository.dart';
 import '../../blocs/user_bloc/user_bloc.dart';
 import '../../widgets/general/error_view.dart';
 import '../../widgets/general/home_button_widgets.dart';
@@ -35,9 +33,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: BlocConsumer<UserBloc, UserState>(
         listener: (context, state) {
           if (state is ImageUpdatedSuccessfullyState) {
-            showCustomDialog(context,message: "تم تحديث الصورة بنجاح");
+            showCustomDialog(context, message: "تم تحديث الصورة بنجاح");
             BlocProvider.of<UserBloc>(context).add(
-              GetUserInfo(email: authState.user!.email),
+              GetUserInfo(email: authState.user!.id),
             );
           }
         },
@@ -82,8 +80,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: OptionButton(
                           onTap: () {
                             BlocProvider.of<UserBloc>(context).add(
-                              UpdateUserImageEvent(
-                                  email: authState.user!.email, image: image!),
+                              UpdateUserImageEvent(email: authState.user!.id, image: image!),
                             );
                           },
                           title: AppStrings.save.tr(context),

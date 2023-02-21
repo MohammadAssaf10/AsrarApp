@@ -71,19 +71,23 @@ class MessageDetails {
 }
 
 class Sender {
+  String id;
   String name;
   String email;
 
   Sender({
+    required this.id,
     required this.name,
     required this.email,
   });
 
   Sender copyWith({
+    String? id,
     String? name,
     String? email,
   }) {
     return Sender(
+      id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
     );
@@ -91,15 +95,17 @@ class Sender {
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
-
+  
+    result.addAll({'id': id});
     result.addAll({'name': name});
     result.addAll({'email': email});
-
+  
     return result;
   }
 
   factory Sender.fromMap(Map<String, dynamic> map) {
     return Sender(
+      id: map['id'] ?? '',
       name: map['name'] ?? '',
       email: map['email'] ?? '',
     );
@@ -110,17 +116,20 @@ class Sender {
   factory Sender.fromJson(String source) => Sender.fromMap(json.decode(source));
 
   @override
-  String toString() => 'Sender(name: $name, email: $email)';
+  String toString() => 'Sender(id: $id, name: $name, email: $email)';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-
-    return other is Sender && other.name == name && other.email == email;
+  
+    return other is Sender &&
+      other.id == id &&
+      other.name == name &&
+      other.email == email;
   }
 
   @override
-  int get hashCode => name.hashCode ^ email.hashCode;
+  int get hashCode => id.hashCode ^ name.hashCode ^ email.hashCode;
 }
 
 abstract class Message {
@@ -128,7 +137,7 @@ abstract class Message {
 
   Message({required this.details});
 
-  bool isMine(String email) => email == details.sender.email;
+  bool isMine(String id) => id == details.sender.id;
 
   factory Message.fromMap(Map<String, dynamic> map) {
     String? messageType = map['details']['type'];
@@ -234,7 +243,6 @@ class ImageMessage extends Message {
       details: details ?? this.details,
     );
   }
-
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};

@@ -53,11 +53,11 @@ class FirebaseAuthHelper {
 
   Future<void> register(RegisterRequest registerRequest) async {
     await _firebaseAuth.createUserWithEmailAndPassword(
-        email: registerRequest.email, password: registerRequest.password);
+        email: registerRequest.emailG, password: registerRequest.password);
   }
 
   Future<domain.User> updateUserData(domain.User user) async {
-    await _firestore.collection(userCollectionPath).doc(user.email).set(user.toMap());
+    await _firestore.collection(userCollectionPath).doc(user.id).set(user.toMap());
 
     return user;
   }
