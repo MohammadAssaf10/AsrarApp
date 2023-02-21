@@ -243,6 +243,11 @@ void showNewPasswordDialog(
             textInputType: TextInputType.text,
             regExp: getTextWithNumberInputFormat(),
             textAlign: TextAlign.center,
+            validator: (String? text) {
+              if (text == null || text == "" || text.isEmpty)
+                return "Can't be Empty";
+              return null;
+            },
           ),
           actions: [
             OptionButton(

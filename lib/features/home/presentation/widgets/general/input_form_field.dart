@@ -14,6 +14,7 @@ class InputFormField extends StatelessWidget {
     this.textAlign = TextAlign.start,
     this.onChanage,
     this.suffixIcon,
+    this.validator,
   }) : super(key: key);
   final String? labelText;
   final String? hintText;
@@ -25,32 +26,38 @@ class InputFormField extends StatelessWidget {
   final TextInputType textInputType;
   final Function(String)? onChanage;
   final Widget? suffixIcon;
+  final String? Function(String?)? validator;
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: height,
-      child: TextFormField(
-        onTap: () {
-          if (controller!.selection ==
-              TextSelection.fromPosition(
-                  TextPosition(offset: controller!.text.length - 1))) {
-            controller!.selection = TextSelection.fromPosition(
-                TextPosition(offset: controller!.text.length));
-          }
-        },
-        onChanged: onChanage,
-        controller: controller,
-        textAlign: textAlign,
-        keyboardType: textInputType,
-        inputFormatters: [
-          FilteringTextInputFormatter.allow(regExp),
-        ],
-        decoration: InputDecoration(
-          labelText: labelText,
-          suffixIcon: suffixIcon,
-          hintText: hintText,
-          contentPadding: EdgeInsets.symmetric(
-            horizontal: horizontalContentPadding,
+    return Form(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      child: SizedBox(
+        height: height,
+        child: TextFormField(
+          onTap: () {
+            if (controller!.selection ==
+                TextSelection.fromPosition(
+                    TextPosition(offset: controller!.text.length - 1))) {
+              controller!.selection = TextSelection.fromPosition(
+                  TextPosition(offset: controller!.text.length));
+            }
+          },
+          onChanged: onChanage,
+          validator: validator,
+          controller: controller,
+          textAlign: textAlign,
+          keyboardType: textInputType,
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(regExp),
+          ],
+          decoration: InputDecoration(
+            labelText: labelText,
+            suffixIcon: suffixIcon,
+            hintText: hintText,
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: horizontalContentPadding,
+            ),
           ),
         ),
       ),
