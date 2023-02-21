@@ -28,23 +28,60 @@ class ChatBottom extends StatelessWidget {
             left: AppSize.s10.w, top: AppSize.s10.w, right: AppSize.s10.w, bottom: AppSize.s15.h),
         child: Row(
           children: [
-            IconButton(
-                onPressed: () async {
-                  onSended;
-                  XFile? image = await selectFile(context);
-                  if (image != null) {
-                    BlocProvider.of<ChatBloc>(context)
-                        .add(ImageMessageSent(image, ImageMessage.create(sender)));
-                  }
-                },
-                icon: Icon(
-                  Icons.camera_alt,
-                  color: ColorManager.primary,
-                )),
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: InkWell(
+                  onTap: () async {
+                    onSended;
+                  },
+                  child: Icon(
+                    Icons.mic,
+                    color: ColorManager.primary,
+                  )),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: InkWell(
+                  onTap: () async {
+                    onSended;
+                    XFile? image = await selectFile(context);
+                    if (image != null) {
+                      BlocProvider.of<ChatBloc>(context)
+                          .add(ImageMessageSent(image, ImageMessage.create(sender)));
+                    }
+                  },
+                  child: Icon(
+                    Icons.camera_alt,
+                    color: ColorManager.primary,
+                  )),
+            ),
             Expanded(
                 child: ChatTextField(
               onSended: onSended,
             )),
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: InkWell(
+                  onTap: () async {
+                    onSended;
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) => Container(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            TextButton(onPressed: () {}, child: Text("انسحاب")),
+                            TextButton(onPressed: () {}, child: Text("")),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                  child: Icon(
+                    Icons.more_vert,
+                    color: ColorManager.primary,
+                  )),
+            )
           ],
         ),
       ),

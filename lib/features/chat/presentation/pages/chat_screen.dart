@@ -1,6 +1,9 @@
+import '../../../../config/app_localizations.dart';
+import '../../../home/domain/entities/service_order.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../config/strings_manager.dart';
 import '../../../../core/app/functions.dart';
 import '../../../auth/presentation/bloc/authentication_bloc.dart';
 import '../blocs/chat_bloc/chat_bloc.dart';
@@ -9,15 +12,16 @@ import '../widgets/chat_bottom_widget.dart';
 import '../widgets/message_widget.dart';
 
 class ChatScreen extends StatelessWidget {
-  ChatScreen({super.key});
+  ChatScreen({super.key, required this.serviceOrder});
 
+  final ServiceOrder serviceOrder;
   final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(''),
+        title: Text(AppStrings.chat.tr(context)),
       ),
       body: Column(
         children: [

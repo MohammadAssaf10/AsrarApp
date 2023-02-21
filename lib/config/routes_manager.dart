@@ -119,12 +119,13 @@ class RouteGenerator {
       case Routes.chatRoute:
         {
           final arg = settings.arguments as ServiceOrder;
+          print(arg);
           initChatModule(arg);
           return MaterialPageRoute(
             builder: (context) => BlocProvider(
               create: (context) => ChatBloc()..add(ChatStarted(serviceOrder: arg)),
               lazy: false,
-              child: ChatScreen(),
+              child: ChatScreen(serviceOrder: arg),
             ),
           );
         }
