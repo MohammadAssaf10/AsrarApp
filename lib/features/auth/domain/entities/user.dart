@@ -24,7 +24,7 @@ class User {
   User copyWith({
     String? id,
     String? name,
-    String? emailG,
+    String? email,
     String? phoneNumber,
     String? imageURL,
     String? imageName,
@@ -33,7 +33,7 @@ class User {
     return User(
       id: id ?? this.id,
       name: name ?? this.name,
-      email: emailG ?? this.email,
+      email: email ?? this.email,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       imageURL: imageURL ?? this.imageURL,
       imageName: imageName ?? this.imageName,

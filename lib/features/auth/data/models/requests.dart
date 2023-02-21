@@ -28,7 +28,7 @@ class RegisterRequest extends User {
   RegisterRequest copyWith({
     String? id,
     String? name,
-    String? emailG,
+    String? email,
     String? password,
     String? phoneNumber,
     String? imageURL,
@@ -38,7 +38,7 @@ class RegisterRequest extends User {
     return RegisterRequest(
       id: id ?? this.id,
       name: name ?? this.name,
-      email: emailG ?? this.email,
+      email: email ?? this.email,
       password: password ?? this.password,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       imageURL: imageURL ?? this.imageURL,
