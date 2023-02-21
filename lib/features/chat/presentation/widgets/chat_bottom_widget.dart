@@ -21,7 +21,7 @@ class ChatBottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var authUser = BlocProvider.of<AuthenticationBloc>(context).state.user!;
-    sender = Sender(name: authUser.name, id: authUser.id, email: authUser.emailG);
+    sender = Sender(name: authUser.name, id: authUser.id, email: authUser.email);
     return SafeArea(
       child: Container(
         color: Colors.white,

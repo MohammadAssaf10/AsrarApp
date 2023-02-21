@@ -22,7 +22,8 @@ class FirebaseAuthHelper {
 
   Future<User?> loginViaEmail(LoginRequest loginRequest) async {
     return (await _firebaseAuth.signInWithEmailAndPassword(
-        email: loginRequest.email, password: loginRequest.password)).user;
+            email: loginRequest.email, password: loginRequest.password))
+        .user;
   }
 
   Future<UserCredential> loginViaGoogle() async {
@@ -52,8 +53,9 @@ class FirebaseAuthHelper {
   }
 
   Future<User?> register(RegisterRequest registerRequest) async {
-    return( await _firebaseAuth.createUserWithEmailAndPassword(
-        email: registerRequest.emailG, password: registerRequest.password)).user;
+    return (await _firebaseAuth.createUserWithEmailAndPassword(
+            email: registerRequest.email, password: registerRequest.password))
+        .user;
   }
 
   Future<domain.User> updateUserData(domain.User user) async {

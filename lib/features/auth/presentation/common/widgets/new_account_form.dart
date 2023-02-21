@@ -150,7 +150,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
                     RegisterRequest(
                       id: '',
                       name: _nameTextEditingController.text,
-                      emailG: _emailTextEditingController.text,
+                      email: _emailTextEditingController.text,
                       password: _passwordTextEditingController.text,
                       phoneNumber: _phoneNumberTextEditingController.text,
                       userTokenList: [],

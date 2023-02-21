@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 class User {
   String id;
   String name;
-  String emailG;
+  String email;
   String phoneNumber;
   String imageURL;
   String imageName;
@@ -14,7 +14,7 @@ class User {
   User({
     required this.id,
     required this.name,
-    required this.emailG,
+    required this.email,
     required this.phoneNumber,
     required this.imageURL,
     required this.imageName,
@@ -33,7 +33,7 @@ class User {
     return User(
       id: id ?? this.id,
       name: name ?? this.name,
-      emailG: emailG ?? this.emailG,
+      email: emailG ?? this.email,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       imageURL: imageURL ?? this.imageURL,
       imageName: imageName ?? this.imageName,
@@ -43,15 +43,15 @@ class User {
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
-  
+
     result.addAll({'id': id});
     result.addAll({'name': name});
-    result.addAll({'emailG': emailG});
+    result.addAll({'emailG': email});
     result.addAll({'phoneNumber': phoneNumber});
     result.addAll({'imageURL': imageURL});
     result.addAll({'imageName': imageName});
     result.addAll({'userTokenList': userTokenList});
-  
+
     return result;
   }
 
@@ -59,7 +59,7 @@ class User {
     return User(
       id: map['id'] ?? '',
       name: map['name'] ?? '',
-      emailG: map['emailG'] ?? '',
+      email: map['emailG'] ?? '',
       phoneNumber: map['phoneNumber'] ?? '',
       imageURL: map['imageURL'] ?? '',
       imageName: map['imageName'] ?? '',
@@ -73,37 +73,37 @@ class User {
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, emailG: $emailG, phoneNumber: $phoneNumber, imageURL: $imageURL, imageName: $imageName, userTokenList: $userTokenList)';
+    return 'User(id: $id, name: $name, emailG: $email, phoneNumber: $phoneNumber, imageURL: $imageURL, imageName: $imageName, userTokenList: $userTokenList)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is User &&
-      other.id == id &&
-      other.name == name &&
-      other.emailG == emailG &&
-      other.phoneNumber == phoneNumber &&
-      other.imageURL == imageURL &&
-      other.imageName == imageName &&
-      listEquals(other.userTokenList, userTokenList);
+        other.id == id &&
+        other.name == name &&
+        other.email == email &&
+        other.phoneNumber == phoneNumber &&
+        other.imageURL == imageURL &&
+        other.imageName == imageName &&
+        listEquals(other.userTokenList, userTokenList);
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-      name.hashCode ^
-      emailG.hashCode ^
-      phoneNumber.hashCode ^
-      imageURL.hashCode ^
-      imageName.hashCode ^
-      userTokenList.hashCode;
+        name.hashCode ^
+        email.hashCode ^
+        phoneNumber.hashCode ^
+        imageURL.hashCode ^
+        imageName.hashCode ^
+        userTokenList.hashCode;
   }
 
   /// true if all sensitive filed actually has data
   bool safeToContinue() {
-    return (this.emailG.isNotEmpty &&
+    return (this.email.isNotEmpty &&
         this.name.isNotEmpty &&
         this.phoneNumber.isNotEmpty &&
         this.userTokenList.isNotEmpty);

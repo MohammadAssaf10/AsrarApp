@@ -17,7 +17,7 @@ class RegisterRequest extends User {
   RegisterRequest({
     required super.id,
     required super.name,
-    required super.emailG,
+    required super.email,
     required this.password,
     required super.phoneNumber,
     required super.userTokenList,
@@ -38,7 +38,7 @@ class RegisterRequest extends User {
     return RegisterRequest(
       id: id ?? this.id,
       name: name ?? this.name,
-      emailG: emailG ?? this.emailG,
+      email: emailG ?? this.email,
       password: password ?? this.password,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       imageURL: imageURL ?? this.imageURL,
