@@ -20,9 +20,9 @@ class FirebaseAuthHelper {
     ],
   );
 
-  Future<void> loginViaEmail(LoginRequest loginRequest) async {
-    await _firebaseAuth.signInWithEmailAndPassword(
-        email: loginRequest.email, password: loginRequest.password);
+  Future<User?> loginViaEmail(LoginRequest loginRequest) async {
+    return (await _firebaseAuth.signInWithEmailAndPassword(
+        email: loginRequest.email, password: loginRequest.password)).user;
   }
 
   Future<UserCredential> loginViaGoogle() async {
@@ -51,9 +51,9 @@ class FirebaseAuthHelper {
     return _firebaseAuth.currentUser;
   }
 
-  Future<void> register(RegisterRequest registerRequest) async {
-    await _firebaseAuth.createUserWithEmailAndPassword(
-        email: registerRequest.emailG, password: registerRequest.password);
+  Future<User?> register(RegisterRequest registerRequest) async {
+    return( await _firebaseAuth.createUserWithEmailAndPassword(
+        email: registerRequest.emailG, password: registerRequest.password)).user;
   }
 
   Future<domain.User> updateUserData(domain.User user) async {

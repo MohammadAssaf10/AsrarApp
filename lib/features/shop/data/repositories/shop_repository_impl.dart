@@ -15,6 +15,7 @@ class ShopRepositoryImpl extends ShopRepository {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final NetworkInfo networkInfo;
   ShopRepositoryImpl({required this.networkInfo});
+
   @override
   Future<Either<Failure, List<ProductEntities>>> getShopProducts() async {
     if (await networkInfo.isConnected) {
@@ -44,13 +45,13 @@ class ShopRepositoryImpl extends ShopRepository {
   }
 
   @override
-  Future<Either<Failure, List<ShopOrderEntities>>> getShopOrder(String userEmail) async {
+  Future<Either<Failure, List<ShopOrderEntities>>> getShopOrder(String userId) async {
     if (await networkInfo.isConnected) {
       try {
         List<ShopOrderEntities> shopOrderList = [];
         final shopOrders = await firestore.collection(FireBaseConstants.shopOrders).get();
         for (var doc in shopOrders.docs) {
-          if (doc["user"]["email"] == userEmail)
+          if (doc["user"]["id"] == userId)
             shopOrderList.add(ShopOrderEntities.fromMap(doc.data()));
         }
         shopOrderList.sort((a, b) => b.shopOrderId.compareTo(a.shopOrderId));

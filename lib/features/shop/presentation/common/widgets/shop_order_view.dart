@@ -25,7 +25,7 @@ class ShopOrderView extends StatelessWidget {
     final authState = BlocProvider.of<AuthenticationBloc>(context).state;
     return BlocConsumer<ShopOrderBloc, ShopOrderState>(
       bloc: BlocProvider.of<ShopOrderBloc>(context)
-        ..add(GetShopOrderEvent(userEmail: authState.user!.id)),
+        ..add(GetShopOrderEvent(userId: authState.user!.id)),
       // bloc: ShopOrderBloc()
       //   ..add(GetShopOrderEvent(userEmail: authState.user!.email)),
       listener: (context, state) {
@@ -35,14 +35,14 @@ class ShopOrderView extends StatelessWidget {
           showCustomDialog(context, message: state.errorMessage.tr(context));
           BlocProvider.of<ShopOrderBloc>(context).add(
             GetShopOrderEvent(
-              userEmail: authState.user!.id,
+              userId: authState.user!.id,
             ),
           );
         } else if (state is ShopOrderCancelledSuccessfullyState) {
           showCustomDialog(context, message: AppStrings.orderCancelledSuccessfully.tr(context));
           BlocProvider.of<ShopOrderBloc>(context).add(
             GetShopOrderEvent(
-              userEmail: authState.user!.id,
+              userId: authState.user!.id,
             ),
           );
         }

@@ -27,8 +27,8 @@ class registering implements AuthRepository {
     }
 
     try {
-      await _authHelper.loginViaEmail(loginRequest);
-      User user = await _authHelper.getUser(loginRequest.email);
+      var firebaseUser = await _authHelper.loginViaEmail(loginRequest);
+      User user = await _authHelper.getUser(firebaseUser!.uid);
       return Right(user);
     } catch (e) {
       return Left(ExceptionHandler.handle(e).failure);
@@ -44,7 +44,8 @@ class registering implements AuthRepository {
 
     // try to register
     try {
-      await _authHelper.register(registerRequest);
+      var user = await _authHelper.register(registerRequest);
+      if (user != null) registerRequest = registerRequest.copyWith(id: user.uid);
     } catch (e) {
       return Left(ExceptionHandler.handle(e).failure);
     }
