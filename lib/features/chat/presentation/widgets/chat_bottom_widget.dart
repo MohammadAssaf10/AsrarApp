@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_sound/flutter_sound.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../config/color_manager.dart';
@@ -28,17 +29,7 @@ class ChatBottom extends StatelessWidget {
             left: AppSize.s10.w, top: AppSize.s10.w, right: AppSize.s10.w, bottom: AppSize.s15.h),
         child: Row(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: InkWell(
-                  onTap: () async {
-                    onSended;
-                  },
-                  child: Icon(
-                    Icons.mic,
-                    color: ColorManager.primary,
-                  )),
-            ),
+            Recorder(onSended: onSended),
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: InkWell(
@@ -83,6 +74,37 @@ class ChatBottom extends StatelessWidget {
                   )),
             )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class Recorder extends StatelessWidget {
+  Recorder({
+    Key? key,
+    required this.onSended,
+  }) : super(key: key);
+
+  final Function? onSended;
+  final recorder = FlutterSoundRecorder();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: InkWell(
+        onTap: () async {
+          onSended;
+          if (recorder.isRecording) {
+            await recorder.stopRecorder();
+          } else {
+            await recorder.startRecorder();
+          }
+        },
+        child: Icon(
+          Icons.mic,
+          color: ColorManager.primary,
         ),
       ),
     );
