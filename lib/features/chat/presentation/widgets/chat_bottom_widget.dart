@@ -30,52 +30,82 @@ class ChatBottom extends StatelessWidget {
         child: Row(
           children: [
             Recorder(onSended: onSended),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: InkWell(
-                  onTap: () async {
-                    onSended;
-                    XFile? image = await selectFile(context);
-                    if (image != null) {
-                      BlocProvider.of<ChatBloc>(context)
-                          .add(ImageMessageSent(image, ImageMessage.create(sender)));
-                    }
-                  },
-                  child: Icon(
-                    Icons.camera_alt,
-                    color: ColorManager.primary,
-                  )),
-            ),
+            ImageButton(onSended: onSended, sender: sender),
             Expanded(
                 child: ChatTextField(
               onSended: onSended,
             )),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: InkWell(
-                  onTap: () async {
-                    onSended;
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) => Container(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            TextButton(onPressed: () {}, child: Text("انسحاب")),
-                            TextButton(onPressed: () {}, child: Text("")),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                  child: Icon(
-                    Icons.more_vert,
-                    color: ColorManager.primary,
-                  )),
-            )
+            OptionButton(onSended: onSended)
           ],
         ),
       ),
+    );
+  }
+}
+
+class OptionButton extends StatelessWidget {
+  const OptionButton({
+    Key? key,
+    required this.onSended,
+  }) : super(key: key);
+
+  final Function? onSended;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: InkWell(
+          onTap: () async {
+            onSended;
+            showModalBottomSheet(
+              context: context,
+              builder: (context) => Container(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextButton(onPressed: () {}, child: Text("انسحاب")),
+                    TextButton(onPressed: () {}, child: Text("")),
+                  ],
+                ),
+              ),
+            );
+          },
+          child: Icon(
+            Icons.more_vert,
+            color: ColorManager.primary,
+          )),
+    );
+  }
+}
+
+class ImageButton extends StatelessWidget {
+  const ImageButton({
+    Key? key,
+    required this.onSended,
+    required this.sender,
+  }) : super(key: key);
+
+  final Function? onSended;
+  final Sender sender;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: InkWell(
+          onTap: () async {
+            onSended;
+            XFile? image = await selectFile(context);
+            if (image != null) {
+              BlocProvider.of<ChatBloc>(context)
+                  .add(ImageMessageSent(image, ImageMessage.create(sender)));
+            }
+          },
+          child: Icon(
+            Icons.camera_alt,
+            color: ColorManager.primary,
+          )),
     );
   }
 }

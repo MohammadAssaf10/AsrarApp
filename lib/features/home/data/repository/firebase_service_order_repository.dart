@@ -31,7 +31,7 @@ class FirebaseServiceOrderRepository extends ServiceOrderRepository {
   }
 
   @override
-  Future<Either<Failure, void>> addOrder(ServiceOrder serviceOrder) async {
+  Future<Either<Failure, List<ServiceOrder>>> addOrder(ServiceOrder serviceOrder) async {
     if (!await _networkInfo.isConnected) {
       return Left(DataSourceExceptions.noInternetConnections.getFailure());
     }
@@ -44,7 +44,17 @@ class FirebaseServiceOrderRepository extends ServiceOrderRepository {
           .doc(serviceOrder.id.toString())
           .set(serviceOrder.toMap());
 
-      return Right(null);
+
+      List<ServiceOrder> servicesOrderList = [];
+
+      final servicesOrderSnapShot =
+          await _firestore.collection(FireBaseConstants.serviceOrder).get();
+      for (var doc in servicesOrderSnapShot.docs) {
+        var serviceOrder = ServiceOrder.fromMap(doc.data());
+
+        if (serviceOrder.user.id == serviceOrder.user.id) servicesOrderList.add(serviceOrder);
+      }
+      return Right(servicesOrderList);
     } catch (e) {
       return Left(ExceptionHandler.handle(e).failure);
     }
@@ -86,5 +96,11 @@ class FirebaseServiceOrderRepository extends ServiceOrderRepository {
     } catch (e) {
       return Left(ExceptionHandler.handle(e).failure);
     }
+  }
+
+  @override
+  Future<Either<Failure, void>> completeOrder(ServiceOrder serviceOrder) {
+    // TODO: implement completeOrder
+    throw UnimplementedError();
   }
 }

@@ -41,7 +41,12 @@ class ServiceOrderBloc extends Bloc<ServiceOrderEvent, ServiceOrderState> {
           emit(state.copyWith(processStatus: Status.failed, message: l.message));
         },
         (r) {
-          emit(state.copyWith(processStatus: Status.success));
+          r.sort((a, b) => (a.id < b.id) ? 1 : 0);
+
+          emit(state.copyWith(
+              processStatus: Status.success,
+              serviceOrderListStatus: Status.success,
+              serviceOrderList: r));
         },
       );
     });
