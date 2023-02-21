@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../../../config/strings_manager.dart';
-
 class InputFormField extends StatelessWidget {
   const InputFormField({
     Key? key,
