@@ -100,7 +100,7 @@ class DrawerList extends StatelessWidget {
               onTap: () {},
             ),
             MenuItem(
-              title: AppStrings.subscribe.tr(context),
+              title: AppStrings.otherServices.tr(context),
               icon: IconAssets.subscribe,
               onTap: () {
                 BlocProvider.of<SubscriptionBloc>(context)

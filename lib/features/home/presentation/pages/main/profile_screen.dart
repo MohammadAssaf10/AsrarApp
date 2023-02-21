@@ -10,6 +10,8 @@ import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../../../../core/app/functions.dart';
 import '../../../../auth/presentation/bloc/authentication_bloc.dart';
+import '../../../data/repository/user_repository_impl.dart';
+import '../../../domain/repository/user_repository.dart';
 import '../../blocs/user_bloc/user_bloc.dart';
 import '../../widgets/general/error_view.dart';
 import '../../widgets/general/home_button_widgets.dart';
@@ -24,7 +26,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController newPasswordController = TextEditingController();
+  final TextEditingController oldPasswordController = TextEditingController();
   XFile? image;
   @override
   Widget build(BuildContext context) {
@@ -40,7 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               GetUserInfo(email: authState.user!.email),
             );
           }
-          if (state is PasswordUpdatedSuccessfullyState) {
+          if (state is PasswordUpdatedLoadingState) {
             showCustomDialog(context);
           }
           if (state is PasswordUpdatedErrorState) {
@@ -127,12 +130,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   onTap: () {
                     showNewPasswordDialog(
                       context,
-                      passwordController,
+                      newPasswordController,
                       () {
-                        BlocProvider.of<UserBloc>(context).add(
-                          UpdatePasswordEvent(
-                              newPassword: passwordController.text),
-                        );
+                        // BlocProvider.of<UserBloc>(context).add(
+                        //   UpdatePasswordEvent(
+                        //       newPassword: newPasswordController.text),
+                        // );
+                        final UserRepository userRepository =
+                            UserRepositoryImpl();
+                        userRepository.updateUserInfo(authState.user!,
+                            "Mohamadassaf@test.com", "Mohamad assaf", "963968609046");
                       },
                     );
                   },

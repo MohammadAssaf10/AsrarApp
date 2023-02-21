@@ -60,8 +60,7 @@ class AppStrings {
   static const String whatsApp = "whats_app";
   static const String googleTranslate = "google_translate";
   static const String subscribe = "subscribe";
-  static const String subscriptions = "subscriptions";
-  static const String noSubscriptions = "no_subscriptions";
+  static const String otherServices = "other_services";
   static const String termsOfUse = "terms_of_use";
   static const String noServices = "no_services";
   static const String noProducts = "no_products";

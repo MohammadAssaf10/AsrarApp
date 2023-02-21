@@ -24,21 +24,21 @@ ThemeData getApplicationTheme() {
       titleTextStyle: getAlmaraiRegularStyle(
           fontSize: AppSize.s17.sp, color: ColorManager.white),
     ),
-    
+
     errorColor: ColorManager.error,
-    
+
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: ColorManager.primary,
       selectionHandleColor: ColorManager.primary,
     ),
-    
+
     textTheme: TextTheme(
       subtitle1: getAlmaraiRegularStyle(
         fontSize: AppSize.s18.sp,
         color: ColorManager.primary,
       ),
     ),
-    
+
     // input decoration theme (text form field)
     inputDecorationTheme: InputDecorationTheme(
       // hint style
@@ -49,6 +49,13 @@ ThemeData getApplicationTheme() {
       errorStyle: getAlmaraiRegularStyle(
           color: ColorManager.error, fontSize: AppSize.s16.sp),
       suffixIconColor: ColorManager.primary,
+      border: OutlineInputBorder(
+        borderSide:
+            BorderSide(color: ColorManager.primary, width: AppSize.s1_5.w),
+        borderRadius: BorderRadius.all(
+          Radius.circular(AppSize.s18.r),
+        ),
+      ),
       // enabled border style
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: ColorManager.grey, width: AppSize.s1_5.w),
@@ -66,14 +73,16 @@ ThemeData getApplicationTheme() {
       ),
       // error border style
       errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: ColorManager.error),
+        borderSide:
+            BorderSide(color: ColorManager.error, width: AppSize.s1_5.w),
         borderRadius: BorderRadius.all(
           Radius.circular(AppSize.s18.r),
         ),
       ),
       // focused error border style
       focusedErrorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: ColorManager.error),
+        borderSide:
+            BorderSide(color: ColorManager.error, width: AppSize.s1_5.w),
         borderRadius: BorderRadius.all(
           Radius.circular(AppSize.s18.r),
         ),

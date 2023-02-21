@@ -21,7 +21,7 @@ class SubscriptionScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppStrings.subscriptions.tr(context),
+          AppStrings.otherServices.tr(context),
         ),
       ),
       body: BlocBuilder<SubscriptionBloc, SubscriptionState>(
@@ -101,7 +101,7 @@ class SubscriptionScreen extends StatelessWidget {
             );
           else
             return EmptyListView(
-              emptyListMessage: AppStrings.noSubscriptions.tr(context),
+              emptyListMessage: AppStrings.noServices.tr(context),
               height: MediaQuery.of(context).size.height / 1.2,
               width: MediaQuery.of(context).size.width,
             );
