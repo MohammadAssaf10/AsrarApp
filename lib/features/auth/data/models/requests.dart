@@ -15,12 +15,35 @@ class RegisterRequest extends User {
   final String password;
 
   RegisterRequest({
+    required super.id,
     required super.name,
-    required super.email,
+    required super.emailG,
     required this.password,
     required super.phoneNumber,
     required super.userTokenList,
     required super.imageURL,
     required super.imageName,
   });
+
+  RegisterRequest copyWith({
+    String? id,
+    String? name,
+    String? emailG,
+    String? password,
+    String? phoneNumber,
+    String? imageURL,
+    String? imageName,
+    List<String>? userTokenList,
+  }) {
+    return RegisterRequest(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      emailG: emailG ?? this.emailG,
+      password: password ?? this.password,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      imageURL: imageURL ?? this.imageURL,
+      imageName: imageName ?? this.imageName,
+      userTokenList: userTokenList ?? this.userTokenList,
+    );
+  }
 }

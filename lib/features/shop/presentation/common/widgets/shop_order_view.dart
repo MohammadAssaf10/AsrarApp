@@ -25,7 +25,7 @@ class ShopOrderView extends StatelessWidget {
     final authState = BlocProvider.of<AuthenticationBloc>(context).state;
     return BlocConsumer<ShopOrderBloc, ShopOrderState>(
       bloc: BlocProvider.of<ShopOrderBloc>(context)
-        ..add(GetShopOrderEvent(userEmail: authState.user!.email)),
+        ..add(GetShopOrderEvent(userId: authState.user!.id)),
       // bloc: ShopOrderBloc()
       //   ..add(GetShopOrderEvent(userEmail: authState.user!.email)),
       listener: (context, state) {
@@ -35,15 +35,14 @@ class ShopOrderView extends StatelessWidget {
           showCustomDialog(context, message: state.errorMessage.tr(context));
           BlocProvider.of<ShopOrderBloc>(context).add(
             GetShopOrderEvent(
-              userEmail: authState.user!.email,
+              userId: authState.user!.id,
             ),
           );
         } else if (state is ShopOrderCancelledSuccessfullyState) {
-          showCustomDialog(context,
-              message: AppStrings.orderCancelledSuccessfully.tr(context));
+          showCustomDialog(context, message: AppStrings.orderCancelledSuccessfully.tr(context));
           BlocProvider.of<ShopOrderBloc>(context).add(
             GetShopOrderEvent(
-              userEmail: authState.user!.email,
+              userId: authState.user!.id,
             ),
           );
         }
@@ -106,8 +105,7 @@ class ShopOrderView extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                state.shopOrderList[index].shopOrderId
-                                    .toString(),
+                                state.shopOrderList[index].shopOrderId.toString(),
                                 textAlign: TextAlign.center,
                                 style: getAlmaraiBoldStyle(
                                   fontSize: AppSize.s16.sp,
@@ -142,14 +140,11 @@ class ShopOrderView extends StatelessWidget {
                           ],
                         ),
                       ),
-                      (state.shopOrderList[index].orderStatus ==
-                              OrderStatus.pending.name)
+                      (state.shopOrderList[index].orderStatus == OrderStatus.pending.name)
                           ? CancelButton(onTap: () {
-                              showConfirmDialog(context,
-                                  executeWhenConfirm: () {
+                              showConfirmDialog(context, executeWhenConfirm: () {
                                 BlocProvider.of<ShopOrderBloc>(context).add(
-                                  CancelShopOrderEvent(
-                                      shopOrder: state.shopOrderList[index]),
+                                  CancelShopOrderEvent(shopOrder: state.shopOrderList[index]),
                                 );
                               });
                             })

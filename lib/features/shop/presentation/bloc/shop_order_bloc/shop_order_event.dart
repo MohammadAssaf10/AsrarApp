@@ -19,10 +19,10 @@ class CancelShopOrderEvent extends ShopOrderEvent {
 }
 
 class GetShopOrderEvent extends ShopOrderEvent {
-  final String userEmail;
+  final String userId;
   GetShopOrderEvent({
-    required this.userEmail,
+    required this.userId,
   });
   @override
-  List<Object?> get props => [userEmail];
+  List<Object?> get props => [userId];
 }

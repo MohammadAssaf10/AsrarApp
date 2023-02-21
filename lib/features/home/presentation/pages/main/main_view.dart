@@ -23,10 +23,8 @@ class MainView extends StatelessWidget {
         controller: _controller,
         onPageChanged: (v) {
           if (v == 4) {
-            final authState =
-                BlocProvider.of<AuthenticationBloc>(context).state;
-            BlocProvider.of<UserBloc>(context)
-              ..add(GetUserInfo(email: authState.user!.email));
+            final authState = BlocProvider.of<AuthenticationBloc>(context).state;
+            BlocProvider.of<UserBloc>(context)..add(GetUserInfo(email: authState.user!.id));
           }
         },
         children: [

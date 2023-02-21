@@ -80,7 +80,7 @@ class FirebaseServiceOrderRepository extends ServiceOrderRepository {
       for (var doc in servicesOrderSnapShot.docs) {
         var serviceOrder = ServiceOrder.fromMap(doc.data());
 
-        if (user.email == serviceOrder.user.email) servicesOrderList.add(serviceOrder);
+        if (user.id == serviceOrder.user.id) servicesOrderList.add(serviceOrder);
       }
       return Right(servicesOrderList);
     } catch (e) {
