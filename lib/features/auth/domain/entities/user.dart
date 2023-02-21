@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 class User {
+  String id;
   String name;
   String email;
   String phoneNumber;
@@ -11,6 +12,7 @@ class User {
   List<String> userTokenList;
 
   User({
+    required this.id,
     required this.name,
     required this.email,
     required this.phoneNumber,
@@ -20,16 +22,18 @@ class User {
   });
 
   User copyWith({
+    String? id,
     String? name,
-    String? email,
+    String? emailG,
     String? phoneNumber,
     String? imageURL,
     String? imageName,
     List<String>? userTokenList,
   }) {
     return User(
+      id: id ?? this.id,
       name: name ?? this.name,
-      email: email ?? this.email,
+      email: emailG ?? this.email,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       imageURL: imageURL ?? this.imageURL,
       imageName: imageName ?? this.imageName,
@@ -39,25 +43,27 @@ class User {
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
-  
+
+    result.addAll({'id': id});
     result.addAll({'name': name});
-    result.addAll({'email': email});
+    result.addAll({'emailG': email});
     result.addAll({'phoneNumber': phoneNumber});
     result.addAll({'imageURL': imageURL});
     result.addAll({'imageName': imageName});
     result.addAll({'userTokenList': userTokenList});
-  
+
     return result;
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
+      id: map['id'] ?? '',
       name: map['name'] ?? '',
-      email: map['email'] ?? '',
+      email: map['emailG'] ?? '',
       phoneNumber: map['phoneNumber'] ?? '',
       imageURL: map['imageURL'] ?? '',
       imageName: map['imageName'] ?? '',
-      userTokenList: List<String>.from(map['userTokenList'] ?? []),
+      userTokenList: List<String>.from(map['userTokenList']),
     );
   }
 
@@ -67,7 +73,7 @@ class User {
 
   @override
   String toString() {
-    return 'User(name: $name, email: $email, phoneNumber: $phoneNumber, imageURL: $imageURL, imageName: $imageName, userTokenList: $userTokenList)';
+    return 'User(id: $id, name: $name, emailG: $email, phoneNumber: $phoneNumber, imageURL: $imageURL, imageName: $imageName, userTokenList: $userTokenList)';
   }
 
   @override
@@ -75,6 +81,7 @@ class User {
     if (identical(this, other)) return true;
 
     return other is User &&
+        other.id == id &&
         other.name == name &&
         other.email == email &&
         other.phoneNumber == phoneNumber &&
@@ -85,7 +92,8 @@ class User {
 
   @override
   int get hashCode {
-    return name.hashCode ^
+    return id.hashCode ^
+        name.hashCode ^
         email.hashCode ^
         phoneNumber.hashCode ^
         imageURL.hashCode ^

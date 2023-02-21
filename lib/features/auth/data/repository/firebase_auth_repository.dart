@@ -27,8 +27,8 @@ class registering implements AuthRepository {
     }
 
     try {
-      await _authHelper.loginViaEmail(loginRequest);
-      User user = await _authHelper.getUser(loginRequest.email);
+      var firebaseUser = await _authHelper.loginViaEmail(loginRequest);
+      User user = await _authHelper.getUser(firebaseUser!.uid);
       return Right(user);
     } catch (e) {
       return Left(ExceptionHandler.handle(e).failure);
@@ -44,7 +44,8 @@ class registering implements AuthRepository {
 
     // try to register
     try {
-      await _authHelper.register(registerRequest);
+      var user = await _authHelper.register(registerRequest);
+      if (user != null) registerRequest = registerRequest.copyWith(id: user.uid);
     } catch (e) {
       return Left(ExceptionHandler.handle(e).failure);
     }
@@ -56,7 +57,7 @@ class registering implements AuthRepository {
   // because if it from google it can be the first sign in
   Future<Either<Failure, User>> updateUserData(User user) async {
     try {
-      user.userTokenList = await _authHelper.addUserToken(user.email);
+      user.userTokenList = await _authHelper.addUserToken(user.id);
       _authPreference.setUserLoggedIn();
       _authPreference.setUser(user);
 
@@ -101,6 +102,7 @@ class registering implements AuthRepository {
         // first sign create the user
         if (e is firebase.FirebaseAuthException && e.code == "auth/user-not-found") {
           User user = User(
+              id: firebaseUser.uid,
               name: firebaseUser.displayName!,
               email: firebaseUser.email!,
               phoneNumber: '',

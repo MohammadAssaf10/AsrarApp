@@ -148,6 +148,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
                 BlocProvider.of<AuthenticationBloc>(context).add(
                   RegisterButtonPressed(
                     RegisterRequest(
+                      id: '',
                       name: _nameTextEditingController.text,
                       email: _emailTextEditingController.text,
                       password: _passwordTextEditingController.text,

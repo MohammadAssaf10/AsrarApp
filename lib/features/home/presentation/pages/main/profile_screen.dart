@@ -10,8 +10,6 @@ import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../../../../core/app/functions.dart';
 import '../../../../auth/presentation/bloc/authentication_bloc.dart';
-import '../../../data/repository/user_repository_impl.dart';
-import '../../../domain/repository/user_repository.dart';
 import '../../blocs/user_bloc/user_bloc.dart';
 import '../../widgets/general/error_view.dart';
 import '../../widgets/general/home_button_widgets.dart';
@@ -56,7 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             showCustomDialog(context,
                 message: AppStrings.passwordUpdated.tr(context));
             BlocProvider.of<UserBloc>(context).add(
-              GetUserInfo(email: authState.user!.email),
+              GetUserInfo(email: authState.user!.id),
             );
           }
         },
@@ -101,8 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: OptionButton(
                           onTap: () {
                             BlocProvider.of<UserBloc>(context).add(
-                              UpdateUserImageEvent(
-                                  email: authState.user!.email, image: image!),
+                              UpdateUserImageEvent(email: authState.user!.id, image: image!),
                             );
                             image = null;
                           },

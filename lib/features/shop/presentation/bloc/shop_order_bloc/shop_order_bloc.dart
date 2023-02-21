@@ -22,8 +22,7 @@ class ShopOrderBloc extends Bloc<ShopOrderEvent, ShopOrderState> {
     });
     on<GetShopOrderEvent>((event, emit) async {
       emit(ShopOrderLoadingState());
-      (await shopRepository.getShopOrder(event.userEmail))
-          .fold((failure) {
+      (await shopRepository.getShopOrder(event.userId)).fold((failure) {
         emit(ShopOrderErrorState(errorMessage: failure.message));
       }, (shopOrderList) {
         emit(ShopOrderLoadedState(shopOrderList: shopOrderList));

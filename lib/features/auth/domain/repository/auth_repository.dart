@@ -7,7 +7,7 @@ import '../entities/user.dart';
 abstract class AuthRepository {
   Future<Either<Failure, User>> loginViaEmail(LoginRequest loginRequest);
   Future<Either<Failure, User>> loginViaGoogle();
-  Future<Either<Failure,void>> logOut(String userEmail);
+  Future<Either<Failure,void>> logOut(String id);
   Future<Either<Failure, void>> sendVerificationCode(
       String number, String message);
   Future<Either<Failure, User>> updateUserData(User user);
