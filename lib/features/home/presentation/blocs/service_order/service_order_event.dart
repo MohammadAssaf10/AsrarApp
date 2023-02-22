@@ -24,6 +24,15 @@ class CancelOrder extends ServiceOrderEvent {
   List<Object?> get props => [serviceOrder];
 }
 
+class CompleteOrder extends ServiceOrderEvent {
+  final ServiceOrder serviceOrder;
+  CompleteOrder({
+    required this.serviceOrder,
+  });
+
+  @override
+  List<Object?> get props => [serviceOrder];
+}
 class GetOrders extends ServiceOrderEvent {
   final User user;
   

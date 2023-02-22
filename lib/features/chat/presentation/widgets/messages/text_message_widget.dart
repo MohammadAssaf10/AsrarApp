@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../config/color_manager.dart';
-import '../../domain/entities/message.dart';
+import '../../../../../config/color_manager.dart';
+import '../../../domain/entities/message.dart';
 
 class TextMessageWidget extends StatelessWidget {
   TextMessageWidget({super.key, required this.message});

@@ -44,7 +44,6 @@ class FirebaseServiceOrderRepository extends ServiceOrderRepository {
           .doc(serviceOrder.id.toString())
           .set(serviceOrder.toMap());
 
-
       List<ServiceOrder> servicesOrderList = [];
 
       final servicesOrderSnapShot =
@@ -99,8 +98,18 @@ class FirebaseServiceOrderRepository extends ServiceOrderRepository {
   }
 
   @override
-  Future<Either<Failure, void>> completeOrder(ServiceOrder serviceOrder) {
-    // TODO: implement completeOrder
-    throw UnimplementedError();
+  Future<Either<Failure, void>> completeOrder(ServiceOrder serviceOrder) async {
+    if (!await _networkInfo.isConnected) {
+      return Left(DataSourceExceptions.noInternetConnections.getFailure());
+    }
+    try {
+      await _firestore
+          .collection(FireBaseConstants.serviceOrder)
+          .doc(serviceOrder.id.toString())
+          .update({"status": OrderStatus.completed.name});
+      return Right(null);
+    } catch (e) {
+      return Left(ExceptionHandler.handle(e).failure);
+    }
   }
 }

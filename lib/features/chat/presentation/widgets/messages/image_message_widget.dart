@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/message.dart';
+import '../../../domain/entities/message.dart';
 
 class ImageMessageWidget extends StatelessWidget {
   const ImageMessageWidget({super.key, required this.message});

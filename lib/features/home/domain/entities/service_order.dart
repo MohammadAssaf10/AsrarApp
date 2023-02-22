@@ -1,10 +1,8 @@
 import 'dart:convert';
 
-
 import '../../../auth/domain/entities/user.dart';
 import 'employee.dart';
 import 'service_entities.dart';
-
 
 /// [status] must be one of the [OrderStatus]
 class ServiceOrder {
