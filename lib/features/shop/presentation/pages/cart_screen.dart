@@ -33,6 +33,8 @@ class _CartScreenState extends State<CartScreen> {
     });
   }
 
+  final GlobalKey<FormState> formKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     final TextEditingController controller = TextEditingController();
@@ -78,18 +80,21 @@ class _CartScreenState extends State<CartScreen> {
                   state.user!.phoneNumber,
                   controller,
                   widget.cartList,
+                  formKey,
                   () async {
-                    final int lastID = await getLastId() + 1;
-                    final ShopOrderEntities shopOrder = ShopOrderEntities(
-                        shopOrderId: lastID,
-                        user: state.user!,
-                        phoneNumber: controller.text,
-                        products: widget.cartList,
-                        totalPrice: getTotalProductsPrice(widget.cartList),
-                        orderStatus: OrderStatus.pending.name);
-                    BlocProvider.of<ShopOrderBloc>(context).add(
-                      AddShopOrderEvent(shopOrder: shopOrder),
-                    );
+                    if (formKey.currentState!.validate()) {
+                      final int lastID = await getLastId() + 1;
+                      final ShopOrderEntities shopOrder = ShopOrderEntities(
+                          shopOrderId: lastID,
+                          user: state.user!,
+                          phoneNumber: controller.text,
+                          products: widget.cartList,
+                          totalPrice: getTotalProductsPrice(widget.cartList),
+                          orderStatus: OrderStatus.pending.name);
+                      BlocProvider.of<ShopOrderBloc>(context).add(
+                        AddShopOrderEvent(shopOrder: shopOrder),
+                      );
+                    }
                   },
                 );
               }

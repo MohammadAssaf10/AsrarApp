@@ -42,12 +42,12 @@ ThemeData getApplicationTheme() {
     // input decoration theme (text form field)
     inputDecorationTheme: InputDecorationTheme(
       // hint style
-      hintStyle: getAlmaraiBoldStyle(
+      hintStyle: getAlmaraiRegularStyle(
           color: ColorManager.darkPrimary, fontSize: AppSize.s16.sp),
       labelStyle: getAlmaraiRegularStyle(
           color: ColorManager.darkPrimary, fontSize: AppSize.s16.sp),
       errorStyle: getAlmaraiRegularStyle(
-          color: ColorManager.error, fontSize: AppSize.s16.sp),
+          color: ColorManager.error, fontSize: AppSize.s14.sp),
       suffixIconColor: ColorManager.primary,
       border: OutlineInputBorder(
         borderSide:
@@ -74,7 +74,7 @@ ThemeData getApplicationTheme() {
       // error border style
       errorBorder: OutlineInputBorder(
         borderSide:
-            BorderSide(color: ColorManager.error, width: AppSize.s1_5.w),
+            BorderSide(color: ColorManager.error),
         borderRadius: BorderRadius.all(
           Radius.circular(AppSize.s18.r),
         ),
@@ -82,7 +82,7 @@ ThemeData getApplicationTheme() {
       // focused error border style
       focusedErrorBorder: OutlineInputBorder(
         borderSide:
-            BorderSide(color: ColorManager.error, width: AppSize.s1_5.w),
+            BorderSide(color: ColorManager.error),
         borderRadius: BorderRadius.all(
           Radius.circular(AppSize.s18.r),
         ),

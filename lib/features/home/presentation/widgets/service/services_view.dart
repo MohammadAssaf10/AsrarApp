@@ -55,7 +55,6 @@ class _ServicesViewState extends State<ServicesView> {
             controller: controller,
             labelText: AppStrings.searchForYourServices.tr(context),
             regExp: getTextWithNumberInputFormat(),
-            height: AppSize.s40.h,
             textInputType: TextInputType.text,
             horizontalContentPadding: AppSize.s12.w,
           ),

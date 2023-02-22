@@ -86,7 +86,7 @@ RegExp getDoubleInputFormat() {
 }
 
 RegExp getTextWithNumberInputFormat() {
-  return RegExp(r"^[a-zA-Z0-9ء-ي\s]+");
+  return RegExp(r"^[.@a-zA-Z0-9ء-ي\s]+");
 }
 
 RegExp getArabicAndEnglishTextInputFormat() {
@@ -222,13 +222,14 @@ Future<bool> showConfirmDialog(BuildContext context,
 void showNewPasswordDialog(
   BuildContext context,
   TextEditingController passwordController,
+  GlobalKey<FormState> formKey,
   Function onTap,
 ) {
   showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text(
+          content: Text(
             AppStrings.enterNewPassword.tr(context),
             style: getAlmaraiRegularStyle(
               fontSize: AppSize.s20.sp,
@@ -236,20 +237,23 @@ void showNewPasswordDialog(
             ),
             textAlign: TextAlign.center,
           ),
-          content: InputFormField(
-            controller: passwordController,
-            hintText: AppStrings.newPassword.tr(context),
-            height: AppSize.s40.h,
-            textInputType: TextInputType.text,
-            regExp: getTextWithNumberInputFormat(),
-            textAlign: TextAlign.center,
-            validator: (String? text) {
-              if (text == null || text == "" || text.isEmpty)
-                return "Can't be Empty";
-              return null;
-            },
-          ),
           actions: [
+            InputFormField(
+              formKey: formKey,
+              controller: passwordController,
+              hintText: AppStrings.newPassword.tr(context),
+              textInputType: TextInputType.text,
+              regExp: getTextWithNumberInputFormat(),
+              textAlign: TextAlign.center,
+              validator: (String? text) {
+                if (text == null || text == "" || text.isEmpty)
+                  return AppStrings.fieldCantBeEmpty.tr(context);
+                else if (text.length < 6)
+                  return AppStrings.passwordShouldAtLeast6Character.tr(context);
+                return null;
+              },
+            ),
+            SizedBox(height: AppSize.s10.h),
             OptionButton(
               onTap: () {
                 if (passwordController.text.isNotEmpty) onTap();

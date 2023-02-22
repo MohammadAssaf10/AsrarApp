@@ -2,6 +2,7 @@ import 'package:asrar_app/config/app_localizations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 import '../../../../config/color_manager.dart';
 import '../../../../config/strings_manager.dart';
@@ -10,12 +11,13 @@ import '../../../../config/values_manager.dart';
 import '../../../../core/app/constants.dart';
 import '../../../../core/app/functions.dart';
 import '../../../home/presentation/widgets/general/home_button_widgets.dart';
-import '../../../home/presentation/widgets/general/input_form_field.dart';
 import '../../domain/entities/product_entities.dart';
 
 Future<int> getLastId() async {
   int id = 0;
-  final data = await FirebaseFirestore.instance.collection(FireBaseConstants.shopOrders).get();
+  final data = await FirebaseFirestore.instance
+      .collection(FireBaseConstants.shopOrders)
+      .get();
   if (data.size > 0) {
     for (var doc in data.docs) {
       if (doc["shopOrderId"] > id) {
@@ -32,10 +34,13 @@ void showOrderDialog(
   String number,
   TextEditingController controller,
   List<ProductEntities> cartList,
+  GlobalKey<FormState> formKey,
   Function acceptOnTap,
-) {
-  dismissDialog(context);
+) async {
   controller.text = number;
+  String _phoneNumber = '';
+  String _countryCode = '';
+
   showDialog(
     context: context,
     builder: (_) {
@@ -62,13 +67,30 @@ void showOrderDialog(
                 ),
               ),
               SizedBox(height: AppSize.s10.h),
-              InputFormField(
-                controller: controller,
-                hintText: title,
-                height: AppSize.s40.h,
-                textInputType: TextInputType.phone,
-                regExp: getNumberInputFormat(),
-                textAlign: TextAlign.center,
+              Form(
+                key: formKey,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                child: IntlPhoneField(
+                  controller: controller,
+                  invalidNumberMessage:
+                      AppStrings.mobileNumberFormatNotCorrect.tr(context),
+                      searchText: AppStrings.searchCountry.tr(context),
+                  dropdownIcon: const Icon(
+                    Icons.arrow_drop_down,
+                    color: ColorManager.primary,
+                  ),
+                  decoration: InputDecoration(
+                    hintText: title,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(),
+                    ),
+                  ),
+                  initialCountryCode: 'SA',
+                  onChanged: (phone) {
+                    _countryCode = phone.countryCode;
+                    _phoneNumber = phone.number;
+                  },
+                ),
               ),
             ],
           ),
@@ -80,7 +102,7 @@ void showOrderDialog(
               children: [
                 OptionButton(
                   onTap: () {
-                    if (controller.text.isNotEmpty) acceptOnTap();
+                    acceptOnTap();
                   },
                   title: AppStrings.checkout.tr(context),
                   height: AppSize.s35.h,
@@ -106,12 +128,20 @@ void showOrderDialog(
       );
     },
   );
+  if (_phoneNumber[0] == '0') {
+    _phoneNumber = _phoneNumber.replaceFirst('0', '');
+  }
+
+  _phoneNumber = _countryCode + _phoneNumber;
+  _phoneNumber.replaceAll(' ', '').replaceAll('-', '').replaceAll('+', '');
+  controller.text = _phoneNumber;
 }
 
 String getTotalProductsPrice(List<ProductEntities> cartList) {
   double totalPrice = 0.0;
   cartList.forEach((product) {
-    totalPrice = totalPrice + (product.productCount * stringToDouble(product.productPrice));
+    totalPrice = totalPrice +
+        (product.productCount * stringToDouble(product.productPrice));
   });
   totalPrice = dp(totalPrice, 2);
   return totalPrice.toString();

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../core/app/di.dart';
+import '../features/auth/domain/entities/user.dart';
 import '../features/auth/presentation/pages/auth_view.dart';
 import '../features/auth/presentation/pages/password_reset_view.dart';
 import '../features/auth/presentation/pages/verification_view.dart';
@@ -19,6 +20,7 @@ import '../features/home/presentation/pages/job/job_details_screen.dart';
 import '../features/home/presentation/pages/job/job_screen.dart';
 import '../features/home/presentation/pages/main/main_view.dart';
 import '../features/home/presentation/pages/main/subscription_screen.dart';
+import '../features/home/presentation/pages/main/your_account.dart';
 import '../features/home/presentation/pages/news/news_details_screen.dart';
 import '../features/home/presentation/pages/news/news_screen.dart';
 import '../features/home/presentation/pages/service&company/services_screen.dart';
@@ -49,6 +51,7 @@ class Routes {
   static const String jobDetailsRoute = "/jobDetails";
   static const String subscriptionRoute = "/subscription";
   static const String chatRoute = "/chat";
+  static const String yourAccountRoute = "/yourAccount";
 
   // auth rotes
   static const String auth = '/auth';
@@ -76,6 +79,11 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => NewsScreen());
       case Routes.courseRoute:
         return MaterialPageRoute(builder: (_) => CoursesScreen());
+      case Routes.yourAccountRoute:
+        {
+          final arg = settings.arguments as User;
+          return MaterialPageRoute(builder: (_) => YourAccountScreen(arg));
+        }
       case Routes.jobRoute:
         return MaterialPageRoute(builder: (_) => JobScreen());
       case Routes.subscriptionRoute:
@@ -123,7 +131,8 @@ class RouteGenerator {
           initChatModule(arg);
           return MaterialPageRoute(
             builder: (context) => BlocProvider(
-              create: (context) => ChatBloc()..add(ChatStarted(serviceOrder: arg)),
+              create: (context) =>
+                  ChatBloc()..add(ChatStarted(serviceOrder: arg)),
               lazy: false,
               child: ChatScreen(serviceOrder: arg),
             ),
