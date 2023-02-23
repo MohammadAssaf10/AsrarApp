@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sound/public/flutter_sound_recorder.dart';
+import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../../config/color_manager.dart';
@@ -10,9 +10,11 @@ class RecorderButton extends StatefulWidget {
     Key? key,
     required this.onSended,
     required this.sender,
+    required this.recordActivated,
   }) : super(key: key);
 
   final Function? onSended;
+  final Function(bool) recordActivated;
   final Sender sender;
 
   @override
@@ -21,6 +23,7 @@ class RecorderButton extends StatefulWidget {
 
 class _RecorderButtonState extends State<RecorderButton> {
   final FlutterSoundRecorder recorder = FlutterSoundRecorder();
+  bool recordProcessing = false;
 
   @override
   void initState() {
@@ -37,6 +40,8 @@ class _RecorderButtonState extends State<RecorderButton> {
     recorder.openRecorder();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -47,9 +52,10 @@ class _RecorderButtonState extends State<RecorderButton> {
           if (recorder.isRecording) {
             await recorder.stopRecorder();
           } else {
-            print('sni');
             await recorder.startRecorder(toFile: 're');
           }
+          setState(() {});
+          widget.recordActivated(recorder.isRecording);
         },
         child: Icon(
           recorder.isRecording ? Icons.stop : Icons.mic,

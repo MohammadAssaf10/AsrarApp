@@ -11,17 +11,29 @@ import 'image_button.dart';
 import 'option_button_widget.dart';
 import 'recorder_button.dart';
 
-class ChatBottom extends StatelessWidget {
+class ChatBottom extends StatefulWidget {
   ChatBottom({super.key, this.onSended, required this.serviceOrder});
 
   final Function? onSended;
-  late final Sender sender;
   final ServiceOrder serviceOrder;
 
   @override
-  Widget build(BuildContext context) {
+  State<ChatBottom> createState() => _ChatBottomState();
+}
+
+class _ChatBottomState extends State<ChatBottom> {
+  late final Sender sender;
+  bool isRecordActive = false;
+
+  @override
+  void initState() {
     var authUser = BlocProvider.of<AuthenticationBloc>(context).state.user!;
     sender = Sender(name: authUser.name, id: authUser.id, email: authUser.email);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
         color: Colors.white,
@@ -29,20 +41,28 @@ class ChatBottom extends StatelessWidget {
             left: AppSize.s10.w, top: AppSize.s10.w, right: AppSize.s10.w, bottom: AppSize.s15.h),
         child: Row(
           textDirection: TextDirection.ltr,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             RecorderButton(
-              onSended: onSended,
+              recordActivated: (processing) {
+                setState(() {
+                  isRecordActive = processing;
+                });
+              },
+              onSended: widget.onSended,
               sender: sender,
             ),
-            ImageButton(onSended: onSended, sender: sender),
-            Expanded(
-                child: ChatTextField(
-              onSended: onSended,
-            )),
-            OptionButton(
-              onSended: onSended,
-              serviceOrder: serviceOrder,
-            )
+            if (!isRecordActive) ImageButton(onSended: widget.onSended, sender: sender),
+            if (!isRecordActive)
+              Expanded(
+                  child: ChatTextField(
+                onSended: widget.onSended,
+              )),
+            if (!isRecordActive)
+              OptionButton(
+                onSended: widget.onSended,
+                serviceOrder: widget.serviceOrder,
+              )
           ],
         ),
       ),
