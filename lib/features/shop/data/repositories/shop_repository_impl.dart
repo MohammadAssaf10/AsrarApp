@@ -22,13 +22,16 @@ class ShopRepositoryImpl extends ShopRepository {
       try {
         List<ProductEntities> productsList = [];
         final products = await firestore.collection(FireBaseConstants.products).get();
-        for (var doc in products.docs) productsList.add(ProductEntities.fromMap(doc.data()));
+        for (var doc in products.docs) {
+          productsList.add(ProductEntities.fromMap(doc.data()));
+        }
         return Right(productsList);
       } catch (e) {
         return Left(ExceptionHandler.handle(e).failure);
       }
-    } else
+    } else {
       return Left(DataSourceExceptions.noInternetConnections.getFailure());
+    }
   }
 
   @override
@@ -51,16 +54,18 @@ class ShopRepositoryImpl extends ShopRepository {
         List<ShopOrderEntities> shopOrderList = [];
         final shopOrders = await firestore.collection(FireBaseConstants.shopOrders).get();
         for (var doc in shopOrders.docs) {
-          if (doc["user"]["id"] == userId)
+          if (doc["user"]["id"] == userId) {
             shopOrderList.add(ShopOrderEntities.fromMap(doc.data()));
+          }
         }
         shopOrderList.sort((a, b) => b.shopOrderId.compareTo(a.shopOrderId));
         return Right(shopOrderList);
       } catch (e) {
         return Left(ExceptionHandler.handle(e).failure);
       }
-    } else
+    } else {
       return Left(DataSourceExceptions.noInternetConnections.getFailure());
+    }
   }
 
   @override

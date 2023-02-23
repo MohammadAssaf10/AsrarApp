@@ -9,5 +9,5 @@ abstract class ShopRepository {
   Future<Either<Failure, Unit>> addShopOrder(ShopOrderEntities shopOrder);
   Future<Either<Failure, Unit>> cancelShopOrder(ShopOrderEntities shopOrder);
   Future<Either<Failure, List<ShopOrderEntities>>> getShopOrder(
-      String userEmail);
+      String userId);
 }

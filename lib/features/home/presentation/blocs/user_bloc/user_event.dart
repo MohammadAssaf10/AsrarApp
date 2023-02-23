@@ -21,7 +21,7 @@ class UpdateUserImageEvent extends UserEvent {
 
 class UpdatePasswordEvent extends UserEvent {
   final String newPassword;
-  UpdatePasswordEvent({required this.newPassword});
+  const UpdatePasswordEvent({required this.newPassword});
   @override
   List<Object?> get props => [newPassword];
 }

@@ -5,7 +5,7 @@ import '../../../../../config/color_manager.dart';
 import 'loading_view.dart';
 
 class CachedNetworkImageWidget extends StatelessWidget {
-  CachedNetworkImageWidget({
+  const CachedNetworkImageWidget({
     super.key,
     required this.image,
     required this.shapeBorder,

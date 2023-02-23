@@ -44,7 +44,7 @@ class FirebaseServiceOrderRepository extends ServiceOrderRepository {
           .doc(serviceOrder.id.toString())
           .set(serviceOrder.toMap());
 
-      return Right(null);
+      return const Right(null);
     } catch (e) {
       return Left(ExceptionHandler.handle(e).failure);
     }
@@ -60,7 +60,7 @@ class FirebaseServiceOrderRepository extends ServiceOrderRepository {
           .collection(FireBaseConstants.serviceOrder)
           .doc(serviceOrder.id.toString())
           .update({"status": OrderStatus.canceled.name});
-      return Right(null);
+      return const Right(null);
     } catch (e) {
       return Left(ExceptionHandler.handle(e).failure);
     }

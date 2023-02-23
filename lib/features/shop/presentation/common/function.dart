@@ -38,8 +38,8 @@ void showOrderDialog(
   Function acceptOnTap,
 ) async {
   controller.text = number;
-  String _phoneNumber = '';
-  String _countryCode = '';
+  String phoneNumber = '';
+  String countryCode = '';
 
   showDialog(
     context: context,
@@ -74,6 +74,7 @@ void showOrderDialog(
                   controller: controller,
                   invalidNumberMessage:
                       AppStrings.mobileNumberFormatNotCorrect.tr(context),
+                      // ignore: deprecated_member_use
                       searchText: AppStrings.searchCountry.tr(context),
                   dropdownIcon: const Icon(
                     Icons.arrow_drop_down,
@@ -81,14 +82,14 @@ void showOrderDialog(
                   ),
                   decoration: InputDecoration(
                     hintText: title,
-                    border: OutlineInputBorder(
+                    border: const OutlineInputBorder(
                       borderSide: BorderSide(),
                     ),
                   ),
                   initialCountryCode: 'SA',
                   onChanged: (phone) {
-                    _countryCode = phone.countryCode;
-                    _phoneNumber = phone.number;
+                    countryCode = phone.countryCode;
+                    phoneNumber = phone.number;
                   },
                 ),
               ),
@@ -128,21 +129,21 @@ void showOrderDialog(
       );
     },
   );
-  if (_phoneNumber[0] == '0') {
-    _phoneNumber = _phoneNumber.replaceFirst('0', '');
+  if (phoneNumber[0] == '0') {
+    phoneNumber = phoneNumber.replaceFirst('0', '');
   }
 
-  _phoneNumber = _countryCode + _phoneNumber;
-  _phoneNumber.replaceAll(' ', '').replaceAll('-', '').replaceAll('+', '');
-  controller.text = _phoneNumber;
+  phoneNumber = countryCode + phoneNumber;
+  phoneNumber.replaceAll(' ', '').replaceAll('-', '').replaceAll('+', '');
+  controller.text = phoneNumber;
 }
 
 String getTotalProductsPrice(List<ProductEntities> cartList) {
   double totalPrice = 0.0;
-  cartList.forEach((product) {
+  for (var product in cartList) {
     totalPrice = totalPrice +
         (product.productCount * stringToDouble(product.productPrice));
-  });
+  }
   totalPrice = dp(totalPrice, 2);
   return totalPrice.toString();
 }

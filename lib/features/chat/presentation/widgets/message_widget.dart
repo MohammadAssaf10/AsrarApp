@@ -38,16 +38,16 @@ class MessageWidget extends StatelessWidget {
           if (!isMine & !isPreviousFromTheSameSender)
             Text(
               message.details.sender.name,
-              style: TextStyle(color: ColorManager.veryDarkGrey),
+              style: const TextStyle(color: ColorManager.veryDarkGrey),
             ),
           Card(
-            margin: EdgeInsets.only(),
+            margin: const EdgeInsets.only(),
             color: getMessageColor(isMine),
             child: MessageTypeDirector(message: message),
           ),
           Text(
             time,
-            style: TextStyle(color: ColorManager.veryDarkGrey),
+            style: const TextStyle(color: ColorManager.veryDarkGrey),
           ),
         ],
       ),
@@ -62,11 +62,11 @@ class MessageTypeDirector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (message is TextMessage)
+    if (message is TextMessage) {
       return TextMessageWidget(
         message: message as TextMessage,
       );
-    else if (message is ImageMessage) {
+    } else if (message is ImageMessage) {
       return ImageMessageWidget(
         message: message as ImageMessage,
       );

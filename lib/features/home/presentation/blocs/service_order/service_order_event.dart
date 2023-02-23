@@ -6,7 +6,7 @@ abstract class ServiceOrderEvent extends Equatable {
 
 class AddOrder extends ServiceOrderEvent {
   final ServiceOrder serviceOrder;
-  AddOrder({
+  const AddOrder({
     required this.serviceOrder,
   });
 
@@ -16,7 +16,7 @@ class AddOrder extends ServiceOrderEvent {
 
 class CancelOrder extends ServiceOrderEvent {
   final ServiceOrder serviceOrder;
-  CancelOrder({
+  const CancelOrder({
     required this.serviceOrder,
   });
 
@@ -27,7 +27,7 @@ class CancelOrder extends ServiceOrderEvent {
 class GetOrders extends ServiceOrderEvent {
   final User user;
   
-  GetOrders({
+  const GetOrders({
     required this.user,
   });
   @override

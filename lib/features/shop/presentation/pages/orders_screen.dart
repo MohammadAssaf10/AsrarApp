@@ -29,7 +29,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
           SwitcherWidget(
             executeWhenPressSecond: () {
               final auth = BlocProvider.of<AuthenticationBloc>(context).state;
-              BlocProvider.of<ServiceOrderBloc>(context)..add(GetOrders(user: auth.user!));
+              BlocProvider.of<ServiceOrderBloc>(context).add(GetOrders(user: auth.user!));
             },
             onChange: (v) {
               setState(() {
@@ -39,10 +39,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
           ),
           AnimatedCrossFade(
             alignment: Alignment.center,
-            firstChild: ShopOrderView(),
-            secondChild: ServiceOrderView(),
+            firstChild: const ShopOrderView(),
+            secondChild: const ServiceOrderView(),
             crossFadeState: isFirst ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-            duration: Duration(milliseconds: 250),
+            duration: const Duration(milliseconds: 250),
           ),
         ],
       ),

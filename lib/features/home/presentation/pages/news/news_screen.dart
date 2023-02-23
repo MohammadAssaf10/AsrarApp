@@ -27,21 +27,21 @@ class NewsScreen extends StatelessWidget {
       ),
       body: BlocBuilder<NewsBloc, NewsState>(
         builder: (context, state) {
-          if (state is NewsLoadingState)
+          if (state is NewsLoadingState) {
             return LoadingView(
               height: MediaQuery.of(context).size.height / 1.2,
               width: MediaQuery.of(context).size.width,
             );
-          else if (state is NewsErrorState)
+          } else if (state is NewsErrorState) {
             return ErrorView(
               errorMessage: state.errorMessage.tr(context),
               height: MediaQuery.of(context).size.height / 1.2,
               width: MediaQuery.of(context).size.width,
             );
-          else if (state is NewsLoadedState) {
+          } else if (state is NewsLoadedState) {
             if (state.newsList.isNotEmpty) {
               return ListView.builder(
-                physics: ScrollPhysics(),
+                physics: const ScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: state.newsList.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -72,7 +72,7 @@ class NewsScreen extends StatelessWidget {
                               width: double.infinity,
                               verticalMargin: AppSize.s4.h,
                               image: state.newsList[index].newsImageUrl,
-                              shapeBorder: CircleBorder(),
+                              shapeBorder: const CircleBorder(),
                             ),
                           ),
                           Expanded(
@@ -139,14 +139,15 @@ class NewsScreen extends StatelessWidget {
                   );
                 },
               );
-            } else
-               return EmptyListView(
+            } else {
+              return EmptyListView(
                 emptyListMessage: AppStrings.noNews.tr(context),
                 height: MediaQuery.of(context).size.height / 1.2,
                 width: MediaQuery.of(context).size.width,
               );
+            }
           }
-          return SizedBox();
+          return const SizedBox();
         },
       ),
     );

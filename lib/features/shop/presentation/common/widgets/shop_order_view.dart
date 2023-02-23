@@ -48,20 +48,23 @@ class ShopOrderView extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        if (state is ShopOrderLoadingState)
+        if (state is ShopOrderLoadingState) {
           return LoadingView(
             height: MediaQuery.of(context).size.height / 1.5,
             width: MediaQuery.of(context).size.width,
           );
-        if (state is ShopOrderErrorState)
+        }
+        if (state is ShopOrderErrorState) {
           return ErrorView(
             errorMessage: state.errorMessage.tr(context),
             height: MediaQuery.of(context).size.height / 1.5,
             width: MediaQuery.of(context).size.width,
           );
-        if (state is ShopOrderLoadedState) if (state.shopOrderList.isNotEmpty) {
+        }
+        if (state is ShopOrderLoadedState) {
+        if (state.shopOrderList.isNotEmpty) {
           return ListView.builder(
-            physics: ScrollPhysics(),
+            physics: const ScrollPhysics(),
             shrinkWrap: true,
             itemCount: state.shopOrderList.length,
             itemBuilder: (BuildContext context, int index) {
@@ -92,7 +95,7 @@ class ShopOrderView extends StatelessWidget {
                       Expanded(
                         child: Card(
                           color: ColorManager.darkWhite,
-                          shape: CircleBorder(),
+                          shape: const CircleBorder(),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -161,8 +164,8 @@ class ShopOrderView extends StatelessWidget {
             height: MediaQuery.of(context).size.height / 1.5,
             width: MediaQuery.of(context).size.width,
           );
-        }
-        return SizedBox();
+        }}
+        return const SizedBox();
       },
     );
   }

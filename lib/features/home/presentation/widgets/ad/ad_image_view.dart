@@ -22,32 +22,32 @@ class AdImageView extends StatelessWidget {
     return Expanded(
       child: BlocBuilder<AdImageBloc, AdImageState>(
         builder: (context, state) {
-          if (state is AdImageLoadingState)
+          if (state is AdImageLoadingState) {
             return LoadingView(
               height: AppSize.s200.h,
               width: MediaQuery.of(context).size.width,
             );
-          else if (state is AdImageErrorState)
+          } else if (state is AdImageErrorState) {
             return ErrorView(
               errorMessage: state.errorMessage.tr(context),
               height: AppSize.s200.h,
               width: MediaQuery.of(context).size.width,
             );
-          else if (state is AdImagesLoadedState) if (state
-              .adImagelist.isNotEmpty)
+          } else if (state is AdImagesLoadedState) {
+          if (state.adImagelist.isNotEmpty){
             return ListView.builder(
-              physics: ScrollPhysics(),
+              physics: const ScrollPhysics(),
               scrollDirection: Axis.horizontal,
               itemCount: state.adImagelist.length,
               shrinkWrap: true,
               itemBuilder: (BuildContext context, int index) {
                 return InkWell(
                   onTap: () async {
-                    final Uri _url =
+                    final Uri url =
                         Uri.parse(state.adImagelist[index].adImagedeepLink);
-                    if (await canLaunchUrl(_url)) {
+                    if (await canLaunchUrl(url)) {
                       await launchUrl(
-                        _url,
+                        url,
                         mode: LaunchMode.externalApplication,
                       );
                     } else {
@@ -64,15 +64,15 @@ class AdImageView extends StatelessWidget {
                     width: AppSize.s360.w,
                     shapeBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(AppSize.s10.r),
-                      borderSide: BorderSide(color: ColorManager.transparent),
+                      borderSide: const BorderSide(color: ColorManager.transparent),
                     ),
                     horizontalMargin: AppSize.s8.w,
                     verticalMargin: AppSize.s12.h,
                   ),
                 );
               },
-            );
-          else
+            );}
+          else{
             return Padding(
               padding: EdgeInsets.symmetric(
                 vertical: AppSize.s12.h,
@@ -84,8 +84,8 @@ class AdImageView extends StatelessWidget {
                 height: AppSize.s220.h,
                 width: AppSize.s360.w,
               ),
-            );
-          return SizedBox();
+            );}}
+          return const SizedBox();
         },
       ),
     );

@@ -17,7 +17,7 @@ class LoadingView extends StatelessWidget {
       height: height,
       width: width,
       alignment: Alignment.center,
-      child: CircularProgressIndicator(
+      child: const CircularProgressIndicator(
         color: ColorManager.primary,
       ),
     );

@@ -8,7 +8,7 @@ import '../../../domain/entities/product_entities.dart';
 import '../../../../home/presentation/widgets/general/cached_network_image_widget.dart';
 
 class ProductWidget extends StatefulWidget {
-  ProductWidget({
+  const ProductWidget({
     super.key,
     required this.product,
     required this.addToList,
@@ -57,9 +57,7 @@ class _ProductWidgetState extends State<ProductWidget> {
               child: CachedNetworkImageWidget(
                 image: widget.product.productImageUrl,
                 shapeBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: ColorManager.transparent,
-                  ),
+                  borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(
                     AppSize.s20.r,
                   ),

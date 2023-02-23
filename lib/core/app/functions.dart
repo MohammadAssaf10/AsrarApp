@@ -246,10 +246,11 @@ void showNewPasswordDialog(
               regExp: getTextWithNumberInputFormat(),
               textAlign: TextAlign.center,
               validator: (String? text) {
-                if (text == null || text == "" || text.isEmpty)
+                if (text == null || text == "" || text.isEmpty) {
                   return AppStrings.fieldCantBeEmpty.tr(context);
-                else if (text.length < 6)
+                } else if (text.length < 6) {
                   return AppStrings.passwordShouldAtLeast6Character.tr(context);
+                }
                 return null;
               },
             ),

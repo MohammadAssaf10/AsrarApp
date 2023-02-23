@@ -28,7 +28,7 @@ class GoogleLoginButtonPressed extends AuthenticationEvent {
 
 class MobileNumberEntered extends AuthenticationEvent {
   final String mobileNumber;
-  MobileNumberEntered({
+  const MobileNumberEntered({
     required this.mobileNumber,
   });
 
@@ -66,7 +66,7 @@ class SendVerificationCode extends AuthenticationEvent {
   final String number;
   final String code;
 
-  SendVerificationCode(this.number, this.code);
+  const SendVerificationCode(this.number, this.code);
   @override
   List<Object?> get props => [number];
 }

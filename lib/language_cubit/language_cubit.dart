@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 part 'language_state.dart';
 
 class LanguageCubit extends Cubit<LanguageState> {
-  LanguageCubit() : super(LanguageState());
+  LanguageCubit() : super(const LanguageState());
 
   void setArabic() {
     emit(const LanguageState(locale: arabicLocale));

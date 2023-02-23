@@ -10,7 +10,7 @@ import '../../../../home/presentation/widgets/general/cached_network_image_widge
 import '../../../domain/entities/shop_order_entities.dart';
 
 class ShopOrederDetailsView extends StatelessWidget {
-  const ShopOrederDetailsView(this.shopOrder);
+  const ShopOrederDetailsView(this.shopOrder, {super.key});
   final ShopOrderEntities shopOrder;
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class ShopOrederDetailsView extends StatelessWidget {
             "${AppStrings.orderNumber.tr(context)} ${shopOrder.shopOrderId.toString()}"),
       ),
       body: ListView.builder(
-        physics: ScrollPhysics(),
+        physics: const ScrollPhysics(),
         shrinkWrap: true,
         itemCount: shopOrder.products.length,
         itemBuilder: (BuildContext context, int index) {

@@ -26,7 +26,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: DrawerWidget(),
+      drawer: const DrawerWidget(),
       appBar: AppBar(
         title: Text(
           AppStrings.asrarForElectronicServices.tr(context),
@@ -49,7 +49,7 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          AdImageView(),
+          const AdImageView(),
           OptionsWidget(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -132,7 +132,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          CompaniesView(),
+          const CompaniesView(),
         ],
       ),
     );

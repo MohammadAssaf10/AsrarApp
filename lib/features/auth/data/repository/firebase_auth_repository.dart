@@ -11,13 +11,13 @@ import '../data_sources/firebase_auth_helper.dart';
 import '../data_sources/whatsapp_api.dart';
 import '../models/requests.dart';
 
-class registering implements AuthRepository {
+class FirebaseAuthRepository implements AuthRepository {
   final FirebaseAuthHelper _authHelper;
   final NetworkInfo _networkInfo;
   final WhatsappApi _whatsappApi;
   final AuthPreference _authPreference;
 
-  registering(this._authHelper, this._networkInfo, this._whatsappApi, this._authPreference);
+  FirebaseAuthRepository(this._authHelper, this._networkInfo, this._whatsappApi, this._authPreference);
 
   @override
   Future<Either<Failure, User>> loginViaEmail(LoginRequest loginRequest) async {
@@ -55,6 +55,7 @@ class registering implements AuthRepository {
 
   // this method called in every signIn or registering
   // because if it from google it can be the first sign in
+  @override
   Future<Either<Failure, User>> updateUserData(User user) async {
     try {
       user.userTokenList = await _authHelper.addUserToken(user.id);
@@ -111,8 +112,9 @@ class registering implements AuthRepository {
               userTokenList: []);
 
           return Right(user);
-        } else
+        } else {
           rethrow;
+        }
       }
     } catch (e) {
       return Left(ExceptionHandler.handle(e).failure);
@@ -139,7 +141,7 @@ class registering implements AuthRepository {
           message: 'رمز التحقق الخاص بك هو: $code',
           instance_id: WhatsAppApiConstance.instance.instance_id,
           access_token: WhatsAppApiConstance.instance.access_token);
-      return Right(null);
+      return const Right(null);
     } catch (e) {
       return Left(ExceptionHandler.handle(e).failure);
     }

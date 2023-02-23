@@ -80,7 +80,7 @@ class FullElevatedButton extends StatelessWidget {
 }
 
 class AuthSwitcher extends StatefulWidget {
-  AuthSwitcher({required this.onChange, super.key});
+  const AuthSwitcher({required this.onChange, super.key});
 
   @override
   State<AuthSwitcher> createState() => _AuthSwitcherState();

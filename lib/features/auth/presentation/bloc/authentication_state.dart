@@ -16,7 +16,7 @@ class AuthenticationState extends Equatable {
   final User? user;
   final String? message;
 
-  AuthenticationState({
+  const AuthenticationState({
     required this.status,
     this.user,
     this.message,

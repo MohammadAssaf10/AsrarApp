@@ -36,16 +36,17 @@ manageDialog(BuildContext context, AuthenticationState state) async {
     dismissDialog(context);
 
     final phoneNumber = await phoneDialog(context);
-    if (phoneNumber.isNotEmpty)
+    if (phoneNumber.isNotEmpty) {
       BlocProvider.of<AuthenticationBloc>(context)
           .add(MobileNumberEntered(mobileNumber: phoneNumber));
+    }
   }
 }
 
 Future<String> phoneDialog(BuildContext context) async {
-  String _phoneNumber = '';
-  String _countryCode = '';
-  GlobalKey<FormState> _key = GlobalKey();
+  String phoneNumber = '';
+  String countryCode = '';
+  GlobalKey<FormState> key = GlobalKey();
 
   await showDialog(
       context: context,
@@ -67,28 +68,28 @@ Future<String> phoneDialog(BuildContext context) async {
                 ),
                 SizedBox(height: AppSize.s10.h),
                 Form(
-                  key: _key,
+                  key: key,
                   autovalidateMode: AutovalidateMode.always,
                   child: IntlPhoneField(
                     decoration: InputDecoration(
                       labelText: AppStrings.mobileNumber.tr(context),
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                         borderSide: BorderSide(),
                       ),
                     ),
                     initialCountryCode: 'SA',
                     onChanged: (phone) {
-                      _countryCode = phone.countryCode;
-                      _phoneNumber = phone.number;
+                      countryCode = phone.countryCode;
+                      phoneNumber = phone.number;
                     },
                   ),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: AppSize.s10.h,
                 ),
                 FullElevatedButton(
                     onPressed: () {
-                      if (_key.currentState!.validate()) Navigator.pop(context);
+                      if (key.currentState!.validate()) Navigator.pop(context);
                     },
                     text: AppStrings.sendVerificationCode.tr(context))
               ],
@@ -96,12 +97,12 @@ Future<String> phoneDialog(BuildContext context) async {
           ),
         );
       });
-  if (_phoneNumber[0] == '0') {
-    _phoneNumber = _phoneNumber.replaceFirst('0', '');
+  if (phoneNumber[0] == '0') {
+    phoneNumber = phoneNumber.replaceFirst('0', '');
   }
 
-  _phoneNumber = _countryCode + _phoneNumber;
-  return _phoneNumber
+  phoneNumber = countryCode + phoneNumber;
+  return phoneNumber
       .replaceAll(' ', '')
       .replaceAll('-', '')
       .replaceAll('+', '');

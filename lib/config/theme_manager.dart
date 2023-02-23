@@ -27,7 +27,7 @@ ThemeData getApplicationTheme() {
 
     errorColor: ColorManager.error,
 
-    textSelectionTheme: TextSelectionThemeData(
+    textSelectionTheme: const TextSelectionThemeData(
       cursorColor: ColorManager.primary,
       selectionHandleColor: ColorManager.primary,
     ),
@@ -74,7 +74,7 @@ ThemeData getApplicationTheme() {
       // error border style
       errorBorder: OutlineInputBorder(
         borderSide:
-            BorderSide(color: ColorManager.error),
+            const BorderSide(color: ColorManager.error),
         borderRadius: BorderRadius.all(
           Radius.circular(AppSize.s18.r),
         ),
@@ -82,7 +82,7 @@ ThemeData getApplicationTheme() {
       // focused error border style
       focusedErrorBorder: OutlineInputBorder(
         borderSide:
-            BorderSide(color: ColorManager.error),
+            const BorderSide(color: ColorManager.error),
         borderRadius: BorderRadius.all(
           Radius.circular(AppSize.s18.r),
         ),

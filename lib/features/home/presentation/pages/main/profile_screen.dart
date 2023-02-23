@@ -62,18 +62,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
           }
         },
         builder: (context, state) {
-          if (state is UserLoadingState)
+          if (state is UserLoadingState) {
             return LoadingView(
               height: MediaQuery.of(context).size.height / 1.3,
               width: MediaQuery.of(context).size.width,
             );
-          else if (state is UserErrorState)
+          } else if (state is UserErrorState) {
             return ErrorView(
               errorMessage: state.errorMessage,
               height: MediaQuery.of(context).size.height / 1.3,
               width: MediaQuery.of(context).size.width,
             );
-          else if (state is UserLoadedState)
+          } else if (state is UserLoadedState){
             return ListView(
               shrinkWrap: true,
               children: [
@@ -177,8 +177,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   icon: Icons.lock_outline_rounded,
                 ),
               ],
-            );
-          return SizedBox();
+            );}
+          return const SizedBox();
         },
       ),
     );

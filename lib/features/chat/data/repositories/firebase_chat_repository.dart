@@ -33,7 +33,7 @@ class FirebaseChatRepository extends ChatRepository {
     try {
       await orderReference.collection(FireBaseConstants.messages).add(message.toMap());
 
-      return Right(null);
+      return const Right(null);
     } catch (e) {
       return Left(ExceptionHandler.handle(e).failure);
     }

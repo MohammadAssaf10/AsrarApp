@@ -14,7 +14,7 @@ import '../../bloc/authentication_bloc.dart';
 import 'widgets.dart';
 
 class NewAccountForm extends StatefulWidget {
-  NewAccountForm({super.key});
+  const NewAccountForm({super.key});
 
   @override
   State<NewAccountForm> createState() => _NewAccountFormState();
@@ -116,8 +116,9 @@ class _NewAccountFormState extends State<NewAccountForm> {
                   },
                   validator: (v) {
                     if (validatePassword) {
-                      if (v.nullOrEmpty() || v!.length < 6)
+                      if (v.nullOrEmpty() || v!.length < 6) {
                         return AppStrings.passwordShouldAtLeast6Character.tr(context);
+                      }
                     }
                     return null;
                   },
@@ -125,7 +126,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
                 TextButton(
                   child: Text(
                     AppStrings.forgetYourPassword.tr(context),
-                    style: TextStyle(color: ColorManager.grey),
+                    style: const TextStyle(color: ColorManager.grey),
                   ),
                   onPressed: () {
                     Navigator.pushNamed(context, Routes.passwordReset);

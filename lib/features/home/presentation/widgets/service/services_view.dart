@@ -51,7 +51,7 @@ class _ServicesViewState extends State<ServicesView> {
               }
               setState(() {});
             },
-            suffixIcon: Icon(Icons.search),
+            suffixIcon: const Icon(Icons.search),
             controller: controller,
             labelText: AppStrings.searchForYourServices.tr(context),
             regExp: getTextWithNumberInputFormat(),
@@ -62,7 +62,7 @@ class _ServicesViewState extends State<ServicesView> {
         servicesEntitiesList.isNotEmpty
             ? Expanded(
                 child: ListView.builder(
-                  physics: ScrollPhysics(),
+                  physics: const ScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: servicesEntitiesList.length,
                   itemBuilder: (BuildContext context, int index) {

@@ -8,7 +8,7 @@ import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
 
 class SwitcherWidget extends StatefulWidget {
-  SwitcherWidget({
+  const SwitcherWidget({
     required this.onChange,
     super.key,
     this.executeWhenPressFirst,
@@ -39,7 +39,7 @@ class _SwitcherWidgetState extends State<SwitcherWidget> {
           ),
           decoration: ShapeDecoration(
             color: ColorManager.white,
-            shadows: [
+            shadows: const[
               BoxShadow(
                 color: ColorManager.grey,
                 blurRadius: 3.0,
@@ -47,10 +47,7 @@ class _SwitcherWidgetState extends State<SwitcherWidget> {
               ),
             ],
             shape: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: ColorManager.transparent,
-                width: 0,
-              ),
+              borderSide: BorderSide.none,
               borderRadius: BorderRadius.circular(
                 AppSize.s18.r,
               ),
@@ -75,7 +72,7 @@ class _SwitcherWidgetState extends State<SwitcherWidget> {
                   decoration: ShapeDecoration(
                     color: isFirst ? ColorManager.primary : ColorManager.transparent,
                     shape: OutlineInputBorder(
-                      borderSide: BorderSide(color: ColorManager.transparent),
+                      borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(
                         AppSize.s18.r,
                       ),
@@ -107,7 +104,7 @@ class _SwitcherWidgetState extends State<SwitcherWidget> {
                   decoration: ShapeDecoration(
                     color: isFirst ? ColorManager.transparent : ColorManager.primary,
                     shape: OutlineInputBorder(
-                      borderSide: BorderSide(color: ColorManager.transparent),
+                      borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(
                         AppSize.s18.r,
                       ),

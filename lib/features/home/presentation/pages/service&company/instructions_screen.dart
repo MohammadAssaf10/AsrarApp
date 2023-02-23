@@ -21,7 +21,7 @@ import '../../widgets/general/home_button_widgets.dart';
 
 class InstructionsScreen extends StatelessWidget {
   const InstructionsScreen(
-    this.service,
+    this.service, {super.key}
   );
   final ServiceEntities service;
   @override
@@ -52,7 +52,7 @@ class InstructionsScreen extends StatelessWidget {
               horizontal: AppSize.s30.w,
             ),
             child: ListView.builder(
-              physics: ScrollPhysics(),
+              physics: const ScrollPhysics(),
               shrinkWrap: true,
               itemCount: service.requiredDocuments.length,
               itemBuilder: (BuildContext context, int index) {

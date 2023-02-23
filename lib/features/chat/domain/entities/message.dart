@@ -142,12 +142,13 @@ abstract class Message {
   factory Message.fromMap(Map<String, dynamic> map) {
     String? messageType = map['details']['type'];
 
-    if (messageType == MessageType.text.name)
+    if (messageType == MessageType.text.name) {
       return TextMessage.fromMap(map);
-    else if (messageType == MessageType.image.name)
+    } else if (messageType == MessageType.image.name) {
       return ImageMessage.fromMap(map);
-    else
+    } else {
       return EmptyMessage.fromMap(map);
+    }
   }
 
   Map<String, dynamic> toMap() {
@@ -184,6 +185,7 @@ class TextMessage extends Message {
     );
   }
 
+  @override
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
@@ -244,6 +246,7 @@ class ImageMessage extends Message {
     );
   }
 
+  @override
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 

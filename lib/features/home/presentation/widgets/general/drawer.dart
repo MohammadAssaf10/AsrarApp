@@ -23,7 +23,7 @@ class DrawerWidget extends StatelessWidget {
       width: AppSize.s240.w,
       child: SingleChildScrollView(
         child: Column(
-          children: [
+          children: const[
             DrawerHeader(),
             DrawerList(),
           ],
@@ -41,7 +41,7 @@ class DrawerHeader extends StatelessWidget {
     return Container(
       height: AppSize.s200.h,
       width: double.infinity,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
             ColorManager.darkPrimary,
@@ -84,7 +84,7 @@ class DrawerList extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AboutUsScreen(),
+                    builder: (context) => const AboutUsScreen(),
                   ),
                 );
               },
@@ -115,7 +115,7 @@ class DrawerList extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => TermsOfUseScreen(),
+                    builder: (context) => const TermsOfUseScreen(),
                   ),
                 );
               },
@@ -182,7 +182,7 @@ class MenuItem extends StatelessWidget {
             SizedBox(
               height: AppSize.s0_5.h,
               width: double.infinity,
-              child: Material(
+              child: const Material(
                 color: ColorManager.grey,
               ),
             ),

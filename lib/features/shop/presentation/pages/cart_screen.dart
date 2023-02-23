@@ -17,7 +17,7 @@ import '../common/function.dart';
 import '../common/widgets/cart_widget.dart';
 
 class CartScreen extends StatefulWidget {
-  CartScreen(this.cartList);
+  const CartScreen(this.cartList, {super.key});
   final List<ProductEntities> cartList;
 
   @override
@@ -28,9 +28,9 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void dispose() {
     super.dispose();
-    widget.cartList.forEach((element) {
+    for (var element in widget.cartList) {
       element.productCount = 1;
-    });
+    }
   }
 
   final GlobalKey<FormState> formKey = GlobalKey();
@@ -54,11 +54,11 @@ class _CartScreenState extends State<CartScreen> {
           title: Text(AppStrings.cart.tr(context)),
         ),
         body: ListView.builder(
-          physics: ScrollPhysics(),
+          physics: const ScrollPhysics(),
           shrinkWrap: true,
           itemCount: widget.cartList.length,
           itemBuilder: (_, int index) {
-            return cartWidget(
+            return CartWidget(
               product: widget.cartList[index],
             );
           },
@@ -71,7 +71,7 @@ class _CartScreenState extends State<CartScreen> {
           color: ColorManager.transparent,
           height: AppSize.s40.h,
           child: ElevatedButton(
-            onPressed: () {
+            onPressed: ()async {
               final state = BlocProvider.of<AuthenticationBloc>(context).state;
               if (state.status == AuthStatus.loggedIn) {
                 showOrderDialog(

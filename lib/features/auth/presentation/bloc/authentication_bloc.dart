@@ -15,7 +15,7 @@ class AuthenticationBloc
 
   static AuthenticationBloc instance = AuthenticationBloc._();
 
-  AuthenticationBloc._() : super(AuthenticationState(status: AuthStatus.init)) {
+  AuthenticationBloc._() : super(const AuthenticationState(status: AuthStatus.init)) {
     // login
     on<LoginButtonPressed>((event, emit) async {
       emit(state.copyWith(status: AuthStatus.loading));
@@ -63,7 +63,7 @@ class AuthenticationBloc
     on<GoogleLoginButtonPressed>(
       (event, emit) async {
         emit(state.copyWith(status: AuthStatus.loading));
-        await (await _authRepository.loginViaGoogle()).fold(
+        (await _authRepository.loginViaGoogle()).fold(
           (failure) {
             emit(state.copyWith(
                 status: AuthStatus.failed, message: failure.message));

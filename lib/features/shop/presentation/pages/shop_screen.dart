@@ -27,17 +27,18 @@ class ShopScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          if (cartList.isNotEmpty)
+          if (cartList.isNotEmpty) {
             Navigator.pushNamed(
               context,
               Routes.cartRoute,
               arguments: cartList,
             );
-          else
+          } else {
             showCustomDialog(
               context,
               message: AppStrings.pleaseChooseProducts.tr(context),
             );
+          }
         },
         backgroundColor: ColorManager.primary,
         child: Icon(
@@ -61,7 +62,7 @@ class ShopScreen extends StatelessWidget {
           } else if (state is ProductsLoadedState) {
             if (state.productsList.isNotEmpty) {
               return GridView.builder(
-                physics: ScrollPhysics(),
+                physics: const ScrollPhysics(),
                 itemCount: state.productsList.length,
                 shrinkWrap: true,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -80,14 +81,15 @@ class ShopScreen extends StatelessWidget {
                   );
                 },
               );
-            } else
+            } else {
               return EmptyListView(
                 emptyListMessage: AppStrings.noProducts.tr(context),
                 height: MediaQuery.of(context).size.height / 1.2,
                 width: MediaQuery.of(context).size.width,
               );
+            }
           }
-          return SizedBox();
+          return const SizedBox();
         },
       ),
     );

@@ -36,7 +36,7 @@ class CompaniesView extends StatelessWidget {
           } else if (state is CompanyLoadedState) {
             if (state.company.isNotEmpty) {
               return GridView.builder(
-                physics: ScrollPhysics(),
+                physics: const ScrollPhysics(),
                 itemCount: state.company.length,
                 shrinkWrap: true,
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -59,11 +59,11 @@ class CompaniesView extends StatelessWidget {
                     },
                     child: CachedNetworkImageWidget(
                       image: state.company[index].image,
-                      offset: Offset(0, 6),
+                      offset: const Offset(0, 6),
                       horizontalMargin: AppSize.s10.w,
                       verticalMargin: AppSize.s5.h,
                       shapeBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: ColorManager.transparent),
+                        borderSide: const BorderSide(color: ColorManager.transparent),
                         borderRadius: BorderRadius.circular(AppSize.s10.r),
                       ),
                     ),
@@ -78,7 +78,7 @@ class CompaniesView extends StatelessWidget {
               );
             }
           }
-          return SizedBox();
+          return const SizedBox();
         },
       ),
     );

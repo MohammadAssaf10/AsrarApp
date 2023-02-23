@@ -26,8 +26,8 @@ class YourAccountScreen extends StatelessWidget {
     final TextEditingController phoneController =
         TextEditingController(text: user.phoneNumber);
     final GlobalKey<FormState> phoneKey = GlobalKey<FormState>();
-    String _phoneNumber = '';
-    String _countryCode = '';
+    String phoneNumber = '';
+    String countryCode = '';
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -47,10 +47,12 @@ class YourAccountScreen extends StatelessWidget {
                 textInputType: TextInputType.emailAddress,
                 horizontalContentPadding: AppSize.s12.w,
                 validator: (String? email) {
-                  if (email.nullOrEmpty())
+                  if (email.nullOrEmpty()) {
                     return AppStrings.pleaseEnterEmail.tr(context);
-                  if (!isEmailFormatCorrect(email!))
+                  }
+                  if (!isEmailFormatCorrect(email!)) {
                     return AppStrings.emailFormatNotCorrect.tr(context);
+                  }
                   return null;
                 },
               ),
@@ -63,11 +65,13 @@ class YourAccountScreen extends StatelessWidget {
                 textInputType: TextInputType.text,
                 horizontalContentPadding: AppSize.s12.w,
                 validator: (String? name) {
-                  if (name.nullOrEmpty())
+                  if (name.nullOrEmpty()) {
                     return AppStrings.pleaseEnterUserName.tr(context);
-                  if (name!.length < 3)
+                  }
+                  if (name!.length < 3) {
                     return AppStrings.userNameShouldAtLeast3Caracter
                         .tr(context);
+                  }
                   return null;
                 },
               ),
@@ -79,20 +83,21 @@ class YourAccountScreen extends StatelessWidget {
                   controller: phoneController,
                   invalidNumberMessage:
                       AppStrings.mobileNumberFormatNotCorrect.tr(context),
+                  // ignore: deprecated_member_use
                   searchText: AppStrings.searchCountry.tr(context),
                   dropdownIcon: const Icon(
                     Icons.arrow_drop_down,
                     color: ColorManager.primary,
                   ),
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(
                       borderSide: BorderSide(),
                     ),
                   ),
                   initialCountryCode: 'SA',
                   onChanged: (phone) {
-                    _countryCode = phone.countryCode;
-                    _phoneNumber = phone.number;
+                    countryCode = phone.countryCode;
+                    phoneNumber = phone.number;
                   },
                 ),
               ),

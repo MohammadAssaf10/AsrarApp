@@ -11,35 +11,36 @@ import '../../widgets/service/services_view.dart';
 
 class ServicesScreen extends StatelessWidget {
   final CompanyEntities company;
-  ServicesScreen(this.company);
+  const ServicesScreen(this.company, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(company.name)),
       body: BlocBuilder<ServicesBloc, ServicesState>(builder: (context, state) {
-        if (state is LoadingServicesState)
+        if (state is LoadingServicesState) {
           return LoadingView(
             height: MediaQuery.of(context).size.height / 1.2,
             width: MediaQuery.of(context).size.width,
           );
-        else if (state is ErrorServicesState)
+        } else if (state is ErrorServicesState) {
           return ErrorView(
             errorMessage: state.errorMessage.tr(context),
             height: MediaQuery.of(context).size.height / 1.2,
             width: MediaQuery.of(context).size.width,
           );
-        else if (state is LoadedServicesState) {
+        } else if (state is LoadedServicesState) {
           if (state.services.isNotEmpty) {
             return ServicesView(servicesList: state.services);
-          } else
+          } else {
             return EmptyListView(
               emptyListMessage: AppStrings.noServices.tr(context),
               height: MediaQuery.of(context).size.height / 1.2,
               width: MediaQuery.of(context).size.width,
             );
+          }
         }
-        return SizedBox();
+        return const SizedBox();
       }),
     );
   }

@@ -15,28 +15,30 @@ import 'my_wallet_screen.dart';
 import 'profile_screen.dart';
 
 class MainView extends StatelessWidget {
+  const MainView({super.key});
+
   @override
   Widget build(BuildContext context) {
-    PageController _controller = PageController(initialPage: 2);
+    PageController controller = PageController(initialPage: 2);
     return Scaffold(
       body: PageView(
-        controller: _controller,
+        controller: controller,
         onPageChanged: (v) {
           if (v == 4) {
             final authState = BlocProvider.of<AuthenticationBloc>(context).state;
-            BlocProvider.of<UserBloc>(context)..add(GetUserInfo(email: authState.user!.id));
+            BlocProvider.of<UserBloc>(context).add(GetUserInfo(email: authState.user!.id));
           }
         },
-        children: [
-          OrdersScreen(),
-          MyWalletScreen(),
-          HomeScreen(),
-          CustomersServiceScreen(),
-          ProfileScreen(),
+        children: const[
+           OrdersScreen(),
+           MyWalletScreen(),
+           HomeScreen(),
+           CustomersServiceScreen(),
+           ProfileScreen(),
         ],
       ),
       floatingActionButton: MaterialButton(
-        onPressed: () => _controller.jumpToPage(2),
+        onPressed: () => controller.jumpToPage(2),
         child: Image.asset(
           IconAssets.home,
           filterQuality: FilterQuality.high,
@@ -44,7 +46,7 @@ class MainView extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-        child: Container(
+        child: SizedBox(
           height: AppSize.s50.h,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -56,13 +58,13 @@ class MainView extends StatelessWidget {
                     title: AppStrings.orders.tr(context),
                     icon: IconAssets.orders,
                     onPress: () {
-                      _controller.jumpToPage(0);
+                      controller.jumpToPage(0);
                     },
                   ),
                   NavigationBarBottom(
                     title: AppStrings.myWallet.tr(context),
                     icon: IconAssets.wallet,
-                    onPress: () => _controller.jumpToPage(1),
+                    onPress: () => controller.jumpToPage(1),
                   ),
                 ],
               ),
@@ -72,13 +74,13 @@ class MainView extends StatelessWidget {
                   NavigationBarBottom(
                     title: AppStrings.customerService.tr(context),
                     icon: IconAssets.customersService,
-                    onPress: () => _controller.jumpToPage(3),
+                    onPress: () => controller.jumpToPage(3),
                   ),
                   NavigationBarBottom(
                     title: AppStrings.profile.tr(context),
                     icon: IconAssets.profile,
                     onPress: () {
-                      _controller.jumpToPage(4);
+                      controller.jumpToPage(4);
                     },
                   ),
                 ],

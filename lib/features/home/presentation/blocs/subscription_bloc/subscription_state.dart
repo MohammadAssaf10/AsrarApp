@@ -16,7 +16,7 @@ class SubscriptionLoadingState extends SubscriptionState {
 
 class SubscriptionErrorState extends SubscriptionState {
   final String errorMessage;
-  SubscriptionErrorState({
+  const SubscriptionErrorState({
     required this.errorMessage,
   });
   @override
@@ -25,7 +25,7 @@ class SubscriptionErrorState extends SubscriptionState {
 
 class SubscriptionsLoadedState extends SubscriptionState {
   final List<SubscriptionEntities> subscriptionList;
-  SubscriptionsLoadedState({
+  const SubscriptionsLoadedState({
     required this.subscriptionList,
   });
   @override

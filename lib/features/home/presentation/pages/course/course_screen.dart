@@ -41,7 +41,7 @@ class CoursesScreen extends StatelessWidget {
           } else if (state is CourseLoadedState) {
             if (state.courseList.isNotEmpty) {
               return ListView.builder(
-                physics: ScrollPhysics(),
+                physics: const ScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: state.courseList.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -159,15 +159,16 @@ class CoursesScreen extends StatelessWidget {
                 },
               );
             }
-            else
-            return EmptyListView(
+            else {
+              return EmptyListView(
                 emptyListMessage: AppStrings.noCourses.tr(context),
                 height: MediaQuery.of(context).size.height / 1.2,
                 width: MediaQuery.of(context).size.width,
               );
+            }
           }
 
-          return SizedBox();
+          return const SizedBox();
         },
       ),
     );

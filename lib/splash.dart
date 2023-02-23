@@ -19,17 +19,17 @@ class SplashScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, Routes.auth);
               },
-              child: Text('Auth')),
+              child: const Text('Auth')),
           ElevatedButton(
               onPressed: () {
                 BlocProvider.of<AuthenticationBloc>(context).add(LogOut());
               },
-              child: Text('logout')),
+              child: const Text('logout')),
           ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, Routes.homeRoute);
               },
-              child: Text('Home')),
+              child: const Text('Home')),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -38,13 +38,13 @@ class SplashScreen extends StatelessWidget {
                     print('ar');
                     context.read<LanguageCubit>().setArabic();
                   },
-                  child: Text('ar')),
+                  child: const Text('ar')),
               ElevatedButton(
                   onPressed: () {
                     print('en');
                     context.read<LanguageCubit>().setEnglish();
                   },
-                  child: Text('en')),
+                  child: const Text('en')),
             ],
           )
         ],

@@ -68,7 +68,7 @@ Future<void> initAuthenticationModule() async {
     instance.registerLazySingleton<WhatsappApi>(
         () => WhatsappApi(dio, baseUrl: whatsAppApiConstants.baseUrl));
 
-    instance.registerLazySingleton<AuthRepository>(() => registering(
+    instance.registerLazySingleton<AuthRepository>(() => FirebaseAuthRepository(
         instance<FirebaseAuthHelper>(),
         instance<NetworkInfo>(),
         instance<WhatsappApi>(),
