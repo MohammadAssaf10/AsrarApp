@@ -117,6 +117,7 @@ class AppStrings {
   static const String profileImageUpdated = "profile_image_updated";
   static const String passwordUpdated = "password_updated";
   static const String save = "save";
+  static const String userInfoUpdatedSuccessfully = "user_info_updated_successfully";
   // exception handler
   static const String success = "Success";
   static const String badRequestError = "Bad request error";

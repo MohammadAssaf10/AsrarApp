@@ -37,7 +37,6 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController controller = TextEditingController();
     return BlocListener<ShopOrderBloc, ShopOrderState>(
       listener: (context, state) {
         if (state is ShopOrderLoadingState) {
@@ -71,23 +70,21 @@ class _CartScreenState extends State<CartScreen> {
           color: ColorManager.transparent,
           height: AppSize.s40.h,
           child: ElevatedButton(
-            onPressed: ()async {
+            onPressed: () {
               final state = BlocProvider.of<AuthenticationBloc>(context).state;
               if (state.status == AuthStatus.loggedIn) {
                 showOrderDialog(
                   context,
                   AppStrings.whatsAppNumber.tr(context),
-                  state.user!.phoneNumber,
-                  controller,
+                  state.user!.phoneNumber.substring(4,state.user!.phoneNumber.length),
                   widget.cartList,
                   formKey,
-                  () async {
+                  (String completePhoneNumber) {
                     if (formKey.currentState!.validate()) {
-                      final int lastID = await getLastId() + 1;
                       final ShopOrderEntities shopOrder = ShopOrderEntities(
-                          shopOrderId: lastID,
+                          shopOrderId: 1,
                           user: state.user!,
-                          phoneNumber: controller.text,
+                          phoneNumber: completePhoneNumber,
                           products: widget.cartList,
                           totalPrice: getTotalProductsPrice(widget.cartList),
                           orderStatus: OrderStatus.pending.name);

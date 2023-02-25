@@ -17,7 +17,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<GetUserInfo>((event, emit) async {
       emit(UserLoadingState());
       try {
-        final user = await _authHelper.getUser(event.email);
+        final user = await _authHelper.getUser(event.id);
         emit(UserLoadedState(user: user));
       } catch (e) {
         emit(UserErrorState(errorMessage: e.toString()));
@@ -25,7 +25,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     });
     on<UpdateUserImageEvent>((event, emit) async {
       emit(UserLoadingState());
-      (await userRepository.updateUserImage(event.image, event.email)).fold(
+      (await userRepository.updateUserImage(event.image, event.user)).fold(
           (failure) {
         emit(UserErrorState(errorMessage: failure.message));
       }, (r) {
@@ -38,6 +38,16 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         emit(PasswordUpdatedErrorState(errorMessage: failure.message));
       }, (r) {
         emit(PasswordUpdatedSuccessfullyState());
+      });
+    });
+    on<UpdateUserInfo>((event, emit) async {
+      emit(UserLoadingState());
+      (await userRepository.updateUserInfo(event.oldUser, event.newEmail,
+              event.newName, event.newPhoneNumber))
+          .fold((failure) {
+        emit(UserErrorState(errorMessage: failure.message));
+      }, (r) {
+        emit(UserInfoUpdatedSuccessfullyState());
       });
     });
   }

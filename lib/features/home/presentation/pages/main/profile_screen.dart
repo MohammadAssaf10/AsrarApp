@@ -41,7 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             showCustomDialog(context,
                 message: AppStrings.profileImageUpdated.tr(context));
             BlocProvider.of<UserBloc>(context).add(
-              GetUserInfo(email: authState.user!.email),
+              GetUserInfo(id: authState.user!.id),
             );
           }
           if (state is PasswordUpdatedLoadingState) {
@@ -50,14 +50,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           if (state is PasswordUpdatedErrorState) {
             showCustomDialog(context, message: state.errorMessage.tr(context));
             BlocProvider.of<UserBloc>(context).add(
-              GetUserInfo(email: authState.user!.email),
+              GetUserInfo(id: authState.user!.id),
             );
           }
           if (state is PasswordUpdatedSuccessfullyState) {
             showCustomDialog(context,
                 message: AppStrings.passwordUpdated.tr(context));
             BlocProvider.of<UserBloc>(context).add(
-              GetUserInfo(email: authState.user!.id),
+              GetUserInfo(id: authState.user!.id),
             );
           }
         },
@@ -103,7 +103,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           onTap: () {
                             BlocProvider.of<UserBloc>(context).add(
                               UpdateUserImageEvent(
-                                  email: authState.user!.id, image: image!),
+                                  user: state.user, image: image!),
                             );
                             image = null;
                           },

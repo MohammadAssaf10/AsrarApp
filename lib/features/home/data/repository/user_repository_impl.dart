@@ -7,71 +7,79 @@ import '../../../../core/app/di.dart';
 import '../../../../core/app/functions.dart';
 import '../../../../core/data/exception_handler.dart';
 import '../../../../core/data/failure.dart';
+import '../../../../core/network/network_info.dart';
 import '../../../auth/data/data_sources/firebase_auth_helper.dart';
+import '../../../auth/domain/entities/user.dart';
 import '../../../auth/domain/repository/auth_repository.dart';
 import '../../domain/entities/file_entities.dart';
 import '../../domain/repository/user_repository.dart';
-import '../../../auth/domain/entities/user.dart' as domain;
+import '../../../auth/domain/entities/user.dart';
 
 class UserRepositoryImpl extends UserRepository {
   final FirebaseAuthHelper _authHelper = instance<FirebaseAuthHelper>();
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  final AuthRepository authRepository = instance<AuthRepository>();
+  final AuthRepository authRepository;
+  final NetworkInfo networkInfo;
+  UserRepositoryImpl({required this.networkInfo, required this.authRepository});
 
   @override
-  Future<Either<Failure, Unit>> updateUserImage(
-      XFile image, String email) async {
-    try {
-      final path = "${FireBaseConstants.user}/$email";
-      final user = await firestore.collection("Users").doc(email).get();
-      if (user['imageURL'] == "" && user['imageName'] == "") {
+  Future<Either<Failure, Unit>> updateUserImage(XFile image, User user) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final path = "${FireBaseConstants.user}/${user.id}";
+        if (user.imageName.isNotEmpty && user.imageURL.isNotEmpty) {
+          await deleteFile("$path/${user.imageName}");
+        }
         final FileEntities file =
             await uploadFile("$path/${image.name}", image);
-        await firestore.collection("Users").doc(email).update({
-          "imageURL": file.url,
-          "imageName": file.name,
-        });
-      } else {
-        await deleteFile("$path/${user['imageName']}");
-        final FileEntities file =
-            await uploadFile("$path/${image.name}", image);
-        await firestore.collection("Users").doc(email).update({
-          "imageURL": file.url,
-          "imageName": file.name,
-        });
+        user = user.copyWith(imageName: file.name, imageURL: file.url);
+        await firestore
+            .collection(userCollectionPath)
+            .doc(user.id)
+            .update(user.toMap());
+        return const Right(unit);
+      } catch (e) {
+        return Left(ExceptionHandler.handle(e).failure);
       }
-      return const Right(unit);
-    } catch (e) {
-      return Left(ExceptionHandler.handle(e).failure);
+    } else {
+      return Left(DataSourceExceptions.noInternetConnections.getFailure());
     }
   }
 
   @override
   Future<Either<Failure, Unit>> updatePassword(String newPassword) async {
-    try {
-      final user = _authHelper.getCurrentUser();
-      await user?.updatePassword(newPassword);
-      return const Right(unit);
-    } catch (e) {
-      return Left(ExceptionHandler.handle(e).failure);
+    if (await networkInfo.isConnected) {
+      try {
+        final user = _authHelper.getCurrentUser();
+        await user?.updatePassword(newPassword);
+        return const Right(unit);
+      } catch (e) {
+        return Left(ExceptionHandler.handle(e).failure);
+      }
+    } else {
+      return Left(DataSourceExceptions.noInternetConnections.getFailure());
     }
   }
 
   @override
-  Future<Either<Failure, Unit>> updateUserInfo(domain.User oldUser,
-      String newEmail, String newName, String newPhoneNumber) async {
-    try {
-      final user = _authHelper.getCurrentUser();
-      await user?.updateEmail(newEmail);
-      domain.User updatedUser = oldUser.copyWith(
-        name: newName,
-        email: newEmail,
-        phoneNumber: newPhoneNumber,
-      );
-      await authRepository.updateUserData(updatedUser);
-      return const Right(unit);
-    } catch (e) {
-      return Left(ExceptionHandler.handle(e).failure);
+  Future<Either<Failure, Unit>> updateUserInfo(User oldUser, String newEmail,
+      String newName, String newPhoneNumber) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final user = _authHelper.getCurrentUser();
+        await user?.updateEmail(newEmail);
+        oldUser = oldUser.copyWith(
+          name: newName,
+          email: newEmail,
+          phoneNumber: newPhoneNumber,
+        );
+        await authRepository.updateUserData(oldUser);
+        return const Right(unit);
+      } catch (e) {
+        return Left(ExceptionHandler.handle(e).failure);
+      }
+    } else {
+      return Left(DataSourceExceptions.noInternetConnections.getFailure());
     }
   }
 }

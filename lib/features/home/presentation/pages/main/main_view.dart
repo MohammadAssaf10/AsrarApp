@@ -26,7 +26,7 @@ class MainView extends StatelessWidget {
         onPageChanged: (v) {
           if (v == 4) {
             final authState = BlocProvider.of<AuthenticationBloc>(context).state;
-            BlocProvider.of<UserBloc>(context).add(GetUserInfo(email: authState.user!.id));
+            BlocProvider.of<UserBloc>(context).add(GetUserInfo(id: authState.user!.id));
           }
         },
         children: const[

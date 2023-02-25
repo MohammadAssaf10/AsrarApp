@@ -5,18 +5,18 @@ abstract class UserEvent extends Equatable {
 }
 
 class GetUserInfo extends UserEvent {
-  final String email;
-  const GetUserInfo({required this.email});
+  final String id;
+  const GetUserInfo({required this.id});
   @override
-  List<Object?> get props => [email];
+  List<Object?> get props => [id];
 }
 
 class UpdateUserImageEvent extends UserEvent {
-  final String email;
+  final User user;
   final XFile image;
-  const UpdateUserImageEvent({required this.email, required this.image});
+  const UpdateUserImageEvent({required this.user, required this.image});
   @override
-  List<Object?> get props => [email, image];
+  List<Object?> get props => [user, image];
 }
 
 class UpdatePasswordEvent extends UserEvent {
@@ -24,4 +24,18 @@ class UpdatePasswordEvent extends UserEvent {
   const UpdatePasswordEvent({required this.newPassword});
   @override
   List<Object?> get props => [newPassword];
+}
+
+class UpdateUserInfo extends UserEvent {
+  final User oldUser;
+  final String newEmail;
+  final String newName;
+  final String newPhoneNumber;
+  const UpdateUserInfo(
+      {required this.oldUser,
+      required this.newEmail,
+      required this.newName,
+      required this.newPhoneNumber});
+  @override
+  List<Object?> get props => [oldUser, newEmail, newName, newPhoneNumber];
 }

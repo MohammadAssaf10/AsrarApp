@@ -33,7 +33,7 @@ class SubscriptionScreen extends StatelessWidget {
             );
           } else if (state is SubscriptionErrorState) {
             return ErrorView(
-              errorMessage: state.errorMessage,
+              errorMessage: state.errorMessage.tr(context),
               height: MediaQuery.of(context).size.height / 1.2,
               width: MediaQuery.of(context).size.width,
             );

@@ -95,7 +95,9 @@ void initHomeModule() {
       );
     });
     instance.registerLazySingleton<UserRepository>(() {
-      return UserRepositoryImpl();
+      return UserRepositoryImpl(
+          networkInfo: instance<NetworkInfo>(),
+          authRepository: instance<AuthRepository>());
     });
   }
 }
@@ -105,6 +107,6 @@ void initChatModule(ServiceOrder serviceOrder) {
     instance.unregister<ChatRepository>();
   }
 
-  instance.registerFactory<ChatRepository>(() =>
-      FirebaseChatRepository(FirebaseFirestore.instance, instance<NetworkInfo>(), serviceOrder));
+  instance.registerFactory<ChatRepository>(() => FirebaseChatRepository(
+      FirebaseFirestore.instance, instance<NetworkInfo>(), serviceOrder));
 }

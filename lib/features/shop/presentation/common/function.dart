@@ -32,15 +32,13 @@ void showOrderDialog(
   BuildContext context,
   String title,
   String number,
-  TextEditingController controller,
   List<ProductEntities> cartList,
   GlobalKey<FormState> formKey,
-  Function acceptOnTap,
+  Function(String completePhoneNumber) acceptOnTap,
 ) async {
-  controller.text = number;
-  String phoneNumber = '';
-  String countryCode = '';
-
+  String phoneNumber = number;
+  String countryCode = '+966';
+  final TextEditingController controller = TextEditingController(text: number);
   showDialog(
     context: context,
     builder: (_) {
@@ -74,8 +72,8 @@ void showOrderDialog(
                   controller: controller,
                   invalidNumberMessage:
                       AppStrings.mobileNumberFormatNotCorrect.tr(context),
-                      // ignore: deprecated_member_use
-                      searchText: AppStrings.searchCountry.tr(context),
+                  // ignore: deprecated_member_use
+                  searchText: AppStrings.searchCountry.tr(context),
                   dropdownIcon: const Icon(
                     Icons.arrow_drop_down,
                     color: ColorManager.primary,
@@ -103,7 +101,15 @@ void showOrderDialog(
               children: [
                 OptionButton(
                   onTap: () {
-                    acceptOnTap();
+                    if (phoneNumber[0] == '0') {
+                      phoneNumber = phoneNumber.replaceFirst('0', '');
+                    }
+                    phoneNumber = countryCode + phoneNumber;
+                    phoneNumber
+                        .replaceAll(' ', '')
+                        .replaceAll('-', '')
+                        .replaceAll('+', '');
+                    acceptOnTap(phoneNumber);
                   },
                   title: AppStrings.checkout.tr(context),
                   height: AppSize.s35.h,
@@ -129,13 +135,6 @@ void showOrderDialog(
       );
     },
   );
-  if (phoneNumber[0] == '0') {
-    phoneNumber = phoneNumber.replaceFirst('0', '');
-  }
-
-  phoneNumber = countryCode + phoneNumber;
-  phoneNumber.replaceAll(' ', '').replaceAll('-', '').replaceAll('+', '');
-  controller.text = phoneNumber;
 }
 
 String getTotalProductsPrice(List<ProductEntities> cartList) {

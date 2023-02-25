@@ -1,15 +1,14 @@
-import 'package:asrar_app/features/shop/domain/entities/shop_order_entities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 
-import 'package:asrar_app/features/shop/domain/entities/product_entities.dart';
-
-import 'package:asrar_app/core/data/failure.dart';
-
 import '../../../../core/app/constants.dart';
 import '../../../../core/data/exception_handler.dart';
+import '../../../../core/data/failure.dart';
 import '../../../../core/network/network_info.dart';
+import '../../domain/entities/product_entities.dart';
+import '../../domain/entities/shop_order_entities.dart';
 import '../../domain/repositories/shop_repository.dart';
+import '../../presentation/common/function.dart';
 
 class ShopRepositoryImpl extends ShopRepository {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -21,7 +20,8 @@ class ShopRepositoryImpl extends ShopRepository {
     if (await networkInfo.isConnected) {
       try {
         List<ProductEntities> productsList = [];
-        final products = await firestore.collection(FireBaseConstants.products).get();
+        final products =
+            await firestore.collection(FireBaseConstants.products).get();
         for (var doc in products.docs) {
           productsList.add(ProductEntities.fromMap(doc.data()));
         }
@@ -35,8 +35,10 @@ class ShopRepositoryImpl extends ShopRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> addShopOrder(ShopOrderEntities shopOrder) async {
+  Future<Either<Failure, Unit>> addShopOrder(
+      ShopOrderEntities shopOrder) async {
     try {
+      shopOrder = shopOrder.copyWith(shopOrderId: (await getLastId()) + 1);
       await firestore
           .collection(FireBaseConstants.shopOrders)
           .doc(shopOrder.shopOrderId.toString())
@@ -48,11 +50,13 @@ class ShopRepositoryImpl extends ShopRepository {
   }
 
   @override
-  Future<Either<Failure, List<ShopOrderEntities>>> getShopOrder(String userId) async {
+  Future<Either<Failure, List<ShopOrderEntities>>> getShopOrder(
+      String userId) async {
     if (await networkInfo.isConnected) {
       try {
         List<ShopOrderEntities> shopOrderList = [];
-        final shopOrders = await firestore.collection(FireBaseConstants.shopOrders).get();
+        final shopOrders =
+            await firestore.collection(FireBaseConstants.shopOrders).get();
         for (var doc in shopOrders.docs) {
           if (doc["user"]["id"] == userId) {
             shopOrderList.add(ShopOrderEntities.fromMap(doc.data()));
@@ -69,7 +73,8 @@ class ShopRepositoryImpl extends ShopRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> cancelShopOrder(ShopOrderEntities shopOrder) async {
+  Future<Either<Failure, Unit>> cancelShopOrder(
+      ShopOrderEntities shopOrder) async {
     try {
       await firestore
           .collection(FireBaseConstants.shopOrders)

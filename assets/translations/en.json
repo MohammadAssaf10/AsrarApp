@@ -99,6 +99,9 @@
   "canceled": "Canceled",
   "canceling": "Canceling",
   "no_orders": "No Orders",
+  "camera": "Camera",
+  "gallery": "Gallery",
+  "user_info_updated_successfully": "User Info Updated Successfully",
 
   "Success": "Success",
   "Bad request error": "Bad request error",
