@@ -45,9 +45,13 @@ class AppStrings {
       "we_send_you_an_email_please_check_your_email_address";
   static const String continueAsGuest = 'continue as guest';
 
+  static const String completedSuccessfully = 'completedSuccessfully';
+  static const String cancelOrder = 'cancelOrder';
+  static const String cantCancel = 'cantCancel';
+  static const String riseAComplaint = 'riseAComplaint';
   static const String confirm = 'confirm';
   static const String chat = 'chat';
- 
+  static const String waitingForAcceptingTheService = 'waitingForAcceptingTheService';
 
   // home
   static const String asrar = "asrar";
@@ -110,7 +114,7 @@ class AppStrings {
   static const String orderName = "orderName";
   static const String pending = "pending";
   static const String inProgress = "inProgress";
-  static const String finished = "finished";
+  static const String completed = "completed";
   static const String canceled = "canceled";
   static const String canceling = "canceling";
   static const String noOrders = "no_orders";

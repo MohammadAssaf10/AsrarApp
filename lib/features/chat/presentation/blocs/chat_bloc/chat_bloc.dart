@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../../core/app/constants.dart';
 import '../../../../../core/app/di.dart';
 import '../../../../home/domain/entities/service_order.dart';
 import '../../../domain/entities/message.dart';

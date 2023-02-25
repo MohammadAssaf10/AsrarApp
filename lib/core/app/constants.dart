@@ -17,4 +17,6 @@ class FireBaseConstants {
   static String termsOfUse = "termsOfUse";
 }
 
-enum OrderStatus { inProgress, pending, finished, canceled }
+enum OrderStatus { inProgress, pending, completed, canceled }
+
+enum Status { init, loading, success, failed }

@@ -6,6 +6,7 @@ import '../entities/service_order.dart';
 
 abstract class ServiceOrderRepository {
   Future<Either<Failure, List<ServiceOrder>>> getUserOrder(User user);
-  Future<Either<Failure, void>> addOrder(ServiceOrder serviceOrder);
+  Future<Either<Failure, List<ServiceOrder>>> addOrder(ServiceOrder serviceOrder);
   Future<Either<Failure, void>> cancelOrder(ServiceOrder serviceOrder);
+  Future<Either<Failure, void>> completeOrder(ServiceOrder serviceOrder);
 }

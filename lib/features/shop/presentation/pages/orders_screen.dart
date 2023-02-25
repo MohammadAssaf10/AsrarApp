@@ -24,7 +24,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
       appBar: AppBar(
         title: Text(AppStrings.orders.tr(context)),
       ),
-      body: ListView(
+      body: Column(
         children: [
           SwitcherWidget(
             executeWhenPressSecond: () {
@@ -37,12 +37,14 @@ class _OrdersScreenState extends State<OrdersScreen> {
               });
             },
           ),
-          AnimatedCrossFade(
-            alignment: Alignment.center,
-            firstChild: const ShopOrderView(),
-            secondChild: const ServiceOrderView(),
-            crossFadeState: isFirst ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-            duration: const Duration(milliseconds: 250),
+          Expanded(
+            child: AnimatedCrossFade(
+              alignment: Alignment.center,
+              firstChild: ShopOrderView(),
+              secondChild: ServiceOrderView(),
+              crossFadeState: isFirst ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+              duration: Duration(milliseconds: 250),
+            ),
           ),
         ],
       ),

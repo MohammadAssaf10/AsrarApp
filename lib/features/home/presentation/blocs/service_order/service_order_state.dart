@@ -1,7 +1,5 @@
 part of 'service_order_bloc.dart';
 
-enum Status { init, loading, success, failed }
-
 /// [processStatus] is for event like [AddOrder] and [CancelOrder]
 // * if for some reason regenerate data class is needed
 // - in [copyWith] remove the ?? in message
