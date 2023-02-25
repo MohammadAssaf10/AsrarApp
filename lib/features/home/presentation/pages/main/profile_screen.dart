@@ -5,16 +5,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../../config/color_manager.dart';
+import '../../../../../config/routes_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../../../../core/app/functions.dart';
 import '../../../../auth/presentation/bloc/authentication_bloc.dart';
-import '../../../data/repository/user_repository_impl.dart';
-import '../../../domain/repository/user_repository.dart';
 import '../../blocs/user_bloc/user_bloc.dart';
 import '../../widgets/general/error_view.dart';
 import '../../widgets/general/home_button_widgets.dart';
+import '../../widgets/general/list_tile.dart';
 import '../../widgets/general/loading_view.dart';
 import '../../widgets/general/profile_image.dart';
 
@@ -28,6 +28,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController newPasswordController = TextEditingController();
   final TextEditingController oldPasswordController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey();
   XFile? image;
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             showCustomDialog(context,
                 message: AppStrings.profileImageUpdated.tr(context));
             BlocProvider.of<UserBloc>(context).add(
-              GetUserInfo(email: authState.user!.email),
+              GetUserInfo(id: authState.user!.id),
             );
           }
           if (state is PasswordUpdatedLoadingState) {
@@ -49,30 +50,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
           if (state is PasswordUpdatedErrorState) {
             showCustomDialog(context, message: state.errorMessage.tr(context));
             BlocProvider.of<UserBloc>(context).add(
-              GetUserInfo(email: authState.user!.email),
+              GetUserInfo(id: authState.user!.id),
             );
           }
           if (state is PasswordUpdatedSuccessfullyState) {
             showCustomDialog(context,
                 message: AppStrings.passwordUpdated.tr(context));
             BlocProvider.of<UserBloc>(context).add(
-              GetUserInfo(email: authState.user!.id),
+              GetUserInfo(id: authState.user!.id),
             );
           }
         },
         builder: (context, state) {
-          if (state is UserLoadingState)
+          if (state is UserLoadingState) {
             return LoadingView(
               height: MediaQuery.of(context).size.height / 1.3,
               width: MediaQuery.of(context).size.width,
             );
-          else if (state is UserErrorState)
+          } else if (state is UserErrorState) {
             return ErrorView(
               errorMessage: state.errorMessage,
               height: MediaQuery.of(context).size.height / 1.3,
               width: MediaQuery.of(context).size.width,
             );
-          else if (state is UserLoadedState)
+          } else if (state is UserLoadedState){
             return ListView(
               shrinkWrap: true,
               children: [
@@ -101,7 +102,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: OptionButton(
                           onTap: () {
                             BlocProvider.of<UserBloc>(context).add(
-                              UpdateUserImageEvent(email: authState.user!.id, image: image!),
+                              UpdateUserImageEvent(
+                                  user: state.user, image: image!),
                             );
                             image = null;
                           },
@@ -111,6 +113,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fontSize: AppSize.s20.sp,
                         ),
                       ),
+                ListTile(
+                  title: Text(
+                    "السماح باظهار الاشعارات\nعلى الشاشة الرئيسية",
+                    style: getAlmaraiRegularStyle(
+                      fontSize: AppSize.s18.sp,
+                      color: ColorManager.darkGrey,
+                    ),
+                  ),
+                  trailing: Switch(
+                    activeColor: ColorManager.primary,
+                    value: true,
+                    onChanged: (v){},
+                  ),
+                ),
                 Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: AppSize.s10.w,
@@ -125,47 +141,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                 ),
-                ListTile(
+                ListTileWidget(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      Routes.yourAccountRoute,
+                      arguments: state.user,
+                    );
+                  },
+                  title: AppStrings.yourAccount.tr(context),
+                  icon: Icons.person_outline,
+                ),
+                Divider(
+                  height: AppSize.s1.h,
+                  thickness: AppSize.s0_5.h,
+                  color: ColorManager.grey,
+                ),
+                ListTileWidget(
                   onTap: () {
                     showNewPasswordDialog(
                       context,
                       newPasswordController,
+                      formKey,
                       () {
-                        // BlocProvider.of<UserBloc>(context).add(
-                        //   UpdatePasswordEvent(
-                        //       newPassword: newPasswordController.text),
-                        // );
-                        final UserRepository userRepository =
-                            UserRepositoryImpl();
-                        userRepository.updateUserInfo(authState.user!,
-                            "Mohamadassaf@test.com", "Mohamad assaf", "963968609046");
+                        if (formKey.currentState!.validate()) {
+                          BlocProvider.of<UserBloc>(context).add(
+                            UpdatePasswordEvent(
+                                newPassword: newPasswordController.text),
+                          );
+                        }
                       },
                     );
                   },
-                  title: Row(
-                    children: [
-                      Icon(
-                        Icons.lock_outline_rounded,
-                        size: AppSize.s25.sp,
-                      ),
-                      SizedBox(width: AppSize.s8.w),
-                      Text(
-                        AppStrings.changePassword.tr(context),
-                        style: getAlmaraiRegularStyle(
-                          fontSize: AppSize.s18.sp,
-                          color: ColorManager.primary,
-                        ),
-                      ),
-                    ],
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    size: AppSize.s20.sp,
-                  ),
+                  title: AppStrings.changePassword.tr(context),
+                  icon: Icons.lock_outline_rounded,
                 ),
               ],
-            );
-          return SizedBox();
+            );}
+          return const SizedBox();
         },
       ),
     );

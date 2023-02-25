@@ -10,7 +10,7 @@ import '../../../domain/entities/news_entities.dart';
 import '../../widgets/general/cached_network_image_widget.dart';
 
 class NewsDetailsScreen extends StatelessWidget {
-  const NewsDetailsScreen(this.news);
+  const NewsDetailsScreen(this.news, {super.key});
   final NewsEntities news;
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class NewsDetailsScreen extends StatelessWidget {
             height: AppSize.s220.h,
             width: double.infinity,
             shapeBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: ColorManager.transparent),
+              borderSide: BorderSide.none,
               borderRadius: BorderRadius.circular(AppSize.s10.r),
             ),
           ),

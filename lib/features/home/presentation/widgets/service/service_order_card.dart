@@ -47,7 +47,7 @@ class ServiceOrderCard extends StatelessWidget {
             Expanded(
               child: Card(
                 color: ColorManager.darkWhite,
-                shape: CircleBorder(),
+                shape: const CircleBorder(),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

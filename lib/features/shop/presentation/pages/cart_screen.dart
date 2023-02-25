@@ -17,7 +17,7 @@ import '../common/function.dart';
 import '../common/widgets/cart_widget.dart';
 
 class CartScreen extends StatefulWidget {
-  CartScreen(this.cartList);
+  const CartScreen(this.cartList, {super.key});
   final List<ProductEntities> cartList;
 
   @override
@@ -28,14 +28,15 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void dispose() {
     super.dispose();
-    widget.cartList.forEach((element) {
+    for (var element in widget.cartList) {
       element.productCount = 1;
-    });
+    }
   }
+
+  final GlobalKey<FormState> formKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController controller = TextEditingController();
     return BlocListener<ShopOrderBloc, ShopOrderState>(
       listener: (context, state) {
         if (state is ShopOrderLoadingState) {
@@ -52,11 +53,11 @@ class _CartScreenState extends State<CartScreen> {
           title: Text(AppStrings.cart.tr(context)),
         ),
         body: ListView.builder(
-          physics: ScrollPhysics(),
+          physics: const ScrollPhysics(),
           shrinkWrap: true,
           itemCount: widget.cartList.length,
           itemBuilder: (_, int index) {
-            return cartWidget(
+            return CartWidget(
               product: widget.cartList[index],
             );
           },
@@ -75,21 +76,22 @@ class _CartScreenState extends State<CartScreen> {
                 showOrderDialog(
                   context,
                   AppStrings.whatsAppNumber.tr(context),
-                  state.user!.phoneNumber,
-                  controller,
+                  state.user!.phoneNumber.substring(4,state.user!.phoneNumber.length),
                   widget.cartList,
-                  () async {
-                    final int lastID = await getLastId() + 1;
-                    final ShopOrderEntities shopOrder = ShopOrderEntities(
-                        shopOrderId: lastID,
-                        user: state.user!,
-                        phoneNumber: controller.text,
-                        products: widget.cartList,
-                        totalPrice: getTotalProductsPrice(widget.cartList),
-                        orderStatus: OrderStatus.pending.name);
-                    BlocProvider.of<ShopOrderBloc>(context).add(
-                      AddShopOrderEvent(shopOrder: shopOrder),
-                    );
+                  formKey,
+                  (String completePhoneNumber) {
+                    if (formKey.currentState!.validate()) {
+                      final ShopOrderEntities shopOrder = ShopOrderEntities(
+                          shopOrderId: 1,
+                          user: state.user!,
+                          phoneNumber: completePhoneNumber,
+                          products: widget.cartList,
+                          totalPrice: getTotalProductsPrice(widget.cartList),
+                          orderStatus: OrderStatus.pending.name);
+                      BlocProvider.of<ShopOrderBloc>(context).add(
+                        AddShopOrderEvent(shopOrder: shopOrder),
+                      );
+                    }
                   },
                 );
               }

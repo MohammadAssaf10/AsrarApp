@@ -8,17 +8,17 @@ import '../../../../../core/app/functions.dart';
 import '../../../../home/presentation/widgets/general/cached_network_image_widget.dart';
 import '../../../domain/entities/product_entities.dart';
 
-class cartWidget extends StatefulWidget {
-  const cartWidget({
+class CartWidget extends StatefulWidget {
+  const CartWidget({
     super.key,
     required this.product,
   });
   final ProductEntities product;
   @override
-  State<cartWidget> createState() => _cartWidgetState();
+  State<CartWidget> createState() => _CartWidgetState();
 }
 
-class _cartWidgetState extends State<cartWidget> {
+class _CartWidgetState extends State<CartWidget> {
   late double totalProductPrice;
   @override
   void initState() {
@@ -104,7 +104,7 @@ class _cartWidgetState extends State<cartWidget> {
                             stringToDouble(widget.product.productPrice);
                       });
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.add,
                       color: ColorManager.white,
                     ),
@@ -129,7 +129,7 @@ class _cartWidgetState extends State<cartWidget> {
                         });
                       }
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.remove,
                       color: ColorManager.white,
                     ),

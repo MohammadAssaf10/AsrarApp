@@ -11,10 +11,10 @@ part 'service_order_event.dart';
 part 'service_order_state.dart';
 
 class ServiceOrderBloc extends Bloc<ServiceOrderEvent, ServiceOrderState> {
-  ServiceOrderRepository _serviceOrderRepository = instance();
+  final ServiceOrderRepository _serviceOrderRepository = instance();
 
   ServiceOrderBloc()
-      : super(ServiceOrderState(
+      : super(const ServiceOrderState(
             serviceOrderListStatus: Status.init,
             serviceOrderList: [],
             processStatus: Status.init)) {

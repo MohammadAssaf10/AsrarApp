@@ -8,7 +8,7 @@ import '../../../../../config/values_manager.dart';
 import 'cached_network_image_widget.dart';
 
 class ProfileImage extends StatelessWidget {
-  ProfileImage({
+  const ProfileImage({
     Key? key,
     required this.userImage,
     required this.onPress,
@@ -24,7 +24,7 @@ class ProfileImage extends StatelessWidget {
         children: [
           if (userImage.isEmpty && imagePicked == null)
             Card(
-              shape: CircleBorder(),
+              shape: const CircleBorder(),
               margin: EdgeInsets.symmetric(vertical: AppSize.s8.h),
               child: Icon(
                 Icons.person,
@@ -35,12 +35,12 @@ class ProfileImage extends StatelessWidget {
           if (userImage.isNotEmpty && imagePicked == null)
             CachedNetworkImageWidget(
               image: userImage,
-              shapeBorder: CircleBorder(),
+              shapeBorder: const CircleBorder(),
               height: AppSize.s150.h,
               width: AppSize.s150.w,
               verticalMargin: AppSize.s8.h,
               blurRadius: 10,
-              offset: Offset(2, 2),
+              offset: const Offset(2, 2),
               boxFit: BoxFit.cover,
             ),
           if (imagePicked != null)
@@ -49,9 +49,9 @@ class ProfileImage extends StatelessWidget {
               width: AppSize.s150.w,
               margin: EdgeInsets.symmetric(vertical: AppSize.s8.h),
               decoration: ShapeDecoration(
-                shape: CircleBorder(),
-                shadows: [
-                  BoxShadow(
+                shape: const CircleBorder(),
+                shadows: const[
+                   BoxShadow(
                     color: ColorManager.grey,
                     blurRadius: 10,
                     spreadRadius: 1,
@@ -79,7 +79,7 @@ class ProfileImage extends StatelessWidget {
               ),
               backgroundColor: ColorManager.primary,
               side: BorderSide.none,
-              shape: CircleBorder(),
+              shape: const CircleBorder(),
               pressElevation: 3,
             ),
           ),

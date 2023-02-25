@@ -11,8 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_localization: ^0.1.9
   cupertino_icons: ^1.0.2
+  flutter_localization: ^0.1.10
   shared_preferences: ^2.0.15
   cached_network_image: ^3.2.3
   flutter_native_splash: ^2.2.16

@@ -11,7 +11,7 @@ class ServiceOrderState extends Equatable {
   final Status processStatus;
   final String? message;
 
-  ServiceOrderState({
+  const ServiceOrderState({
     required this.serviceOrderListStatus,
     required this.serviceOrderList,
     required this.processStatus,

@@ -9,7 +9,7 @@ class PayScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("الدفع"),
+        title: const Text("الدفع"),
       ),
       body: Center(
         child: Image.asset("$imagePath/pay.png"),

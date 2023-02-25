@@ -13,7 +13,7 @@ part 'chat_event.dart';
 part 'chat_state.dart';
 
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
-  ChatRepository _chatRepository = instance();
+  final ChatRepository _chatRepository = instance();
   StreamSubscription? _messageStream;
 
   ChatBloc() : super(ChatState.init()) {

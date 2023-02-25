@@ -37,14 +37,14 @@ class ChatTextField extends StatelessWidget {
                   _chatController.clear();
                 }
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.send,
                 color: ColorManager.primary,
               )),
           Expanded(
             child: TextField(
               controller: _chatController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 enabledBorder: InputBorder.none,
                 // focused border style
                 focusedBorder: InputBorder.none,

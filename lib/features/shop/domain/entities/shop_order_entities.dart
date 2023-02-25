@@ -7,7 +7,7 @@ class ShopOrderEntities {
   final String phoneNumber;
   final List<ProductEntities> products;
   final String totalPrice;
-  String orderStatus;
+  final String orderStatus;
   ShopOrderEntities({
     required this.shopOrderId,
     required this.user,
@@ -42,5 +42,23 @@ class ShopOrderEntities {
   @override
   String toString() {
     return 'ShopOrderEntities(shopOrderId: $shopOrderId, user: $user, phoneNumber: $phoneNumber, products: $products, totalPrice: $totalPrice, orderStatus: $orderStatus)';
+  }
+
+  ShopOrderEntities copyWith({
+    int? shopOrderId,
+    User? user,
+    String? phoneNumber,
+    List<ProductEntities>? products,
+    String? totalPrice,
+    String? orderStatus,
+  }) {
+    return ShopOrderEntities(
+      shopOrderId: shopOrderId ?? this.shopOrderId,
+      user: user ?? this.user,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      products: products ?? this.products,
+      totalPrice: totalPrice ?? this.totalPrice,
+      orderStatus: orderStatus ?? this.orderStatus,
+    );
   }
 }

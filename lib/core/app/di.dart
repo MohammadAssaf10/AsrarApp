@@ -68,7 +68,7 @@ Future<void> initAuthenticationModule() async {
     instance.registerLazySingleton<WhatsappApi>(
         () => WhatsappApi(dio, baseUrl: whatsAppApiConstants.baseUrl));
 
-    instance.registerLazySingleton<AuthRepository>(() => registering(
+    instance.registerLazySingleton<AuthRepository>(() => FirebaseAuthRepository(
         instance<FirebaseAuthHelper>(),
         instance<NetworkInfo>(),
         instance<WhatsappApi>(),
@@ -95,7 +95,9 @@ void initHomeModule() {
       );
     });
     instance.registerLazySingleton<UserRepository>(() {
-      return UserRepositoryImpl();
+      return UserRepositoryImpl(
+          networkInfo: instance<NetworkInfo>(),
+          authRepository: instance<AuthRepository>());
     });
   }
 }
@@ -105,6 +107,6 @@ void initChatModule(ServiceOrder serviceOrder) {
     instance.unregister<ChatRepository>();
   }
 
-  instance.registerFactory<ChatRepository>(() =>
-      FirebaseChatRepository(FirebaseFirestore.instance, instance<NetworkInfo>(), serviceOrder));
+  instance.registerFactory<ChatRepository>(() => FirebaseChatRepository(
+      FirebaseFirestore.instance, instance<NetworkInfo>(), serviceOrder));
 }

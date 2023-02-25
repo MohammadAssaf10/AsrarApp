@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../config/app_localizations.dart';
 import '../../../../config/strings_manager.dart';
+import '../../../../config/values_manager.dart';
 import '../bloc/authentication_bloc.dart';
 import '../common/widgets/widgets.dart';
 
@@ -45,18 +46,18 @@ class _VerificationViewState extends State<VerificationView> {
             children: [
               Text(AppStrings.verificationCodeSentTo.tr(context)),
               SizedBox(
-                height: 10,
+                height: AppSize.s10.h,
               ),
               Text(authenticationBloc.state.user!.phoneNumber),
               SizedBox(
-                height: 10,
+                height: AppSize.s10.h,
               ),
               TextFrom(
                   controller: _codeTextEditingController,
                   icon: Icons.comment_rounded,
                   label: AppStrings.verificationCode.tr(context)),
               SizedBox(
-                height: 10,
+                height: AppSize.s10.h,
               ),
               FullElevatedButton(
                   onPressed: () {
@@ -66,9 +67,9 @@ class _VerificationViewState extends State<VerificationView> {
                       showDialog(
                           context: context,
                           builder: (context) {
-                            return Dialog(
+                            return const Dialog(
                               child: Padding(
-                                padding: const EdgeInsets.all(18.0),
+                                padding: EdgeInsets.all(18.0),
                                 child: Text('الكود الذي ادخلته خاطئ'),
                               ),
                             );

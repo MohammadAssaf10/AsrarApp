@@ -15,7 +15,7 @@ import '../../domain/entities/service_entities.dart';
 import '../../domain/repository/home_repository.dart';
 
 class HomeRepositoryImpl extends HomeRepository {
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final NetworkInfo networkInfo;
   HomeRepositoryImpl({
     required this.networkInfo,
@@ -27,15 +27,17 @@ class HomeRepositoryImpl extends HomeRepository {
       try {
         List<AdImageEntities> adImagesList = [];
         final adImages =
-            await firestore.collection(FireBaseConstants.adImages).get();
-        for (var doc in adImages.docs)
+            await _firestore.collection(FireBaseConstants.adImages).get();
+        for (var doc in adImages.docs) {
           adImagesList.add(AdImageEntities.fromMap(doc.data()));
+        }
         return Right(adImagesList);
       } catch (e) {
         return Left(ExceptionHandler.handle(e).failure);
       }
-    } else
+    } else {
       return Left(DataSourceExceptions.noInternetConnections.getFailure());
+    }
   }
 
   @override
@@ -44,17 +46,19 @@ class HomeRepositoryImpl extends HomeRepository {
       try {
         List<CompanyEntities> companiesList = [];
         final companies =
-            await firestore.collection(FireBaseConstants.companies).get();
-        for (var doc in companies.docs)
+            await _firestore.collection(FireBaseConstants.companies).get();
+        for (var doc in companies.docs) {
           companiesList.add(CompanyEntities.fromMap(doc.data()));
+        }
         companiesList
             .sort((a, b) => a.companyRanking.compareTo(b.companyRanking));
         return Right(companiesList);
       } catch (e) {
         return Left(ExceptionHandler.handle(e).failure);
       }
-    } else
+    } else {
       return Left(DataSourceExceptions.noInternetConnections.getFailure());
+    }
   }
 
   @override
@@ -63,16 +67,18 @@ class HomeRepositoryImpl extends HomeRepository {
       try {
         List<CourseEntities> coursesList = [];
         final courses =
-            await firestore.collection(FireBaseConstants.courses).get();
-        for (var doc in courses.docs)
+            await _firestore.collection(FireBaseConstants.courses).get();
+        for (var doc in courses.docs) {
           coursesList.add(CourseEntities.fromMap(doc.data()));
+        }
         coursesList.sort((a, b) => a.timestamp.compareTo(b.timestamp));
         return Right(coursesList);
       } catch (e) {
         return Left(ExceptionHandler.handle(e).failure);
       }
-    } else
+    } else {
       return Left(DataSourceExceptions.noInternetConnections.getFailure());
+    }
   }
 
   @override
@@ -80,16 +86,18 @@ class HomeRepositoryImpl extends HomeRepository {
     if (await networkInfo.isConnected) {
       try {
         List<NewsEntities> newsList = [];
-        final news = await firestore.collection(FireBaseConstants.news).get();
-        for (var doc in news.docs)
+        final news = await _firestore.collection(FireBaseConstants.news).get();
+        for (var doc in news.docs) {
           newsList.add(NewsEntities.fromMap(doc.data()));
+        }
         newsList.sort((a, b) => a.timestamp.compareTo(b.timestamp));
         return Right(newsList);
       } catch (e) {
         return Left(ExceptionHandler.handle(e).failure);
       }
-    } else
+    } else {
       return Left(DataSourceExceptions.noInternetConnections.getFailure());
+    }
   }
 
   @override
@@ -99,17 +107,19 @@ class HomeRepositoryImpl extends HomeRepository {
       try {
         final List<ServiceEntities> servicesList = [];
         final services =
-            await firestore.collection(FireBaseConstants.services).get();
+            await _firestore.collection(FireBaseConstants.services).get();
         for (var doc in services.docs) {
-          if (doc["companyName"] == companyName)
+          if (doc["companyName"] == companyName) {
             servicesList.add(ServiceEntities.fromMap(doc.data()));
+          }
         }
         return Right(servicesList);
       } catch (e) {
         return Left(ExceptionHandler.handle(e).failure);
       }
-    } else
+    } else {
       return Left(DataSourceExceptions.noInternetConnections.getFailure());
+    }
   }
 
   @override
@@ -117,32 +127,78 @@ class HomeRepositoryImpl extends HomeRepository {
     if (await networkInfo.isConnected) {
       try {
         List<JobEntities> jobsList = [];
-        final jobs = await firestore.collection(FireBaseConstants.jobs).get();
-        for (var doc in jobs.docs)
+        final jobs = await _firestore.collection(FireBaseConstants.jobs).get();
+        for (var doc in jobs.docs) {
           jobsList.add(JobEntities.fromMap(doc.data()));
+        }
         jobsList.sort((a, b) => a.timestamp.compareTo(b.timestamp));
         return Right(jobsList);
       } catch (e) {
         return Left(ExceptionHandler.handle(e).failure);
       }
-    } else
+    } else {
       return Left(DataSourceExceptions.noInternetConnections.getFailure());
+    }
   }
 
   @override
   Future<Either<Failure, List<SubscriptionEntities>>> getSubscriptions() async {
     if (await networkInfo.isConnected) {
       try {
-        List<SubscriptionEntities> SubscriptionsList = [];
-        final Subscriptions =
-            await firestore.collection(FireBaseConstants.subscriptions).get();
-        for (var doc in Subscriptions.docs)
-          SubscriptionsList.add(SubscriptionEntities.fromMap(doc.data()));
-        return Right(SubscriptionsList);
+        List<SubscriptionEntities> subscriptionsList = [];
+        final subscriptions =
+            await _firestore.collection(FireBaseConstants.subscriptions).get();
+        for (var doc in subscriptions.docs) {
+          subscriptionsList.add(SubscriptionEntities.fromMap(doc.data()));
+        }
+        return Right(subscriptionsList);
       } catch (e) {
         return Left(ExceptionHandler.handle(e).failure);
       }
-    } else
+    } else {
       return Left(DataSourceExceptions.noInternetConnections.getFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> getAboutUs() async {
+    if (await networkInfo.isConnected) {
+      try {
+        String aboutUs = "";
+        final aboutUsDoc = await _firestore
+            .collection(FireBaseConstants.aboutUs)
+            .doc(FireBaseConstants.aboutUs)
+            .get();
+        if (aboutUsDoc.exists) {
+          aboutUs = aboutUsDoc[FireBaseConstants.aboutUs];
+        }
+        return Right(aboutUs);
+      } catch (e) {
+        return Left(ExceptionHandler.handle(e).failure);
+      }
+    } else {
+      return Left(DataSourceExceptions.noInternetConnections.getFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> getTermsOfUse() async {
+    if (await networkInfo.isConnected) {
+      try {
+        String termsOfUse = "";
+        final termsOfUseDoc = await _firestore
+            .collection(FireBaseConstants.termsOfUse)
+            .doc(FireBaseConstants.termsOfUse)
+            .get();
+        if (termsOfUseDoc.exists) {
+          termsOfUse = termsOfUseDoc[FireBaseConstants.termsOfUse];
+        }
+        return Right(termsOfUse);
+      } catch (e) {
+        return Left(ExceptionHandler.handle(e).failure);
+      }
+    } else {
+      return Left(DataSourceExceptions.noInternetConnections.getFailure());
+    }
   }
 }

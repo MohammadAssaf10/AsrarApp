@@ -26,21 +26,21 @@ class SubscriptionScreen extends StatelessWidget {
       ),
       body: BlocBuilder<SubscriptionBloc, SubscriptionState>(
         builder: (context, state) {
-          if (state is SubscriptionLoadingState)
+          if (state is SubscriptionLoadingState) {
             return LoadingView(
               height: MediaQuery.of(context).size.height / 1.2,
               width: MediaQuery.of(context).size.width,
             );
-          else if (state is SubscriptionErrorState)
+          } else if (state is SubscriptionErrorState) {
             return ErrorView(
-              errorMessage: state.errorMessage,
+              errorMessage: state.errorMessage.tr(context),
               height: MediaQuery.of(context).size.height / 1.2,
               width: MediaQuery.of(context).size.width,
             );
-          else if (state is SubscriptionsLoadedState) if (state
-              .subscriptionList.isNotEmpty)
+          } else if (state is SubscriptionsLoadedState) {
+          if (state.subscriptionList.isNotEmpty){
             return ListView.builder(
-              physics: ScrollPhysics(),
+              physics: const ScrollPhysics(),
               itemCount: state.subscriptionList.length,
               shrinkWrap: true,
               itemBuilder: (BuildContext context, int index) {
@@ -61,7 +61,7 @@ class SubscriptionScreen extends StatelessWidget {
                         shape: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(AppSize.s16.r),
                           borderSide:
-                              BorderSide(color: ColorManager.transparent),
+                              BorderSide.none,
                         ),
                       ),
                       child: Column(
@@ -98,14 +98,14 @@ class SubscriptionScreen extends StatelessWidget {
                   ),
                 );
               },
-            );
-          else
+            );}
+          else{
             return EmptyListView(
               emptyListMessage: AppStrings.noServices.tr(context),
               height: MediaQuery.of(context).size.height / 1.2,
               width: MediaQuery.of(context).size.width,
-            );
-          return SizedBox();
+            );}}
+          return const SizedBox();
         },
       ),
     );

@@ -41,7 +41,7 @@ class ChatBottom extends StatelessWidget {
                           .add(ImageMessageSent(image, ImageMessage.create(sender)));
                     }
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.camera_alt,
                     color: ColorManager.primary,
                   )),
@@ -61,14 +61,14 @@ class ChatBottom extends StatelessWidget {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            TextButton(onPressed: () {}, child: Text("انسحاب")),
-                            TextButton(onPressed: () {}, child: Text("")),
+                            TextButton(onPressed: () {}, child: const Text("انسحاب")),
+                            TextButton(onPressed: () {}, child: const Text("")),
                           ],
                         ),
                       ),
                     );
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.more_vert,
                     color: ColorManager.primary,
                   )),
@@ -102,7 +102,7 @@ class Recorder extends StatelessWidget {
             await recorder.startRecorder();
           }
         },
-        child: Icon(
+        child: const Icon(
           Icons.mic,
           color: ColorManager.primary,
         ),

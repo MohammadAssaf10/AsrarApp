@@ -6,21 +6,21 @@ abstract class ShopOrderEvent extends Equatable {
 
 class AddShopOrderEvent extends ShopOrderEvent {
   final ShopOrderEntities shopOrder;
-  AddShopOrderEvent({required this.shopOrder});
+  const AddShopOrderEvent({required this.shopOrder});
   @override
   List<Object?> get props => [shopOrder];
 }
 
 class CancelShopOrderEvent extends ShopOrderEvent {
   final ShopOrderEntities shopOrder;
-  CancelShopOrderEvent({required this.shopOrder});
+  const CancelShopOrderEvent({required this.shopOrder});
   @override
   List<Object?> get props => [shopOrder];
 }
 
 class GetShopOrderEvent extends ShopOrderEvent {
   final String userId;
-  GetShopOrderEvent({
+  const GetShopOrderEvent({
     required this.userId,
   });
   @override

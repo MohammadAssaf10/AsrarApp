@@ -16,7 +16,7 @@ class CancelButton extends StatelessWidget {
         onPressed: () {
           onTap();
         },
-        icon: Icon(
+        icon: const Icon(
           Icons.delete,
           color: ColorManager.primary,
         ),

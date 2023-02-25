@@ -20,20 +20,20 @@ class CancelShopOrderLoadingState extends ShopOrderState {
 
 class ShopOrderErrorState extends ShopOrderState {
   final String errorMessage;
-  ShopOrderErrorState({required this.errorMessage});
+  const ShopOrderErrorState({required this.errorMessage});
   @override
   List<Object?> get props => [errorMessage];
 }
 class CancelShopOrderErrorState extends ShopOrderState {
   final String errorMessage;
-  CancelShopOrderErrorState({required this.errorMessage});
+  const CancelShopOrderErrorState({required this.errorMessage});
   @override
   List<Object?> get props => [errorMessage];
 }
 
 class ShopOrderLoadedState extends ShopOrderState {
   final List<ShopOrderEntities> shopOrderList;
-  ShopOrderLoadedState({required this.shopOrderList});
+  const ShopOrderLoadedState({required this.shopOrderList});
   @override
   List<Object?> get props => [shopOrderList];
 }

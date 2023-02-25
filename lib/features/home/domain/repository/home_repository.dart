@@ -17,4 +17,6 @@ abstract class HomeRepository {
   Future<Either<Failure, List<ServiceEntities>>> getServices(String companyName);
   Future<Either<Failure, List<JobEntities>>> getJobs();
   Future<Either<Failure, List<SubscriptionEntities>>> getSubscriptions();
+  Future<Either<Failure, String>> getAboutUs();
+  Future<Either<Failure, String>> getTermsOfUse();
 }

@@ -14,7 +14,7 @@ import '../../bloc/authentication_bloc.dart';
 import 'widgets.dart';
 
 class LoginForm extends StatefulWidget {
-  LoginForm({super.key});
+  const LoginForm({super.key});
 
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -58,11 +58,12 @@ class _LoginFormState extends State<LoginForm> {
                   },
                   validator: (v) {
                     if (validateEmail) {
-                      if (v.nullOrEmpty())
+                      if (v.nullOrEmpty()) {
                         return AppStrings.pleaseEnterEmail.tr(context);
-
-                      if (!isEmailFormatCorrect(v!))
+                      }
+                      if (!isEmailFormatCorrect(v!)) {
                         return AppStrings.emailFormatNotCorrect.tr(context);
+                      }
                     }
 
                     return null;
@@ -80,9 +81,10 @@ class _LoginFormState extends State<LoginForm> {
                   label: AppStrings.password.tr(context),
                   validator: (v) {
                     if (validatePassword) {
-                      if (v.nullOrEmpty() || v!.length < 6)
+                      if (v.nullOrEmpty() || v!.length < 6) {
                         return AppStrings.passwordShouldAtLeast6Character
                             .tr(context);
+                      }
                     }
                     return null;
                   },
@@ -90,7 +92,7 @@ class _LoginFormState extends State<LoginForm> {
                 TextButton(
                   child: Text(
                     AppStrings.forgetYourPassword.tr(context),
-                    style: TextStyle(color: ColorManager.grey),
+                    style: const TextStyle(color: ColorManager.grey),
                   ),
                   onPressed: () {
                     Navigator.pushNamed(context, Routes.passwordReset);

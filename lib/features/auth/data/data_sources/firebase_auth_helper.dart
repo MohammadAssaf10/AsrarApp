@@ -38,8 +38,8 @@ class FirebaseAuthHelper {
     return _firebaseAuth.signInWithCredential(credential);
   }
 
-  Future<domain.User> getUser(String email) async {
-    final userMap = (await _firestore.collection(userCollectionPath).doc(email).get()).data();
+  Future<domain.User> getUser(String id) async {
+    final userMap = (await _firestore.collection(userCollectionPath).doc(id).get()).data();
 
     if (userMap == null) {
       throw FirebaseAuthException(code: "auth/user-not-found");

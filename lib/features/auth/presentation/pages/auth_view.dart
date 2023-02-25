@@ -15,7 +15,7 @@ import '../common/widgets/new_account_form.dart';
 import '../common/widgets/widgets.dart';
 
 class Auth extends StatefulWidget {
-  Auth({super.key});
+  const Auth({super.key});
 
   @override
   State<Auth> createState() => _AuthState();
@@ -48,11 +48,11 @@ class _AuthState extends State<Auth> {
                       });
                     },
                   ),
-                  SizedBox(width: double.infinity),
-                  if (_login) LoginForm(),
-                  if (!_login) NewAccountForm(),
-                  Divider(),
-                  Center(child: Text('او')),
+                  const SizedBox(width: double.infinity),
+                  if (_login) const LoginForm(),
+                  if (!_login) const NewAccountForm(),
+                  const Divider(),
+                  const Center(child: Text('او'),),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -72,7 +72,7 @@ class _AuthState extends State<Auth> {
                     child: TextButton(
                       child: Text(
                         AppStrings.continueAsGuest.tr(context),
-                        style: TextStyle(color: ColorManager.grey),
+                        style: const TextStyle(color: ColorManager.grey),
                       ),
                       onPressed: () {
                         // TODO: navigate to main view

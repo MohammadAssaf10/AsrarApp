@@ -1,16 +1,18 @@
 import 'package:asrar_app/config/app_localizations.dart';
-import 'package:asrar_app/config/assets_manager.dart';
-import 'package:asrar_app/config/styles_manager.dart';
-import 'package:asrar_app/config/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../../config/assets_manager.dart';
 import '../../../../../config/color_manager.dart';
 import '../../../../../config/routes_manager.dart';
 import '../../../../../config/strings_manager.dart';
+import '../../../../../config/styles_manager.dart';
+import '../../../../../config/values_manager.dart';
+import '../../blocs/about_us_bloc/about_us_bloc.dart';
 import '../../blocs/subscription_bloc/subscription_bloc.dart';
+import '../../blocs/terms_of_use_bloc/terms_of_use_bloc.dart';
 import '../../pages/main/about_us.dart';
 import '../../pages/main/terms_of_use_screen.dart';
 
@@ -23,7 +25,7 @@ class DrawerWidget extends StatelessWidget {
       width: AppSize.s240.w,
       child: SingleChildScrollView(
         child: Column(
-          children: [
+          children: const[
             DrawerHeader(),
             DrawerList(),
           ],
@@ -41,7 +43,7 @@ class DrawerHeader extends StatelessWidget {
     return Container(
       height: AppSize.s200.h,
       width: double.infinity,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
             ColorManager.darkPrimary,
@@ -81,10 +83,11 @@ class DrawerList extends StatelessWidget {
               title: AppStrings.aboutUs.tr(context),
               icon: IconAssets.info,
               onTap: () {
+                BlocProvider.of<AboutUsBloc>(context).add(GetAbuotUsEvent());
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AboutUsScreen(),
+                    builder: (context) => const AboutUsScreen(),
                   ),
                 );
               },
@@ -112,10 +115,12 @@ class DrawerList extends StatelessWidget {
               title: AppStrings.termsOfUse.tr(context),
               icon: IconAssets.termsOfUse,
               onTap: () {
+                   BlocProvider.of<TermsOfUseBloc>(context)
+                    .add(GetTermsOfUseEvent());
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => TermsOfUseScreen(),
+                    builder: (context) => const TermsOfUseScreen(),
                   ),
                 );
               },
@@ -182,7 +187,7 @@ class MenuItem extends StatelessWidget {
             SizedBox(
               height: AppSize.s0_5.h,
               width: double.infinity,
-              child: Material(
+              child: const Material(
                 color: ColorManager.grey,
               ),
             ),

@@ -103,9 +103,9 @@ class User {
 
   /// true if all sensitive filed actually has data
   bool safeToContinue() {
-    return (this.email.isNotEmpty &&
-        this.name.isNotEmpty &&
-        this.phoneNumber.isNotEmpty &&
-        this.userTokenList.isNotEmpty);
+    return (email.isNotEmpty &&
+        name.isNotEmpty &&
+        phoneNumber.isNotEmpty &&
+        userTokenList.isNotEmpty);
   }
 }

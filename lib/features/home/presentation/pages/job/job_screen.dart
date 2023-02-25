@@ -41,7 +41,7 @@ class JobScreen extends StatelessWidget {
           } else if (state is JobsLoadedState) {
             if (state.jobsList.isNotEmpty) {
               return ListView.builder(
-                physics: ScrollPhysics(),
+                physics: const ScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: state.jobsList.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -138,15 +138,16 @@ class JobScreen extends StatelessWidget {
                   );
                 },
               );
-            } else
+            } else {
               return EmptyListView(
                 emptyListMessage: AppStrings.noJobs.tr(context),
                 height: MediaQuery.of(context).size.height / 1.2,
                 width: MediaQuery.of(context).size.width,
               );
+            }
           }
 
-          return SizedBox();
+          return const SizedBox();
         },
       ),
     );

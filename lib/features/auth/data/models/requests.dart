@@ -25,6 +25,7 @@ class RegisterRequest extends User {
     required super.imageName,
   });
 
+  @override
   RegisterRequest copyWith({
     String? id,
     String? name,

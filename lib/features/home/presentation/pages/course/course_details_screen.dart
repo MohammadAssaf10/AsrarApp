@@ -8,7 +8,7 @@ import '../../../domain/entities/course_entities.dart';
 import '../../widgets/general/cached_network_image_widget.dart';
 
 class CourseDetailsScereen extends StatelessWidget {
-  const CourseDetailsScereen(this.course);
+  const CourseDetailsScereen(this.course, {super.key});
   final CourseEntities course;
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class CourseDetailsScereen extends StatelessWidget {
       ),
       body: ListView(
         shrinkWrap: true,
-        physics: ScrollPhysics(),
+        physics: const ScrollPhysics(),
         padding: EdgeInsets.symmetric(
           vertical: AppSize.s15.h,
           horizontal: AppSize.s8.w,
@@ -29,7 +29,7 @@ class CourseDetailsScereen extends StatelessWidget {
             height: AppSize.s220.h,
             width: double.infinity,
             shapeBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: ColorManager.transparent),
+              borderSide: const BorderSide(color: ColorManager.transparent),
               borderRadius: BorderRadius.circular(AppSize.s10.r),
             ),
           ),

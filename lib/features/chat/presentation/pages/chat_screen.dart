@@ -53,14 +53,14 @@ class ChatScreen extends StatelessWidget {
                       textDirection: TextDirection.rtl,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        if (!isMine) SizedBox(),
+                        if (!isMine) const SizedBox(),
                         MessageWidget(
                           message: state.messagesList[index],
                           isMine: isMine,
                           isPreviousFromTheSameSender:
                               isPreviousFromTheSameSender(state.messagesList, index),
                         ),
-                        if (isMine) SizedBox(),
+                        if (isMine) const SizedBox(),
                       ],
                     );
                   },
@@ -70,7 +70,7 @@ class ChatScreen extends StatelessWidget {
           ),
           ChatBottom(onSended: () {
             _scrollController.animateTo(_scrollController.position.minScrollExtent,
-                duration: Duration(milliseconds: 500), curve: Curves.fastOutSlowIn);
+                duration: const Duration(milliseconds: 500), curve: Curves.fastOutSlowIn);
           }),
         ],
       ),

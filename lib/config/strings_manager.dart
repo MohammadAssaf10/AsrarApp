@@ -26,6 +26,10 @@ class AppStrings {
   static const String pleaseEnterMobileNumber = "please_enter_mobile_number";
   static const String mobileNumberShouldAtLeast9Character =
       "mobile_number_should_at_least_9_character";
+  static const String userNameShouldAtLeast3Caracter =
+      "username_should_at_least_3_character";
+  static const String mobileNumberShould10Number =
+      "mobile_number_should_10_number";
   static const String passwordShouldAtLeast6Character = "password_should_at_least_6_Character";
   static const String mobileNumberFormatNotCorrect = "mobile_number_format_not_correct";
   static const String resetPassword = "reset_password";
@@ -59,6 +63,7 @@ class AppStrings {
   static const String asrarForElectronicServices = "asrar_for_electronic_services";
   static const String aboutUs = "about_us";
   static const String whatsApp = "whats_app";
+  static const String fieldCantBeEmpty = "field_cant_be_empty";
   static const String googleTranslate = "google_translate";
   static const String subscribe = "subscribe";
   static const String otherServices = "other_services";
@@ -73,6 +78,9 @@ class AppStrings {
   static const String services = "services";
   static const String service = "service";
   static const String searchForYourServices = "search_for_your_services";
+  static const String searchCountry = "search_country";
+  static const String yourAccount = "your_account";
+  static const String pleaseEnterUserName = "please_enter_username";
   static const String instructions = "instructions";
   static const String addOrder = "add_order";
   static const String whatsAppNumber = "whatsApp_number";
@@ -109,6 +117,7 @@ class AppStrings {
   static const String profileImageUpdated = "profile_image_updated";
   static const String passwordUpdated = "password_updated";
   static const String save = "save";
+  static const String userInfoUpdatedSuccessfully = "user_info_updated_successfully";
   // exception handler
   static const String success = "Success";
   static const String badRequestError = "Bad request error";
