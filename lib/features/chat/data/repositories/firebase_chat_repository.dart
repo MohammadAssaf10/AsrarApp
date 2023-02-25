@@ -12,6 +12,7 @@ import '../../domain/entities/message.dart';
 import '../../domain/repositories/chat_repository.dart';
 
 class FirebaseChatRepository extends ChatRepository {
+  // ignore: unused_field
   final FirebaseFirestore _firestore;
   final NetworkInfo _networkInfo;
   final ServiceOrder serviceOrder;

@@ -40,10 +40,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
           Expanded(
             child: AnimatedCrossFade(
               alignment: Alignment.center,
-              firstChild: ShopOrderView(),
-              secondChild: ServiceOrderView(),
+              firstChild: const ShopOrderView(),
+              secondChild: const ServiceOrderView(),
               crossFadeState: isFirst ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-              duration: Duration(milliseconds: 250),
+              duration: const Duration(milliseconds: 250),
             ),
           ),
         ],

@@ -40,22 +40,20 @@ class OptionButton extends StatelessWidget {
               onSended;
               showModalBottomSheet(
                 context: context,
-                builder: (context) => Container(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      CompletedSuccessfullyButton(serviceOrder: serviceOrder),
-                      CancelOrderButton(serviceOrder: serviceOrder),
-                      RiseAComplaintButton(),
-                      SizedBox(
-                        height: AppSize.s30.h,
-                      )
-                    ],
-                  ),
+                builder: (context) => Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CompletedSuccessfullyButton(serviceOrder: serviceOrder),
+                    CancelOrderButton(serviceOrder: serviceOrder),
+                    const RiseAComplaintButton(),
+                    SizedBox(
+                      height: AppSize.s30.h,
+                    )
+                  ],
                 ),
               );
             },
-            child: Icon(
+            child: const Icon(
               Icons.more_vert,
               color: ColorManager.primary,
             )),
@@ -74,9 +72,10 @@ class CompletedSuccessfullyButton extends StatelessWidget {
     return TextButton(
         onPressed: () async {
           bool confirmed = await showConfirmDialog(context);
-          if (confirmed)
+          if (confirmed) {
             BlocProvider.of<ServiceOrderBloc>(context)
                 .add(CompleteOrder(serviceOrder: serviceOrder));
+          }
           dismissDialog(context);
         },
         child: Text(AppStrings.completedSuccessfully.tr(context)));
@@ -93,8 +92,9 @@ class CancelOrderButton extends StatelessWidget {
     return TextButton(
         onPressed: () async {
           bool confirmed = await showConfirmDialog(context);
-          if (confirmed)
+          if (confirmed) {
             BlocProvider.of<ServiceOrderBloc>(context).add(CancelOrder(serviceOrder: serviceOrder));
+          }
           dismissDialog(context);
         },
         child: Text(AppStrings.cancelOrder.tr(context)));

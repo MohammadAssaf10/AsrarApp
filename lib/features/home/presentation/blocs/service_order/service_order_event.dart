@@ -26,7 +26,7 @@ class CancelOrder extends ServiceOrderEvent {
 
 class CompleteOrder extends ServiceOrderEvent {
   final ServiceOrder serviceOrder;
-  CompleteOrder({
+  const CompleteOrder({
     required this.serviceOrder,
   });
 

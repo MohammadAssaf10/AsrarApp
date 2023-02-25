@@ -12,7 +12,7 @@ import 'option_button_widget.dart';
 import 'recorder_button.dart';
 
 class ChatBottom extends StatefulWidget {
-  ChatBottom({super.key, this.onSended, required this.serviceOrder});
+  const ChatBottom({super.key, this.onSended, required this.serviceOrder});
 
   final Function? onSended;
   final ServiceOrder serviceOrder;

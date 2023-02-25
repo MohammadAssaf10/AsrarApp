@@ -23,11 +23,11 @@ class ChatScreen extends StatelessWidget {
   final ScrollController _scrollController = ScrollController();
 
   AppBar getAppBar(BuildContext context) {
-    if (serviceOrder.employee.name.isEmpty)
+    if (serviceOrder.employee.name.isEmpty) {
       return AppBar(
         title: Text(AppStrings.waitingForAcceptingTheService.tr(context)),
       );
-    else
+    } else {
       return AppBar(
         title: Row(
           children: [
@@ -41,8 +41,8 @@ class ChatScreen extends StatelessWidget {
               ),
               child: CachedNetworkImage(
                 imageUrl: serviceOrder.user.imageURL,
-                placeholder: (context, url) => CircularProgressIndicator(),
-                errorWidget: (context, url, error) => Icon(
+                placeholder: (context, url) => const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(
                   Icons.person_pin,
                   color: ColorManager.grey,
                 ),
@@ -51,6 +51,7 @@ class ChatScreen extends StatelessWidget {
           ],
         ),
       );
+    }
   }
 
   @override
@@ -104,7 +105,7 @@ class ChatScreen extends StatelessWidget {
               serviceOrder: serviceOrder,
               onSended: () {
                 _scrollController.animateTo(_scrollController.position.minScrollExtent,
-                    duration: Duration(milliseconds: 500), curve: Curves.fastOutSlowIn);
+                    duration: const Duration(milliseconds: 500), curve: Curves.fastOutSlowIn);
               }),
         ],
       ),

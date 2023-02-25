@@ -37,7 +37,7 @@ class ServiceOrderView extends StatelessWidget {
               BlocProvider.of<ServiceOrderBloc>(context).add(GetOrders(user: user));
             },
             child: SingleChildScrollView(
-              physics: AlwaysScrollableScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               child: EmptyListView(
                 emptyListMessage: AppStrings.noOrders.tr(context),
                 height: MediaQuery.of(context).size.height / 1.5,
@@ -52,7 +52,7 @@ class ServiceOrderView extends StatelessWidget {
             BlocProvider.of<ServiceOrderBloc>(context).add(GetOrders(user: user));
           },
           child: ListView.builder(
-            physics: AlwaysScrollableScrollPhysics(),
+            physics: const AlwaysScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: state.serviceOrderList.length,
             itemBuilder: (BuildContext context, int index) {

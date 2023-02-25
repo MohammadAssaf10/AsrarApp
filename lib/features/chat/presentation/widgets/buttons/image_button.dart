@@ -30,7 +30,7 @@ class ImageButton extends StatelessWidget {
                   .add(ImageMessageSent(image, ImageMessage.create(sender)));
             }
           },
-          child: Icon(
+          child: const Icon(
             Icons.camera_alt,
             color: ColorManager.primary,
           )),

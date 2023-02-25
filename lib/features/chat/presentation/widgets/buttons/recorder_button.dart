@@ -6,7 +6,7 @@ import '../../../../../config/color_manager.dart';
 import '../../../domain/entities/message.dart';
 
 class RecorderButton extends StatefulWidget {
-  RecorderButton({
+  const RecorderButton({
     Key? key,
     required this.onSended,
     required this.sender,

@@ -37,6 +37,7 @@ manageDialog(BuildContext context, AuthenticationState state) async {
 
     final phoneNumber = await phoneDialog(context);
     if (phoneNumber.isNotEmpty) {
+
       BlocProvider.of<AuthenticationBloc>(context)
           .add(MobileNumberEntered(mobileNumber: phoneNumber));
     }

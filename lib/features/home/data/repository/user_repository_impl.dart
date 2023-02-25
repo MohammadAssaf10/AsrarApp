@@ -13,7 +13,6 @@ import '../../../auth/domain/entities/user.dart';
 import '../../../auth/domain/repository/auth_repository.dart';
 import '../../domain/entities/file_entities.dart';
 import '../../domain/repository/user_repository.dart';
-import '../../../auth/domain/entities/user.dart';
 
 class UserRepositoryImpl extends UserRepository {
   final FirebaseAuthHelper _authHelper = instance<FirebaseAuthHelper>();
