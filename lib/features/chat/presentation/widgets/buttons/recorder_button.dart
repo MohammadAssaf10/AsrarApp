@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -30,7 +31,9 @@ class RecorderButton extends StatefulWidget {
 class _RecorderButtonState extends State<RecorderButton> {
   final FlutterSoundRecorder recorder = FlutterSoundRecorder();
   bool recordProcessing = false;
-  String patho = '';
+  String voiceFilePath = '';
+  String timerText = '00:00:00';
+  late StreamController recorderStreamController;
 
   @override
   void initState() {
@@ -44,115 +47,132 @@ class _RecorderButtonState extends State<RecorderButton> {
     recorder.closeRecorder();
   }
 
+  // done
   Future initRecorder() async {
     final status = await Permission.microphone.request();
     print(status);
 
     recorder.openRecorder();
-
-    Directory? appDir = await getExternalStorageDirectory();
-    String jrecord = 'Audiorecords';
-    String dato = "${DateTime.now().millisecondsSinceEpoch.toString()}.wav";
-    Directory appDirec = Directory("${appDir!.path}/$jrecord/");
-    if (await appDirec.exists()) {
-      // playAudio.value = true;
-      patho = "${appDirec.path}$dato";
-      print("path for file $patho");
-      // _recordingSession.openAudioSession();
-      // await recorder.startRecorder(
-      //   toFile: patho,
-      //   codec: Codec.pcm16WAV,
-      // );
-      // _recordingSession.onProgress.listen((e) {
-      //   var date = DateTime.fromMillisecondsSinceEpoch(e.duration.inMilliseconds,
-      //       isUtc: true);
-      //   var timeText = DateFormat('mm:ss:SS', 'en_GB').format(date);
-      //   timerText.value = timeText.substring(0, 8);
-      // });
-    } else {
-      appDirec.create(recursive: true);
-      patho = "${appDirec.path}$dato";
-      print("path for file $patho");
-      // _recordingSession.openAudioSession();
-      // await recorder.startRecorder(
-      //   toFile: patho,
-      //   codec: Codec.pcm16WAV,
-      // );
-
-      // _recordingSession.onProgress.listen((e) {
-      //   var date = DateTime.fromMillisecondsSinceEpoch(e.duration.inMilliseconds,
-      //       isUtc: true);
-      //   var timeText = DateFormat('mm:ss:SS', 'en_GB').format(date);
-      //   timerText.value = timeText.substring(0, 8);
-      // });
-    }
   }
 
   Future<String> startRecording() async {
     Directory? appDir = await getExternalStorageDirectory();
-    String jrecord = 'Audiorecords';
-    String dato = "${DateTime.now().millisecondsSinceEpoch.toString()}.wav";
-    Directory appDirec = Directory("${appDir!.path}/$jrecord/");
-    if (await appDirec.exists()) {
-      // playAudio.value = true;
-      String patho = "${appDirec.path}$dato";
-      print("path for file11 $patho");
-      // _recordingSession.openAudioSession();
-      await recorder.startRecorder(
-        toFile: patho,
-        codec: Codec.pcm16WAV,
-      );
-      // _recordingSession.onProgress.listen((e) {
-      //   var date = DateTime.fromMillisecondsSinceEpoch(e.duration.inMilliseconds,
-      //       isUtc: true);
-      //   var timeText = DateFormat('mm:ss:SS', 'en_GB').format(date);
-      //   timerText.value = timeText.substring(0, 8);
-      // });
-    } else {
-      appDirec.create(recursive: true);
-      String patho = "${appDirec.path}$dato";
-      print("path for file22 $patho");
-      // _recordingSession.openAudioSession();
-      await recorder.startRecorder(
-        toFile: patho,
-        codec: Codec.pcm16WAV,
-      );
+    String date = "${DateTime.now().millisecondsSinceEpoch.toString()}.wav";
+    Directory appDirec = Directory("${appDir!.path}/audio records/");
 
-      // _recordingSession.onProgress.listen((e) {
-      //   var date = DateTime.fromMillisecondsSinceEpoch(e.duration.inMilliseconds,
-      //       isUtc: true);
-      //   var timeText = DateFormat('mm:ss:SS', 'en_GB').format(date);
-      //   timerText.value = timeText.substring(0, 8);
-      // });
-    }
-    return dato;
+    appDirec.create(recursive: true);
+
+    String patho = "${appDirec.path}$date";
+    await recorder.startRecorder(
+      toFile: patho,
+      codec: Codec.pcm16WAV,
+    );
+
+    //TODO: delete this shit (dosent add envent at all)
+    // recorderSubscription = recorder.onProgress!.listen((e) {
+    //   var date = DateTime.fromMillisecondsSinceEpoch(e.duration.inMilliseconds, isUtc: true);
+    //   var timeText = DateFormat('mm:ss:SS', 'en_GB').format(date);
+    //   setState(() {
+    //     timerText = timeText.substring(0, 8);
+    //   });
+
+    //   print('');
+    //   print('1');
+    //   print('2');
+    //   print(timerText);
+    //   print('2');
+    //   print('1');
+    //   print('');
+    // });
+
+    recorderStreamController = StreamController();
+    recorderStreamController.addStream(Stream<String>.periodic(
+      const Duration(seconds: 1),
+      (computationCount) {
+        String duration = '';
+
+        int minuteDuration = (computationCount / 60).truncate();
+        duration += minuteDuration < 10 ? '0$minuteDuration:' : '$minuteDuration:';
+
+        var secDuration = computationCount % 60;
+        duration += secDuration < 10 ? '0$secDuration' : '$secDuration';
+
+        print(duration);
+        print(computationCount);
+        return duration;
+      },
+    ));
+
+    return patho;
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
-      child: InkWell(
-        onTap: () async {
-          widget.onSended;
-          if (recorder.isRecording) {
-            await recorder.stopRecorder();
-            var voice = XFile(patho);
-            // ignore: use_build_context_synchronously
-            BlocProvider.of<ChatBloc>(context)
-                .add(VoiceMessageSent(voice, VoiceMessage.create(widget.sender)));
-          } else {
-            recorder.startRecorder(
-              toFile: patho,
-            );
-          }
-          setState(() {});
-          widget.recordActivated(recorder.isRecording);
-        },
-        child: Icon(
-          recorder.isRecording ? Icons.stop : Icons.mic,
-          color: ColorManager.primary,
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (!recordProcessing)
+            InkWell(
+              onTap: () async {
+                widget.onSended;
+
+                recordProcessing = true;
+                voiceFilePath = await startRecording();
+
+                widget.recordActivated(recordProcessing);
+                setState(() {});
+              },
+              child: const Icon(
+                Icons.mic,
+                color: ColorManager.primary,
+              ),
+            ),
+          if (recordProcessing)
+            InkWell(
+              onTap: () async {
+                recordProcessing = false;
+                widget.recordActivated(recordProcessing);
+
+                await recorder.stopRecorder();
+                recorderStreamController.close();
+                var voice = XFile(voiceFilePath);
+                // ignore: use_build_context_synchronously
+                BlocProvider.of<ChatBloc>(context)
+                    .add(VoiceMessageSent(voice, VoiceMessage.create(widget.sender)));
+              },
+              child: const Icon(
+                Icons.stop,
+                color: ColorManager.primary,
+              ),
+            ),
+          if (recordProcessing)
+            StreamBuilder(
+              stream: recorderStreamController.stream,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Text(snapshot.data);
+                } else {
+                  return Container();
+                }
+              },
+            ),
+          if (recordProcessing)
+            InkWell(
+              onTap: () async {
+                recordProcessing = false;
+                widget.recordActivated(recordProcessing);
+
+                await recorder.stopRecorder();
+                recorderStreamController.close();
+              },
+              child: const Icon(
+                Icons.delete,
+                color: ColorManager.primary,
+              ),
+            ),
+        ],
       ),
     );
   }
