@@ -121,7 +121,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       color: ColorManager.darkGrey,
                     ),
                   ),
-                  trailing: Switch(
+                  trailing: Switch.adaptive(
                     activeColor: ColorManager.primary,
                     value: true,
                     onChanged: (v){},

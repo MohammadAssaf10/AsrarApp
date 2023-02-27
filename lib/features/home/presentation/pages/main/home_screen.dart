@@ -10,8 +10,9 @@ import '../../../../../config/routes_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
-import '../../../../../core/app/functions.dart';
+import '../../../../../core/app/di.dart';
 import '../../../../shop/presentation/bloc/product_bloc/product_bloc.dart';
+import '../../../domain/repository/notification_repository.dart';
 import '../../blocs/course_bloc/course_bloc.dart';
 import '../../blocs/job_bloc/job_bloc.dart';
 import '../../blocs/news_bloc/news_bloc.dart';
@@ -34,10 +35,18 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () async {
-              await sendNotificationToUser(
-                  "dtzf4JTlQ_SDjxWlblwQwM:APA91bHBpS8FTqpTOuc5tXtXumQuhhUO08zwD7ljH9eLLANorr6DzE_-td7PuK87hAsVxIEPqF2OVxDCq4eVEonJ0VX2Yq4zApaWMz-SGj-h8KHPdsO4x-8RETpc-7oV7IK4b8XMdWzO",
-                  "Asrar",
-                  "fuck you");
+              final NotificationRepository n =
+                  instance<NotificationRepository>();
+              (await n.sendNotificationToGroupOfUser([
+                /*My phone */ "dtzf4JTlQ_SDjxWlblwQwM:APA91bHBpS8FTqpTOuc5tXtXumQuhhUO08zwD7ljH9eLLANorr6DzE_-td7PuK87hAsVxIEPqF2OVxDCq4eVEonJ0VX2Yq4zApaWMz-SGj-h8KHPdsO4x-8RETpc-7oV7IK4b8XMdWzO",
+                /*Mohsen */ "dQXW706MS4SpEp2Lah73hY:APA91bEwpKzw4qsyj_p_qOf5M6i6hZYK6EsuZMq2hqhWLRj-IKZ_TTOGShgKawQTTAQC2-PnnU9g0jYx2DMZR11yAyChyIeejFovRlEdtcVWnR45lJHah3QJRBxnHCKHOkqtvqGpBi2D",
+                /*Other phone */ "ch383Jt-TkKJOsDr71oC14:APA91bFmqWXl5sXQCYg45HncZ96Gnu2ETcUHb4xPzfkiAYRpFITA3HGB680dpsvCR53YpTiHX8yseuISOr3HP2lFhUdeCnk9uGvdLv6gXx7VupqXxRc_isoo-oQAUlM-JCxpcisYhefh",
+              ], "Asrar", "Asrar"))
+                  .fold((l) {
+                print(l.message);
+              }, (r) {
+                print("*Notification Sent Successfully*");
+              });
             },
             icon: SvgPicture.asset(IconAssets.notification),
           ),

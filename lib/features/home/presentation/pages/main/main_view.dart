@@ -6,6 +6,7 @@ import '../../../../../config/assets_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../../../auth/presentation/bloc/authentication_bloc.dart';
+import '../../../../shop/presentation/bloc/shop_order_bloc/shop_order_bloc.dart';
 import '../../blocs/user_bloc/user_bloc.dart';
 import '../../widgets/general/navigation_bar_bottom.dart';
 import 'customers_service_screen.dart';
@@ -24,17 +25,22 @@ class MainView extends StatelessWidget {
       body: PageView(
         controller: controller,
         onPageChanged: (v) {
+          final authState = BlocProvider.of<AuthenticationBloc>(context).state;
+
           if (v == 4) {
-            final authState = BlocProvider.of<AuthenticationBloc>(context).state;
-            BlocProvider.of<UserBloc>(context).add(GetUserInfo(id: authState.user!.id));
+            BlocProvider.of<UserBloc>(context)
+                .add(GetUserInfo(id: authState.user!.id));
+          } else if (v == 0) {
+            BlocProvider.of<ShopOrderBloc>(context)
+                .add(GetShopOrderEvent(userId: authState.user!.id));
           }
         },
-        children: const[
-           OrdersScreen(),
-           MyWalletScreen(),
-           HomeScreen(),
-           CustomersServiceScreen(),
-           ProfileScreen(),
+        children: const [
+          OrdersScreen(),
+          MyWalletScreen(),
+          HomeScreen(),
+          CustomersServiceScreen(),
+          ProfileScreen(),
         ],
       ),
       floatingActionButton: MaterialButton(

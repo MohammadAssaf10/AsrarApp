@@ -85,7 +85,7 @@
   "canceled": "ملغي",
   "canceling": "جاري الإلغاء",
   "no_orders": "لا يوجد طلبات",
-  "confirm": "تاكيد",
+  "confirm?": "تاكيد؟",
   "chat": "الدردشة",
   "completedSuccessfully": "تمت بنجاح",
   "cancelOrder": "الغاء الطلب",
