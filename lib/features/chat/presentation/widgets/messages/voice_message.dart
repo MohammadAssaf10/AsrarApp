@@ -58,6 +58,8 @@ class _VoiceMessageWidgetState extends State<VoiceMessageWidget> {
     super.dispose();
   }
 
+  
+
   String getTime(Duration duration) {
     String result = '';
 
@@ -83,7 +85,7 @@ class _VoiceMessageWidgetState extends State<VoiceMessageWidget> {
             }
           },
           child: Icon(
-            Icons.play_arrow,
+            isPlaying ? Icons.pause : Icons.play_arrow,
             size: 40.r,
           ),
         ),
@@ -94,7 +96,10 @@ class _VoiceMessageWidgetState extends State<VoiceMessageWidget> {
               min: 0,
               max: duration.inSeconds.toDouble(),
               value: position.inSeconds.toDouble(),
-              onChanged: (value) {},
+              onChanged: (value) async {
+                final position = Duration(seconds: value.toInt());
+                await audioPlayer.seek(position);
+              },
             ),
             Text(getTime(duration))
           ],
