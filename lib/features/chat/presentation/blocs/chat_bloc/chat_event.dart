@@ -38,6 +38,15 @@ class ImageMessageSent extends ChatEvent {
   @override
   List<Object?> get props => [image, message];
 }
+class VoiceMessageSent extends ChatEvent {
+  final VoiceMessage message;
+  final XFile voice;
+
+  const VoiceMessageSent(this.voice, this.message);
+
+  @override
+  List<Object?> get props => [voice, message];
+}
 
 class _MessageReserved extends ChatEvent {
   final List<Message> messageList;

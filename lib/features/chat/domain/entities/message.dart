@@ -95,11 +95,11 @@ class Sender {
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
-  
+
     result.addAll({'id': id});
     result.addAll({'name': name});
     result.addAll({'email': email});
-  
+
     return result;
   }
 
@@ -121,11 +121,8 @@ class Sender {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
-    return other is Sender &&
-      other.id == id &&
-      other.name == name &&
-      other.email == email;
+
+    return other is Sender && other.id == id && other.name == name && other.email == email;
   }
 
   @override
@@ -279,6 +276,61 @@ class ImageMessage extends Message {
 
   @override
   int get hashCode => imageUrl.hashCode ^ details.hashCode;
+}
+
+class VoiceMessage extends Message {
+  String voiceUrl;
+
+  VoiceMessage({required this.voiceUrl, required super.details});
+
+  VoiceMessage copyWith({String? voiceUrl, MessageDetails? details}) {
+    return VoiceMessage(
+      voiceUrl: voiceUrl ?? this.voiceUrl,
+      details: details ?? this.details,
+    );
+  }
+
+  /// voiceUrl provided when upload image finish
+  factory VoiceMessage.create(Sender sender) {
+    return VoiceMessage(
+        voiceUrl: 'voiceUrl',
+        details: MessageDetails(
+            sender: sender, createdAt: Timestamp.now(), type: MessageType.audio.name));
+  }
+
+  @override
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
+
+    result.addAll({'voiceUrl': voiceUrl});
+    result.addAll({'details': details.toMap()});
+
+    return result;
+  }
+
+  factory VoiceMessage.fromMap(Map<String, dynamic> map) {
+    return VoiceMessage(
+      voiceUrl: map['voiceUrl'] ?? '',
+      details: MessageDetails.fromMap(map['details']),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory VoiceMessage.fromJson(String source) => VoiceMessage.fromMap(json.decode(source));
+
+  @override
+  String toString() => 'VoiceMessage(voiceUrl: $voiceUrl, details: $details)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is VoiceMessage && other.voiceUrl == voiceUrl;
+  }
+
+  @override
+  int get hashCode => voiceUrl.hashCode;
 }
 
 class EmptyMessage extends Message {

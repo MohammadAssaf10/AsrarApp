@@ -72,4 +72,16 @@ class FirebaseChatRepository extends ChatRepository {
       return Left(ExceptionHandler.handle(e).failure);
     }
   }
+  
+  @override
+  Future<Either<Failure, String>> uploadVoice(XFile voice)  async{
+    try {
+      var file = await uploadFile(
+          '${FireBaseConstants.messages}/${serviceOrder.id}/voices/${voice.name}', voice);
+      print(file.url);
+      return Right(file.url);
+    } catch (e) {
+      return Left(ExceptionHandler.handle(e).failure);
+    }
+  }
 }
