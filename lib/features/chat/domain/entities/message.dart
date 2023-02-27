@@ -143,6 +143,8 @@ abstract class Message {
       return TextMessage.fromMap(map);
     } else if (messageType == MessageType.image.name) {
       return ImageMessage.fromMap(map);
+    } else if (messageType == MessageType.audio.name) {
+      return VoiceMessage.fromMap(map);
     } else {
       return EmptyMessage.fromMap(map);
     }

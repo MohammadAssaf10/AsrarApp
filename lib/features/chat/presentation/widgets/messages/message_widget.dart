@@ -1,3 +1,4 @@
+import 'voice_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -69,6 +70,10 @@ class MessageTypeDirector extends StatelessWidget {
     } else if (message is ImageMessage) {
       return ImageMessageWidget(
         message: message as ImageMessage,
+      );
+    } else if (message is VoiceMessage) {
+      return VoiceMessageWidget(
+        message: message as VoiceMessage,
       );
     } else {
       return Container();
