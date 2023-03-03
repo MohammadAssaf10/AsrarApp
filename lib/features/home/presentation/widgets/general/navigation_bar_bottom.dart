@@ -23,27 +23,24 @@ class NavigationBarBottom extends StatelessWidget {
       onTap: () {
         onPress();
       },
-      child: Center(
-        child: Container(
-          height: double.infinity,
-          width: AppSize.s80.w,
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                icon,
+      child: SizedBox(
+        height: double.infinity,
+        width: AppSize.s80.w,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              icon,
+            ),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: getAlmaraiRegularStyle(
+                fontSize: AppSize.s12.sp,
+                color: ColorManager.darkGrey,
               ),
-              Text(
-                title,
-                textAlign: TextAlign.center,
-                style: getAlmaraiRegularStyle(
-                  fontSize: AppSize.s12.sp,
-                  color: ColorManager.darkGrey,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -45,3 +45,4 @@ app.*.map.json
 log
 pubspec.lock
 .vscode/settings.json
+bloc_observer.dart
