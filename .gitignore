@@ -45,4 +45,5 @@ app.*.map.json
 log
 pubspec.lock
 .vscode/settings.json
-bloc_observer.dart
+lib/bloc_observer.dart
+lib/api_constant.dart
