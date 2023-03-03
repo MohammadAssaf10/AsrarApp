@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:493016441872:android:61efcfeb5a10dc710cd695",
         "android_client_info": {
-          "package_name": "com.example.asrar_app"
+          "package_name": "com.asrar_user_app"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "493016441872-3dk91ahr6u7ld2q66na1dbkitvs99cth.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.asrar_app",
+            "package_name": "com.asrar_user_app",
             "certificate_hash": "ae84129390eddd4bcd56998f673d4ffca24d96d5"
           }
         },

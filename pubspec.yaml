@@ -44,6 +44,7 @@ dependencies:
   path_provider: ^2.0.13
   intl: ^0.17.0
   audioplayers: ^3.0.1
+  go_sell_sdk_flutter: ^2.2.2
 
 dev_dependencies:
   flutter_test:
