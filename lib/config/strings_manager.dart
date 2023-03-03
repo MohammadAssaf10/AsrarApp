@@ -49,7 +49,7 @@ class AppStrings {
   static const String cancelOrder = 'cancelOrder';
   static const String cantCancel = 'cantCancel';
   static const String riseAComplaint = 'riseAComplaint';
-  static const String confirm = 'confirm';
+  static const String confirm = 'confirm?';
   static const String chat = 'chat';
   static const String waitingForAcceptingTheService = 'waitingForAcceptingTheService';
 

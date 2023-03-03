@@ -1,13 +1,10 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 
@@ -21,7 +18,6 @@ import '../../core/app/extensions.dart';
 import '../../features/home/domain/entities/file_entities.dart';
 import '../../features/home/presentation/widgets/general/home_button_widgets.dart';
 import '../../features/home/presentation/widgets/general/input_form_field.dart';
-import 'constants.dart';
 
 String? nameValidator(String? name, BuildContext context) {
   if (name.nullOrEmpty()) {
@@ -183,7 +179,7 @@ Future<bool> showConfirmDialog(BuildContext context,
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                text?.tr(context) ?? '${AppStrings.confirm.tr(context)}?',
+                text?.tr(context) ?? AppStrings.confirm.tr(context),
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               SizedBox(height: AppSize.s10.h),
@@ -196,7 +192,10 @@ Future<bool> showConfirmDialog(BuildContext context,
                       if (executeWhenConfirm != null) executeWhenConfirm();
                       Navigator.pop(context);
                     },
-                    child: Text(AppStrings.confirm.tr(context)),
+                    child: Text(
+                      AppStrings.confirm.tr(context).substring(
+                          0, AppStrings.confirm.tr(context).length - 1),
+                    ),
                   ),
                   SizedBox(width: AppSize.s10.h),
                   OutlinedButton(
@@ -267,58 +266,6 @@ void showNewPasswordDialog(
           ],
         );
       });
-}
-
-Future<void> sendNotificationToUser(
-    String token, String title, String nMessage) async {
-  try {
-    // Create a FirebaseMessaging instance
-    final FirebaseMessaging messaging = FirebaseMessaging.instance;
-    await messaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: true,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-    //what do you do when sent notification and app opened
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      if (message.notification != null) {
-        print("Notification Title:${message.notification!.title}");
-        print("Notification Body:${message.notification!.body}");
-      }
-    });
-    // FirebaseMessaging.onBackgroundMessage((RemoteMessage message) {});
-
-    // Define the message to send
-    var message = {
-      'notification': {
-        'title': title,
-        'body': nMessage,
-      },
-      'data': {
-        'click_action': 'FLUTTER_NOTIFICATION_CLICK',
-        'id': '1',
-        'status': 'done'
-      },
-      'to': token
-    };
-
-    // Send the message to the FCM API
-    await http.post(
-      Uri.parse('https://fcm.googleapis.com/fcm/send'),
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-        'Authorization': 'key=${FireBaseConstants.serverKey}',
-      },
-      body: jsonEncode(message),
-    );
-    print("Notification sent successfully");
-  } catch (e) {
-    print('Error sending notification: $e');
-  }
 }
 
 // path: just file path

@@ -19,26 +19,29 @@ class NavigationBarBottom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialButton(
-      // TODO: Remove minWidth
-      minWidth: AppSize.s75.w,
-      onPressed: () {
+    return InkWell(
+      onTap: () {
         onPress();
       },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset(
-            icon,
-          ),
-          Text(
-            title,
-            style: getAlmaraiRegularStyle(
-              fontSize: AppSize.s12.sp,
-              color: ColorManager.darkGrey,
+      child: SizedBox(
+        height: double.infinity,
+        width: AppSize.s80.w,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              icon,
             ),
-          ),
-        ],
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: getAlmaraiRegularStyle(
+                fontSize: AppSize.s12.sp,
+                color: ColorManager.darkGrey,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

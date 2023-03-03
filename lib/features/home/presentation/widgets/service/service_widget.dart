@@ -58,7 +58,7 @@ class ServiceWidget extends StatelessWidget {
                       radius: AppSize.s34.r,
                       backgroundColor: ColorManager.darkWhite,
                       child: Text(
-                        AppStrings.asrarServices.tr(context),
+                        AppStrings.asrarServices.tr(context).replaceAll(" ", "\n"),
                         textAlign: TextAlign.center,
                         style: getAlmaraiBoldStyle(
                           fontSize: AppSize.s16.sp,
