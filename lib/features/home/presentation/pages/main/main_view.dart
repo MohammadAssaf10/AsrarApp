@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/assets_manager.dart';
+import '../../../../../config/color_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../../../auth/presentation/bloc/authentication_bloc.dart';
@@ -21,80 +22,93 @@ class MainView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PageController controller = PageController(initialPage: 2);
-    return Scaffold(
-      body: PageView(
-        controller: controller,
-        onPageChanged: (v) {
-          final authState = BlocProvider.of<AuthenticationBloc>(context).state;
+    return Stack(
+      children: [
+        Scaffold(
+          body: PageView(
+            controller: controller,
+            onPageChanged: (v) {
+              final authState =
+                  BlocProvider.of<AuthenticationBloc>(context).state;
 
-          if (v == 4) {
-            BlocProvider.of<UserBloc>(context)
-                .add(GetUserInfo(id: authState.user!.id));
-          } else if (v == 0) {
-            BlocProvider.of<ShopOrderBloc>(context)
-                .add(GetShopOrderEvent(userId: authState.user!.id));
-          }
-        },
-        children: const [
-          OrdersScreen(),
-          MyWalletScreen(),
-          HomeScreen(),
-          CustomersServiceScreen(),
-          ProfileScreen(),
-        ],
-      ),
-      floatingActionButton: MaterialButton(
-        onPressed: () => controller.jumpToPage(2),
-        child: Image.asset(
-          IconAssets.home,
-          filterQuality: FilterQuality.high,
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomAppBar(
-        child: SizedBox(
-          height: AppSize.s50.h,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  NavigationBarBottom(
-                    title: AppStrings.orders.tr(context),
-                    icon: IconAssets.orders,
-                    onPress: () {
-                      controller.jumpToPage(0);
-                    },
-                  ),
-                  NavigationBarBottom(
-                    title: AppStrings.myWallet.tr(context),
-                    icon: IconAssets.wallet,
-                    onPress: () => controller.jumpToPage(1),
-                  ),
-                ],
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  NavigationBarBottom(
-                    title: AppStrings.customerService.tr(context),
-                    icon: IconAssets.customersService,
-                    onPress: () => controller.jumpToPage(3),
-                  ),
-                  NavigationBarBottom(
-                    title: AppStrings.profile.tr(context),
-                    icon: IconAssets.profile,
-                    onPress: () {
-                      controller.jumpToPage(4);
-                    },
-                  ),
-                ],
-              )
+              if (v == 4) {
+                BlocProvider.of<UserBloc>(context)
+                    .add(GetUserInfo(id: authState.user!.id));
+              } else if (v == 0) {
+                BlocProvider.of<ShopOrderBloc>(context)
+                    .add(GetShopOrderEvent(userId: authState.user!.id));
+              }
+            },
+            children: const [
+              OrdersScreen(),
+              MyWalletScreen(),
+              HomeScreen(),
+              CustomersServiceScreen(),
+              ProfileScreen(),
             ],
           ),
+          bottomNavigationBar: Container(
+            color: ColorManager.white,
+            height: AppSize.s50.h,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    NavigationBarBottom(
+                      title: AppStrings.orders.tr(context),
+                      icon: IconAssets.orders,
+                      onPress: () {
+                        controller.jumpToPage(0);
+                      },
+                    ),
+                    NavigationBarBottom(
+                      title: AppStrings.myWallet.tr(context),
+                      icon: IconAssets.wallet,
+                      onPress: () => controller.jumpToPage(1),
+                    ),
+                  ],
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    NavigationBarBottom(
+                      title: AppStrings.customerService.tr(context),
+                      icon: IconAssets.customersService,
+                      onPress: () => controller.jumpToPage(3),
+                    ),
+                    NavigationBarBottom(
+                      title: AppStrings.profile.tr(context),
+                      icon: IconAssets.profile,
+                      onPress: () {
+                        controller.jumpToPage(4);
+                      },
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
         ),
-      ),
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 20,
+          child: Center(
+            child: GestureDetector(
+              onTap: () {
+                controller.jumpToPage(2);
+              },
+              child: Image.asset(
+                IconAssets.home,
+                filterQuality: FilterQuality.high,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

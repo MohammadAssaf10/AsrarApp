@@ -15,13 +15,18 @@ import '../../domain/repository/notification_repository.dart';
 
 class NotificationRepositoryImpl extends NotificationRepository {
   final NetworkInfo networkInfo;
+
   NotificationRepositoryImpl({required this.networkInfo});
+
   final FirebaseMessaging messaging = FirebaseMessaging.instance;
 
   final Map<String, dynamic> data = {
     'click_action': 'FLUTTER_NOTIFICATION_CLICK',
     'id': '1',
     'status': 'done',
+  };
+  final Map<String, dynamic> headers = {
+    'Authorization': 'key=${FireBaseConstants.serverKey}'
   };
 
   @override
@@ -46,14 +51,11 @@ class NotificationRepositoryImpl extends NotificationRepository {
         // Create a Dio instance
         final Dio dio = await instance<DioFactory>().getDio();
 
-        // Define the request headers
-        dio.options.headers['Authorization'] =
-            'key=${FireBaseConstants.serverKey}';
-
         // Send the message to the FCM API
         final response = await dio.post(
           FireBaseConstants.notificationApi,
           data: jsonEncode(body),
+          options: Options(headers: headers),
         );
         if (response.statusCode == 200) {
           return const Right(unit);
@@ -94,14 +96,11 @@ class NotificationRepositoryImpl extends NotificationRepository {
         // Create a Dio instance
         final Dio dio = await instance<DioFactory>().getDio();
 
-        // Define the request headers
-        dio.options.headers['Authorization'] =
-            'key=${FireBaseConstants.serverKey}';
-
         // Send the message to the FCM API
         final response = await dio.post(
           FireBaseConstants.notificationApi,
           data: jsonEncode(body),
+          options: Options(headers: headers),
         );
         if (response.statusCode == 200) {
           return const Right(unit);

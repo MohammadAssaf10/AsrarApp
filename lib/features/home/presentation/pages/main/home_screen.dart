@@ -36,17 +36,27 @@ class HomeScreen extends StatelessWidget {
           IconButton(
             onPressed: () async {
               final NotificationRepository n =
-                  instance<NotificationRepository>();
+              instance<NotificationRepository>();
               (await n.sendNotificationToGroupOfUser([
-                /*My phone */ "dtzf4JTlQ_SDjxWlblwQwM:APA91bHBpS8FTqpTOuc5tXtXumQuhhUO08zwD7ljH9eLLANorr6DzE_-td7PuK87hAsVxIEPqF2OVxDCq4eVEonJ0VX2Yq4zApaWMz-SGj-h8KHPdsO4x-8RETpc-7oV7IK4b8XMdWzO",
-                /*Mohsen */ "dQXW706MS4SpEp2Lah73hY:APA91bEwpKzw4qsyj_p_qOf5M6i6hZYK6EsuZMq2hqhWLRj-IKZ_TTOGShgKawQTTAQC2-PnnU9g0jYx2DMZR11yAyChyIeejFovRlEdtcVWnR45lJHah3QJRBxnHCKHOkqtvqGpBi2D",
-                /*Other phone */ "ch383Jt-TkKJOsDr71oC14:APA91bFmqWXl5sXQCYg45HncZ96Gnu2ETcUHb4xPzfkiAYRpFITA3HGB680dpsvCR53YpTiHX8yseuISOr3HP2lFhUdeCnk9uGvdLv6gXx7VupqXxRc_isoo-oQAUlM-JCxpcisYhefh",
-              ], "Asrar", "Asrar"))
+                /*My phone */
+                "dtzf4JTlQ_SDjxWlblwQwM:APA91bHBpS8FTqpTOuc5tXtXumQuhhUO08zwD7ljH9eLLANorr6DzE_-td7PuK87hAsVxIEPqF2OVxDCq4eVEonJ0VX2Yq4zApaWMz-SGj-h8KHPdsO4x-8RETpc-7oV7IK4b8XMdWzO",
+                /*Mohsen */
+                "dQXW706MS4SpEp2Lah73hY:APA91bEwpKzw4qsyj_p_qOf5M6i6hZYK6EsuZMq2hqhWLRj-IKZ_TTOGShgKawQTTAQC2-PnnU9g0jYx2DMZR11yAyChyIeejFovRlEdtcVWnR45lJHah3QJRBxnHCKHOkqtvqGpBi2D",
+                /*Other phone */
+                "ch383Jt-TkKJOsDr71oC14:APA91bFmqWXl5sXQCYg45HncZ96Gnu2ETcUHb4xPzfkiAYRpFITA3HGB680dpsvCR53YpTiHX8yseuISOr3HP2lFhUdeCnk9uGvdLv6gXx7VupqXxRc_isoo-oQAUlM-JCxpcisYhefh",
+              ], "Asrar", "Asrar For Electronic Services"))
                   .fold((l) {
-                print(l.message);
+                print("======>${l.message}");
               }, (r) {
                 print("*Notification Sent Successfully*");
               });
+              // (await n.sendNotificationToAllUser(
+              //         "Asrar", "Asrar For Electronic Services"))
+              //     .fold((l) {
+              //   print("======>${l.message}");
+              // }, (r) {
+              //   print("*Notification Sent Successfully*");
+              // });
             },
             icon: SvgPicture.asset(IconAssets.notification),
           ),
@@ -131,7 +141,10 @@ class HomeScreen extends StatelessWidget {
               vertical: AppSize.s5.h,
               horizontal: AppSize.s15.w,
             ),
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
             child: Text(
               AppStrings.services.tr(context),
               textAlign: TextAlign.start,
