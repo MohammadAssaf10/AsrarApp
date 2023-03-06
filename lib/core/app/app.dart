@@ -65,14 +65,14 @@ class MyApp extends StatelessWidget {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
                 title: "أسرار",
-                localizationsDelegates: const[
+                localizationsDelegates: const [
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate,
                   GlobalCupertinoLocalizations.delegate,
                   AppLocalizations.delegate,
                 ],
                 supportedLocales: const [arabicLocale, englishLocale],
-                locale: state.locale,
+                locale: getLocal(),
                 localeResolutionCallback: (deviceLocale, supportedLocales) {
                   for (var locale in supportedLocales) {
                     if (deviceLocale != null &&

@@ -107,7 +107,7 @@ class FirebaseServiceOrderRepository extends ServiceOrderRepository {
           .collection(FireBaseConstants.serviceOrder)
           .doc(serviceOrder.id.toString())
           .update({"status": OrderStatus.completed.name});
-      return Right(null);
+      return const Right(null);
     } catch (e) {
       return Left(ExceptionHandler.handle(e).failure);
     }
