@@ -26,7 +26,7 @@ class AwesomeLoader extends StatefulWidget {
   final Color innerColor;
   final double strokeWidth;
   final int duration;
-  final AwesomeLoaderController controller;
+  final AwesomeLoaderController? controller;
 
   @override
   // ignore: library_private_types_in_public_api
@@ -44,7 +44,7 @@ class _AwesomeLoaderState extends State<AwesomeLoader> with TickerProviderStateM
 
   // final int durationPortion = 40;
 
-  late Timer timer;
+  Timer timer = Timer(const Duration(seconds: 1), () {});
   static const int TIME_PORTION = 10; // 40 milliseconds for each increment
 
   /// ranges are from 0-100
@@ -76,7 +76,7 @@ class _AwesomeLoaderState extends State<AwesomeLoader> with TickerProviderStateM
   @override
   void initState() {
     super.initState();
-    widget.controller._awesomeLoaderState = this;
+    widget.controller?._awesomeLoaderState = this;
 
     // controls the smoothness of the arc animation
     arcIncrement = 2 *
@@ -110,34 +110,32 @@ class _AwesomeLoaderState extends State<AwesomeLoader> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Stack(
-        children: <Widget>[
-          RotationTransition(
-            turns: outerAnimation,
-            child: CustomPaint(
-              //  /50 to return a range from  to 0-2
-              painter: OuterArcPainter(
-                  widget.outerColor, startRectSize / 50.0, endRectSize / 50.0, widget.strokeWidth),
-              child: const SizedBox(
-                width: 200.0,
-                height: 200.0,
-              ),
+    return Stack(
+      children: <Widget>[
+        RotationTransition(
+          turns: outerAnimation,
+          child: CustomPaint(
+            //  /50 to return a range from  to 0-2
+            painter: OuterArcPainter(
+                widget.outerColor, startRectSize / 50.0, endRectSize / 50.0, widget.strokeWidth),
+            child: const SizedBox(
+              width: 200.0,
+              height: 200.0,
             ),
           ),
-          RotationTransition(
-            turns: innerAnimation,
-            child: CustomPaint(
-              painter: InnerArcPainter(
-                  widget.innerColor, startRectSize / 50.0, endRectSize / 50.0, widget.strokeWidth),
-              child: const SizedBox(
-                width: 200.0,
-                height: 200.0,
-              ),
+        ),
+        RotationTransition(
+          turns: innerAnimation,
+          child: CustomPaint(
+            painter: InnerArcPainter(
+                widget.innerColor, startRectSize / 50.0, endRectSize / 50.0, widget.strokeWidth),
+            child: const SizedBox(
+              width: 200.0,
+              height: 200.0,
             ),
-          )
-        ],
-      ),
+          ),
+        )
+      ],
     );
   }
 
