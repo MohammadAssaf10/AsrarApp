@@ -1,296 +1,298 @@
-// import 'dart:async';
-// import 'package:flutter/material.dart';
-// import 'dart:math';
+// ignore_for_file: constant_identifier_names
 
-// /// TODOs:
-// /// - expose these parameters:
-// ///   - Animation Smoothness
-// ///   - minimum arc size
-// ///   -
-// /// - Extra work:
-// ///   - develop a callback when the loader gets to full state
-// ///   - develop a controller to assign number of rotates or a duration before a full stop
-// ///   - develop the ability to stop on full state
-// ///
-// class AwesomeLoader extends StatefulWidget {
-//   const AwesomeLoader(
-//       {super.key,
-//       this.outerColor = const Color.fromARGB(255, 66, 62, 60),
-//       this.innerColor = const Color.fromARGB(255, 66, 62, 60),
-//       this.strokeWidth = 15,
-//       this.duration = 4000,
-//       required this.controller});
-//   final Color outerColor;
-//   final Color innerColor;
-//   final double strokeWidth;
-//   final int duration;
-//   final AwesomeLoaderController controller;
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'dart:math';
 
-//   @override
-//   _AwesomeLoaderState createState() => _AwesomeLoaderState();
-// }
+/// TODOs:
+/// - expose these parameters:
+///   - Animation Smoothness
+///   - minimum arc size
+///   -
+/// - Extra work:
+///   - develop a callback when the loader gets to full state
+///   - develop a controller to assign number of rotates or a duration before a full stop
+///   - develop the ability to stop on full state
+///
+class AwesomeLoader extends StatefulWidget {
+  const AwesomeLoader(
+      {super.key,
+      this.outerColor = const Color.fromARGB(255, 66, 62, 60),
+      this.innerColor = const Color.fromARGB(255, 66, 62, 60),
+      this.strokeWidth = 15,
+      this.duration = 4000,
+      required this.controller});
+  final Color outerColor;
+  final Color innerColor;
+  final double strokeWidth;
+  final int duration;
+  final AwesomeLoaderController controller;
 
-// class _AwesomeLoaderState extends State<AwesomeLoader> with TickerProviderStateMixin {
-//    Animation<double>? outerAnimation;
-//    Animation<double>? innerAnimation;
-//    AnimationController? outerController;
-//    AnimationController? innerController;
+  @override
+  // ignore: library_private_types_in_public_api
+  _AwesomeLoaderState createState() => _AwesomeLoaderState();
+}
 
-// // controls the minimum size of the arc
-//   static const int minimumArcSize = 5;
+class _AwesomeLoaderState extends State<AwesomeLoader> with TickerProviderStateMixin {
+  late Animation<double> outerAnimation;
+  late Animation<double> innerAnimation;
+  late AnimationController outerController;
+  late AnimationController innerController;
 
-//   // final int durationPortion = 40;
+// controls the minimum size of the arc
+  static const int minimumArcSize = 5;
 
-//    Timer? timer;
-//   static const int TIME_PORTION = 10; // 40 milliseconds for each increment
+  // final int durationPortion = 40;
 
-//   /// ranges are from 0-100
-//   /// it is returning back in the build method to 0-2 (to be multiplied by pi)
-//   double startRectSize = 0;
-//   double endRectSize = 0;
-//   double staticSizeCounter = 0;
-//   static const double staticStatePercent = 0.1;
+  late Timer timer;
+  static const int TIME_PORTION = 10; // 40 milliseconds for each increment
 
-//   // static double SMOOTHNESS = 0.5; // 40 milliseconds for each increment
+  /// ranges are from 0-100
+  /// it is returning back in the build method to 0-2 (to be multiplied by pi)
+  double startRectSize = 0;
+  double endRectSize = 0;
+  double staticSizeCounter = 0;
+  static const double staticStatePercent = 0.1;
 
-//   // controls the smoothness of the arc animation
-//   // double arcIncrement;
+  // static double SMOOTHNESS = 0.5; // 40 milliseconds for each increment
 
-//   final double staticStateInvisibleSize = staticStatePercent * 100;
-//   bool reverseFlag = false;
+  // controls the smoothness of the arc animation
+  // double arcIncrement;
 
-//   /// the state of the minimum or maximum arc size
-//   bool staticState = false;
+  final double staticStateInvisibleSize = staticStatePercent * 100;
+  bool reverseFlag = false;
 
-//   int i = 1;
+  /// the state of the minimum or maximum arc size
+  bool staticState = false;
 
-//   // controls the smoothness of the arc animation
-//   late double arcIncrement;
+  int i = 1;
 
-//   /// this swithc is controlled by start() and stop() functions
-//   /// it is used to wait till loader finishes full circle then stop
-//   bool isLoaderAskedToStop = false;
-//   @override
-//   void initState() {
-//     super.initState();
-//     widget.controller._awesomeLoaderState = this;
+  // controls the smoothness of the arc animation
+  late double arcIncrement;
 
-//     // TODO(khaled): clarify this equation and exctract a constant
-//     // controls the smoothness of the arc animation
-//     arcIncrement = 2 *
-//         2 *
-//         (100 - minimumArcSize + (100 * 0.1)) *
-//         (1 - staticStatePercent) *
-//         (TIME_PORTION / widget.duration);
+  /// this switch is controlled by start() and stop() functions
+  /// it is used to wait till loader finishes full circle then stop
+  bool isLoaderAskedToStop = false;
+  @override
+  void initState() {
+    super.initState();
+    widget.controller._awesomeLoaderState = this;
 
-//     /// determines the size of the rect in initially [0-100]
-//     endRectSize = 100;
+    // controls the smoothness of the arc animation
+    arcIncrement = 2 *
+        2 *
+        (100 - minimumArcSize + (100 * 0.1)) *
+        (1 - staticStatePercent) *
+        (TIME_PORTION / widget.duration);
 
-//     outerController =
-//         AnimationController(duration: Duration(milliseconds: widget.duration), vsync: this);
+    /// determines the size of the rect in initially [0-100]
+    endRectSize = 100;
 
-//     innerController =
-//         AnimationController(duration: Duration(milliseconds: widget.duration), vsync: this);
+    outerController =
+        AnimationController(duration: Duration(milliseconds: widget.duration), vsync: this);
 
-//     /// rotates three times per duration
-//     outerAnimation = Tween<double>(begin: 0, end: 3).animate(CurvedAnimation(
-//         parent: outerController, curve: const Interval(0.0, 1.0, curve: Curves.linear)));
+    innerController =
+        AnimationController(duration: Duration(milliseconds: widget.duration), vsync: this);
 
-//     /// rotates three rotations per duration
-//     innerAnimation = Tween<double>(begin: 3.0, end: 0.0).animate(CurvedAnimation(
-//         parent: innerController, curve: const Interval(0.0, 1.0, curve: Curves.linear)));
+    /// rotates three times per duration
+    outerAnimation = Tween<double>(begin: 0, end: 3).animate(CurvedAnimation(
+        parent: outerController, curve: const Interval(0.0, 1.0, curve: Curves.linear)));
 
-//     /// if there is no controller, start the loader immediatly
-//     if (widget.controller == null) {
-//       start();
-//     }
-//   }
+    /// rotates three rotations per duration
+    innerAnimation = Tween<double>(begin: 3.0, end: 0.0).animate(CurvedAnimation(
+        parent: innerController, curve: const Interval(0.0, 1.0, curve: Curves.linear)));
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       child: Stack(
-//         children: <Widget>[
-//           RotationTransition(
-//             turns: outerAnimation,
-//             child: CustomPaint(
-//               //  /50 to return a range from  to 0-2
-//               painter: OuterArcPainter(
-//                   widget.outerColor, startRectSize / 50.0, endRectSize / 50.0, widget.strokeWidth),
-//               child: const SizedBox(
-//                 width: 200.0,
-//                 height: 200.0,
-//               ),
-//             ),
-//           ),
-//           RotationTransition(
-//             turns: innerAnimation,
-//             child: CustomPaint(
-//               painter: InnerArcPainter(
-//                   widget.innerColor, startRectSize / 50.0, endRectSize / 50.0, widget.strokeWidth),
-//               child: const SizedBox(
-//                 width: 200.0,
-//                 height: 200.0,
-//               ),
-//             ),
-//           )
-//         ],
-//       ),
-//     );
-//   }
+    /// if there is no controller, start the loader immediatly
+    if (widget.controller == null) {
+      start();
+    }
+  }
 
-//   @override
-//   void dispose() {
-//     outerController.dispose();
-//     innerController.dispose();
-//     super.dispose();
-//   }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Stack(
+        children: <Widget>[
+          RotationTransition(
+            turns: outerAnimation,
+            child: CustomPaint(
+              //  /50 to return a range from  to 0-2
+              painter: OuterArcPainter(
+                  widget.outerColor, startRectSize / 50.0, endRectSize / 50.0, widget.strokeWidth),
+              child: const SizedBox(
+                width: 200.0,
+                height: 200.0,
+              ),
+            ),
+          ),
+          RotationTransition(
+            turns: innerAnimation,
+            child: CustomPaint(
+              painter: InnerArcPainter(
+                  widget.innerColor, startRectSize / 50.0, endRectSize / 50.0, widget.strokeWidth),
+              child: const SizedBox(
+                width: 200.0,
+                height: 200.0,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
 
-//   void start() {
-//     isLoaderAskedToStop = false;
-//     if (!outerController.isAnimating) outerController.repeat();
-//     if (!innerController.isAnimating) innerController.repeat();
-//     _startRotation();
-//   }
+  @override
+  void dispose() {
+    outerController.dispose();
+    innerController.dispose();
+    super.dispose();
+  }
 
-//   void stopWhenFull() {
-//     /// turn the switch on, then the animation loop will stop the timer when the loader is in a full circle shape
-//     isLoaderAskedToStop = true;
-//   }
+  void start() {
+    isLoaderAskedToStop = false;
+    if (!outerController.isAnimating) outerController.repeat();
+    if (!innerController.isAnimating) innerController.repeat();
+    _startRotation();
+  }
 
-//   void stopNow() {
-//     outerController.stop();
-//     innerController.stop();
-//     _stopRotation();
-//   }
+  void stopWhenFull() {
+    /// turn the switch on, then the animation loop will stop the timer when the loader is in a full circle shape
+    isLoaderAskedToStop = true;
+  }
 
-//   _startRotation() {
-//     if (timer.isActive) timer.cancel();
-//     timer = Timer.periodic(const Duration(milliseconds: TIME_PORTION), (Timer t) {
-//       if (mounted) {
-//         setState(() {
-//           if (!reverseFlag) {
-//             if (!staticState) {
-//               /// modify size only if the staticState is FALSE
-//               endRectSize = endRectSize + arcIncrement;
-//             } else {
-//               staticSizeCounter += arcIncrement;
-//               if (staticSizeCounter > staticStateInvisibleSize) {
-//                 staticSizeCounter = 0;
-//                 staticState = false;
-//               }
-//             }
-//             if (endRectSize > 100) {
-//               staticState = true;
-//               reverseFlag = true;
-//               startRectSize = 0;
-//               //// check if loader is asked to stop, stop the timer
-//               if (isLoaderAskedToStop) {
-//                 stopNow();
-//               }
-//             }
-//           } else {
-//             if (!staticState) {
-//               /// modify size only if the staticState is FALSE
-//               startRectSize = startRectSize + arcIncrement;
-//               endRectSize = endRectSize - arcIncrement;
-//             } else {
-//               staticSizeCounter += arcIncrement;
-//               if (staticSizeCounter > staticStateInvisibleSize) {
-//                 staticSizeCounter = 0;
-//                 staticState = false;
-//               }
-//             }
+  void stopNow() {
+    outerController.stop();
+    innerController.stop();
+    _stopRotation();
+  }
 
-//             if (startRectSize > 100 - minimumArcSize) {
-//               staticState = true;
-//               reverseFlag = false;
-//             }
-//           }
-//         });
-//       }
-//     });
-//   }
+  _startRotation() {
+    if (timer.isActive) timer.cancel();
+    timer = Timer.periodic(const Duration(milliseconds: TIME_PORTION), (Timer t) {
+      if (mounted) {
+        setState(() {
+          if (!reverseFlag) {
+            if (!staticState) {
+              /// modify size only if the staticState is FALSE
+              endRectSize = endRectSize + arcIncrement;
+            } else {
+              staticSizeCounter += arcIncrement;
+              if (staticSizeCounter > staticStateInvisibleSize) {
+                staticSizeCounter = 0;
+                staticState = false;
+              }
+            }
+            if (endRectSize > 100) {
+              staticState = true;
+              reverseFlag = true;
+              startRectSize = 0;
+              //// check if loader is asked to stop, stop the timer
+              if (isLoaderAskedToStop) {
+                stopNow();
+              }
+            }
+          } else {
+            if (!staticState) {
+              /// modify size only if the staticState is FALSE
+              startRectSize = startRectSize + arcIncrement;
+              endRectSize = endRectSize - arcIncrement;
+            } else {
+              staticSizeCounter += arcIncrement;
+              if (staticSizeCounter > staticStateInvisibleSize) {
+                staticSizeCounter = 0;
+                staticState = false;
+              }
+            }
 
-//   _stopRotation() {
-//     timer.cancel();
-//   }
-// }
+            if (startRectSize > 100 - minimumArcSize) {
+              staticState = true;
+              reverseFlag = false;
+            }
+          }
+        });
+      }
+    });
+  }
 
-// class OuterArcPainter extends CustomPainter {
-//   OuterArcPainter(this.color, this.startRectSize, this.endRectSize, this.strokeWidth);
+  _stopRotation() {
+    timer.cancel();
+  }
+}
 
-//   final Color color;
-//   final double endRectSize;
-//   final double startRectSize;
-//   final double strokeWidth;
+class OuterArcPainter extends CustomPainter {
+  OuterArcPainter(this.color, this.startRectSize, this.endRectSize, this.strokeWidth);
 
-//   @override
-//   void paint(Canvas canvas, Size size) {
-//     final Paint outerPaint = Paint()
-//       ..color = color
-//       ..strokeWidth = strokeWidth
-//       ..strokeCap = StrokeCap.round
-//       ..style = PaintingStyle.stroke;
+  final Color color;
+  final double endRectSize;
+  final double startRectSize;
+  final double strokeWidth;
 
-//     final Rect outerRect = Rect.fromLTWH(0.0, 0.0, size.width, size.height);
-//     canvas.drawArc(outerRect, startRectSize * pi, endRectSize * pi, false, outerPaint);
-//   }
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint outerPaint = Paint()
+      ..color = color
+      ..strokeWidth = strokeWidth
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.stroke;
 
-//   @override
-//   bool shouldRepaint(CustomPainter oldDelegate) {
-//     return true;
-//   }
-// }
+    final Rect outerRect = Rect.fromLTWH(0.0, 0.0, size.width, size.height);
+    canvas.drawArc(outerRect, startRectSize * pi, endRectSize * pi, false, outerPaint);
+  }
 
-// class InnerArcPainter extends CustomPainter {
-//   InnerArcPainter(
-//     this.color,
-//     this.startRectSize,
-//     this.endRectSize,
-//     this.strokeWidth,
-//   );
-//   final Color color;
-//   final double endRectSize;
-//   final double startRectSize;
-//   final double strokeWidth;
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
 
-//   @override
-//   void paint(Canvas canvas, Size size) {
-//     final Paint innerPaint = Paint()
-//       ..color = color
-//       ..strokeWidth = strokeWidth
-//       ..strokeCap = StrokeCap.round
-//       ..style = PaintingStyle.stroke;
+class InnerArcPainter extends CustomPainter {
+  InnerArcPainter(
+    this.color,
+    this.startRectSize,
+    this.endRectSize,
+    this.strokeWidth,
+  );
+  final Color color;
+  final double endRectSize;
+  final double startRectSize;
+  final double strokeWidth;
 
-//     final Rect innerRect = Rect.fromLTWH(
-//         0.0 + (0.35 * size.width) / 2,
-//         0.0 + (0.35 * size.height) / 2,
-//         size.width - 0.35 * size.width,
-//         size.height - 0.35 * size.height);
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint innerPaint = Paint()
+      ..color = color
+      ..strokeWidth = strokeWidth
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.stroke;
 
-//     canvas.drawArc(innerRect, -startRectSize * pi, -endRectSize * pi, false, innerPaint);
-//   }
+    final Rect innerRect = Rect.fromLTWH(
+        0.0 + (0.35 * size.width) / 2,
+        0.0 + (0.35 * size.height) / 2,
+        size.width - 0.35 * size.width,
+        size.height - 0.35 * size.height);
 
-//   @override
-//   bool shouldRepaint(CustomPainter oldDelegate) {
-//     return true;
-//   }
-// }
+    canvas.drawArc(innerRect, -startRectSize * pi, -endRectSize * pi, false, innerPaint);
+  }
 
-// class AwesomeLoaderController {
-//   AwesomeLoaderController();
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
 
-//   late _AwesomeLoaderState _awesomeLoaderState;
-//   void stopWhenFull() {
-//     _awesomeLoaderState.stopWhenFull();
-//   }
+class AwesomeLoaderController {
+  AwesomeLoaderController();
 
-//   void start() {
-//     _awesomeLoaderState.start();
-//   }
+  late _AwesomeLoaderState _awesomeLoaderState;
+  void stopWhenFull() {
+    _awesomeLoaderState.stopWhenFull();
+  }
 
-//   void stopNow() {
-//     _awesomeLoaderState.stopNow();
-//   }
-// }
+  void start() {
+    _awesomeLoaderState.start();
+  }
+
+  void stopNow() {
+    _awesomeLoaderState.stopNow();
+  }
+}

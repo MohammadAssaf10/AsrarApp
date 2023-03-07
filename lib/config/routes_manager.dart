@@ -84,7 +84,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const CoursesScreen());
 
       case Routes.paymentRoute:
-        return MaterialPageRoute(builder: (_) =>  const PaymentScreen(amount: 1, currency: 'USD',));
+        return MaterialPageRoute(builder: (_) =>  const PaymentScreen());
 
       case Routes.yourAccountRoute:
         {

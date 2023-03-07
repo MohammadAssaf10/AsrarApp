@@ -1,227 +1,327 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
+import 'dart:async';
 
-import '../../data/repositorys/tap_payment_repository.dart';
+import 'package:flutter/material.dart';
+import 'package:go_sell_sdk_flutter/go_sell_sdk_flutter.dart';
+import 'package:go_sell_sdk_flutter/model/models.dart';
+import 'package:flutter/services.dart';
+
+import '../../../../api_constant.dart';
+import '../widgets/tap_loader.dart';
 
 class PaymentScreen extends StatefulWidget {
-  final double amount;
-  final String currency;
-
-  const PaymentScreen({required this.amount, required this.currency});
+  const PaymentScreen({super.key});
 
   @override
-  _PaymentScreenState createState() => _PaymentScreenState();
+  State<PaymentScreen> createState() => _PaymentScreenState();
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final TapPaymentService _tapPaymentService = TapPaymentService();
+  late Map<dynamic, dynamic> tapSDKResult;
+  late String responseID = "";
+  late String sdkStatus = "";
+  late String sdkErrorCode;
+  late String sdkErrorMessage;
+  late String sdkErrorDescription;
+  late AwesomeLoaderController loaderController = AwesomeLoaderController();
+  late Color _buttonColor;
 
-  String _cardNumber = '';
-  String _expiryMonth = '';
-  String _expiryYear = '';
-  String _cvv = '';
-  String _name = '';
-  final bool _isLoading = false;
+  @override
+  void initState() {
+    super.initState();
+    _buttonColor = const Color(0xff2ace00);
+    configureSDK();
+  }
+
+  // configure SDK
+  Future<void> configureSDK() async {
+    // configure app
+    configureApp();
+    // sdk session configurations
+    setupSDKSession();
+  }
+
+  // configure app key and bundle-id (You must get those keys from tap)
+  Future<void> configureApp() async {
+    GoSellSdkFlutter.configureApp(
+        bundleId: Platform.isAndroid ? kAndroidBundleId : kIosBundleId,
+        productionSecreteKey: Platform.isAndroid ? kTapAndroidProdKey : kTapIosProdKey,
+        sandBoxsecretKey: Platform.isAndroid ? kTapAndroidTestKey : kTapIosTestKey,
+        lang: "ar");
+  }
+
+  //
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> setupSDKSession() async {
+    try {
+      GoSellSdkFlutter.sessionConfigurations(
+          trxMode: TransactionMode.PURCHASE,
+          transactionCurrency: "sr",
+          amount: '1',
+          customer: Customer(
+              customerId: "",
+              // customer id is important to retrieve cards saved for this customer
+              email: "test@test.com",
+              isdNumber: "965",
+              number: "00000000",
+              firstName: "test",
+              middleName: "test",
+              lastName: "test",
+              metaData: null),
+          paymentItems: <PaymentItem>[
+            PaymentItem(
+                name: "item1",
+                amountPerUnit: 1,
+                quantity: Quantity(value: 1),
+                discount: {"type": "F", "value": 10, "maximum_fee": 10, "minimum_fee": 1},
+                description: "Item 1 Apple",
+                taxes: [
+                  Tax(
+                      amount: Amount(type: "F", value: 10, minimumFee: 1, maximumFee: 10),
+                      name: "tax1",
+                      description: "tax describtion")
+                ],
+                totalAmount: 100),
+          ],
+          // List of taxes
+          taxes: [
+            Tax(
+                amount: Amount(type: "F", value: 10, minimumFee: 1, maximumFee: 10),
+                name: "tax1",
+                description: "tax describtion"),
+            Tax(
+                amount: Amount(type: "F", value: 10, minimumFee: 1, maximumFee: 10),
+                name: "tax1",
+                description: "tax describtion")
+          ],
+          // List of shippnig
+          shippings: [
+            Shipping(name: "shipping 1", amount: 100, description: "shiping description 1"),
+            Shipping(name: "shipping 2", amount: 150, description: "shiping description 2")
+          ],
+          postURL: "https://tap.company",
+          // Payment description
+          paymentDescription: "paymentDescription",
+          // Payment Metadata
+          paymentMetaData: {
+            "a": "a meta",
+            "b": "b meta",
+          },
+          // Payment Reference
+          paymentReference: Reference(
+              acquirer: "acquirer",
+              gateway: "gateway",
+              payment: "payment",
+              track: "track",
+              transaction: "trans_910101",
+              order: "order_262625"),
+          // payment Descriptor
+          paymentStatementDescriptor: "paymentStatementDescriptor",
+          // Save Card Switch
+          isUserAllowedToSaveCard: true,
+          // Enable/Disable 3DSecure
+          isRequires3DSecure: true,
+          // Receipt SMS/Email
+          receipt: Receipt(true, false),
+          // Authorize Action [Capture - Void]
+          authorizeAction: AuthorizeAction(type: AuthorizeActionType.CAPTURE, timeInHours: 10),
+          // Destinations
+          destinations: null,
+          // merchant id
+          merchantID: "",
+          // Allowed cards
+          allowedCadTypes: CardType.ALL,
+          applePayMerchantID: "merchant.applePayMerchantID",
+          allowsToSaveSameCardMoreThanOnce: true,
+          // pass the card holder name to the SDK
+          cardHolderName: "Card Holder NAME",
+          // disable changing the card holder name by the user
+          allowsToEditCardHolderName: true,
+          // select payments you need to show [Default is all, and you can choose between WEB-CARD-APPLEPAY ]
+          paymentType: PaymentType.ALL,
+          // Transaction mode
+          sdkMode: SDKMode.Sandbox);
+    } on PlatformException {
+      // platformVersion = 'Failed to get platform version.';
+    }
+
+    if (!mounted) return;
+
+    setState(() {
+      tapSDKResult = {};
+    });
+  }
+
+  Future<void> startSDK() async {
+    setState(() {
+      loaderController.start();
+    });
+
+    var tapSDKResult = await GoSellSdkFlutter.startPaymentSDK;
+    loaderController.stopWhenFull();
+    print('>>>> ${tapSDKResult['sdk_result']}');
+
+    setState(() {
+      switch (tapSDKResult['sdk_result']) {
+        case "SUCCESS":
+          sdkStatus = "SUCCESS";
+          handleSDKResult();
+          break;
+        case "FAILED":
+          sdkStatus = "FAILED";
+          handleSDKResult();
+          break;
+        case "SDK_ERROR":
+          print('sdk error............');
+          print(tapSDKResult['sdk_error_code']);
+          print(tapSDKResult['sdk_error_message']);
+          print(tapSDKResult['sdk_error_description']);
+          print('sdk error............');
+          sdkErrorCode = tapSDKResult['sdk_error_code'].toString();
+          sdkErrorMessage = tapSDKResult['sdk_error_message'];
+          sdkErrorDescription = tapSDKResult['sdk_error_description'];
+          break;
+
+        case "NOT_IMPLEMENTED":
+          sdkStatus = "NOT_IMPLEMENTED";
+          break;
+      }
+    });
+  }
+
+  void handleSDKResult() {
+    print('>>>> ${tapSDKResult['trx_mode']}');
+
+    switch (tapSDKResult['trx_mode']) {
+      case "CHARGE":
+        printSDKResult('Charge');
+        break;
+
+      case "AUTHORIZE":
+        printSDKResult('Authorize');
+        break;
+
+      case "SAVE_CARD":
+        printSDKResult('Save Card');
+        break;
+
+      case "TOKENIZE":
+        print('TOKENIZE token : ${tapSDKResult['token']}');
+        print('TOKENIZE token_currency  : ${tapSDKResult['token_currency']}');
+        print('TOKENIZE card_first_six : ${tapSDKResult['card_first_six']}');
+        print('TOKENIZE card_last_four : ${tapSDKResult['card_last_four']}');
+        print('TOKENIZE card_object  : ${tapSDKResult['card_object']}');
+        print('TOKENIZE card_exp_month : ${tapSDKResult['card_exp_month']}');
+        print('TOKENIZE card_exp_year    : ${tapSDKResult['card_exp_year']}');
+
+        responseID = tapSDKResult['token'];
+        break;
+    }
+  }
+
+  void printSDKResult(String trxMode) {
+    print('$trxMode status                : ${tapSDKResult['status']}');
+    print('$trxMode id               : ${tapSDKResult['charge_id']}');
+    print('$trxMode  description        : ${tapSDKResult['description']}');
+    print('$trxMode  message           : ${tapSDKResult['message']}');
+    print('$trxMode  card_first_six : ${tapSDKResult['card_first_six']}');
+    print('$trxMode  card_last_four   : ${tapSDKResult['card_last_four']}');
+    print('$trxMode  card_object         : ${tapSDKResult['card_object']}');
+    print('$trxMode  card_brand          : ${tapSDKResult['card_brand']}');
+    print('$trxMode  card_exp_month  : ${tapSDKResult['card_exp_month']}');
+    print('$trxMode  card_exp_year: ${tapSDKResult['card_exp_year']}');
+    print('$trxMode  acquirer_id  : ${tapSDKResult['acquirer_id']}');
+    print('$trxMode  acquirer_response_code : ${tapSDKResult['acquirer_response_code']}');
+    print('$trxMode  acquirer_response_message: ${tapSDKResult['acquirer_response_message']}');
+    print('$trxMode  source_id: ${tapSDKResult['source_id']}');
+    print('$trxMode  source_channel     : ${tapSDKResult['source_channel']}');
+    print('$trxMode  source_object      : ${tapSDKResult['source_object']}');
+    print('$trxMode source_payment_type : ${tapSDKResult['source_payment_type']}');
+
+    responseID = tapSDKResult['charge_id'];
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Make Payment"),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(20.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Card Number',
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Plugin example app'),
+          backgroundColor: Colors.grey,
+        ),
+        body: SafeArea(
+          child: Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              Positioned(
+                top: 300,
+                left: 18,
+                right: 18,
+                child: Text(
+                  "Status: [$sdkStatus $responseID ]",
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "Roboto",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 15.0,
                   ),
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter card number';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _cardNumber = value!;
-                  },
+                  textAlign: TextAlign.center,
                 ),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Expiry Month',
+              ),
+              Positioned(
+                bottom: Platform.isIOS ? 0 : 10,
+                left: 18,
+                right: 18,
+                child: SizedBox(
+                  height: 45,
+                  child: ElevatedButton(
+                    clipBehavior: Clip.hardEdge,
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(_buttonColor),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
                         ),
-                        keyboardType: TextInputType.number,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter expiry month';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _expiryMonth = value!;
-                        },
                       ),
                     ),
-                    const SizedBox(
-                      width: 10.0,
-                    ),
-                    Expanded(
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Expiry Year',
-                        ),
-                        keyboardType: TextInputType.number,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter expiry year';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _expiryYear = value!;
-                        },
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10.0,
-                    ),
-                    Expanded(
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'CVV',
-                        ),
-                        keyboardType: TextInputType.number,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter CVV';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _cvv = value!;
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Name on Card',
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter name on card';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _name = value!;
-                  },
-                ),
-                const SizedBox(
-                  height: 20.0,
-                ),
-                _isLoading
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : Center(
-                        child: ElevatedButton(
-                          onPressed: _makePayment,
-                          child: const Text(
-                            'Make Payment',
-                            style: TextStyle(fontSize: 20),
+                    onPressed: startSDK,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 25,
+                          height: 25,
+                          child: AwesomeLoader(
+                            outerColor: Colors.white,
+                            innerColor: Colors.white,
+                            strokeWidth: 3.0,
+                            controller: loaderController,
                           ),
                         ),
-                      ),
-              ],
-            ),
+                        const Spacer(),
+                        const Text(
+                          'PAY',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        const Spacer(),
+                        const Icon(
+                          Icons.lock_outline,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
     );
-  }
-
-  void _makePayment() async {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      // setState(() {
-      //   _isLoading = true;
-      // });
-
-      // Call the TapPaymentService to create a charge
-      final charge = await _tapPaymentService.makePayment(
-        address: '',
-        amount: 1,
-        city: '',
-        countryCode: '',
-        currency: 'USD',
-        description: 'test from flutter',
-        email: 'mehsen2222@gmail.com',
-        phone: '',
-        zip: '',
-        // amount: widget.amount,
-        // currency: widget.currency,
-        number: _cardNumber,
-        expMonth: int.parse(_expiryMonth),
-        expYear: int.parse(_expiryYear),
-        cvc: _cvv,
-        name: _name,
-      );
-
-      // setState(() {
-      //   _isLoading = false;
-      // });
-
-      // Show a dialog to indicate success or failure of the charge
-      // if (charge.status == 'succeeded') {
-      //   showDialog(
-      //     context: context,
-      //     builder: (BuildContext context) {
-      //       return AlertDialog(
-      //         title: const Text('Payment Successful'),
-      //         content: Text('Your payment of ${charge.amount} ${charge.currency} was successful.'),
-      //         actions: <Widget>[
-      //           TextButton(
-      //             onPressed: () {
-      //               Navigator.of(context).pop();
-      //               Navigator.of(context).pop();
-      //             },
-      //             child: const Text('OK'),
-      //           ),
-      //         ],
-      //       );
-      //     },
-      //   );
-      // } else {
-      //   showDialog(
-      //     context: context,
-      //     builder: (BuildContext context) {
-      //       return AlertDialog(
-      //         title: const Text('Payment Failed'),
-      //         content:
-      //             const Text('There was an error processing your payment. Please try again later.'),
-      //         actions: <Widget>[
-      //           TextButton(
-      //             onPressed: () {
-      //               Navigator.of(context).pop();
-      //             },
-      //             child: const Text('OK'),
-      //           ),
-      //         ],
-      //       );
-      //     },
-      //   );
-      // }
-    }
   }
 }
