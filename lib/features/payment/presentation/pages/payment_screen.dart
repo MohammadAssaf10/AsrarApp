@@ -62,7 +62,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           customer: Customer(
             customerId: "",
             // customer id is important to retrieve cards saved for this customer
-            email: "test@test.com",
+            email: "test@teest.com",
             isdNumber: "965",
             number: "00000000",
             firstName: "test",
@@ -72,52 +72,18 @@ class _PaymentScreenState extends State<PaymentScreen> {
           ),
           paymentItems: <PaymentItem>[
             PaymentItem(
-                name: "item1",
-                amountPerUnit: 1,
-                quantity: Quantity(value: 1),
-                // discount: {"type": "F", "value": 10, "maximum_fee": 10, "minimum_fee": 1},
-                // description: "Item 1 Apple",
-                // taxes: [
-                //   Tax(
-                //       amount: Amount(type: "F", value: 10, minimumFee: 1, maximumFee: 10),
-                //       name: "tax1",
-                //       description: "tax description")
-                // ],
-                totalAmount: 100),
+                name: "item1", amountPerUnit: 1, quantity: Quantity(value: 1), totalAmount: 100),
           ],
-          // List of taxes
-          taxes: [
-            // Tax(
-            //     amount: Amount(type: "F", value: 10, minimumFee: 1, maximumFee: 10),
-            //     name: "tax1",
-            //     description: "tax describtion"),
-            // Tax(
-            //     amount: Amount(type: "F", value: 10, minimumFee: 1, maximumFee: 10),
-            //     name: "tax1",
-            //     description: "tax describtion")
-          ],
+          taxes: [],
           // List of shippnig
-          shippings: [
-            // todo Shipping(name: "shipping 1", amount: 100, description: "shiping description 1"),
-            //Shipping(name: "shipping 2", amount: 150, description: "shiping description 2")
-          ],
+          shippings: [],
           postURL: "https://tap.company",
           // Payment description
           paymentDescription: "paymentDescription",
           // Payment Metadata
-          paymentMetaData: {
-            // "a": "a meta",
-            // "b": "b meta",
-          },
+          paymentMetaData: {},
           // Payment Reference
-          paymentReference: Reference(
-              // acquirer: "acquirer",
-              // gateway: "gateway",
-              // payment: "payment",
-              // track: "track",
-              // transaction: "trans_910101",
-              // order: "order_262625",
-              ),
+          paymentReference: Reference(),
           // payment Descriptor
           paymentStatementDescriptor: "paymentStatementDescriptor",
           // Save Card Switch
@@ -128,13 +94,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
           receipt: Receipt(true, false),
           // Authorize Action [Capture - Void]
           authorizeAction: AuthorizeAction(type: AuthorizeActionType.CAPTURE, timeInHours: 10),
-          // Destinations
-          // destinations: null,
           // merchant id
           merchantID: "",
           // Allowed cards
           allowedCadTypes: CardType.ALL,
-          // applePayMerchantID: "merchant.applePayMerchantID",
           allowsToSaveSameCardMoreThanOnce: true,
           // pass the card holder name to the SDK
           cardHolderName: "Card Holder NAME",
