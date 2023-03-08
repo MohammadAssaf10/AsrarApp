@@ -30,11 +30,6 @@ class SplashScreen extends StatelessWidget {
                 Navigator.pushNamed(context, Routes.homeRoute);
               },
               child: const Text('Home')),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, Routes.paymentRoute);
-              },
-              child: const Text('Payment')),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [

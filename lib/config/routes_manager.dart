@@ -25,7 +25,6 @@ import '../features/home/presentation/pages/main/your_account.dart';
 import '../features/home/presentation/pages/news/news_details_screen.dart';
 import '../features/home/presentation/pages/news/news_screen.dart';
 import '../features/home/presentation/pages/service&company/services_screen.dart';
-import '../features/payment/presentation/pages/payment_screen.dart';
 import '../features/shop/domain/entities/product_entities.dart';
 import '../features/shop/domain/entities/shop_order_entities.dart';
 import '../features/shop/presentation/common/widgets/shop_order_details_view.dart';
@@ -53,7 +52,6 @@ class Routes {
   static const String jobDetailsRoute = "/jobDetails";
   static const String subscriptionRoute = "/subscription";
   static const String chatRoute = "/chat";
-  static const String paymentRoute = "/payment";
   static const String yourAccountRoute = "/yourAccount";
 
   // auth rotes
@@ -82,9 +80,6 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const NewsScreen());
       case Routes.courseRoute:
         return MaterialPageRoute(builder: (_) => const CoursesScreen());
-
-      case Routes.paymentRoute:
-        return MaterialPageRoute(builder: (_) =>  const PaymentScreen());
 
       case Routes.yourAccountRoute:
         {
@@ -138,8 +133,7 @@ class RouteGenerator {
           initChatModule(arg);
           return MaterialPageRoute(
             builder: (context) => BlocProvider(
-              create: (context) =>
-                  ChatBloc()..add(ChatStarted(serviceOrder: arg)),
+              create: (context) => ChatBloc()..add(ChatStarted(serviceOrder: arg)),
               lazy: false,
               child: ChatScreen(serviceOrder: arg),
             ),

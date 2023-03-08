@@ -1,16 +1,25 @@
-import 'dart:io';
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_sell_sdk_flutter/go_sell_sdk_flutter.dart';
 import 'package:go_sell_sdk_flutter/model/models.dart';
-import 'package:flutter/services.dart';
 
 import '../../../../api_constant.dart';
 import '../widgets/tap_loader.dart';
 
 class PaymentScreen extends StatefulWidget {
-  const PaymentScreen({super.key});
+  final Customer customer;
+  final List<PaymentItem> paymentItems;
+  final Function(String) sdkResults;
+
+  const PaymentScreen({
+    Key? key,
+    required this.customer,
+    required this.paymentItems,
+    required this.sdkResults,
+  }) : super(key: key);
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -50,30 +59,16 @@ class _PaymentScreenState extends State<PaymentScreen> {
         lang: "ar");
   }
 
-  //
-
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> setupSDKSession() async {
     try {
       GoSellSdkFlutter.sessionConfigurations(
           trxMode: TransactionMode.PURCHASE,
           transactionCurrency: "sar",
+          // its not the cost
           amount: '1',
-          customer: Customer(
-            customerId: "",
-            // customer id is important to retrieve cards saved for this customer
-            email: "test@teest.com",
-            isdNumber: "965",
-            number: "00000000",
-            firstName: "test",
-            middleName: "test",
-            lastName: "test",
-            // metaData: null,
-          ),
-          paymentItems: <PaymentItem>[
-            PaymentItem(
-                name: "item1", amountPerUnit: 1, quantity: Quantity(value: 1), totalAmount: 100),
-          ],
+          customer: widget.customer,
+          paymentItems: widget.paymentItems,
           taxes: [],
           // List of shippnig
           shippings: [],
@@ -123,7 +118,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       loaderController.start();
     });
 
-    var tapSDKResult = await GoSellSdkFlutter.startPaymentSDK;
+    tapSDKResult = await GoSellSdkFlutter.startPaymentSDK;
     loaderController.stopWhenFull();
     print('>>>> ${tapSDKResult['sdk_result']}');
 
@@ -160,14 +155,19 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
     switch (tapSDKResult['trx_mode']) {
       case "CHARGE":
+        widget.sdkResults("CHARGE");
         printSDKResult('Charge');
         break;
 
       case "AUTHORIZE":
+        widget.sdkResults("Authorize");
+
         printSDKResult('Authorize');
         break;
 
       case "SAVE_CARD":
+        widget.sdkResults("SAVE_CARD");
+
         printSDKResult('Save Card');
         break;
 
@@ -209,81 +209,52 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-          backgroundColor: Colors.grey,
-        ),
-        body: SafeArea(
-          child: Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              Positioned(
-                top: 300,
-                left: 18,
-                right: 18,
-                child: Text(
-                  "Status: [$sdkStatus $responseID ]",
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: "Roboto",
-                    fontStyle: FontStyle.normal,
-                    fontSize: 15.0,
-                  ),
-                  textAlign: TextAlign.center,
+    return SafeArea(
+      child: Positioned(
+        bottom: Platform.isIOS ? 0 : 10,
+        left: 18,
+        right: 18,
+        child: SizedBox(
+          height: 45,
+          child: ElevatedButton(
+            clipBehavior: Clip.hardEdge,
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(_buttonColor),
+              shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
                 ),
               ),
-              Positioned(
-                bottom: Platform.isIOS ? 0 : 10,
-                left: 18,
-                right: 18,
-                child: SizedBox(
-                  height: 45,
-                  child: ElevatedButton(
-                    clipBehavior: Clip.hardEdge,
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(_buttonColor),
-                      shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                    ),
-                    onPressed: startSDK,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 25,
-                          height: 25,
-                          child: AwesomeLoader(
-                            outerColor: Colors.white,
-                            innerColor: Colors.white,
-                            strokeWidth: 3.0,
-                            controller: loaderController,
-                          ),
-                        ),
-                        const Spacer(),
-                        const Text(
-                          'PAY',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
-                          ),
-                        ),
-                        const Spacer(),
-                        const Icon(
-                          Icons.lock_outline,
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
+            ),
+            onPressed: startSDK,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 25,
+                  height: 25,
+                  child: AwesomeLoader(
+                    outerColor: Colors.white,
+                    innerColor: Colors.white,
+                    strokeWidth: 3.0,
+                    controller: loaderController,
                   ),
                 ),
-              ),
-            ],
+                const Spacer(),
+                const Text(
+                  'PAY',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                  ),
+                ),
+                const Spacer(),
+                const Icon(
+                  Icons.lock_outline,
+                  color: Colors.white,
+                ),
+              ],
+            ),
           ),
         ),
       ),
