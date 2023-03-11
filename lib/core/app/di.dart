@@ -24,7 +24,6 @@ import '../../features/shop/data/repositories/shop_repository_impl.dart';
 import '../../features/shop/domain/repositories/shop_repository.dart';
 import '../network/dio_factory.dart';
 import '../network/network_info.dart';
-import 'language.dart';
 
 final GetIt instance = GetIt.instance;
 
@@ -46,13 +45,9 @@ Future<void> initAppModule() async {
   instance.registerLazySingleton<AuthPreference>(
       () => AuthPreference(instance<SharedPreferences>()));
 
-  // language pref
-  instance.registerLazySingleton(
-      () => LanguageCacheHelper(instance<SharedPreferences>()));
-
   // dio factory
   instance.registerLazySingleton<DioFactory>(
-      () => DioFactory(instance<LanguageCacheHelper>()));
+      () => DioFactory());
 }
 
 Future<void> initAuthenticationModule() async {

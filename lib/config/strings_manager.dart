@@ -122,6 +122,9 @@ class AppStrings {
   static const String passwordUpdated = "password_updated";
   static const String save = "save";
   static const String userInfoUpdatedSuccessfully = "user_info_updated_successfully";
+  static const String arabic = "arabic";
+  static const String english = "english";
+  static const String selectLanguage = "select_language";
   // exception handler
   static const String success = "Success";
   static const String badRequestError = "Bad request error";
