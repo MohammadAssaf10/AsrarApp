@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../config/assets_manager.dart';
 import '../../../../../config/color_manager.dart';
@@ -10,6 +12,10 @@ import '../../../../../config/routes_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
+import '../../../../../core/app/di.dart';
+import '../../../../../core/app/language.dart';
+import '../../../../../language_cubit/language_cubit.dart';
+import '../../../../auth/presentation/bloc/authentication_bloc.dart';
 import '../../blocs/about_us_bloc/about_us_bloc.dart';
 import '../../blocs/subscription_bloc/subscription_bloc.dart';
 import '../../blocs/terms_of_use_bloc/terms_of_use_bloc.dart';
@@ -25,7 +31,7 @@ class DrawerWidget extends StatelessWidget {
       width: AppSize.s240.w,
       child: SingleChildScrollView(
         child: Column(
-          children: const[
+          children: const [
             DrawerHeader(),
             DrawerList(),
           ],
@@ -95,9 +101,18 @@ class DrawerList extends StatelessWidget {
             MenuItem(
               title: AppStrings.whatsApp.tr(context),
               icon: IconAssets.whatsApp,
-              onTap: () {},
+              onTap: () async {
+                final Uri url =
+                    Uri.parse("whatsapp://send?phone=+966560777194");
+                if (await canLaunchUrl(url)) {
+                  await launchUrl(
+                    url,
+                    mode: LaunchMode.externalApplication,
+                  );
+                }
+              },
             ),
-            MenuItem(
+            LanguageMenuItem(
               title: AppStrings.googleTranslate.tr(context),
               icon: IconAssets.googleTranslate,
               onTap: () {},
@@ -115,7 +130,7 @@ class DrawerList extends StatelessWidget {
               title: AppStrings.termsOfUse.tr(context),
               icon: IconAssets.termsOfUse,
               onTap: () {
-                   BlocProvider.of<TermsOfUseBloc>(context)
+                BlocProvider.of<TermsOfUseBloc>(context)
                     .add(GetTermsOfUseEvent());
                 Navigator.push(
                   context,
@@ -128,7 +143,9 @@ class DrawerList extends StatelessWidget {
             MenuItem(
               title: AppStrings.signOut.tr(context),
               icon: IconAssets.signOut,
-              onTap: () {},
+              onTap: () {
+                BlocProvider.of<AuthenticationBloc>(context).add(LogOut());
+              },
             ),
           ],
         ),
@@ -150,49 +167,139 @@ class MenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: InkWell(
-        onTap: () {
-          onTap();
-        },
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: AppSize.s12.h,
-                horizontal: AppSize.s5.w,
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: SvgPicture.asset(
-                      icon,
-                      height: AppSize.s24.h,
-                      width: AppSize.s24.w,
+    return InkWell(
+      onTap: () {
+        onTap();
+      },
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: AppSize.s12.h,
+              horizontal: AppSize.s5.w,
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: SvgPicture.asset(
+                    icon,
+                    height: AppSize.s24.h,
+                    width: AppSize.s24.w,
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Text(
+                    title,
+                    style: getAlmaraiRegularStyle(
+                      fontSize: AppSize.s20.sp,
+                      color: ColorManager.primary,
                     ),
                   ),
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      title,
+                ),
+              ],
+            ),
+          ),
+          Divider(
+            height: AppSize.s0_5.h,
+            thickness: AppSize.s1.h,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class LanguageMenuItem extends StatelessWidget {
+  const LanguageMenuItem({
+    Key? key,
+    required this.title,
+    required this.icon,
+    required this.onTap,
+  }) : super(key: key);
+  final String title;
+  final String icon;
+  final Function onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    String? dropdownValue =
+        instance<SharedPreferences>().getString(prefsKeyLang)?.tr(context);
+    return InkWell(
+      onTap: () {
+        onTap();
+      },
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: AppSize.s12.h,
+              horizontal: AppSize.s5.w,
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: SvgPicture.asset(
+                    icon,
+                    height: AppSize.s24.h,
+                    width: AppSize.s24.w,
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: DropdownButton<String>(
+                    hint: Text(
+                      dropdownValue ?? AppStrings.googleTranslate.tr(context),
                       style: getAlmaraiRegularStyle(
                         fontSize: AppSize.s20.sp,
                         color: ColorManager.primary,
                       ),
                     ),
+                    style: getAlmaraiRegularStyle(
+                      fontSize: AppSize.s20.sp,
+                      color: ColorManager.primary,
+                    ),
+                    items: [
+                      DropdownMenuItem<String>(
+                        value: AppStrings.arabic.tr(context),
+                        child: Text(
+                          AppStrings.arabic.tr(context),
+                        ),
+                        onTap: () {
+                          context.read<LanguageCubit>().setArabic();
+                        },
+                      ),
+                      DropdownMenuItem<String>(
+                        value: AppStrings.english.tr(context),
+                        child: Text(
+                          AppStrings.english.tr(context),
+                        ),
+                        onTap: () {
+                          context.read<LanguageCubit>().setEnglish();
+                        },
+                      ),
+                    ],
+                    onChanged: (value) {},
+                    iconDisabledColor: ColorManager.primary,
+                    iconEnabledColor: ColorManager.primary,
+                    underline: Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Container(
+                        width: AppSize.s85.w,
+                        height: AppSize.s1.h,
+                        color: ColorManager.grey,
+                      ),
+                    ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            SizedBox(
-              height: AppSize.s0_5.h,
-              width: double.infinity,
-              child: const Material(
-                color: ColorManager.grey,
-              ),
-            ),
-          ],
-        ),
+          ),
+          Divider(
+            height: AppSize.s0_5.h,
+            thickness: AppSize.s1.h,
+          ),
+        ],
       ),
     );
   }

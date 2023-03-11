@@ -62,7 +62,6 @@ class _ServicesViewState extends State<ServicesView> {
         servicesEntitiesList.isNotEmpty
             ? Expanded(
                 child: ListView.builder(
-                  physics: const ScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: servicesEntitiesList.length,
                   itemBuilder: (BuildContext context, int index) {

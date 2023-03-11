@@ -1,7 +1,7 @@
 part of 'language_cubit.dart';
 
 class LanguageState {
-  const LanguageState({this.locale});
+  const LanguageState({this.locale=englishLocale});
 
-  final Locale? locale;
+  final Locale locale;
 }

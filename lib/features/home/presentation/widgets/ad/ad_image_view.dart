@@ -34,57 +34,60 @@ class AdImageView extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
             );
           } else if (state is AdImagesLoadedState) {
-          if (state.adImagelist.isNotEmpty){
-            return ListView.builder(
-              physics: const ScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemCount: state.adImagelist.length,
-              shrinkWrap: true,
-              itemBuilder: (BuildContext context, int index) {
-                return InkWell(
-                  onTap: () async {
-                    final Uri url =
-                        Uri.parse(state.adImagelist[index].adImagedeepLink);
-                    if (await canLaunchUrl(url)) {
-                      await launchUrl(
-                        url,
-                        mode: LaunchMode.externalApplication,
-                      );
-                    } else {
-                      showCustomDialog(
-                        context,
-                        message:
-                            AppStrings.sorryWeCouldNotOpenThatLink.tr(context),
-                      );
-                    }
-                  },
-                  child: CachedNetworkImageWidget(
-                    image: state.adImagelist[index].adImageUrl,
-                    height: AppSize.s220.h,
-                    width: AppSize.s360.w,
-                    shapeBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppSize.s10.r),
-                      borderSide: const BorderSide(color: ColorManager.transparent),
+            if (state.adImagelist.isNotEmpty) {
+              return ListView.builder(
+                physics: const ScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                itemCount: state.adImagelist.length,
+                shrinkWrap: true,
+                itemBuilder: (BuildContext context, int index) {
+                  return InkWell(
+                    onTap: () async {
+                      final Uri url =
+                          Uri.parse(state.adImagelist[index].adImagedeepLink);
+                      if (await canLaunchUrl(url)) {
+                        await launchUrl(
+                          url,
+                          mode: LaunchMode.externalApplication,
+                        );
+                      } else {
+                        showCustomDialog(
+                          context,
+                          message: AppStrings.sorryWeCouldNotOpenThatLink
+                              .tr(context),
+                        );
+                      }
+                    },
+                    child: CachedNetworkImageWidget(
+                      image: state.adImagelist[index].adImageUrl,
+                      height: AppSize.s220.h,
+                      width: AppSize.s360.w,
+                      shapeBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(AppSize.s10.r),
+                        borderSide:
+                            const BorderSide(color: ColorManager.transparent),
+                      ),
+                      horizontalMargin: AppSize.s8.w,
+                      verticalMargin: AppSize.s12.h,
                     ),
-                    horizontalMargin: AppSize.s8.w,
-                    verticalMargin: AppSize.s12.h,
-                  ),
-                );
-              },
-            );}
-          else{
-            return Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: AppSize.s12.h,
-                horizontal: AppSize.s8.w,
-              ),
-              child: Image.asset(
-                ImageAssets.maskGroup,
-                fit: BoxFit.fill,
-                height: AppSize.s220.h,
-                width: AppSize.s360.w,
-              ),
-            );}}
+                  );
+                },
+              );
+            } else {
+              return Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: AppSize.s12.h,
+                  horizontal: AppSize.s8.w,
+                ),
+                child: Image.asset(
+                  ImageAssets.maskGroup,
+                  fit: BoxFit.fill,
+                  height: AppSize.s220.h,
+                  width: AppSize.s360.w,
+                ),
+              );
+            }
+          }
           return const SizedBox();
         },
       ),

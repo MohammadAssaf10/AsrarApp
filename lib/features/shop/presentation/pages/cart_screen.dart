@@ -76,7 +76,7 @@ class _CartScreenState extends State<CartScreen> {
                 showOrderDialog(
                   context,
                   AppStrings.whatsAppNumber.tr(context),
-                  state.user!.phoneNumber.substring(4,state.user!.phoneNumber.length),
+                  state.user!.phoneNumber.substring(3,state.user!.phoneNumber.length),
                   widget.cartList,
                   formKey,
                   (String completePhoneNumber) {

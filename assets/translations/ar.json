@@ -85,7 +85,7 @@
   "canceled": "ملغي",
   "canceling": "جاري الإلغاء",
   "no_orders": "لا يوجد طلبات",
-  "confirm": "تاكيد",
+  "confirm?": "تاكيد؟",
   "chat": "الدردشة",
   "completedSuccessfully": "تمت بنجاح",
   "cancelOrder": "الغاء الطلب",
@@ -137,5 +137,8 @@
   "user_info_updated_successfully": "تم تحديث معلومات المستخدم بنجاح",
   "profile_image_updated": "تم تحديث صورة الملف الشخصي",
   "password_updated": "تم تحديث كلمة السر",
+  "arabic": "العربية",
+  "english": "الإنجليزية",
+  "select_language": "اختر اللغة",
   "show_details": "عرض التفاصيل"
 }

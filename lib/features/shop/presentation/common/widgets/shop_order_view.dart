@@ -24,10 +24,6 @@ class ShopOrderView extends StatelessWidget {
   Widget build(BuildContext context) {
     final authState = BlocProvider.of<AuthenticationBloc>(context).state;
     return BlocConsumer<ShopOrderBloc, ShopOrderState>(
-      bloc: BlocProvider.of<ShopOrderBloc>(context)
-        ..add(GetShopOrderEvent(userId: authState.user!.id)),
-      // bloc: ShopOrderBloc()
-      //   ..add(GetShopOrderEvent(userEmail: authState.user!.email)),
       listener: (context, state) {
         if (state is CancelShopOrderLoadingState) {
           showCustomDialog(context);
@@ -39,7 +35,8 @@ class ShopOrderView extends StatelessWidget {
             ),
           );
         } else if (state is ShopOrderCancelledSuccessfullyState) {
-          showCustomDialog(context, message: AppStrings.orderCancelledSuccessfully.tr(context));
+          showCustomDialog(context,
+              message: AppStrings.orderCancelledSuccessfully.tr(context));
           BlocProvider.of<ShopOrderBloc>(context).add(
             GetShopOrderEvent(
               userId: authState.user!.id,
@@ -62,109 +59,116 @@ class ShopOrderView extends StatelessWidget {
           );
         }
         if (state is ShopOrderLoadedState) {
-        if (state.shopOrderList.isNotEmpty) {
-          return ListView.builder(
-            physics: const ScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: state.shopOrderList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return InkWell(
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    Routes.shopOrderDetailsRoute,
-                    arguments: state.shopOrderList[index],
-                  );
-                },
-                child: Container(
-                  height: AppSize.s80.h,
-                  margin: EdgeInsets.symmetric(
-                    horizontal: AppSize.s8.w,
-                    vertical: AppSize.s5.h,
-                  ),
-                  decoration: ShapeDecoration(
-                    shape: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(AppSize.s18.r),
+          if (state.shopOrderList.isNotEmpty) {
+            return ListView.builder(
+              shrinkWrap: true,
+              itemCount: state.shopOrderList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      Routes.shopOrderDetailsRoute,
+                      arguments: state.shopOrderList[index],
+                    );
+                  },
+                  child: Container(
+                    height: AppSize.s80.h,
+                    margin: EdgeInsets.symmetric(
+                      horizontal: AppSize.s8.w,
+                      vertical: AppSize.s5.h,
                     ),
-                    color: ColorManager.white,
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Card(
-                          color: ColorManager.darkWhite,
-                          shape: const CircleBorder(),
+                    decoration: ShapeDecoration(
+                      shape: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(AppSize.s18.r),
+                      ),
+                      color: ColorManager.white,
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Card(
+                            color: ColorManager.darkWhite,
+                            shape: const CircleBorder(),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  AppStrings.orderNNumber.tr(context),
+                                  textAlign: TextAlign.center,
+                                  style: getAlmaraiBoldStyle(
+                                    fontSize: AppSize.s16.sp,
+                                    color: ColorManager.primary,
+                                  ),
+                                ),
+                                Text(
+                                  state.shopOrderList[index].shopOrderId
+                                      .toString(),
+                                  textAlign: TextAlign.center,
+                                  style: getAlmaraiBoldStyle(
+                                    fontSize: AppSize.s16.sp,
+                                    color: ColorManager.primary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                AppStrings.orderNNumber.tr(context),
-                                textAlign: TextAlign.center,
-                                style: getAlmaraiBoldStyle(
-                                  fontSize: AppSize.s16.sp,
+                                "${AppStrings.status.tr(context)}: ${state.shopOrderList[index].orderStatus.tr(context)}",
+                                style: getAlmaraiRegularStyle(
+                                  fontSize: AppSize.s18.sp,
                                   color: ColorManager.primary,
                                 ),
                               ),
+                              SizedBox(height: AppSize.s4.h),
                               Text(
-                                state.shopOrderList[index].shopOrderId.toString(),
-                                textAlign: TextAlign.center,
-                                style: getAlmaraiBoldStyle(
-                                  fontSize: AppSize.s16.sp,
+                                "${AppStrings.price.tr(context)}: ${state.shopOrderList[index].totalPrice} ر.س",
+                                style: getAlmaraiRegularStyle(
+                                  fontSize: AppSize.s18.sp,
                                   color: ColorManager.primary,
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "${AppStrings.status.tr(context)}: ${state.shopOrderList[index].orderStatus.tr(context)}",
-                              style: getAlmaraiRegularStyle(
-                                fontSize: AppSize.s18.sp,
-                                color: ColorManager.primary,
-                              ),
-                            ),
-                            SizedBox(height: AppSize.s4.h),
-                            Text(
-                              "${AppStrings.price.tr(context)}: ${state.shopOrderList[index].totalPrice} ر.س",
-                              style: getAlmaraiRegularStyle(
-                                fontSize: AppSize.s18.sp,
-                                color: ColorManager.primary,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      (state.shopOrderList[index].orderStatus == OrderStatus.pending.name)
-                          ? CancelButton(onTap: () {
-                              showConfirmDialog(context, executeWhenConfirm: () {
-                                BlocProvider.of<ShopOrderBloc>(context).add(
-                                  CancelShopOrderEvent(shopOrder: state.shopOrderList[index]),
-                                );
-                              });
-                            })
-                          : SizedBox(width: AppSize.s50.w),
-                    ],
+                        (state.shopOrderList[index].orderStatus ==
+                                OrderStatus.pending.name)
+                            ? CancelButton(onTap: () {
+                                showConfirmDialog(context,
+                                    executeWhenConfirm: () {
+                                  BlocProvider.of<ShopOrderBloc>(context).add(
+                                    CancelShopOrderEvent(
+                                        shopOrder: state.shopOrderList[index]),
+                                  );
+                                });
+                              })
+                            : SizedBox(width: AppSize.s50.w),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
-          );
-        } else {
-          return EmptyListView(
-            emptyListMessage: AppStrings.noOrders.tr(context),
-            height: MediaQuery.of(context).size.height / 1.5,
-            width: MediaQuery.of(context).size.width,
-          );
-        }}
+                );
+              },
+            );
+          } else {
+            return SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: EmptyListView(
+                emptyListMessage: AppStrings.noOrders.tr(context),
+                height: MediaQuery.of(context).size.height / 1.5,
+                width: MediaQuery.of(context).size.width,
+              ),
+            );
+          }
+        }
         return const SizedBox();
       },
     );
