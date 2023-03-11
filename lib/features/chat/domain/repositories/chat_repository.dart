@@ -8,4 +8,5 @@ abstract class ChatRepository {
   Future<Either<Failure, Stream<List<Message>>>> startChatStream();
   Future<Either<Failure, void>> sendMessage(Message message);
   Future<Either<Failure, String>> uploadImage(XFile image);
+  Future<Either<Failure, String>> uploadVoice(XFile voice);
 }

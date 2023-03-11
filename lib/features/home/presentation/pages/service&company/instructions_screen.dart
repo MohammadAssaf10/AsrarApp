@@ -1,7 +1,9 @@
+import '../../../../payment/presentation/pages/payment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_sell_sdk_flutter/model/models.dart';
 
 import '../../../../../config/app_localizations.dart';
 import '../../../../../config/assets_manager.dart';
@@ -12,17 +14,11 @@ import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../../../../core/app/constants.dart';
 import '../../../../../core/app/functions.dart';
-import '../../../../auth/presentation/bloc/authentication_bloc.dart';
-import '../../../domain/entities/employee.dart';
 import '../../../domain/entities/service_entities.dart';
-import '../../../domain/entities/service_order.dart';
 import '../../blocs/service_order/service_order_bloc.dart';
-import '../../widgets/general/home_button_widgets.dart';
 
 class InstructionsScreen extends StatelessWidget {
-  const InstructionsScreen(
-    this.service, {super.key}
-  );
+  const InstructionsScreen(this.service, {super.key});
   final ServiceEntities service;
   @override
   Widget build(BuildContext context) {
@@ -93,30 +89,61 @@ class InstructionsScreen extends StatelessWidget {
                       arguments: state.serviceOrderList.first);
                 }
               },
-              child: OptionButton(
-                onTap: () {
-                  // TODO: remove this (but it after the payment screen)
-
-                  var user = BlocProvider.of<AuthenticationBloc>(context).state.user!;
-                  showConfirmDialog(context, executeWhenConfirm: () {
-                    BlocProvider.of<ServiceOrderBloc>(context).add(AddOrder(
-                        serviceOrder: ServiceOrder(
-                      id: 0,
-                      service: service,
-                      user: user,
-                      status: OrderStatus.pending.name,
-                      employee: Employee.fromMap({}),
-                    )));
-                  });
-
-                  // TODO: remove comment
-                  // Navigator.push(context, MaterialPageRoute(builder: (context) => PayScreen()));
+              child: PaymentScreen(
+                sdkResults: (p0) {
+                  print(1);
+                  print(2);
+                  print(3);
+                  print(4);
+                  print(p0);
+                  print(1);
+                  print(2);
+                  print(3);
+                  print(4);
                 },
-                title: AppStrings.checkout.tr(context),
-                height: AppSize.s35.h,
-                width: AppSize.s200.w,
-                fontSize: AppSize.s18.sp,
+                customer: Customer(
+                  customerId: "",
+                  // customer id is important to retrieve cards saved for this customer
+                  email: "test@teest.com",
+                  isdNumber: "965",
+                  number: "00000000",
+                  firstName: "test",
+                  middleName: "test",
+                  lastName: "test",
+                  // metaData: null,
+                ),
+                paymentItems: <PaymentItem>[
+                  PaymentItem(
+                      name: "item1",
+                      amountPerUnit: 12,
+                      quantity: Quantity(value: 1),
+                      totalAmount: 100),
+                ],
               ),
+              //  OptionButton(
+              //   onTap: () {
+              //     // TODO: remove this (but it after the payment screen)
+
+              //     var user = BlocProvider.of<AuthenticationBloc>(context).state.user!;
+              //     showConfirmDialog(context, executeWhenConfirm: () {
+              //       BlocProvider.of<ServiceOrderBloc>(context).add(AddOrder(
+              //           serviceOrder: ServiceOrder(
+              //         id: 0,
+              //         service: service,
+              //         user: user,
+              //         status: OrderStatus.pending.name,
+              //         employee: Employee.fromMap({}),
+              //       )));
+              //     });
+
+              //     // TODO: remove comment
+              //     // Navigator.push(context, MaterialPageRoute(builder: (context) => PayScreen()));
+              //   },
+              //   title: AppStrings.checkout.tr(context),
+              //   height: AppSize.s35.h,
+              //   width: AppSize.s200.w,
+              //   fontSize: AppSize.s18.sp,
+              // ),
             ),
           ),
         ],

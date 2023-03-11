@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.asrar_app">
+    package="com.asrar_user_app">
    <application
         android:label="أسرار"
         android:name="${applicationName}"

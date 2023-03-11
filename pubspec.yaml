@@ -41,7 +41,10 @@ dependencies:
   image_picker: ^0.8.6+2
   flutter_sound: ^9.2.13
   permission_handler: ^10.2.0
-
+  path_provider: ^2.0.13
+  intl: ^0.17.0
+  audioplayers: ^3.0.1
+  go_sell_sdk_flutter: ^2.2.2
 
 dev_dependencies:
   flutter_test:

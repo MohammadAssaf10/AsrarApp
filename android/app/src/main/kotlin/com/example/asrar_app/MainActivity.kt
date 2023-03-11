@@ -1,4 +1,4 @@
-package com.example.asrar_app
+package com.asrar_user_app
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -80,6 +80,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const NewsScreen());
       case Routes.courseRoute:
         return MaterialPageRoute(builder: (_) => const CoursesScreen());
+
       case Routes.yourAccountRoute:
         {
           final arg = settings.arguments as User;
@@ -132,8 +133,7 @@ class RouteGenerator {
           initChatModule(arg);
           return MaterialPageRoute(
             builder: (context) => BlocProvider(
-              create: (context) =>
-                  ChatBloc()..add(ChatStarted(serviceOrder: arg)),
+              create: (context) => ChatBloc()..add(ChatStarted(serviceOrder: arg)),
               lazy: false,
               child: ChatScreen(serviceOrder: arg),
             ),
