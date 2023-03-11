@@ -45,3 +45,4 @@ app.*.map.json
 log
 pubspec.lock
 .vscode/settings.json
+lib/api_constant.dart
