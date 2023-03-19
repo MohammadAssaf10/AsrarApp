@@ -1,4 +1,5 @@
-import '../../../../payment/presentation/pages/payment_screen.dart';
+import '../../../../auth/presentation/bloc/authentication_bloc.dart';
+import '../../../../payment/presentation/widgets/payment_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,6 +16,7 @@ import '../../../../../config/values_manager.dart';
 import '../../../../../core/app/constants.dart';
 import '../../../../../core/app/functions.dart';
 import '../../../domain/entities/service_entities.dart';
+import '../../../domain/entities/service_order.dart';
 import '../../blocs/service_order/service_order_bloc.dart';
 
 class InstructionsScreen extends StatelessWidget {
@@ -89,17 +91,14 @@ class InstructionsScreen extends StatelessWidget {
                       arguments: state.serviceOrderList.first);
                 }
               },
-              child: PaymentScreen(
-                sdkResults: (p0) {
-                  print(1);
-                  print(2);
-                  print(3);
-                  print(4);
-                  print(p0);
-                  print(1);
-                  print(2);
-                  print(3);
-                  print(4);
+              child: PaymentButton(
+                onSuccess: () {
+                  var user = BlocProvider.of<AuthenticationBloc>(context).state.user!;
+                  BlocProvider.of<ServiceOrderBloc>(context).add(AddOrder(
+                        serviceOrder: ServiceOrder.newRequest(
+                      service: service,
+                      user: user,
+                    )));
                 },
                 customer: Customer(
                   customerId: "",
@@ -119,31 +118,10 @@ class InstructionsScreen extends StatelessWidget {
                       quantity: Quantity(value: 1),
                       totalAmount: 100),
                 ],
+                onFailed: (message) {
+                  print(message);
+                },
               ),
-              //  OptionButton(
-              //   onTap: () {
-              //     // TODO: remove this (but it after the payment screen)
-
-              //     var user = BlocProvider.of<AuthenticationBloc>(context).state.user!;
-              //     showConfirmDialog(context, executeWhenConfirm: () {
-              //       BlocProvider.of<ServiceOrderBloc>(context).add(AddOrder(
-              //           serviceOrder: ServiceOrder(
-              //         id: 0,
-              //         service: service,
-              //         user: user,
-              //         status: OrderStatus.pending.name,
-              //         employee: Employee.fromMap({}),
-              //       )));
-              //     });
-
-              //     // TODO: remove comment
-              //     // Navigator.push(context, MaterialPageRoute(builder: (context) => PayScreen()));
-              //   },
-              //   title: AppStrings.checkout.tr(context),
-              //   height: AppSize.s35.h,
-              //   width: AppSize.s200.w,
-              //   fontSize: AppSize.s18.sp,
-              // ),
             ),
           ),
         ],

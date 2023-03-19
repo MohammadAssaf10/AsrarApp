@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import '../../../../core/app/constants.dart';
+
 import '../../../auth/domain/entities/user.dart';
 import 'employee.dart';
 import 'service_entities.dart';
@@ -20,6 +22,11 @@ class ServiceOrder {
     required this.employee,
     required this.status,
   });
+
+  ServiceOrder.newRequest({required this.service, required this.user})
+      : id = 0,
+        employee = Employee.fromMap({}),
+        status = OrderStatus.pending.name;
 
   ServiceOrder copyWith({
     int? id,

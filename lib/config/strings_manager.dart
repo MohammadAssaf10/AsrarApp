@@ -125,6 +125,9 @@ class AppStrings {
   static const String arabic = "arabic";
   static const String english = "english";
   static const String selectLanguage = "select_language";
+  static const String pay = "pay";
+
+
   // exception handler
   static const String success = "Success";
   static const String badRequestError = "Bad request error";
