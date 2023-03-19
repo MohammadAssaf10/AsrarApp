@@ -40,7 +40,7 @@ class _ProductWidgetState extends State<ProductWidget> {
       child: Container(
         margin: EdgeInsets.symmetric(
           horizontal: AppSize.s20.w,
-          vertical: AppSize.s8.h,
+          vertical: AppSize.s5.h,
         ),
         decoration: BoxDecoration(
           color: ColorManager.white,
@@ -69,7 +69,7 @@ class _ProductWidgetState extends State<ProductWidget> {
             Expanded(
               flex: 2,
               child: Container(
-                margin: EdgeInsets.symmetric(vertical: AppSize.s12.h),
+                margin: EdgeInsets.symmetric(vertical: AppSize.s12.h,),
                 child: Text(
                   widget.product.productName,
                   textAlign: TextAlign.center,
@@ -82,27 +82,23 @@ class _ProductWidgetState extends State<ProductWidget> {
                 ),
               ),
             ),
-            Container(
-              height: AppSize.s1_5.h,
+            Divider(
               color: ColorManager.grey,
+              thickness: AppSize.s1_5.h,
             ),
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: ColorManager.white,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(AppSize.s20.r),
-                    bottomRight: Radius.circular(AppSize.s20.r),
-                  ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(AppSize.s20.r),
+                  bottomRight: Radius.circular(AppSize.s20.r),
                 ),
-                alignment: Alignment.center,
-                child: Text(
-                  "${widget.product.productPrice} ر.س",
-                  textDirection: TextDirection.rtl,
-                  style: getAlmaraiBoldStyle(
-                    fontSize: AppSize.s22.sp,
-                    color: ColorManager.darkPrimary,
-                  ),
+              ),
+              child: Text(
+                "${widget.product.productPrice} ر.س",
+                textDirection: TextDirection.rtl,
+                style: getAlmaraiBoldStyle(
+                  fontSize: AppSize.s22.sp,
+                  color: ColorManager.darkPrimary,
                 ),
               ),
             ),

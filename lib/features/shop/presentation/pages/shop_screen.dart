@@ -62,12 +62,10 @@ class ShopScreen extends StatelessWidget {
           } else if (state is ProductsLoadedState) {
             if (state.productsList.isNotEmpty) {
               return GridView.builder(
-                physics: const ScrollPhysics(),
                 itemCount: state.productsList.length,
                 shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 0.85.h,
                 ),
                 itemBuilder: (_, int index) {
                   return ProductWidget(

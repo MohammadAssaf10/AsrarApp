@@ -28,10 +28,10 @@ class _VerificationViewState extends State<VerificationView> {
     super.initState();
 
     code = Random().nextInt(8999) + 1000;
-
+    print(code);
     authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
-    authenticationBloc.add(SendVerificationCode(
-        authenticationBloc.state.user!.phoneNumber, code.toString()));
+    // authenticationBloc.add(SendVerificationCode(
+    //     authenticationBloc.state.user!.phoneNumber, code.toString()));
   }
 
   @override

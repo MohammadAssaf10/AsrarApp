@@ -49,7 +49,7 @@ class MainView extends StatelessWidget {
           ),
           bottomNavigationBar: Container(
             color: ColorManager.white,
-            height: AppSize.s50.h,
+            height: AppSize.s60.h,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
