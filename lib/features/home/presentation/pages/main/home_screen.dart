@@ -10,12 +10,12 @@ import '../../../../../config/routes_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
-import '../../../../../core/app/di.dart';
 import '../../../../shop/presentation/bloc/product_bloc/product_bloc.dart';
-import '../../../domain/repository/notification_repository.dart';
+import '../../../domain/entities/notification.dart';
 import '../../blocs/course_bloc/course_bloc.dart';
 import '../../blocs/job_bloc/job_bloc.dart';
 import '../../blocs/news_bloc/news_bloc.dart';
+import '../../blocs/notification_bloc/notification_bloc.dart';
 import '../../widgets/ad/ad_image_view.dart';
 import '../../widgets/company/companies_view.dart';
 import '../../widgets/general/drawer.dart';
@@ -34,36 +34,20 @@ class HomeScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () async {
-              final NotificationRepository n =
-              instance<NotificationRepository>();
-              (await n.sendNotificationToGroupOfUser([
-                /*My phone */
-                "dT5BVEc_RIWlEqtaUN0IOi:APA91bGDS38RKJs4umQ0s5HdM8Qd1Li9e0R-9iuMzkD2ZfJQAa2xpvPhfQ1HA0zbef6TduEcuPf_VIO-dPzoeRkdr0WgKz17_JuNfDW_gv_w4EvD4eurbfJM3ZjPvjmkAH6TsxRlTRR2",
-                /*Mohsen */
-                "dQXW706MS4SpEp2Lah73hY:APA91bEwpKzw4qsyj_p_qOf5M6i6hZYK6EsuZMq2hqhWLRj-IKZ_TTOGShgKawQTTAQC2-PnnU9g0jYx2DMZR11yAyChyIeejFovRlEdtcVWnR45lJHah3QJRBxnHCKHOkqtvqGpBi2D",
-                /*Other phone */
-                "ch383Jt-TkKJOsDr71oC14:APA91bFmqWXl5sXQCYg45HncZ96Gnu2ETcUHb4xPzfkiAYRpFITA3HGB680dpsvCR53YpTiHX8yseuISOr3HP2lFhUdeCnk9uGvdLv6gXx7VupqXxRc_isoo-oQAUlM-JCxpcisYhefh",
-              ], "Asrar", "Asrar For Electronic Services"))
-                  .fold((l) {
-                print("======>${l.message}");
-              }, (r) {
-                print("*Notification Sent Successfully*");
-              });
-              // (await n.sendNotificationToAllUser(
-              //         "Asrar", "Asrar For Electronic Services"))
-              //     .fold((l) {
-              //   print("======>${l.message}");
-              // }, (r) {
-              //   print("*Notification Sent Successfully*");
-              // });
+            onPressed: () {
+              const NotificationInfo notificationInfo = NotificationInfo(
+                  title: "Asrar",
+                  message: "Hello World!",
+                  token:
+                      // iPhone 8 plus
+                      "c5vv_uoYX0A0rVJVaZMO7s:APA91bHHjLWYULhKPvhqBa231ro6tg7Jk9y1LYRMNWn9HDiXeEu0SBxvjvWKTAcJYFeu0YiFrFrS_WjaCg_BIO7s9Gh9SosFNX6uYCnakck3RC2lNqmAxTMtdMu76VnWhsvUkYKJkyh5",
+                  userID: "123456");
+              BlocProvider.of<NotificationBloc>(context).add(
+                  const SendNotificationToUser(
+                      notificationInfo: notificationInfo));
             },
             icon: SvgPicture.asset(IconAssets.notification),
           ),
-          // IconButton(
-          //   onPressed: () {},
-          //   icon: SvgPicture.asset(IconAssets.share),
-          // ),
         ],
       ),
       body: Column(
@@ -141,10 +125,7 @@ class HomeScreen extends StatelessWidget {
               vertical: AppSize.s5.h,
               horizontal: AppSize.s15.w,
             ),
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             child: Text(
               AppStrings.services.tr(context),
               textAlign: TextAlign.start,

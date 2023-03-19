@@ -2,7 +2,6 @@ import 'package:asrar_app/config/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'dart:io' show Platform;
 import '../../../../../config/assets_manager.dart';
 import '../../../../../config/color_manager.dart';
 import '../../../../../config/strings_manager.dart';
@@ -50,7 +49,7 @@ class MainView extends StatelessWidget {
           ),
           bottomNavigationBar: Container(
             color: ColorManager.white,
-            height: Platform.isIOS ? AppSize.s60.h : AppSize.s58.h,
+            height: AppSize.s50.h,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -75,7 +74,7 @@ class MainView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     NavigationBarBottom(
-                      title: AppStrings.customerService.tr(context),
+                      title: AppStrings.support.tr(context),
                       icon: IconAssets.customersService,
                       onPress: () => controller.jumpToPage(3),
                     ),

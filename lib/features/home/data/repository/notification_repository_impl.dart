@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -11,14 +12,14 @@ import '../../../../core/data/exception_handler.dart';
 import '../../../../core/data/failure.dart';
 import '../../../../core/network/dio_factory.dart';
 import '../../../../core/network/network_info.dart';
+import '../../domain/entities/notification.dart';
 import '../../domain/repository/notification_repository.dart';
 
 class NotificationRepositoryImpl extends NotificationRepository {
   final NetworkInfo networkInfo;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   NotificationRepositoryImpl({required this.networkInfo});
-
-  final FirebaseMessaging messaging = FirebaseMessaging.instance;
 
   final Map<String, dynamic> data = {
     'click_action': 'FLUTTER_NOTIFICATION_CLICK',
@@ -30,21 +31,21 @@ class NotificationRepositoryImpl extends NotificationRepository {
   };
 
   @override
-  Future<Either<Failure, Unit>> sendNotificationToGroupOfUser(
-      List<String> tokens, String title, String message) async {
+  Future<Either<Failure, Unit>> sendNotificationToUser(
+      NotificationInfo notificationInfo) async {
     if (await networkInfo.isConnected) {
       try {
         // Define the message to send
         final Map<String, dynamic> notification = {
-          'title': title,
-          'body': message,
+          'title': notificationInfo.title,
+          'body': notificationInfo.message,
           'sound': 'default',
         };
 
         final Map<String, dynamic> body = {
           'notification': notification,
           'data': data,
-          'registration_ids': tokens,
+          'to': notificationInfo.token,
           'priority': 'high',
         };
 
@@ -58,6 +59,9 @@ class NotificationRepositoryImpl extends NotificationRepository {
           options: Options(headers: headers),
         );
         if (response.statusCode == 200) {
+          await _firestore
+              .collection(FireBaseConstants.notifications)
+              .add(notificationInfo.toMap());
           return const Right(unit);
         } else {
           final Failure failure = Failure(response.statusCode ?? 0,
@@ -74,7 +78,7 @@ class NotificationRepositoryImpl extends NotificationRepository {
 
   @override
   Future<Either<Failure, Unit>> sendNotificationToAllUser(
-      String title, String message) async {
+     String title,String message) async {
     if (await networkInfo.isConnected) {
       try {
         await FirebaseMessaging.instance.subscribeToTopic('all');
