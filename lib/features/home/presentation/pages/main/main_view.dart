@@ -2,6 +2,7 @@ import 'package:asrar_app/config/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'dart:io' show Platform;
 import '../../../../../config/assets_manager.dart';
 import '../../../../../config/color_manager.dart';
 import '../../../../../config/strings_manager.dart';
@@ -49,7 +50,7 @@ class MainView extends StatelessWidget {
           ),
           bottomNavigationBar: Container(
             color: ColorManager.white,
-            height: AppSize.s60.h,
+            height: Platform.isIOS ? AppSize.s60.h : AppSize.s50.h,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
