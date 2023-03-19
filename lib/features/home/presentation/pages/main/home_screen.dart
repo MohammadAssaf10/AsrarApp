@@ -41,6 +41,8 @@ class HomeScreen extends StatelessWidget {
                   token:
                       // iPhone 8 plus
                       "c5vv_uoYX0A0rVJVaZMO7s:APA91bHHjLWYULhKPvhqBa231ro6tg7Jk9y1LYRMNWn9HDiXeEu0SBxvjvWKTAcJYFeu0YiFrFrS_WjaCg_BIO7s9Gh9SosFNX6uYCnakck3RC2lNqmAxTMtdMu76VnWhsvUkYKJkyh5",
+                  // Honor 8X
+                  // "dBj0wY-MaLk-Hyx74RcbnI:APA91bFJgBmbydZyP5na4L8_tZ8d6R7r8DSzcsnpVe6cY72ZZmdKEVnv0zY3X0CpTUmXFd9hI58WUKc8mIp7wpA-VDNs5lHRhOhlsJUeXp9zR4y_KTKMS0Shhw74ruuE88HUR1DxKzaI",
                   userID: "123456");
               BlocProvider.of<NotificationBloc>(context).add(
                   const SendNotificationToUser(
