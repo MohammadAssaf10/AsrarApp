@@ -8,4 +8,6 @@ abstract class NotificationRepository {
       NotificationInfo notificationInfo);
   Future<Either<Failure, Unit>> sendNotificationToAllUser(
       String title, String message);
+  Future<Either<Failure, List<NotificationInfo>>> getUserNotifications(
+      String userID);
 }

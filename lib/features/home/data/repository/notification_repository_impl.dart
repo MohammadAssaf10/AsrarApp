@@ -78,7 +78,7 @@ class NotificationRepositoryImpl extends NotificationRepository {
 
   @override
   Future<Either<Failure, Unit>> sendNotificationToAllUser(
-     String title,String message) async {
+      String title, String message) async {
     if (await networkInfo.isConnected) {
       try {
         await FirebaseMessaging.instance.subscribeToTopic('all');
@@ -93,7 +93,7 @@ class NotificationRepositoryImpl extends NotificationRepository {
           'notification': notification,
           'data': data,
           'to': '/topics/all',
-          'topic': "all",
+          // 'topic': "all",
           'priority': 'high',
         };
 
@@ -113,6 +113,28 @@ class NotificationRepositoryImpl extends NotificationRepository {
               response.statusMessage ?? AppStrings.undefined);
           return Left(failure);
         }
+      } catch (e) {
+        return Left(ExceptionHandler.handle(e).failure);
+      }
+    } else {
+      return Left(DataSourceExceptions.noInternetConnections.getFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<NotificationInfo>>> getUserNotifications(
+      String userID) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final List<NotificationInfo> notificationList = [];
+        final notificationDoc =
+            await _firestore.collection(FireBaseConstants.notifications).get();
+        for (var notification in notificationDoc.docs) {
+          if (notification['userID'] == userID) {
+            notificationList.add(NotificationInfo.fromMap(notification.data()));
+          }
+        }
+        return Right(notificationList);
       } catch (e) {
         return Left(ExceptionHandler.handle(e).failure);
       }

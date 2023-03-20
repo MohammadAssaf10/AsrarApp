@@ -24,5 +24,26 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
         emit(state.copyWith(notificationStatus: NotificationStatus.sended));
       });
     });
+    on<SendNotificationToAllUser>((event, emit) async {
+      (await _notificationRepository.sendNotificationToAllUser(
+              event.title, event.message))
+          .fold((l) {}, (r) {
+        emit(state.copyWith(notificationStatus: NotificationStatus.sended));
+      });
+    });
+    on<GetUserNotifications>((event, emit) async {
+      emit(state.copyWith(notificationStatus: NotificationStatus.loading));
+      (await _notificationRepository.getUserNotifications(event.userID)).fold(
+          (failure) {
+        emit(state.copyWith(
+          notificationStatus: NotificationStatus.error,
+          errorMessage: failure.message,
+        ));
+      }, (notificationList) {
+        emit(state.copyWith(
+            notificationStatus: NotificationStatus.success,
+            notificationList: notificationList));
+      });
+    });
   }
 }

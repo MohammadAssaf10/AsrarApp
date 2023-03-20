@@ -1,4 +1,5 @@
 import 'package:asrar_app/config/app_localizations.dart';
+import 'package:asrar_app/core/app/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +11,7 @@ import '../../../../../config/routes_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
+import '../../../../auth/presentation/bloc/authentication_bloc.dart';
 import '../../../../shop/presentation/bloc/product_bloc/product_bloc.dart';
 import '../../../domain/entities/notification.dart';
 import '../../blocs/course_bloc/course_bloc.dart';
@@ -35,18 +37,28 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
+              final authState =
+                  BlocProvider.of<AuthenticationBloc>(context).state;
+              if (authState.user != null) {
+                // BlocProvider.of<NotificationBloc>(context)
+                //     .add(GetUserNotifications(userID: authState.user!.id));
+                BlocProvider.of<NotificationBloc>(context)
+                    .add(GetUserNotifications(userID: "123456"));
+              }
               const NotificationInfo notificationInfo = NotificationInfo(
                   title: "Asrar",
                   message: "Hello World!",
                   token:
-                      // iPhone 8 plus
-                      "c5vv_uoYX0A0rVJVaZMO7s:APA91bHHjLWYULhKPvhqBa231ro6tg7Jk9y1LYRMNWn9HDiXeEu0SBxvjvWKTAcJYFeu0YiFrFrS_WjaCg_BIO7s9Gh9SosFNX6uYCnakck3RC2lNqmAxTMtdMu76VnWhsvUkYKJkyh5",
+                      // iPhone 14 Pro Max
+                      "fwsTNeSijU89lKwBG4ajni:APA91bEdp68L2cg6LFwAlMYaxxEYEfV0HxO6Lm01HGWYwPKiRHBGzXoV7Bz90SFsl833oitynF5P1q6R07E3FBxo2QQC5EOb8yztDHW7bcp9nE-bVgBNsFFrVEXtkZycxMFhgNYSUMX5",
+                  // iPhone 8 plus
+                  // "c5vv_uoYX0A0rVJVaZMO7s:APA91bHHjLWYULhKPvhqBa231ro6tg7Jk9y1LYRMNWn9HDiXeEu0SBxvjvWKTAcJYFeu0YiFrFrS_WjaCg_BIO7s9Gh9SosFNX6uYCnakck3RC2lNqmAxTMtdMu76VnWhsvUkYKJkyh5",
                   // Honor 8X
                   // "dBj0wY-MaLk-Hyx74RcbnI:APA91bFJgBmbydZyP5na4L8_tZ8d6R7r8DSzcsnpVe6cY72ZZmdKEVnv0zY3X0CpTUmXFd9hI58WUKc8mIp7wpA-VDNs5lHRhOhlsJUeXp9zR4y_KTKMS0Shhw74ruuE88HUR1DxKzaI",
                   userID: "123456");
-              BlocProvider.of<NotificationBloc>(context).add(
-                  const SendNotificationToUser(
-                      notificationInfo: notificationInfo));
+              // BlocProvider.of<NotificationBloc>(context).add(
+              //     const SendNotificationToAllUser(
+              //         message: "Hello World", title: "Asrar"));
             },
             icon: SvgPicture.asset(IconAssets.notification),
           ),

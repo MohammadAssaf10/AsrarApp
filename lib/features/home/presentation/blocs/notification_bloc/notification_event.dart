@@ -12,10 +12,11 @@ class SendNotificationToUser extends NotificationEvent {
 }
 
 class SendNotificationToAllUser extends NotificationEvent {
-  final NotificationInfo notificationInfo;
-  const SendNotificationToAllUser({required this.notificationInfo});
+  final String title;
+  final String message;
+  const SendNotificationToAllUser({required this.title,required this.message});
   @override
-  List<Object?> get props => [notificationInfo];
+  List<Object?> get props => [title,message];
 }
 
 class GetUserNotifications extends NotificationEvent {
