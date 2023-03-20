@@ -1,3 +1,4 @@
+import '../../../payment/data/repository/tap_payment_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 
@@ -69,6 +70,12 @@ class FirebaseServiceOrderRepository extends ServiceOrderRepository {
           .collection(FireBaseConstants.serviceOrder)
           .doc(serviceOrder.id.toString())
           .update({"status": OrderStatus.canceled.name});
+
+      await TapPaymentService().refound(
+          chargeId: serviceOrder.chargeId,
+          currency: 'SAR',
+          reason: 'returned',
+          amount: int.parse(serviceOrder.service.servicePrice));
       return const Right(null);
     } catch (e) {
       return Left(ExceptionHandler.handle(e).failure);
