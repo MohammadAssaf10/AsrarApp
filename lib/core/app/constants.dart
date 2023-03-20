@@ -10,6 +10,7 @@ class FireBaseConstants {
   static String subscriptions = "subscriptions";
   static String shopOrders = "shopOrders";
   static String user = "user";
+    static String notifications = "notifications";
   static String serverKey =
       "AAAAcsoR5BA:APA91bErG1Nb6XMvRUERMyZ7TOD3X7XspXJNeiDvGbsRKH7vfT0TFfQo1oFzZJRIhfBEzvv4gxqJ5GX9DXG9zDOqxJbHhd4YZPvKCRtlhRaGgYnfJkqC2rRgR358YIIHLYh01rdf8zns";
   static String notificationApi = "https://fcm.googleapis.com/fcm/send";

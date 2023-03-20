@@ -59,7 +59,7 @@
   "my_shop": "Shop",
   "shop": "Shop",
   "my_wallet": "MyWallet",
-  "customers_service": "Customers Service",
+  "support": "Support",
   "asrar_for_electronic_services": "Asrar For Electronic Services",
   "about_us": "About Us",
   "whats_app": "Contact WhatApp",
@@ -110,7 +110,7 @@
   "english": "English",
   "user_info_updated_successfully": "User Info Updated Successfully",
   "select_language": "Select Language",
-  "pay": "Pay",
+  "notification": "notification",
 
   "Success": "Success",
   "Bad request error": "Bad request error",

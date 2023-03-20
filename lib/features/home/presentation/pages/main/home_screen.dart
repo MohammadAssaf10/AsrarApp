@@ -10,12 +10,12 @@ import '../../../../../config/routes_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
-import '../../../../../core/app/di.dart';
+import '../../../../auth/presentation/bloc/authentication_bloc.dart';
 import '../../../../shop/presentation/bloc/product_bloc/product_bloc.dart';
-import '../../../domain/repository/notification_repository.dart';
 import '../../blocs/course_bloc/course_bloc.dart';
 import '../../blocs/job_bloc/job_bloc.dart';
 import '../../blocs/news_bloc/news_bloc.dart';
+import '../../blocs/notification_bloc/notification_bloc.dart';
 import '../../widgets/ad/ad_image_view.dart';
 import '../../widgets/company/companies_view.dart';
 import '../../widgets/general/drawer.dart';
@@ -34,36 +34,26 @@ class HomeScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () async {
-              final NotificationRepository n =
-              instance<NotificationRepository>();
-              (await n.sendNotificationToGroupOfUser([
-                /*My phone */
-                "dT5BVEc_RIWlEqtaUN0IOi:APA91bGDS38RKJs4umQ0s5HdM8Qd1Li9e0R-9iuMzkD2ZfJQAa2xpvPhfQ1HA0zbef6TduEcuPf_VIO-dPzoeRkdr0WgKz17_JuNfDW_gv_w4EvD4eurbfJM3ZjPvjmkAH6TsxRlTRR2",
-                /*Mohsen */
-                "dQXW706MS4SpEp2Lah73hY:APA91bEwpKzw4qsyj_p_qOf5M6i6hZYK6EsuZMq2hqhWLRj-IKZ_TTOGShgKawQTTAQC2-PnnU9g0jYx2DMZR11yAyChyIeejFovRlEdtcVWnR45lJHah3QJRBxnHCKHOkqtvqGpBi2D",
-                /*Other phone */
-                "ch383Jt-TkKJOsDr71oC14:APA91bFmqWXl5sXQCYg45HncZ96Gnu2ETcUHb4xPzfkiAYRpFITA3HGB680dpsvCR53YpTiHX8yseuISOr3HP2lFhUdeCnk9uGvdLv6gXx7VupqXxRc_isoo-oQAUlM-JCxpcisYhefh",
-              ], "Asrar", "Asrar For Electronic Services"))
-                  .fold((l) {
-                print("======>${l.message}");
-              }, (r) {
-                print("*Notification Sent Successfully*");
-              });
-              // (await n.sendNotificationToAllUser(
-              //         "Asrar", "Asrar For Electronic Services"))
-              //     .fold((l) {
-              //   print("======>${l.message}");
-              // }, (r) {
-              //   print("*Notification Sent Successfully*");
-              // });
+            onPressed: () {
+              final authState =
+                  BlocProvider.of<AuthenticationBloc>(context).state;
+              if (authState.status == AuthStatus.loggedIn) {
+                BlocProvider.of<NotificationBloc>(context)
+                    .add(GetUserNotifications(userID: authState.user!.id));
+                Navigator.pushNamed(context, Routes.notificationRoute);
+              }
+              // final NotificationInfo notificationInfo = NotificationInfo(
+              //   title: "السلام عليكم",
+              //   message: "أسرار",
+              //   token: "dBj0wY-MaLk-Hyx74RcbnI:APA91bFJgBmbydZyP5na4L8_tZ8d6R7r8DSzcsnpVe6cY72ZZmdKEVnv0zY3X0CpTUmXFd9hI58WUKc8mIp7wpA-VDNs5lHRhOhlsJUeXp9zR4y_KTKMS0Shhw74ruuE88HUR1DxKzaI",
+              //   userID: authState.user!.id,
+              //   timeStamp: Timestamp.now(),
+              // );
+              // BlocProvider.of<NotificationBloc>(context).add(
+              //     SendNotificationToUser(notificationInfo: notificationInfo));
             },
             icon: SvgPicture.asset(IconAssets.notification),
           ),
-          // IconButton(
-          //   onPressed: () {},
-          //   icon: SvgPicture.asset(IconAssets.share),
-          // ),
         ],
       ),
       body: Column(
@@ -141,10 +131,7 @@ class HomeScreen extends StatelessWidget {
               vertical: AppSize.s5.h,
               horizontal: AppSize.s15.w,
             ),
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             child: Text(
               AppStrings.services.tr(context),
               textAlign: TextAlign.start,

@@ -74,7 +74,7 @@ class MainView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     NavigationBarBottom(
-                      title: AppStrings.customerService.tr(context),
+                      title: AppStrings.support.tr(context),
                       icon: IconAssets.customersService,
                       onPress: () => controller.jumpToPage(3),
                     ),

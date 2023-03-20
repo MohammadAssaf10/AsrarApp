@@ -63,7 +63,7 @@ class AppStrings {
   static const String orders = "orders";
   static const String order = "order";
   static const String myWallet = "my_wallet";
-  static const String customerService = "customers_service";
+  static const String support = "support";
   static const String asrarForElectronicServices = "asrar_for_electronic_services";
   static const String aboutUs = "about_us";
   static const String whatsApp = "whats_app";
@@ -139,6 +139,7 @@ class AppStrings {
   static const String defaultError = "Default error";
   static const String cacheError = "Cache error";
   static const String noInternetError = "no_internet_error";
+  static const String notification = "notification";
 
   // firebase auth exception
   static const String emailAlreadyExists = "Email already exists";
