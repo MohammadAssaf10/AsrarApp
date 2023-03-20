@@ -20,6 +20,7 @@ import '../features/home/presentation/pages/course/course_screen.dart';
 import '../features/home/presentation/pages/job/job_details_screen.dart';
 import '../features/home/presentation/pages/job/job_screen.dart';
 import '../features/home/presentation/pages/main/main_view.dart';
+import '../features/home/presentation/pages/main/notification_screen.dart';
 import '../features/home/presentation/pages/main/subscription_screen.dart';
 import '../features/home/presentation/pages/main/your_account.dart';
 import '../features/home/presentation/pages/news/news_details_screen.dart';
@@ -53,6 +54,7 @@ class Routes {
   static const String subscriptionRoute = "/subscription";
   static const String chatRoute = "/chat";
   static const String yourAccountRoute = "/yourAccount";
+  static const String notificationRoute = "/notification";
 
   // auth rotes
   static const String auth = '/auth';
@@ -71,6 +73,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const MainView());
       case Routes.shopRoute:
         return MaterialPageRoute(builder: (_) => const ShopScreen());
+      case Routes.notificationRoute:
+        return MaterialPageRoute(builder: (_) => const NotificationScreen());
       case Routes.cartRoute:
         {
           final arg = settings.arguments as List<ProductEntities>;

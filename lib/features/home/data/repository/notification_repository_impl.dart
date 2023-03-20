@@ -134,7 +134,51 @@ class NotificationRepositoryImpl extends NotificationRepository {
             notificationList.add(NotificationInfo.fromMap(notification.data()));
           }
         }
+        notificationList.sort((a, b) => a.timeStamp.compareTo(b.timeStamp));
         return Right(notificationList);
+      } catch (e) {
+        return Left(ExceptionHandler.handle(e).failure);
+      }
+    } else {
+      return Left(DataSourceExceptions.noInternetConnections.getFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> sendNotificationToGroupOfUser(
+      String title, String message, List<String> tokenList) async {
+    if (await networkInfo.isConnected) {
+      try {
+        // Define the message to send
+        final Map<String, dynamic> notification = {
+          'title': title,
+          'body': message,
+          'sound': 'default',
+        };
+
+        final Map<String, dynamic> body = {
+          'notification': notification,
+          'data': data,
+          'registration_ids': tokenList,
+          'priority': 'high',
+        };
+
+        // Create a Dio instance
+        final Dio dio = await instance<DioFactory>().getDio();
+
+        // Send the message to the FCM API
+        final response = await dio.post(
+          FireBaseConstants.notificationApi,
+          data: jsonEncode(body),
+          options: Options(headers: headers),
+        );
+        if (response.statusCode == 200) {
+          return const Right(unit);
+        } else {
+          final Failure failure = Failure(response.statusCode ?? 0,
+              response.statusMessage ?? AppStrings.undefined);
+          return Left(failure);
+        }
       } catch (e) {
         return Left(ExceptionHandler.handle(e).failure);
       }

@@ -1,7 +1,4 @@
-import 'package:equatable/equatable.dart';
-
-import '../../../domain/entities/notification.dart';
-
+part of 'notification_bloc.dart';
 enum NotificationStatus { initial, loading, error, success,sended }
 
 class NotificationState extends Equatable {
@@ -18,10 +15,6 @@ class NotificationState extends Equatable {
   List<Object> get props =>
       [notificationStatus, errorMessage, notificationList];
 
-  @override
-  String toString() =>
-      'NotificationState(notificationStatus: $notificationStatus, errorMessage: $errorMessage, notificationList: $notificationList)';
-
   NotificationState copyWith({
     NotificationStatus? notificationStatus,
     String? errorMessage,
@@ -33,4 +26,10 @@ class NotificationState extends Equatable {
       notificationList: notificationList ?? this.notificationList,
     );
   }
+
+  @override
+  String toString() {
+    return 'NotificationState{notificationStatus: $notificationStatus, errorMessage: $errorMessage, notificationList: $notificationList}';
+  }
 }
+

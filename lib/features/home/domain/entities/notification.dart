@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class NotificationInfo extends Equatable {
@@ -5,25 +6,32 @@ class NotificationInfo extends Equatable {
   final String message;
   final String token;
   final String userID;
-  const NotificationInfo(
-      {required this.title,
-      required this.message,
-      required this.token,
-      required this.userID});
+  final Timestamp timeStamp;
+
+  const NotificationInfo({
+    required this.title,
+    required this.message,
+    required this.token,
+    required this.userID,
+    required this.timeStamp,
+  });
+
   @override
-  List<Object> get props => [title, message, token, userID];
+  List<Object> get props => [title, message, token, userID,timeStamp];
 
   NotificationInfo copyWith({
     String? title,
     String? message,
     String? token,
     String? userID,
+    Timestamp? timeStamp,
   }) {
     return NotificationInfo(
       title: title ?? this.title,
       message: message ?? this.message,
       token: token ?? this.token,
       userID: userID ?? this.userID,
+      timeStamp: timeStamp ?? this.timeStamp,
     );
   }
 
@@ -33,6 +41,7 @@ class NotificationInfo extends Equatable {
       'message': message,
       'token': token,
       'userID': userID,
+      'timeStamp': timeStamp,
     };
   }
 
@@ -42,11 +51,12 @@ class NotificationInfo extends Equatable {
       message: map['message'] ?? '',
       token: map['token'] ?? '',
       userID: map['userID'] ?? '',
+      timeStamp: map['timeStamp'] ?? '',
     );
   }
 
   @override
   String toString() {
-    return 'NotificationInfo(title: $title, message: $message, token: $token, userID: $userID)';
+    return 'NotificationInfo{title: $title, message: $message, token: $token, userID: $userID, timeStamp: $timeStamp}';
   }
 }

@@ -136,6 +136,7 @@ class AppStrings {
   static const String defaultError = "Default error";
   static const String cacheError = "Cache error";
   static const String noInternetError = "no_internet_error";
+  static const String notification = "notification";
 
   // firebase auth exception
   static const String emailAlreadyExists = "Email already exists";
