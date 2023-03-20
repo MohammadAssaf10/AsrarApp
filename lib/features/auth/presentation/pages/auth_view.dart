@@ -75,8 +75,7 @@ class _AuthState extends State<Auth> {
                         style: const TextStyle(color: ColorManager.grey),
                       ),
                       onPressed: () {
-                        // TODO: navigate to main view
-                        Navigator.pushReplacementNamed(context, Routes.splash);
+                        Navigator.pushReplacementNamed(context, Routes.homeRoute);
                       },
                     ),
                   )

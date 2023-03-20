@@ -68,23 +68,6 @@ class _RecorderButtonState extends State<RecorderButton> {
       codec: Codec.pcm16WAV,
     );
 
-    //TODO: delete this shit (dosent add envent at all)
-    // recorderSubscription = recorder.onProgress!.listen((e) {
-    //   var date = DateTime.fromMillisecondsSinceEpoch(e.duration.inMilliseconds, isUtc: true);
-    //   var timeText = DateFormat('mm:ss:SS', 'en_GB').format(date);
-    //   setState(() {
-    //     timerText = timeText.substring(0, 8);
-    //   });
-
-    //   print('');
-    //   print('1');
-    //   print('2');
-    //   print(timerText);
-    //   print('2');
-    //   print('1');
-    //   print('');
-    // });
-
     recorderStreamController = StreamController();
     recorderStreamController.addStream(Stream<String>.periodic(
       const Duration(seconds: 1),
