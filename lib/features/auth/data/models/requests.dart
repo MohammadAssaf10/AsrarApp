@@ -16,6 +16,7 @@ class RegisterRequest extends User {
 
   RegisterRequest({
     required super.id,
+    required super.tapId,
     required super.name,
     required super.email,
     required this.password,
@@ -28,6 +29,7 @@ class RegisterRequest extends User {
   @override
   RegisterRequest copyWith({
     String? id,
+    String? tapId,
     String? name,
     String? email,
     String? password,
@@ -38,6 +40,7 @@ class RegisterRequest extends User {
   }) {
     return RegisterRequest(
       id: id ?? this.id,
+      tapId: tapId ?? this.tapId,
       name: name ?? this.name,
       email: email ?? this.email,
       password: password ?? this.password,

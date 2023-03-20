@@ -9,8 +9,7 @@ import '../../domain/repository/auth_repository.dart';
 part 'authentication_event.dart';
 part 'authentication_state.dart';
 
-class AuthenticationBloc
-    extends Bloc<AuthenticationEvent, AuthenticationState> {
+class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
   final AuthRepository _authRepository = di.instance<AuthRepository>();
 
   static AuthenticationBloc instance = AuthenticationBloc._();
@@ -20,11 +19,9 @@ class AuthenticationBloc
     on<LoginButtonPressed>((event, emit) async {
       emit(state.copyWith(status: AuthStatus.loading));
       (await _authRepository.loginViaEmail(event.loginRequest)).fold((failure) {
-        emit(state.copyWith(
-            status: AuthStatus.failed, message: failure.message));
+        emit(state.copyWith(status: AuthStatus.failed, message: failure.message));
       }, (user) {
-        emit(state.copyWith(
-            status: AuthStatus.verificationCodeNeeded, user: user));
+        emit(state.copyWith(status: AuthStatus.verificationCodeNeeded, user: user));
       });
     });
 
@@ -32,19 +29,16 @@ class AuthenticationBloc
     on<RegisterButtonPressed>((event, emit) async {
       emit(state.copyWith(status: AuthStatus.loading));
       (await _authRepository.register(event.registerRequest)).fold((failure) {
-        emit(state.copyWith(
-            status: AuthStatus.failed, message: failure.message));
+        emit(state.copyWith(status: AuthStatus.failed, message: failure.message));
       }, (user) {
-        emit(state.copyWith(
-            status: AuthStatus.verificationCodeNeeded, user: user));
+        emit(state.copyWith(status: AuthStatus.verificationCodeNeeded, user: user));
       });
     });
 
     on<ResetPasswordButtonPressed>((event, emit) async {
       emit(state.copyWith(status: AuthStatus.loading));
       (await _authRepository.resetPassword(event.email)).fold((failure) {
-        emit(state.copyWith(
-            status: AuthStatus.failed, message: failure.message));
+        emit(state.copyWith(status: AuthStatus.failed, message: failure.message));
       }, (_) {
         emit(state.copyWith(status: AuthStatus.resetPasswordSent));
       });
@@ -65,16 +59,13 @@ class AuthenticationBloc
         emit(state.copyWith(status: AuthStatus.loading));
         (await _authRepository.loginViaGoogle()).fold(
           (failure) {
-            emit(state.copyWith(
-                status: AuthStatus.failed, message: failure.message));
+            emit(state.copyWith(status: AuthStatus.failed, message: failure.message));
           },
           (user) {
             if (user.phoneNumber.isEmpty) {
-              emit(state.copyWith(
-                  status: AuthStatus.phoneNumberNeeded, user: user));
+              emit(state.copyWith(status: AuthStatus.phoneNumberNeeded, user: user));
             } else {
-              emit(state.copyWith(
-                  status: AuthStatus.verificationCodeNeeded, user: user));
+              emit(state.copyWith(status: AuthStatus.verificationCodeNeeded, user: user));
             }
           },
         );
@@ -88,8 +79,7 @@ class AuthenticationBloc
       } else {
         user = user.copyWith(phoneNumber: event.mobileNumber);
 
-        emit(state.copyWith(
-            status: AuthStatus.verificationCodeNeeded, user: user));
+        emit(state.copyWith(status: AuthStatus.verificationCodeNeeded, user: user));
       }
     });
 
@@ -103,10 +93,8 @@ class AuthenticationBloc
 
     on<SendVerificationCode>(
       (event, emit) async {
-        (await _authRepository.sendVerificationCode(event.number, event.code))
-            .fold((failure) {
-          emit(state.copyWith(
-              status: AuthStatus.failed, message: failure.message));
+        (await _authRepository.sendVerificationCode(event.number, event.code)).fold((failure) {
+          emit(state.copyWith(status: AuthStatus.failed, message: failure.message));
         }, (r) {
           emit(state.copyWith(status: AuthStatus.verificationCodeNeeded));
         });
@@ -121,6 +109,17 @@ class AuthenticationBloc
         }, (r) {
           emit(state.copyWith(status: AuthStatus.loggedIn));
         });
+      },
+    );
+
+    on<UpdateUserData>(
+      (event, emit) async {
+        (await _authRepository.updateUserData(event.user)).fold(
+          (l) {},
+          (r) {
+            emit(state.copyWith(user: r));
+          },
+        );
       },
     );
   }

@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 
 class User {
   String id;
+  String tapId;
   String name;
   String email;
   String phoneNumber;
@@ -13,6 +14,7 @@ class User {
 
   User({
     required this.id,
+    required this.tapId,
     required this.name,
     required this.email,
     required this.phoneNumber,
@@ -23,6 +25,7 @@ class User {
 
   User copyWith({
     String? id,
+    String? tapId,
     String? name,
     String? email,
     String? phoneNumber,
@@ -32,6 +35,7 @@ class User {
   }) {
     return User(
       id: id ?? this.id,
+      tapId: tapId ?? this.tapId,
       name: name ?? this.name,
       email: email ?? this.email,
       phoneNumber: phoneNumber ?? this.phoneNumber,
@@ -43,23 +47,25 @@ class User {
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
-
+  
     result.addAll({'id': id});
+    result.addAll({'tapId': tapId});
     result.addAll({'name': name});
-    result.addAll({'emailG': email});
+    result.addAll({'email': email});
     result.addAll({'phoneNumber': phoneNumber});
     result.addAll({'imageURL': imageURL});
     result.addAll({'imageName': imageName});
     result.addAll({'userTokenList': userTokenList});
-
+  
     return result;
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
       id: map['id'] ?? '',
+      tapId: map['tapId'] ?? '',
       name: map['name'] ?? '',
-      email: map['emailG'] ?? '',
+      email: map['email'] ?? '',
       phoneNumber: map['phoneNumber'] ?? '',
       imageURL: map['imageURL'] ?? '',
       imageName: map['imageName'] ?? '',
@@ -73,32 +79,34 @@ class User {
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, emailG: $email, phoneNumber: $phoneNumber, imageURL: $imageURL, imageName: $imageName, userTokenList: $userTokenList)';
+    return 'User(id: $id, tapId: $tapId, name: $name, email: $email, phoneNumber: $phoneNumber, imageURL: $imageURL, imageName: $imageName, userTokenList: $userTokenList)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-
+  
     return other is User &&
-        other.id == id &&
-        other.name == name &&
-        other.email == email &&
-        other.phoneNumber == phoneNumber &&
-        other.imageURL == imageURL &&
-        other.imageName == imageName &&
-        listEquals(other.userTokenList, userTokenList);
+      other.id == id &&
+      other.tapId == tapId &&
+      other.name == name &&
+      other.email == email &&
+      other.phoneNumber == phoneNumber &&
+      other.imageURL == imageURL &&
+      other.imageName == imageName &&
+      listEquals(other.userTokenList, userTokenList);
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-        name.hashCode ^
-        email.hashCode ^
-        phoneNumber.hashCode ^
-        imageURL.hashCode ^
-        imageName.hashCode ^
-        userTokenList.hashCode;
+      tapId.hashCode ^
+      name.hashCode ^
+      email.hashCode ^
+      phoneNumber.hashCode ^
+      imageURL.hashCode ^
+      imageName.hashCode ^
+      userTokenList.hashCode;
   }
 
   /// true if all sensitive filed actually has data

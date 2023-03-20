@@ -11,14 +11,15 @@ import '../../../../api_constant.dart';
 import '../../../../config/app_localizations.dart';
 import '../../../../config/strings_manager.dart';
 import '../../../../config/values_manager.dart';
+import '../../domain/entities/transaction_info.dart';
 import 'full_elevated_button.dart';
 import 'tap_loader.dart';
 
 class PaymentButton extends StatefulWidget {
   final Customer customer;
   final List<PaymentItem> paymentItems;
-  final Function(String) onFailed;
-  final Function() onSuccess;
+  final Function(String message) onFailed;
+  final Function(ChargeInfo chargeInfo) onSuccess;
 
   const PaymentButton({
     Key? key,
@@ -34,11 +35,6 @@ class PaymentButton extends StatefulWidget {
 
 class _PaymentButtonState extends State<PaymentButton> {
   late Map<dynamic, dynamic> tapSDKResult;
-  late String responseID = "";
-  late String sdkStatus = "";
-  late String sdkErrorCode;
-  late String sdkErrorMessage;
-  late String sdkErrorDescription;
   late AwesomeLoaderController loaderController = AwesomeLoaderController();
 
   @override
@@ -129,13 +125,15 @@ class _PaymentButtonState extends State<PaymentButton> {
     setState(() {
       switch (tapSDKResult['sdk_result']) {
         case "SUCCESS":
-          sdkStatus = "SUCCESS";
-          widget.onSuccess();
+        
+          widget.onSuccess(ChargeInfo(
+            charge_id: tapSDKResult['charge_id'],
+            customer_id: tapSDKResult['customer_id'],
+            source_id: tapSDKResult['source_id'],
+          ));
           break;
 
         default:
-          print(tapSDKResult['message']);
-
           widget.onFailed(tapSDKResult['message'] ?? AppStrings.notFoundError.tr(context));
       }
     });

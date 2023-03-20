@@ -97,7 +97,7 @@ class FirebaseAuthRepository implements AuthRepository {
 
       try {
         // the user sign before
-        User user = await _authHelper.getUser(firebaseUser.email!);
+        User user = await _authHelper.getUser(firebaseUser.uid);
         return Right(user);
       } catch (e) {
         // first sign create the user
@@ -106,6 +106,7 @@ class FirebaseAuthRepository implements AuthRepository {
               id: firebaseUser.uid,
               name: firebaseUser.displayName!,
               email: firebaseUser.email!,
+              tapId: "",
               phoneNumber: '',
               imageURL: "",
               imageName: "",

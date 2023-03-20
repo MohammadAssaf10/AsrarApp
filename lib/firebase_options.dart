@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDrMPbKFA9AW_I2-kmQTvQONhoRy7Md6i8',
-    appId: '1:493016441872:android:61efcfeb5a10dc710cd695',
+    appId: '1:493016441872:android:20f5c71d2f1ba7cf0cd695',
     messagingSenderId: '493016441872',
     projectId: 'asrar-82d33',
     storageBucket: 'asrar-82d33.appspot.com',
@@ -63,7 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '493016441872',
     projectId: 'asrar-82d33',
     storageBucket: 'asrar-82d33.appspot.com',
-    androidClientId: '493016441872-3dk91ahr6u7ld2q66na1dbkitvs99cth.apps.googleusercontent.com',
+    androidClientId: '493016441872-1fhd45pvpjbhdrkn2rkg0tlqb65q05hv.apps.googleusercontent.com',
     iosClientId: '493016441872-p6oord5l09b3h498uh50k4327v7e9hae.apps.googleusercontent.com',
     iosBundleId: 'com.example.asrarApp',
   );

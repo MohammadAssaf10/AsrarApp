@@ -150,6 +150,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
                   RegisterButtonPressed(
                     RegisterRequest(
                       id: '',
+                      tapId: '',
                       name: _nameTextEditingController.text,
                       email: _emailTextEditingController.text,
                       password: _passwordTextEditingController.text,

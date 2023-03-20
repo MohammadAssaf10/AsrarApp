@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import '../../../../core/app/constants.dart';
-
 import '../../../auth/domain/entities/user.dart';
 import 'employee.dart';
 import 'service_entities.dart';
@@ -10,6 +9,7 @@ import 'service_entities.dart';
 // when regenerate data class remove the employee form [toMap]
 class ServiceOrder {
   final int id;
+  final String chargeId;
   final ServiceEntities service;
   final User user;
   final Employee employee;
@@ -17,19 +17,21 @@ class ServiceOrder {
 
   ServiceOrder({
     required this.id,
+    required this.chargeId,
     required this.service,
     required this.user,
     required this.employee,
     required this.status,
   });
 
-  ServiceOrder.newRequest({required this.service, required this.user})
+  ServiceOrder.newRequest({required this.service, required this.user, required this.chargeId})
       : id = 0,
         employee = Employee.fromMap({}),
         status = OrderStatus.pending.name;
 
   ServiceOrder copyWith({
     int? id,
+    String? chargeId,
     ServiceEntities? service,
     User? user,
     Employee? employee,
@@ -37,6 +39,7 @@ class ServiceOrder {
   }) {
     return ServiceOrder(
       id: id ?? this.id,
+      chargeId: chargeId ?? this.chargeId,
       service: service ?? this.service,
       user: user ?? this.user,
       employee: employee ?? this.employee,
@@ -48,6 +51,7 @@ class ServiceOrder {
     final result = <String, dynamic>{};
 
     result.addAll({'id': id});
+    result.addAll({'chargeId': chargeId});
     result.addAll({'service': service.toMap()});
     result.addAll({'user': user.toMap()});
     result.addAll({'status': status});
@@ -58,6 +62,7 @@ class ServiceOrder {
   factory ServiceOrder.fromMap(Map<String, dynamic> map) {
     return ServiceOrder(
       id: map['id']?.toInt() ?? 0,
+      chargeId: map['chargeId'] ?? '',
       service: ServiceEntities.fromMap(map['service'] ?? {}),
       user: User.fromMap(map['user']),
       employee: Employee.fromMap(map['employee'] ?? {}),
@@ -71,7 +76,7 @@ class ServiceOrder {
 
   @override
   String toString() {
-    return 'ServiceOrder(id: $id, service: $service, user: $user, employee: $employee, status: $status)';
+    return 'ServiceOrder(id: $id, chargeId: $chargeId, service: $service, user: $user, employee: $employee, status: $status)';
   }
 
   @override
@@ -80,6 +85,7 @@ class ServiceOrder {
 
     return other is ServiceOrder &&
         other.id == id &&
+        other.chargeId == chargeId &&
         other.service == service &&
         other.user == user &&
         other.employee == employee &&
@@ -88,6 +94,11 @@ class ServiceOrder {
 
   @override
   int get hashCode {
-    return id.hashCode ^ service.hashCode ^ user.hashCode ^ employee.hashCode ^ status.hashCode;
+    return id.hashCode ^
+        chargeId.hashCode ^
+        service.hashCode ^
+        user.hashCode ^
+        employee.hashCode ^
+        status.hashCode;
   }
 }

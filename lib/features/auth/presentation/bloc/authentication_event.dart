@@ -75,3 +75,15 @@ class VerificationCodeSubmitted extends AuthenticationEvent {
   @override
   List<Object?> get props => [];
 }
+
+class UpdateUserData extends AuthenticationEvent {
+  final User user;
+
+  const UpdateUserData({
+    required this.user,
+  });
+  
+  @override
+  List<Object?> get props => [user];
+  
+}

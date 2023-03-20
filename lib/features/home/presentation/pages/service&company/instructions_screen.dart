@@ -1,5 +1,3 @@
-import '../../../../auth/presentation/bloc/authentication_bloc.dart';
-import '../../../../payment/presentation/widgets/payment_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,6 +13,9 @@ import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../../../../core/app/constants.dart';
 import '../../../../../core/app/functions.dart';
+import '../../../../auth/domain/entities/user.dart';
+import '../../../../auth/presentation/bloc/authentication_bloc.dart';
+import '../../../../payment/presentation/widgets/payment_button.dart';
 import '../../../domain/entities/service_entities.dart';
 import '../../../domain/entities/service_order.dart';
 import '../../blocs/service_order/service_order_bloc.dart';
@@ -24,6 +25,8 @@ class InstructionsScreen extends StatelessWidget {
   final ServiceEntities service;
   @override
   Widget build(BuildContext context) {
+    User user = BlocProvider.of<AuthenticationBloc>(context).state.user!;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(service.serviceName),
@@ -92,34 +95,41 @@ class InstructionsScreen extends StatelessWidget {
                 }
               },
               child: PaymentButton(
-                onSuccess: () {
-                  var user = BlocProvider.of<AuthenticationBloc>(context).state.user!;
+                onSuccess: (chargeInfo) {
+                  print(chargeInfo);
+
                   BlocProvider.of<ServiceOrderBloc>(context).add(AddOrder(
-                        serviceOrder: ServiceOrder.newRequest(
-                      service: service,
-                      user: user,
-                    )));
+                      serviceOrder: ServiceOrder.newRequest(
+                    chargeId: chargeInfo.charge_id,
+                    service: service,
+                    user: user,
+                  )));
+
+                  if (user.tapId.isEmpty) {
+                    BlocProvider.of<AuthenticationBloc>(context)
+                        .add(UpdateUserData(user: user.copyWith(tapId: chargeInfo.customer_id)));
+                  }
                 },
                 customer: Customer(
-                  customerId: "",
+                  customerId: user.tapId,
                   // customer id is important to retrieve cards saved for this customer
-                  email: "test@teest.com",
-                  isdNumber: "965",
-                  number: "00000000",
-                  firstName: "test",
-                  middleName: "test",
-                  lastName: "test",
+                  email: user.email,
+                  isdNumber: "",
+                  number: user.phoneNumber,
+                  firstName: user.name,
+                  middleName: "",
+                  lastName: '',
                   // metaData: null,
                 ),
                 paymentItems: <PaymentItem>[
                   PaymentItem(
-                      name: "item1",
-                      amountPerUnit: 12,
+                      name: service.serviceName,
+                      amountPerUnit: double.parse(service.servicePrice),
                       quantity: Quantity(value: 1),
                       totalAmount: 100),
                 ],
                 onFailed: (message) {
-                  print(message);
+                  showCustomDialog(context, message: message);
                 },
               ),
             ),

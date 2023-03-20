@@ -7,18 +7,70 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:493016441872:android:61efcfeb5a10dc710cd695",
+        "mobilesdk_app_id": "1:493016441872:android:20f5c71d2f1ba7cf0cd695",
         "android_client_info": {
           "package_name": "com.asrar_user_app"
         }
       },
       "oauth_client": [
         {
+          "client_id": "493016441872-rpr2bo0irvktibthdjgrj80nuqgo1vqg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrMPbKFA9AW_I2-kmQTvQONhoRy7Md6i8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "493016441872-4johhr4e1cdh0trlmsvf5c5b78uo4j8u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "493016441872-2vuquu1srdneo3ouvdd5c7svb15prj4c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.asrarEmployeeApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493016441872:android:61efcfeb5a10dc710cd695",
+        "android_client_info": {
+          "package_name": "com.example.asrar_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "493016441872-1fhd45pvpjbhdrkn2rkg0tlqb65q05hv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.asrar_app",
+            "certificate_hash": "cf37c487a7665435071978f55897087f00508f0c"
+          }
+        },
+        {
           "client_id": "493016441872-3dk91ahr6u7ld2q66na1dbkitvs99cth.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.asrar_user_app",
+            "package_name": "com.example.asrar_app",
             "certificate_hash": "ae84129390eddd4bcd56998f673d4ffca24d96d5"
+          }
+        },
+        {
+          "client_id": "493016441872-dd57149pdt9u1h4k3uivbmsodpeihp3o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.asrar_app",
+            "certificate_hash": "624c75832c7fd8fcd76b950e5fefa403acd58407"
           }
         },
         {

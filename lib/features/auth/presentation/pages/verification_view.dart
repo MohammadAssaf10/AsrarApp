@@ -20,8 +20,7 @@ class VerificationView extends StatefulWidget {
 class _VerificationViewState extends State<VerificationView> {
   late int code;
   late AuthenticationBloc authenticationBloc;
-  final TextEditingController _codeTextEditingController =
-      TextEditingController();
+  final TextEditingController _codeTextEditingController = TextEditingController();
 
   @override
   void initState() {
@@ -30,8 +29,11 @@ class _VerificationViewState extends State<VerificationView> {
     code = Random().nextInt(8999) + 1000;
 
     authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
-    authenticationBloc.add(SendVerificationCode(
-        authenticationBloc.state.user!.phoneNumber, code.toString()));
+    code = 0000;
+    print(code);
+
+    // authenticationBloc.add(SendVerificationCode(
+    //     authenticationBloc.state.user!.phoneNumber, code.toString()));
   }
 
   @override
