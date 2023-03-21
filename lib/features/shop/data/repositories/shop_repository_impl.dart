@@ -5,7 +5,7 @@ import '../../../../core/app/constants.dart';
 import '../../../../core/data/exception_handler.dart';
 import '../../../../core/data/failure.dart';
 import '../../../../core/network/network_info.dart';
-import '../../../payment/data/repositorys/tap_payment_repository.dart';
+import '../../../payment/data/repository/tap_payment_repository.dart';
 import '../../domain/entities/product_entities.dart';
 import '../../domain/entities/shop_order_entities.dart';
 import '../../domain/repositories/shop_repository.dart';
