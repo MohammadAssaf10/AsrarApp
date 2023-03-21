@@ -5,6 +5,7 @@ import '../../../../core/app/constants.dart';
 import '../../../../core/data/exception_handler.dart';
 import '../../../../core/data/failure.dart';
 import '../../../../core/network/network_info.dart';
+import '../../../payment/data/repositorys/tap_payment_repository.dart';
 import '../../domain/entities/product_entities.dart';
 import '../../domain/entities/shop_order_entities.dart';
 import '../../domain/repositories/shop_repository.dart';
@@ -76,6 +77,11 @@ class ShopRepositoryImpl extends ShopRepository {
   Future<Either<Failure, Unit>> cancelShopOrder(
       ShopOrderEntities shopOrder) async {
     try {
+      await TapPaymentService().refound(
+          chargeId: shopOrder.chargeId,
+          currency: 'SAR',
+          reason: 'returned',
+          amount: int.parse(shopOrder.totalPrice));
       await firestore
           .collection(FireBaseConstants.shopOrders)
           .doc(shopOrder.shopOrderId.toString())

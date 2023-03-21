@@ -18,6 +18,7 @@ import '../common/widgets/cart_widget.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen(this.cartList, {super.key});
+
   final List<ProductEntities> cartList;
 
   @override
@@ -76,15 +77,19 @@ class _CartScreenState extends State<CartScreen> {
                 showOrderDialog(
                   context,
                   AppStrings.whatsAppNumber.tr(context),
-                  state.user!.phoneNumber.substring(3,state.user!.phoneNumber.length),
+                  state.user!.phoneNumber
+                      .substring(3, state.user!.phoneNumber.length),
                   widget.cartList,
                   formKey,
-                  (String completePhoneNumber) {
+                  state.user!,
+                  widget.cartList,
+                  (String completePhoneNumber,String chargeId) {
                     if (formKey.currentState!.validate()) {
                       final ShopOrderEntities shopOrder = ShopOrderEntities(
                           shopOrderId: 1,
+                          chargeId:chargeId,
                           user: state.user!,
-                          phoneNumber: completePhoneNumber,
+                          phoneNumber: completePhoneNumber.replaceAll("+",""),
                           products: widget.cartList,
                           totalPrice: getTotalProductsPrice(widget.cartList),
                           orderStatus: OrderStatus.pending.name);
