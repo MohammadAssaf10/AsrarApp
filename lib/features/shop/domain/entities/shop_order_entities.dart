@@ -8,6 +8,7 @@ class ShopOrderEntities {
   final List<ProductEntities> products;
   final String totalPrice;
   final String orderStatus;
+  final String chargeId;
   ShopOrderEntities({
     required this.shopOrderId,
     required this.user,
@@ -15,6 +16,7 @@ class ShopOrderEntities {
     required this.products,
     required this.totalPrice,
     required this.orderStatus,
+    required this.chargeId,
   });
 
   Map<String, dynamic> toMap() {
@@ -25,6 +27,7 @@ class ShopOrderEntities {
       'products': products.map((x) => x.toMap()).toList(),
       'totalPrice': totalPrice,
       'orderStatus': orderStatus,
+      'chargeId': chargeId,
     };
   }
 
@@ -37,11 +40,12 @@ class ShopOrderEntities {
           map['products']?.map((x) => ProductEntities.fromMap(x))),
       totalPrice: map['totalPrice'],
       orderStatus: map['orderStatus'],
+      chargeId: map['chargeId'],
     );
   }
   @override
   String toString() {
-    return 'ShopOrderEntities(shopOrderId: $shopOrderId, user: $user, phoneNumber: $phoneNumber, products: $products, totalPrice: $totalPrice, orderStatus: $orderStatus)';
+    return 'ShopOrderEntities(shopOrderId: $shopOrderId, user: $user, phoneNumber: $phoneNumber, products: $products, totalPrice: $totalPrice, orderStatus: $orderStatus, chargeId: $chargeId)';
   }
 
   ShopOrderEntities copyWith({
@@ -51,6 +55,7 @@ class ShopOrderEntities {
     List<ProductEntities>? products,
     String? totalPrice,
     String? orderStatus,
+    String? chargeId,
   }) {
     return ShopOrderEntities(
       shopOrderId: shopOrderId ?? this.shopOrderId,
@@ -59,6 +64,7 @@ class ShopOrderEntities {
       products: products ?? this.products,
       totalPrice: totalPrice ?? this.totalPrice,
       orderStatus: orderStatus ?? this.orderStatus,
+      chargeId: chargeId ?? this.chargeId,
     );
   }
 }

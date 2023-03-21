@@ -143,7 +143,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 ListTileWidget(
                   onTap: () {
-                    Navigator.pushNamed(
+                    Navigator.pushReplacementNamed(
                       context,
                       Routes.yourAccountRoute,
                       arguments: state.user,
