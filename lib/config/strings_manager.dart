@@ -26,7 +26,7 @@ class AppStrings {
   static const String pleaseEnterMobileNumber = "please_enter_mobile_number";
   static const String mobileNumberShouldAtLeast9Character =
       "mobile_number_should_at_least_9_character";
-  static const String userNameShouldAtLeast3Caracter =
+  static const String userNameShouldAtLeast3Character =
       "username_should_at_least_3_character";
   static const String mobileNumberShould10Number =
       "mobile_number_should_10_number";

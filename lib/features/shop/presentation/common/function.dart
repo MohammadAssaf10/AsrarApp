@@ -115,11 +115,7 @@ void showOrderDialog(
                         phoneNumber = phoneNumber.replaceFirst('0', '');
                       }
                       phoneNumber = countryCode + phoneNumber;
-                      phoneNumber
-                          .replaceAll(' ', '')
-                          .replaceAll('-', '')
-                          .replaceAll('+', '');
-                      acceptOnTap(phoneNumber,chargeInfo.charge_id);
+                      acceptOnTap(phoneNumber.replaceAll('+', ''),chargeInfo.charge_id);
                       if (user.tapId.isEmpty) {
                         BlocProvider.of<AuthenticationBloc>(context).add(
                           UpdateUserData(

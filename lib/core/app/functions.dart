@@ -21,11 +21,11 @@ import '../../features/home/presentation/widgets/general/input_form_field.dart';
 
 String? nameValidator(String? name, BuildContext context) {
   if (name.nullOrEmpty()) {
-    return ""; //AppStrings.pleaseEnterName.tr(context);
+    return AppStrings.pleaseEnterUserName.tr(context);
   }
 
   if (name!.length < 3) {
-    return ""; //AppStrings.nameTooShort.tr(context);
+    return AppStrings.nameTooShort.tr(context);
   }
 
   return null;
@@ -33,7 +33,7 @@ String? nameValidator(String? name, BuildContext context) {
 
 String? mobileNumberValidator(String? phone, BuildContext context) {
   if (phone.nullOrEmpty()) {
-    return ""; //AppStrings.pleaseEnterName.tr(context);
+    return AppStrings.pleaseEnterMobileNumber.tr(context);
   }
 
   if (!isMobileNumberCorrect(phone!)) {
@@ -57,7 +57,7 @@ String? emailValidator(String? email, BuildContext context) {
 
 String? cantBeEmpty(String? v, BuildContext context) {
   if (v.nullOrEmpty()) {
-    return '';
+    return AppStrings.fieldCantBeEmpty.tr(context);
   }
 
   return null;

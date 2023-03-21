@@ -83,7 +83,7 @@ class YourAccountScreen extends StatelessWidget {
                       return AppStrings.pleaseEnterUserName.tr(context);
                     }
                     if (name!.length < 3) {
-                      return AppStrings.userNameShouldAtLeast3Caracter
+                      return AppStrings.userNameShouldAtLeast3Character
                           .tr(context);
                     }
                     return null;

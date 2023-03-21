@@ -83,13 +83,13 @@ class _CartScreenState extends State<CartScreen> {
                   formKey,
                   state.user!,
                   widget.cartList,
-                  (String completePhoneNumber,String chargeId) {
+                  (String phoneNumber,String chargeId) {
                     if (formKey.currentState!.validate()) {
                       final ShopOrderEntities shopOrder = ShopOrderEntities(
                           shopOrderId: 1,
                           chargeId:chargeId,
                           user: state.user!,
-                          phoneNumber: completePhoneNumber.replaceAll("+",""),
+                          phoneNumber: phoneNumber,
                           products: widget.cartList,
                           totalPrice: getTotalProductsPrice(widget.cartList),
                           orderStatus: OrderStatus.pending.name);

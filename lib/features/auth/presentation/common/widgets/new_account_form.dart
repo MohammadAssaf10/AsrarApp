@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 import '../../../../../config/app_localizations.dart';
 import '../../../../../config/color_manager.dart';
@@ -22,14 +23,17 @@ class NewAccountForm extends StatefulWidget {
 
 class _NewAccountFormState extends State<NewAccountForm> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
+  String phoneNumber = '';
+  String countryCode = '966';
 
-  final TextEditingController _emailTextEditingController = TextEditingController();
+  final TextEditingController _emailTextEditingController =
+      TextEditingController();
 
-  final TextEditingController _passwordTextEditingController = TextEditingController();
+  final TextEditingController _passwordTextEditingController =
+      TextEditingController();
 
-  final TextEditingController _nameTextEditingController = TextEditingController();
-
-  final TextEditingController _phoneNumberTextEditingController = TextEditingController();
+  final TextEditingController _nameTextEditingController =
+      TextEditingController();
 
   bool validateEmail = false;
 
@@ -58,6 +62,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
                   controller: _emailTextEditingController,
                   icon: Icons.email_outlined,
                   label: AppStrings.email.tr(context),
+                  keyboardType: TextInputType.emailAddress,
                   onTap: () {
                     setState(() {
                       validateEmail = true;
@@ -88,10 +93,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
                   },
                 ),
                 SizedBox(height: AppSize.s15.h),
-                TextFrom(
-                  controller: _phoneNumberTextEditingController,
-                  icon: Icons.phone,
-                  label: AppStrings.mobileNumber.tr(context),
+                IntlPhoneField(
                   onTap: () {
                     setState(() {
                       validatePhoneNumber = true;
@@ -99,9 +101,28 @@ class _NewAccountFormState extends State<NewAccountForm> {
                   },
                   validator: (val) {
                     if (validatePhoneNumber) {
-                      return mobileNumberValidator(val, context);
+                      return mobileNumberValidator(val.toString(), context);
                     }
                     return null;
+                  },
+                  showCursor: false,
+                  invalidNumberMessage:
+                      AppStrings.mobileNumberFormatNotCorrect.tr(context),
+                  // ignore: deprecated_member_use
+                  searchText: AppStrings.searchCountry.tr(context),
+                  dropdownIcon: const Icon(
+                    Icons.arrow_drop_down,
+                    color: ColorManager.primary,
+                  ),
+                  decoration: InputDecoration(
+                    labelText: AppStrings.mobileNumber.tr(context),
+                    labelStyle:
+                        Theme.of(context).inputDecorationTheme.labelStyle,
+                  ),
+                  initialCountryCode: 'SA',
+                  onChanged: (phone) {
+                    countryCode = phone.countryCode;
+                    phoneNumber = phone.number;
                   },
                 ),
                 SizedBox(height: AppSize.s15.h),
@@ -117,7 +138,8 @@ class _NewAccountFormState extends State<NewAccountForm> {
                   validator: (v) {
                     if (validatePassword) {
                       if (v.nullOrEmpty() || v!.length < 6) {
-                        return AppStrings.passwordShouldAtLeast6Character.tr(context);
+                        return AppStrings.passwordShouldAtLeast6Character
+                            .tr(context);
                       }
                     }
                     return null;
@@ -146,6 +168,10 @@ class _NewAccountFormState extends State<NewAccountForm> {
                 validateUserName = true;
               });
               if (_key.currentState!.validate()) {
+                if (phoneNumber[0] == '0') {
+                  phoneNumber = phoneNumber.replaceFirst('0', '');
+                }
+                phoneNumber = countryCode + phoneNumber;
                 BlocProvider.of<AuthenticationBloc>(context).add(
                   RegisterButtonPressed(
                     RegisterRequest(
@@ -154,7 +180,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
                       name: _nameTextEditingController.text,
                       email: _emailTextEditingController.text,
                       password: _passwordTextEditingController.text,
-                      phoneNumber: _phoneNumberTextEditingController.text,
+                      phoneNumber: phoneNumber.replaceAll('+', ''),
                       userTokenList: [],
                       imageURL: "",
                       imageName: "",
