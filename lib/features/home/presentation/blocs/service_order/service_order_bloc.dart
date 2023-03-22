@@ -76,22 +76,18 @@ class ServiceOrderBloc extends Bloc<ServiceOrderEvent, ServiceOrderState> {
     on<CompleteOrder>((event, emit) async {
       emit(state.copyWith(processStatus: Status.loading));
 
-      if (event.serviceOrder.status != OrderStatus.pending.name) {
-        emit(state.copyWith(processStatus: Status.failed, message: AppStrings.cantCancel));
-      } else {
-        (await _serviceOrderRepository.completeOrder(event.serviceOrder)).fold(
-          (l) {
-            emit(state.copyWith(processStatus: Status.failed, message: l.message));
-          },
-          (r) {
-            var list = state.serviceOrderList;
-            list.remove(event.serviceOrder);
-            list.add(event.serviceOrder.copyWith(status: OrderStatus.completed.name));
-            list.sort((a, b) => (a.id < b.id) ? 1 : 0);
-            emit(state.copyWith(processStatus: Status.success, serviceOrderList: list));
-          },
-        );
-      }
+      (await _serviceOrderRepository.completeOrder(event.serviceOrder)).fold(
+        (l) {
+          emit(state.copyWith(processStatus: Status.failed, message: l.message));
+        },
+        (r) {
+          var list = state.serviceOrderList;
+          list.remove(event.serviceOrder);
+          list.add(event.serviceOrder.copyWith(status: OrderStatus.completed.name));
+          list.sort((a, b) => (a.id < b.id) ? 1 : 0);
+          emit(state.copyWith(processStatus: Status.success, serviceOrderList: list));
+        },
+      );
     });
   }
 }

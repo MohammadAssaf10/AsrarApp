@@ -9,6 +9,7 @@ import '../../../../core/network/network_info.dart';
 import '../../../auth/domain/entities/user.dart';
 import '../../domain/entities/service_order.dart';
 import '../../domain/repository/service_order_repository.dart';
+import 'financial_entitlements_repository.dart';
 
 class FirebaseServiceOrderRepository extends ServiceOrderRepository {
   final FirebaseFirestore _firestore;
@@ -114,6 +115,10 @@ class FirebaseServiceOrderRepository extends ServiceOrderRepository {
           .collection(FireBaseConstants.serviceOrder)
           .doc(serviceOrder.id.toString())
           .update({"status": OrderStatus.completed.name});
+
+    await FinancialEntitlementsRepository().addFinancialEntitlements(
+        serviceOrder.employee, double.parse(serviceOrder.service.servicePrice));
+
       return const Right(null);
     } catch (e) {
       return Left(ExceptionHandler.handle(e).failure);
