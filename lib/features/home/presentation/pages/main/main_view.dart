@@ -6,7 +6,9 @@ import '../../../../../config/assets_manager.dart';
 import '../../../../../config/color_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/values_manager.dart';
+import '../../../../../core/app/di.dart';
 import '../../../../auth/presentation/bloc/authentication_bloc.dart';
+import '../../../../chat/presentation/blocs/support_chat/support_chat_bloc.dart';
 import '../../../../shop/presentation/bloc/shop_order_bloc/shop_order_bloc.dart';
 import '../../blocs/user_bloc/user_bloc.dart';
 import '../../widgets/general/navigation_bar_bottom.dart';
@@ -37,6 +39,11 @@ class MainView extends StatelessWidget {
               } else if (v == 0) {
                 BlocProvider.of<ShopOrderBloc>(context)
                     .add(GetShopOrderEvent(userId: authState.user!.id));
+              } else if (v == 3) {
+                if (authState.status == AuthStatus.loggedIn) {
+                  initSupportChatModule(authState.user!);
+                  BlocProvider.of<SupportChatBloc>(context).add(ChatStarted());
+                }
               }
             },
             children: const [
@@ -76,7 +83,9 @@ class MainView extends StatelessWidget {
                     NavigationBarBottom(
                       title: AppStrings.support.tr(context),
                       icon: IconAssets.customersService,
-                      onPress: () => controller.jumpToPage(3),
+                      onPress: () {
+                        controller.jumpToPage(3);
+                      },
                     ),
                     NavigationBarBottom(
                       title: AppStrings.profile.tr(context),

@@ -78,7 +78,11 @@ class RouteGenerator {
       case Routes.notificationRoute:
         return MaterialPageRoute(builder: (_) => const NotificationScreen());
       case Routes.supportRoute:
-        return MaterialPageRoute(builder: (_) => const SupportScreen());
+        {
+          final arg = settings.arguments as User;
+          initSupportChatModule(arg);
+          return MaterialPageRoute(builder: (_) => const SupportScreen());
+        }
       case Routes.cartRoute:
         {
           final arg = settings.arguments as List<ProductEntities>;
@@ -141,7 +145,8 @@ class RouteGenerator {
           initChatModule(arg);
           return MaterialPageRoute(
             builder: (context) => BlocProvider(
-              create: (context) => ChatBloc()..add(ChatStarted(serviceOrder: arg)),
+              create: (context) =>
+                  ChatBloc()..add(ChatStarted(serviceOrder: arg)),
               lazy: false,
               child: ChatScreen(serviceOrder: arg),
             ),

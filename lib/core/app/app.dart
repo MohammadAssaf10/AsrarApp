@@ -7,6 +7,7 @@ import '../../config/app_localizations.dart';
 import '../../config/routes_manager.dart';
 import '../../config/theme_manager.dart';
 import '../../features/auth/presentation/bloc/authentication_bloc.dart';
+import '../../features/chat/presentation/blocs/support_chat/support_chat_bloc.dart';
 import '../../features/home/presentation/blocs/about_us_bloc/about_us_bloc.dart';
 import '../../features/home/presentation/blocs/course_bloc/course_bloc.dart';
 import '../../features/home/presentation/blocs/job_bloc/job_bloc.dart';
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<TermsOfUseBloc>(create: (context) => TermsOfUseBloc()),
         BlocProvider<ServiceOrderBloc>(create: (context) => ServiceOrderBloc()),
         BlocProvider<SubscriptionBloc>(create: (context) => SubscriptionBloc()),
+        BlocProvider<SupportChatBloc>(create: (context) => SupportChatBloc()),
         BlocProvider<AuthenticationBloc>(
           lazy: false,
           create: ((context) => AuthenticationBloc.instance..add(AppStarted())),

@@ -8,8 +8,10 @@ import '../../features/auth/data/data_sources/auth_preference.dart';
 import '../../features/auth/data/data_sources/firebase_auth_helper.dart';
 import '../../features/auth/data/data_sources/whatsapp_api.dart';
 import '../../features/auth/data/repository/firebase_auth_repository.dart';
+import '../../features/auth/domain/entities/user.dart';
 import '../../features/auth/domain/repository/auth_repository.dart';
 import '../../features/chat/data/repositories/firebase_chat_repository.dart';
+import '../../features/chat/data/repositories/support_chat_repository.dart';
 import '../../features/chat/domain/repositories/chat_repository.dart';
 import '../../features/home/data/repository/notification_repository_impl.dart';
 import '../../features/home/data/repository/user_repository_impl.dart';
@@ -99,6 +101,13 @@ void initHomeModule() {
       return NotificationRepositoryImpl(networkInfo: instance<NetworkInfo>());
     });
   }
+}
+
+void initSupportChatModule(User user) {
+  instance.registerLazySingleton<SupportChatRepository>(() {
+    return SupportChatRepository(
+        FirebaseFirestore.instance, instance<NetworkInfo>(), user);
+  });
 }
 
 void initChatModule(ServiceOrder serviceOrder) {
