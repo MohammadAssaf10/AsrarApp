@@ -46,8 +46,7 @@ Future<void> initAppModule() async {
       () => AuthPreference(instance<SharedPreferences>()));
 
   // dio factory
-  instance.registerLazySingleton<DioFactory>(
-      () => DioFactory());
+  instance.registerLazySingleton<DioFactory>(() => DioFactory());
 }
 
 Future<void> initAuthenticationModule() async {

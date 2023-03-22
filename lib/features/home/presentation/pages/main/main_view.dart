@@ -10,7 +10,7 @@ import '../../../../auth/presentation/bloc/authentication_bloc.dart';
 import '../../../../shop/presentation/bloc/shop_order_bloc/shop_order_bloc.dart';
 import '../../blocs/user_bloc/user_bloc.dart';
 import '../../widgets/general/navigation_bar_bottom.dart';
-import 'customers_service_screen.dart';
+import 'support_screen.dart';
 import 'home_screen.dart';
 import '../../../../shop/presentation/pages/orders_screen.dart';
 import 'my_wallet_screen.dart';
@@ -43,7 +43,7 @@ class MainView extends StatelessWidget {
               OrdersScreen(),
               MyWalletScreen(),
               HomeScreen(),
-              CustomersServiceScreen(),
+              SupportScreen(),
               ProfileScreen(),
             ],
           ),

@@ -22,7 +22,9 @@ import '../../blocs/service_order/service_order_bloc.dart';
 
 class InstructionsScreen extends StatelessWidget {
   const InstructionsScreen(this.service, {super.key});
+
   final ServiceEntities service;
+
   @override
   Widget build(BuildContext context) {
     User user = BlocProvider.of<AuthenticationBloc>(context).state.user!;
@@ -87,50 +89,55 @@ class InstructionsScreen extends StatelessWidget {
                 if (state.processStatus == Status.loading) {
                   showCustomDialog(context);
                 } else if (state.processStatus == Status.failed) {
-                  showCustomDialog(context, message: state.message!.tr(context));
+                  showCustomDialog(context,
+                      message: state.message!.tr(context));
                 } else if (state.processStatus == Status.success) {
-                  dismissDialog(context);
                   Navigator.pushNamed(context, Routes.chatRoute,
                       arguments: state.serviceOrderList.first);
                 }
               },
-              child: PaymentButton(
-                onSuccess: (chargeInfo) {
-                  print(chargeInfo);
+              child: SizedBox(
+                width: AppSize.s200.w,
+                child: PaymentButton(
+                  onSuccess: (chargeInfo) {
+                    print(chargeInfo);
 
-                  BlocProvider.of<ServiceOrderBloc>(context).add(AddOrder(
-                      serviceOrder: ServiceOrder.newRequest(
-                    chargeId: chargeInfo.charge_id,
-                    service: service,
-                    user: user,
-                  )));
+                    BlocProvider.of<ServiceOrderBloc>(context).add(AddOrder(
+                        serviceOrder: ServiceOrder.newRequest(
+                      chargeId: chargeInfo.charge_id,
+                      service: service,
+                      user: user,
+                    )));
 
-                  if (user.tapId.isEmpty) {
-                    BlocProvider.of<AuthenticationBloc>(context)
-                        .add(UpdateUserData(user: user.copyWith(tapId: chargeInfo.customer_id)));
-                  }
-                },
-                customer: Customer(
-                  customerId: user.tapId,
-                  // customer id is important to retrieve cards saved for this customer
-                  email: user.email,
-                  isdNumber: "",
-                  number: user.phoneNumber,
-                  firstName: user.name,
-                  middleName: "",
-                  lastName: '',
-                  // metaData: null,
+                    if (user.tapId.isEmpty) {
+                      BlocProvider.of<AuthenticationBloc>(context).add(
+                          UpdateUserData(
+                              user: user.copyWith(
+                                  tapId: chargeInfo.customer_id)));
+                    }
+                  },
+                  customer: Customer(
+                    customerId: user.tapId,
+                    // customer id is important to retrieve cards saved for this customer
+                    email: user.email,
+                    isdNumber: "",
+                    number: user.phoneNumber,
+                    firstName: user.name,
+                    middleName: "",
+                    lastName: '',
+                    // metaData: null,
+                  ),
+                  paymentItems: <PaymentItem>[
+                    PaymentItem(
+                        name: service.serviceName,
+                        amountPerUnit: double.parse(service.servicePrice),
+                        quantity: Quantity(value: 1),
+                        totalAmount: 100),
+                  ],
+                  onFailed: (message) {
+                    showCustomDialog(context, message: message);
+                  },
                 ),
-                paymentItems: <PaymentItem>[
-                  PaymentItem(
-                      name: service.serviceName,
-                      amountPerUnit: double.parse(service.servicePrice),
-                      quantity: Quantity(value: 1),
-                      totalAmount: 100),
-                ],
-                onFailed: (message) {
-                  showCustomDialog(context, message: message);
-                },
               ),
             ),
           ),

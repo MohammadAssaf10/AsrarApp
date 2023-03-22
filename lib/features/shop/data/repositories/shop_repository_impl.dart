@@ -14,6 +14,7 @@ import '../../presentation/common/function.dart';
 class ShopRepositoryImpl extends ShopRepository {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final NetworkInfo networkInfo;
+
   ShopRepositoryImpl({required this.networkInfo});
 
   @override
@@ -76,19 +77,40 @@ class ShopRepositoryImpl extends ShopRepository {
   @override
   Future<Either<Failure, Unit>> cancelShopOrder(
       ShopOrderEntities shopOrder) async {
-    try {
-      await TapPaymentService().refound(
-          chargeId: shopOrder.chargeId,
-          currency: 'SAR',
-          reason: 'returned',
-          amount: int.parse(shopOrder.totalPrice));
-      await firestore
-          .collection(FireBaseConstants.shopOrders)
-          .doc(shopOrder.shopOrderId.toString())
-          .update({"orderStatus": OrderStatus.canceled.name});
-      return const Right(unit);
-    } catch (e) {
-      return Left(ExceptionHandler.handle(e).failure);
+    if (await networkInfo.isConnected) {
+      try {
+        return (await returnMoney(shopOrder.totalPrice, shopOrder.chargeId)).fold(
+            (failure) {
+          return Left(failure);
+        }, (r) async {
+          await firestore
+              .collection(FireBaseConstants.shopOrders)
+              .doc(shopOrder.shopOrderId.toString())
+              .update({"orderStatus": OrderStatus.canceled.name});
+          return const Right(unit);
+        });
+      } catch (e) {
+        return Left(ExceptionHandler.handle(e).failure);
+      }
+    } else {
+      return Left(DataSourceExceptions.noInternetConnections.getFailure());
+    }
+  }
+
+  Future<Either<Failure, Unit>> returnMoney(int amount, String chargeId) async {
+    if (await networkInfo.isConnected) {
+      try {
+        await TapPaymentService().refound(
+            chargeId: chargeId,
+            currency: 'SAR',
+            reason: 'returned',
+            amount: amount);
+        return const Right(unit);
+      } catch (e) {
+        return Left(ExceptionHandler.handle(e).failure);
+      }
+    } else {
+      return Left(DataSourceExceptions.noInternetConnections.getFailure());
     }
   }
 }

@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:asrar_app/config/app_localizations.dart';
 
 import '../../../../../config/color_manager.dart';
+import '../../../../../config/routes_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
@@ -46,7 +47,9 @@ class SubscriptionScreen extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 return Center(
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, Routes.supportRoute);
+                    },
                     child: Container(
                       height: AppSize.s45.h,
                       width: MediaQuery.of(context).size.width / 1.1,

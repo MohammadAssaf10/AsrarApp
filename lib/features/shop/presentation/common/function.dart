@@ -191,12 +191,11 @@ List<PaymentItem> convertToPaymentItem(List<ProductEntities> products) {
   return items;
 }
 
-String getTotalProductsPrice(List<ProductEntities> cartList) {
-  double totalPrice = 0.0;
+int getTotalProductsPrice(List<ProductEntities> cartList) {
+  int totalPrice = 0;
   for (var product in cartList) {
     totalPrice = totalPrice +
-        (product.productCount * stringToDouble(product.productPrice));
+        (product.productCount * int.parse(product.productPrice));
   }
-  totalPrice = dp(totalPrice, 2);
-  return totalPrice.toString();
+  return totalPrice;
 }
