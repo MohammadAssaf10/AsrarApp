@@ -5,7 +5,7 @@ import '../../../../api_constant.dart';
 
 class TapPaymentService {
   static const String _apiBaseUrl = "https://api.tap.company/v2";
-  static const String _apiKey = kTapApiKey;
+  static const String _apiKey = kTestMode ? kTapTestApiKey : kTapAndroidProdKey;
   Dio dio;
 
   TapPaymentService()
