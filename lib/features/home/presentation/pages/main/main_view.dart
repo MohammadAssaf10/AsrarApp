@@ -41,8 +41,7 @@ class MainView extends StatelessWidget {
                   showLoginDialog(context);
                   controller.jumpToPage(2);
                 }
-              }
-              else if (v == 0) {
+              } else if (v == 0) {
                 if (authState.status == AuthStatus.loggedIn) {
                   BlocProvider.of<ShopOrderBloc>(context)
                       .add(GetShopOrderEvent(userId: authState.user!.id));
@@ -51,20 +50,16 @@ class MainView extends StatelessWidget {
                   showLoginDialog(context);
                   controller.jumpToPage(2);
                 }
+              } else if (v == 3) {
+                if (authState.status == AuthStatus.loggedIn) {
+                  initSupportChatModule(authState.user!);
+                  BlocProvider.of<SupportChatBloc>(context).add(ChatStarted());
+                  controller.jumpToPage(3);
+                } else {
+                  showLoginDialog(context);
+                  controller.jumpToPage(2);
+                }
               }
-              // if (v == 4 && authState.status == AuthStatus.loggedIn) {
-              //   BlocProvider.of<UserBloc>(context)
-              //       .add(GetUserInfo(id: authState.user!.id));
-              // } else if (v == 0 && authState.status == AuthStatus.loggedIn) {
-              //   BlocProvider.of<ShopOrderBloc>(context)
-              //       .add(GetShopOrderEvent(userId: authState.user!.id));
-              // } else if (v == 3 && authState.status == AuthStatus.loggedIn) {
-              //   initSupportChatModule(authState.user!);
-              //   BlocProvider.of<SupportChatBloc>(context).add(ChatStarted());
-              // } else if (v == 2) {
-              // } else {
-              //   showLoginDialog(context);
-              // }
             },
             children: const [
               OrdersScreen(),
@@ -108,7 +103,11 @@ class MainView extends StatelessWidget {
                       title: AppStrings.support.tr(context),
                       icon: IconAssets.customersService,
                       onPress: () {
-                        controller.jumpToPage(3);
+                        if (authState.status == AuthStatus.loggedIn) {
+                          controller.jumpToPage(3);
+                        } else {
+                          showLoginDialog(context);
+                        }
                       },
                     ),
                     NavigationBarBottom(

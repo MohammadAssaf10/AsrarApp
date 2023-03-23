@@ -30,7 +30,6 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       drawer: const DrawerWidget(),
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         title: Text(
           AppStrings.asrarForElectronicServices.tr(context),
         ),
