@@ -26,7 +26,7 @@ class AppStrings {
   static const String pleaseEnterMobileNumber = "please_enter_mobile_number";
   static const String mobileNumberShouldAtLeast9Character =
       "mobile_number_should_at_least_9_character";
-  static const String userNameShouldAtLeast3Caracter =
+  static const String userNameShouldAtLeast3Character =
       "username_should_at_least_3_character";
   static const String mobileNumberShould10Number =
       "mobile_number_should_10_number";
@@ -43,7 +43,8 @@ class AppStrings {
   static const String newPassword = "new_password";
   static const String resetEmailSendMessage =
       "we_send_you_an_email_please_check_your_email_address";
-  static const String continueAsGuest = 'continue as guest';
+  static const String continueAsGuest = 'continue_as_guest';
+  static const String noNotifications = 'no_notifications';
 
   static const String completedSuccessfully = 'completedSuccessfully';
   static const String cancelOrder = 'cancelOrder';

@@ -6,7 +6,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import '../../config/app_localizations.dart';
 import '../../config/routes_manager.dart';
 import '../../config/theme_manager.dart';
+import '../../features/auth/data/data_sources/auth_preference.dart';
 import '../../features/auth/presentation/bloc/authentication_bloc.dart';
+import '../../features/chat/presentation/blocs/support_chat/support_chat_bloc.dart';
 import '../../features/home/presentation/blocs/about_us_bloc/about_us_bloc.dart';
 import '../../features/home/presentation/blocs/course_bloc/course_bloc.dart';
 import '../../features/home/presentation/blocs/job_bloc/job_bloc.dart';
@@ -20,6 +22,7 @@ import '../../features/home/presentation/blocs/user_bloc/user_bloc.dart';
 import '../../features/shop/presentation/bloc/product_bloc/product_bloc.dart';
 import '../../features/shop/presentation/bloc/shop_order_bloc/shop_order_bloc.dart';
 import '../../language_cubit/language_cubit.dart';
+import 'di.dart';
 import 'language.dart';
 import '../../features/home/presentation/blocs/ad_image_bloc/ad_image_bloc.dart';
 import '../../features/home/presentation/blocs/company_bloc/company_bloc.dart';
@@ -52,6 +55,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<TermsOfUseBloc>(create: (context) => TermsOfUseBloc()),
         BlocProvider<ServiceOrderBloc>(create: (context) => ServiceOrderBloc()),
         BlocProvider<SubscriptionBloc>(create: (context) => SubscriptionBloc()),
+        BlocProvider<SupportChatBloc>(create: (context) => SupportChatBloc()),
         BlocProvider<AuthenticationBloc>(
           lazy: false,
           create: ((context) => AuthenticationBloc.instance..add(AppStarted())),
@@ -86,6 +90,7 @@ class MyApp extends StatelessWidget {
                 },
                 theme: getApplicationTheme(),
                 onGenerateRoute: RouteGenerator.getRoute,
+                initialRoute: instance<AuthPreference>().isUserLoggedIn()?'/':'/auth',
               );
             },
           );

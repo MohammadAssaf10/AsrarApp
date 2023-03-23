@@ -31,7 +31,7 @@ class _AuthState extends State<Auth> {
         manageDialog(context, state);
       },
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(automaticallyImplyLeading: false),
         body: SingleChildScrollView(
           // physics: NeverScrollableScrollPhysics(),
           child: Padding(
@@ -52,21 +52,17 @@ class _AuthState extends State<Auth> {
                   if (_login) const LoginForm(),
                   if (!_login) const NewAccountForm(),
                   const Divider(),
-                  const Center(child: Text('او'),),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                          onTap: () {
-                            BlocProvider.of<AuthenticationBloc>(context)
-                                .add(GoogleLoginButtonPressed());
-                          },
-                          child: SvgPicture.asset(IconAssets.gmail)),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      SvgPicture.asset(IconAssets.apple),
-                    ],
+                  const Center(
+                    child: Text('او'),
+                  ),
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        BlocProvider.of<AuthenticationBloc>(context)
+                            .add(GoogleLoginButtonPressed());
+                      },
+                      child: SvgPicture.asset(IconAssets.gmail),
+                    ),
                   ),
                   Center(
                     child: TextButton(
@@ -75,7 +71,8 @@ class _AuthState extends State<Auth> {
                         style: const TextStyle(color: ColorManager.grey),
                       ),
                       onPressed: () {
-                        Navigator.pushReplacementNamed(context, Routes.homeRoute);
+                        Navigator.pushNamed(
+                            context, Routes.homeRoute);
                       },
                     ),
                   )

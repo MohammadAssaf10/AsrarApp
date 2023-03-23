@@ -8,6 +8,7 @@ import '../../../../config/routes_manager.dart';
 import '../../../../config/strings_manager.dart';
 import '../../../../config/values_manager.dart';
 import '../../../../core/app/functions.dart';
+import '../../../auth/presentation/bloc/authentication_bloc.dart';
 import '../../domain/entities/product_entities.dart';
 import '../bloc/product_bloc/product_bloc.dart';
 import '../../../home/presentation/widgets/general/empty_list_view.dart';
@@ -27,17 +28,21 @@ class ShopScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          if (cartList.isNotEmpty) {
+          final authState = BlocProvider.of<AuthenticationBloc>(context).state;
+          if (cartList.isNotEmpty && authState.status == AuthStatus.loggedIn) {
             Navigator.pushNamed(
               context,
               Routes.cartRoute,
               arguments: cartList,
             );
-          } else {
+          } else if (cartList.isEmpty) {
             showCustomDialog(
               context,
               message: AppStrings.pleaseChooseProducts.tr(context),
             );
+          } else if (cartList.isNotEmpty &&
+              authState.status != AuthStatus.loggedIn) {
+            showLoginDialog(context);
           }
         },
         backgroundColor: ColorManager.primary,

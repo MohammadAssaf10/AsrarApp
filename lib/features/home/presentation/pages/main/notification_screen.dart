@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../config/strings_manager.dart';
 import '../../blocs/notification_bloc/notification_bloc.dart';
+import '../../widgets/general/empty_list_view.dart';
 import '../../widgets/general/error_view.dart';
 import '../../widgets/general/loading_view.dart';
 import '../../widgets/general/notification_view.dart';
@@ -32,7 +33,8 @@ class NotificationScreen extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height / 1.2,
             );
-          } else if (state.notificationStatus == NotificationStatus.success) {
+          } else if (state.notificationStatus == NotificationStatus.success &&
+              state.notificationList.isNotEmpty) {
             return ListView.builder(
                 shrinkWrap: true,
                 itemCount: state.notificationList.length,
@@ -41,6 +43,13 @@ class NotificationScreen extends StatelessWidget {
                     notificationInfo: state.notificationList[index],
                   );
                 });
+          } else if (state.notificationStatus == NotificationStatus.success &&
+              state.notificationList.isEmpty) {
+            return EmptyListView(
+              emptyListMessage: AppStrings.noNotifications.tr(context),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height / 1.2,
+            );
           }
           return const SizedBox();
         },

@@ -11,7 +11,7 @@ class InputFormField extends StatelessWidget {
     required this.textInputType,
     this.horizontalContentPadding = 0,
     this.textAlign = TextAlign.start,
-    this.onChanage,
+    this.onChanged,
     this.suffixIcon,
     this.validator,
     this.formKey,
@@ -23,7 +23,7 @@ class InputFormField extends StatelessWidget {
   final double horizontalContentPadding;
   final TextAlign textAlign;
   final TextInputType textInputType;
-  final Function(String)? onChanage;
+  final Function(String)? onChanged;
   final Widget? suffixIcon;
   final String? Function(String?)? validator;
   final GlobalKey<FormState>? formKey;
@@ -42,7 +42,7 @@ class InputFormField extends StatelessWidget {
                 TextPosition(offset: controller!.text.length));
           }
         },
-        onChanged: onChanage,
+        onChanged: onChanged,
         validator: validator,
         controller: controller,
         textAlign: textAlign,

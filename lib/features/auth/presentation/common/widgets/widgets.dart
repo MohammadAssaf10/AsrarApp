@@ -32,6 +32,7 @@ class TextFrom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       onTap: onTap,
       onFieldSubmitted: onFieldSubmitted,
       controller: controller,

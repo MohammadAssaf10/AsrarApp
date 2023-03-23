@@ -15,6 +15,7 @@ void main() async {
   );
   await initAppModule();
   await initAuthenticationModule();
+
   // lock rotate
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

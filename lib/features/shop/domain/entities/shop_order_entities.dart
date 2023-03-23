@@ -6,7 +6,7 @@ class ShopOrderEntities {
   final User user;
   final String phoneNumber;
   final List<ProductEntities> products;
-  final String totalPrice;
+  final int totalPrice;
   final String orderStatus;
   final String chargeId;
   ShopOrderEntities({
@@ -53,7 +53,7 @@ class ShopOrderEntities {
     User? user,
     String? phoneNumber,
     List<ProductEntities>? products,
-    String? totalPrice,
+    int? totalPrice,
     String? orderStatus,
     String? chargeId,
   }) {

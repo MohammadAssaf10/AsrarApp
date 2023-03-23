@@ -115,11 +115,7 @@ void showOrderDialog(
                         phoneNumber = phoneNumber.replaceFirst('0', '');
                       }
                       phoneNumber = countryCode + phoneNumber;
-                      phoneNumber
-                          .replaceAll(' ', '')
-                          .replaceAll('-', '')
-                          .replaceAll('+', '');
-                      acceptOnTap(phoneNumber,chargeInfo.charge_id);
+                      acceptOnTap(phoneNumber.replaceAll('+', ''),chargeInfo.charge_id);
                       if (user.tapId.isEmpty) {
                         BlocProvider.of<AuthenticationBloc>(context).add(
                           UpdateUserData(
@@ -195,12 +191,11 @@ List<PaymentItem> convertToPaymentItem(List<ProductEntities> products) {
   return items;
 }
 
-String getTotalProductsPrice(List<ProductEntities> cartList) {
-  double totalPrice = 0.0;
+int getTotalProductsPrice(List<ProductEntities> cartList) {
+  int totalPrice = 0;
   for (var product in cartList) {
     totalPrice = totalPrice +
-        (product.productCount * stringToDouble(product.productPrice));
+        (product.productCount * int.parse(product.productPrice));
   }
-  totalPrice = dp(totalPrice, 2);
-  return totalPrice.toString();
+  return totalPrice;
 }

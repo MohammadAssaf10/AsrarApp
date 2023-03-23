@@ -39,7 +39,7 @@ class _ServicesViewState extends State<ServicesView> {
             vertical: AppSize.s10.h,
           ),
           child: InputFormField(
-            onChanage: (v) {
+            onChanged: (v) {
               if (v.isEmpty) {
                 servicesEntitiesList = widget.servicesList;
               } else {

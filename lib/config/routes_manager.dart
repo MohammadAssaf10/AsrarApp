@@ -19,6 +19,7 @@ import '../features/home/presentation/pages/course/course_details_screen.dart';
 import '../features/home/presentation/pages/course/course_screen.dart';
 import '../features/home/presentation/pages/job/job_details_screen.dart';
 import '../features/home/presentation/pages/job/job_screen.dart';
+import '../features/home/presentation/pages/main/support_screen.dart';
 import '../features/home/presentation/pages/main/main_view.dart';
 import '../features/home/presentation/pages/main/notification_screen.dart';
 import '../features/home/presentation/pages/main/subscription_screen.dart';
@@ -32,14 +33,11 @@ import '../features/shop/presentation/common/widgets/shop_order_details_view.dar
 import '../features/shop/presentation/pages/cart_screen.dart';
 import '../features/home/presentation/pages/service&company/instructions_screen.dart';
 import '../features/shop/presentation/pages/shop_screen.dart';
-import '../splash.dart';
 import 'strings_manager.dart';
 
 class Routes {
-  static const String splash = '/';
-
   // home route
-  static const String homeRoute = "/home";
+  static const String homeRoute = "/";
   static const String serviceRoute = "/service";
   static const String instructionsRoute = "/instructions";
   static const String shopRoute = "/shop";
@@ -55,6 +53,7 @@ class Routes {
   static const String chatRoute = "/chat";
   static const String yourAccountRoute = "/yourAccount";
   static const String notificationRoute = "/notification";
+  static const String supportRoute = "/support";
 
   // auth rotes
   static const String auth = '/auth';
@@ -65,8 +64,6 @@ class Routes {
 class RouteGenerator {
   static Route getRoute(RouteSettings settings) {
     switch (settings.name) {
-      case Routes.splash:
-        return MaterialPageRoute(builder: (_) => const SplashScreen());
 
       case Routes.homeRoute:
         initHomeModule();
@@ -75,6 +72,12 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const ShopScreen());
       case Routes.notificationRoute:
         return MaterialPageRoute(builder: (_) => const NotificationScreen());
+      case Routes.supportRoute:
+        {
+          final arg = settings.arguments as User;
+          initSupportChatModule(arg);
+          return MaterialPageRoute(builder: (_) => const SupportScreen());
+        }
       case Routes.cartRoute:
         {
           final arg = settings.arguments as List<ProductEntities>;
@@ -137,7 +140,8 @@ class RouteGenerator {
           initChatModule(arg);
           return MaterialPageRoute(
             builder: (context) => BlocProvider(
-              create: (context) => ChatBloc()..add(ChatStarted(serviceOrder: arg)),
+              create: (context) =>
+                  ChatBloc()..add(ChatStarted(serviceOrder: arg)),
               lazy: false,
               child: ChatScreen(serviceOrder: arg),
             ),

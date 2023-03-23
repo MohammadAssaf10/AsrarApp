@@ -17,6 +17,7 @@ class FireBaseConstants {
   static String messages = "messages";
   static String aboutUs = "aboutUs";
   static String termsOfUse = "termsOfUse";
+  static String supportChat = "supportChat";
 }
 
 enum OrderStatus { inProgress, pending, completed, canceled }

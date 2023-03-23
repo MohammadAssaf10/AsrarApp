@@ -53,8 +53,10 @@ class _PaymentButtonState extends State<PaymentButton> {
   Future<void> configureApp() async {
     GoSellSdkFlutter.configureApp(
         bundleId: Platform.isAndroid ? kAndroidBundleId : kIosBundleId,
-        productionSecreteKey: Platform.isAndroid ? kTapAndroidProdKey : kTapIosProdKey,
-        sandBoxsecretKey: Platform.isAndroid ? kTapAndroidTestKey : kTapIosTestKey,
+        productionSecreteKey:
+            Platform.isAndroid ? kTapAndroidProdKey : kTapIosProdKey,
+        sandBoxsecretKey:
+            Platform.isAndroid ? kTapAndroidTestKey : kTapIosTestKey,
         lang: "ar");
   }
 
@@ -87,7 +89,8 @@ class _PaymentButtonState extends State<PaymentButton> {
         // Receipt SMS/Email
         receipt: Receipt(true, false),
         // Authorize Action [Capture - Void]
-        authorizeAction: AuthorizeAction(type: AuthorizeActionType.CAPTURE, timeInHours: 10),
+        authorizeAction:
+            AuthorizeAction(type: AuthorizeActionType.CAPTURE, timeInHours: 10),
         // merchant id
         merchantID: "",
         // Allowed cards
@@ -125,7 +128,6 @@ class _PaymentButtonState extends State<PaymentButton> {
     setState(() {
       switch (tapSDKResult['sdk_result']) {
         case "SUCCESS":
-        
           widget.onSuccess(ChargeInfo(
             charge_id: tapSDKResult['charge_id'],
             customer_id: tapSDKResult['customer_id'],
@@ -134,7 +136,8 @@ class _PaymentButtonState extends State<PaymentButton> {
           break;
 
         default:
-          widget.onFailed(tapSDKResult['message'] ?? AppStrings.notFoundError.tr(context));
+          widget.onFailed(
+              tapSDKResult['message'] ?? AppStrings.notFoundError.tr(context));
       }
     });
   }
@@ -148,6 +151,16 @@ class _PaymentButtonState extends State<PaymentButton> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Spacer(),
+            Text(
+              AppStrings.pay.tr(context),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18.0,
+              ),
+            ),
+            SizedBox(
+              width: AppSize.s10.w,
+            ),
             SizedBox(
               width: 25,
               height: 25,
@@ -156,16 +169,6 @@ class _PaymentButtonState extends State<PaymentButton> {
                 innerColor: Colors.white,
                 strokeWidth: 3.0,
                 controller: loaderController,
-              ),
-            ),
-            SizedBox(
-              width: AppSize.s10.w,
-            ),
-            Text(
-              AppStrings.pay.tr(context),
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16.0,
               ),
             ),
             const Spacer(),
