@@ -10,6 +10,7 @@ import '../../../../../config/routes_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
+import '../../../../../core/app/functions.dart';
 import '../../../../auth/presentation/bloc/authentication_bloc.dart';
 import '../../../../shop/presentation/bloc/product_bloc/product_bloc.dart';
 import '../../blocs/course_bloc/course_bloc.dart';
@@ -29,6 +30,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       drawer: const DrawerWidget(),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           AppStrings.asrarForElectronicServices.tr(context),
         ),
@@ -41,16 +43,9 @@ class HomeScreen extends StatelessWidget {
                 BlocProvider.of<NotificationBloc>(context)
                     .add(GetUserNotifications(userID: authState.user!.id));
                 Navigator.pushNamed(context, Routes.notificationRoute);
+              } else {
+                showLoginDialog(context);
               }
-              // final NotificationInfo notificationInfo = NotificationInfo(
-              //   title: "السلام عليكم",
-              //   message: "أسرار",
-              //   token: "dBj0wY-MaLk-Hyx74RcbnI:APA91bFJgBmbydZyP5na4L8_tZ8d6R7r8DSzcsnpVe6cY72ZZmdKEVnv0zY3X0CpTUmXFd9hI58WUKc8mIp7wpA-VDNs5lHRhOhlsJUeXp9zR4y_KTKMS0Shhw74ruuE88HUR1DxKzaI",
-              //   userID: authState.user!.id,
-              //   timeStamp: Timestamp.now(),
-              // );
-              // BlocProvider.of<NotificationBloc>(context).add(
-              //     SendNotificationToUser(notificationInfo: notificationInfo));
             },
             icon: SvgPicture.asset(IconAssets.notification),
           ),

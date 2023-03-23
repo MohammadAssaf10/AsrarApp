@@ -9,6 +9,7 @@ import '../../../../../config/routes_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/styles_manager.dart';
 import '../../../../../config/values_manager.dart';
+import '../../../../../core/app/functions.dart';
 import '../../../../auth/presentation/bloc/authentication_bloc.dart';
 import '../../../../chat/presentation/blocs/support_chat/support_chat_bloc.dart';
 import '../../blocs/subscription_bloc/subscription_bloc.dart';
@@ -55,7 +56,10 @@ class SubscriptionScreen extends StatelessWidget {
                         if (authState.status == AuthStatus.loggedIn) {
                           Navigator.pushNamed(context, Routes.supportRoute,
                               arguments: authState.user);
-                          BlocProvider.of<SupportChatBloc>(context).add(ChatStarted());
+                          BlocProvider.of<SupportChatBloc>(context)
+                              .add(ChatStarted());
+                        } else {
+                          showLoginDialog(context);
                         }
                       },
                       child: Container(

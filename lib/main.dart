@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'core/app/di.dart';
+import 'features/auth/presentation/bloc/authentication_bloc.dart';
 import 'firebase_options.dart';
 import 'bloc_observer.dart';
 import 'core/app/app.dart';
@@ -15,6 +16,8 @@ void main() async {
   );
   await initAppModule();
   await initAuthenticationModule();
+  AuthenticationBloc.instance.add(AppStarted());
+
   // lock rotate
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

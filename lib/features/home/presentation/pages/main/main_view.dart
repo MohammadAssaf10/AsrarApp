@@ -7,6 +7,7 @@ import '../../../../../config/color_manager.dart';
 import '../../../../../config/strings_manager.dart';
 import '../../../../../config/values_manager.dart';
 import '../../../../../core/app/di.dart';
+import '../../../../../core/app/functions.dart';
 import '../../../../auth/presentation/bloc/authentication_bloc.dart';
 import '../../../../chat/presentation/blocs/support_chat/support_chat_bloc.dart';
 import '../../../../shop/presentation/bloc/shop_order_bloc/shop_order_bloc.dart';
@@ -24,27 +25,46 @@ class MainView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PageController controller = PageController(initialPage: 2);
+    final authState = BlocProvider.of<AuthenticationBloc>(context).state;
     return Stack(
       children: [
         Scaffold(
           body: PageView(
             controller: controller,
             onPageChanged: (v) {
-              final authState =
-                  BlocProvider.of<AuthenticationBloc>(context).state;
-
               if (v == 4) {
-                BlocProvider.of<UserBloc>(context)
-                    .add(GetUserInfo(id: authState.user!.id));
-              } else if (v == 0) {
-                BlocProvider.of<ShopOrderBloc>(context)
-                    .add(GetShopOrderEvent(userId: authState.user!.id));
-              } else if (v == 3) {
                 if (authState.status == AuthStatus.loggedIn) {
-                  initSupportChatModule(authState.user!);
-                  BlocProvider.of<SupportChatBloc>(context).add(ChatStarted());
+                  BlocProvider.of<UserBloc>(context)
+                      .add(GetUserInfo(id: authState.user!.id));
+                  controller.jumpToPage(4);
+                } else {
+                  showLoginDialog(context);
+                  controller.jumpToPage(2);
                 }
               }
+              else if (v == 0) {
+                if (authState.status == AuthStatus.loggedIn) {
+                  BlocProvider.of<ShopOrderBloc>(context)
+                      .add(GetShopOrderEvent(userId: authState.user!.id));
+                  controller.jumpToPage(0);
+                } else {
+                  showLoginDialog(context);
+                  controller.jumpToPage(2);
+                }
+              }
+              // if (v == 4 && authState.status == AuthStatus.loggedIn) {
+              //   BlocProvider.of<UserBloc>(context)
+              //       .add(GetUserInfo(id: authState.user!.id));
+              // } else if (v == 0 && authState.status == AuthStatus.loggedIn) {
+              //   BlocProvider.of<ShopOrderBloc>(context)
+              //       .add(GetShopOrderEvent(userId: authState.user!.id));
+              // } else if (v == 3 && authState.status == AuthStatus.loggedIn) {
+              //   initSupportChatModule(authState.user!);
+              //   BlocProvider.of<SupportChatBloc>(context).add(ChatStarted());
+              // } else if (v == 2) {
+              // } else {
+              //   showLoginDialog(context);
+              // }
             },
             children: const [
               OrdersScreen(),
@@ -67,7 +87,11 @@ class MainView extends StatelessWidget {
                       title: AppStrings.orders.tr(context),
                       icon: IconAssets.orders,
                       onPress: () {
-                        controller.jumpToPage(0);
+                        if (authState.status == AuthStatus.loggedIn) {
+                          controller.jumpToPage(0);
+                        } else {
+                          showLoginDialog(context);
+                        }
                       },
                     ),
                     NavigationBarBottom(
@@ -91,7 +115,11 @@ class MainView extends StatelessWidget {
                       title: AppStrings.profile.tr(context),
                       icon: IconAssets.profile,
                       onPress: () {
-                        controller.jumpToPage(4);
+                        if (authState.status == AuthStatus.loggedIn) {
+                          controller.jumpToPage(4);
+                        } else {
+                          showLoginDialog(context);
+                        }
                       },
                     ),
                   ],

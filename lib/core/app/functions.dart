@@ -318,3 +318,25 @@ Future<XFile?> selectFile(BuildContext context) async {
       });
   return image;
 }
+
+void showLoginDialog(
+  BuildContext context,
+) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return SimpleDialog(
+        children: [Center(
+          child: Text(
+            AppStrings.pleaseLogin.tr(context),
+            textAlign: TextAlign.center,
+            style: getAlmaraiBoldStyle(
+              fontSize: AppSize.s18.sp,
+              color: ColorManager.primary,
+            ),
+          ),
+        )],
+      );
+    },
+  );
+}

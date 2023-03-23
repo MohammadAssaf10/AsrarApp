@@ -33,14 +33,11 @@ import '../features/shop/presentation/common/widgets/shop_order_details_view.dar
 import '../features/shop/presentation/pages/cart_screen.dart';
 import '../features/home/presentation/pages/service&company/instructions_screen.dart';
 import '../features/shop/presentation/pages/shop_screen.dart';
-import '../splash.dart';
 import 'strings_manager.dart';
 
 class Routes {
-  static const String splash = '/';
-
   // home route
-  static const String homeRoute = "/home";
+  static const String homeRoute = "/";
   static const String serviceRoute = "/service";
   static const String instructionsRoute = "/instructions";
   static const String shopRoute = "/shop";
@@ -67,8 +64,6 @@ class Routes {
 class RouteGenerator {
   static Route getRoute(RouteSettings settings) {
     switch (settings.name) {
-      case Routes.splash:
-        return MaterialPageRoute(builder: (_) => const SplashScreen());
 
       case Routes.homeRoute:
         initHomeModule();

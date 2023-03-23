@@ -30,7 +30,7 @@ manageDialog(BuildContext context, AuthenticationState state) async {
   } else if (state.status == AuthStatus.resetPasswordSent) {
     showCustomDialog(context, message: AppStrings.resetEmailSendMessage.tr(context));
   } else if (state.status == AuthStatus.verificationCodeNeeded) {
-    Navigator.pushNamed(context, Routes.verificationView);
+    Navigator.pushReplacementNamed(context, Routes.verificationView);
   } else if (state.status == AuthStatus.phoneNumberNeeded) {
     dismissDialog(context);
 
