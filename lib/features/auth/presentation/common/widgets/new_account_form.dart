@@ -24,7 +24,7 @@ class NewAccountForm extends StatefulWidget {
 class _NewAccountFormState extends State<NewAccountForm> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   String phoneNumber = '';
-  String countryCode = '966';
+  String countryCode = '963';
 
   final TextEditingController _emailTextEditingController =
       TextEditingController();
@@ -119,7 +119,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
                     labelStyle:
                         Theme.of(context).inputDecorationTheme.labelStyle,
                   ),
-                  initialCountryCode: 'SA',
+                  initialCountryCode: 'SY',
                   onChanged: (phone) {
                     countryCode = phone.countryCode;
                     phoneNumber = phone.number;

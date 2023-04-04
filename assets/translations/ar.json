@@ -143,5 +143,6 @@
   "select_language": "اختر اللغة",
   "notification": "الإشعارات",
   "show_details": "عرض التفاصيل",
-  "pay": "دفع"
+  "pay": "دفع",
+  "allow_notification": "السماح باظهار الاشعارات على الشاشة الرئيسية"
 }

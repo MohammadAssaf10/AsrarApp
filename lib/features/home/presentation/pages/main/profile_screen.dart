@@ -30,6 +30,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController oldPasswordController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey();
   XFile? image;
+  bool allowNotification = true;
+
   @override
   Widget build(BuildContext context) {
     final authState = BlocProvider.of<AuthenticationBloc>(context).state;
@@ -73,7 +75,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: MediaQuery.of(context).size.height / 1.3,
               width: MediaQuery.of(context).size.width,
             );
-          } else if (state is UserLoadedState){
+          } else if (state is UserLoadedState) {
             return ListView(
               shrinkWrap: true,
               children: [
@@ -115,7 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                 ListTile(
                   title: Text(
-                    "السماح باظهار الاشعارات\nعلى الشاشة الرئيسية",
+                    AppStrings.allowNotification.tr(context),
                     style: getAlmaraiRegularStyle(
                       fontSize: AppSize.s18.sp,
                       color: ColorManager.darkGrey,
@@ -123,8 +125,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   trailing: Switch.adaptive(
                     activeColor: ColorManager.primary,
-                    value: true,
-                    onChanged: (v){},
+                    value: allowNotification,
+                    onChanged: (v) {
+                      setState(() {
+                        allowNotification = !allowNotification;
+                      });
+                    },
                   ),
                 ),
                 Padding(
@@ -177,7 +183,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   icon: Icons.lock_outline_rounded,
                 ),
               ],
-            );}
+            );
+          }
           return const SizedBox();
         },
       ),

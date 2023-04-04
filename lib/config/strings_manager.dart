@@ -127,6 +127,7 @@ class AppStrings {
   static const String english = "english";
   static const String selectLanguage = "select_language";
   static const String pay = "pay";
+  static const String allowNotification = "allow_notification";
 
 
   // exception handler

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../config/app_localizations.dart';
+import '../../../../config/routes_manager.dart';
 import '../../../../config/strings_manager.dart';
 import '../../../../config/values_manager.dart';
 import '../bloc/authentication_bloc.dart';
@@ -65,6 +66,7 @@ class _VerificationViewState extends State<VerificationView> {
                   onPressed: () {
                     if (_codeTextEditingController.text == code.toString()) {
                       authenticationBloc.add(VerificationCodeSubmitted());
+                      Navigator.pushReplacementNamed(context, Routes.homeRoute);
                     } else {
                       showDialog(
                           context: context,

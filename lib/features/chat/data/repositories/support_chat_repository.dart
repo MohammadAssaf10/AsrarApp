@@ -19,11 +19,11 @@ class SupportChatRepository extends ChatRepository {
   final DocumentReference supportChatReference;
 
   SupportChatRepository(
-      this._firestore,
-      this._networkInfo,
-      this.user,
-      ) : supportChatReference =
-  _firestore.collection(FireBaseConstants.supportChat).doc(user.id);
+    this._firestore,
+    this._networkInfo,
+    this.user,
+  ) : supportChatReference =
+            _firestore.collection(FireBaseConstants.supportChat).doc(user.id);
 
   @override
   Future<Either<Failure, void>> sendMessage(Message message) async {
@@ -32,7 +32,9 @@ class SupportChatRepository extends ChatRepository {
     }
 
     try {
-      await supportChatReference.collection(FireBaseConstants.supportChat).add(message.toMap());
+      await supportChatReference
+          .collection(FireBaseConstants.supportChat)
+          .add(message.toMap());
 
       return const Right(null);
     } catch (e) {
@@ -47,8 +49,17 @@ class SupportChatRepository extends ChatRepository {
     }
 
     try {
-      return Right(supportChatReference.collection(FireBaseConstants.supportChat).snapshots().map(
-            (event) {
+      final Sender sender =
+          Sender(id: user.id, name: user.name, email: user.email);
+      await _firestore
+          .collection(FireBaseConstants.supportChat)
+          .doc(user.id)
+          .set(sender.toMap());
+      return Right(supportChatReference
+          .collection(FireBaseConstants.supportChat)
+          .snapshots()
+          .map(
+        (event) {
           List<Message> list = [];
           for (var doc in event.docs) {
             list.add(Message.fromMap(doc.data()));
@@ -65,7 +76,8 @@ class SupportChatRepository extends ChatRepository {
   Future<Either<Failure, String>> uploadImage(XFile image) async {
     try {
       var file = await uploadFile(
-          '${FireBaseConstants.supportChat}/${user.id}/images/${image.name}', image);
+          '${FireBaseConstants.supportChat}/${user.id}/images/${image.name}',
+          image);
       print(file.url);
       return Right(file.url);
     } catch (e) {
@@ -74,10 +86,11 @@ class SupportChatRepository extends ChatRepository {
   }
 
   @override
-  Future<Either<Failure, String>> uploadVoice(XFile voice)  async{
+  Future<Either<Failure, String>> uploadVoice(XFile voice) async {
     try {
       var file = await uploadFile(
-          '${FireBaseConstants.supportChat}/${user.id}/voices/${voice.name}', voice);
+          '${FireBaseConstants.supportChat}/${user.id}/voices/${voice.name}',
+          voice);
       print(file.url);
       return Right(file.url);
     } catch (e) {

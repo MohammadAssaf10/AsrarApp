@@ -77,7 +77,7 @@ Future<String> phoneDialog(BuildContext context) async {
                         borderSide: BorderSide(),
                       ),
                     ),
-                    initialCountryCode: 'SA',
+                    initialCountryCode: 'SY',
                     onChanged: (phone) {
                       countryCode = phone.countryCode;
                       phoneNumber = phone.number;

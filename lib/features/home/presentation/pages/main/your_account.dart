@@ -29,7 +29,7 @@ class YourAccountScreen extends StatelessWidget {
         text: user.phoneNumber.substring(4, user.phoneNumber.length));
     final GlobalKey<FormState> phoneKey = GlobalKey<FormState>();
     String phoneNumber = user.phoneNumber;
-    String countryCode = '+966';
+    String countryCode = '963';
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -108,7 +108,7 @@ class YourAccountScreen extends StatelessWidget {
                         borderSide: BorderSide(),
                       ),
                     ),
-                    initialCountryCode: 'SA',
+                    initialCountryCode: 'SY',
                     onChanged: (phone) {
                       countryCode = phone.countryCode;
                       phoneNumber = phone.number;

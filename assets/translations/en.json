@@ -148,5 +148,6 @@
   "select_image_source": "Select Image Source",
   "save": "Save",
   "password_updated": "Password Updated",
-  "instructions": "Instructions: "
+  "instructions": "Instructions: ",
+  "allow_notification": "Allow notifications to show on the home screen"
 }

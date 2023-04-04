@@ -104,7 +104,10 @@ void initHomeModule() {
 }
 
 void initSupportChatModule(User user) {
-  instance.registerLazySingleton<SupportChatRepository>(() {
+  if (instance.isRegistered<SupportChatRepository>()) {
+    instance.unregister<SupportChatRepository>();
+  }
+  instance.registerFactory<SupportChatRepository>(() {
     return SupportChatRepository(
         FirebaseFirestore.instance, instance<NetworkInfo>(), user);
   });

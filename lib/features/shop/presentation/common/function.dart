@@ -44,7 +44,7 @@ void showOrderDialog(
   Function(String completePhoneNumber,String chargeId) acceptOnTap,
 ) async {
   String phoneNumber = number;
-  String countryCode = '966';
+  String countryCode = '963';
   final TextEditingController controller = TextEditingController(text: number);
   showDialog(
     context: context,
@@ -91,7 +91,7 @@ void showOrderDialog(
                       borderSide: BorderSide(),
                     ),
                   ),
-                  initialCountryCode: 'SA',
+                  initialCountryCode: 'SY',
                   onChanged: (phone) {
                     countryCode = phone.countryCode;
                     phoneNumber = phone.number;
